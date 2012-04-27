@@ -1,4 +1,6 @@
-@compile
-Feature: Compilation tests
-    Scenario: Compile Test
-        Given Build is OK
+# language: ru
+Функционал: Тесты компилируются
+
+    @compile
+    Сценарий: Компиляция тестов
+     Допустим билд собирается

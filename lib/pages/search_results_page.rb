@@ -7,7 +7,7 @@ class SearchResultsPage
 
   def search_results
     results = []
-    doc = Nokogiri::HTML.parse(results_table_element.html)
+    doc = Nokogiri::HTML.parse(results_table_element.when_present.html)
     doc.css("tr").each do |row|
       # Skip of it is a banner or bottom 'not found' part
       if row['class'].include?('banner-listing-list') or row['class'].include?('dontSearch')
