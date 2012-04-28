@@ -7,8 +7,10 @@ class AdDetailsPage
   div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
 
   def get_parameter(field)
-    # Open all params
-    self.show_all_params
+    # Open all params if present
+    if self.show_all_params_element.shown?
+      self.show_all_params
+    end
     
     case field
     when "Заголовок"

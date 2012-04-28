@@ -8,6 +8,7 @@ class CarsRepaymentSearchPage
   
   div :type, :xpath => "//div[@data-item-name='type']//div[@class='controlSelect']"
   div :condition, :xpath => "//div[@data-item-name='condition']//div[@class='controlSelect']"
+  div :madein, :xpath => "//div[@data-item-name='madein']//div[@class='controlSelect']"
   
   link :run_search, :id => "show-result-search"
   
@@ -32,6 +33,9 @@ class CarsRepaymentSearchPage
     
     when "Состояние"
       multiselect(self.condition_element, hash['value'])
+        
+    when "Автомобили"
+      multiselect(self.madein_element, hash['value'])
     end
   end
 end
