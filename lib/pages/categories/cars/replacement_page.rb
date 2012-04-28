@@ -7,8 +7,18 @@ class CarsRepaymentSearchPage
   text_field :price_to, :name => "price[to]"
   
   div :type, :xpath => "//div[@data-item-name='type']//div[@class='controlSelect']"
+  div :condition, :xpath => "//div[@data-item-name='condition']//div[@class='controlSelect']"
   
   link :run_search, :id => "show-result-search"
+  
+  #TODO: Переместить в общие для селекторов
+  def multiselect(element, values)
+    element.click
+    values.split(",").each do |value|
+      xpath = "//label[contains(.,'#{value.strip}')]/input"
+      element.parent.checkbox_element(:xpath => xpath).check
+    end
+  end
   
   def set_parameter (hash)
     case hash['parameter']
@@ -18,13 +28,10 @@ class CarsRepaymentSearchPage
       self.price_to = hash['max']
         
     when "Тип автомобиля"
-      # Expand the combobox
-      self.type_element.click
-      hash['value'].split(",").each do |value|
-        xpath = "//label[contains(.,'#{value.strip}')]/input"
-        self.type_element.parent.checkbox_element(:xpath => xpath).check
-      end
-      
+      multiselect(self.type_element, hash['value'])
+    
+    when "Состояние"
+      multiselect(self.condition_element, hash['value'])
     end
   end
 end
