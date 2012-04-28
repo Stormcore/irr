@@ -54,7 +54,6 @@ end
     @results.each do |result|
       current_is_premium = result['premium']
       if premium_section_ended and current_is_premium
-        debugger
         raise "Page #{@current_page_number} Message #{result['url']}: premium message after regular message"
       end
       premium_section_ended = true unless current_is_premium
@@ -142,19 +141,21 @@ end
 end
 
 def results_page_soft_assert(description)
-  validation_errors = []
+  validation_errors = Hash.new
   on SearchResultsPage do |page|
     @results.each do |result|
       begin
         yield result
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
-        validation_errors << result['title']
+        full_url = "http://#{BASE_URL}#{result['url']}"
+        validation_errors[full_url] = verification_error
       end
     end
   end
 
   if !validation_errors.empty?
+    puts "URL: #{@browser.url}"
     puts description
     puts validation_errors
     raise "Error occurred on page #{@browser.url}"
@@ -172,8 +173,8 @@ def results_details_soft_assert(description)
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
-        full_url = "#{BASE_URL}/#{result['url']}"
-        validation_errors[full_url] = verification_error
+        full_url = "#{BASE_URL}#{result['url']}"
+        validation_errors[full_url] = verification_error.message
       ensure
         @browser.back
       end
@@ -181,6 +182,7 @@ def results_details_soft_assert(description)
   end
 
   if !validation_errors.empty?
+    puts "URL: #{@browser.url}"
     puts description
     puts validation_errors
     raise "Error occurred on page #{@browser.url}"

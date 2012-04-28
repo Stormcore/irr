@@ -74,7 +74,7 @@ class SearchResultsPage
   end
   
   def open_ad(url)
-    @browser.goto("#{BASE_URL}/#{url}")
+    @browser.goto("#{BASE_URL}#{url}")
   end
 
   def go_to_page(number)
