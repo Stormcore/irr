@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'json'
 
 class SearchResultsPage
@@ -45,6 +46,7 @@ class SearchResultsPage
 
       begin
         h['url'] = row.css('td.tdTxt > div.h3 > a')[0]['href']
+        ad_id = h['url'].match(/\/advert\/(.*)\//)[1]
       rescue
       end
 
@@ -59,14 +61,25 @@ class SearchResultsPage
       end
 
       begin
-        h['price'] = row.css('td.tdPrise > div.prise')[0].content
+        full_price = row.css('td.tdPrise > div.prise')[0].content
+        if full_price.index(" ") > 0
+          h['price'] = full_price.match(/(.*) /)[1].gsub(' ','')
+          h['currency'] = full_price.split(" ")[-1]
+        else
+          h['price'] = full_price
+        end
+      rescue
+      end
+
+      begin
+        date = parsed_json['items'][ad_id]['date']
+        h['date'] = Date.strptime(date, '%H:%M, %d.%m.%Y')
       rescue
       end
       
       begin
-        ad_id = h['url'].match(/\/advert\/(.*)\//)[1]
-        date = parsed_json['items'][ad_id]['date']
-        h['date'] = Date.strptime(date, '%H:%M, %d.%m.%Y')
+        h['source_title'] = parsed_json['items'][ad_id]['source_title']
+        h['source_link'] = parsed_json['items'][ad_id]['source_link']
       rescue
       end
       

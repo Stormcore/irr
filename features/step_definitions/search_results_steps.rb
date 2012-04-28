@@ -87,6 +87,12 @@ end
     end
   end
 end
+
+То %{в каждом объявлении валюта равна "$price"} do |currency|
+  results_page_soft_assert("Некорректная валюта:") do |result|
+    result['currency'].should be == currency
+  end
+end
  
 То %{в каждом объявлении отображается рисунок} do
   results_page_soft_assert("Не отображен рисунок:") do |result|
@@ -107,8 +113,22 @@ end
   end
 end
 
+То %{в каждом объявлении источник равен "$expected_source"} do |expected_source|
+  results_page_soft_assert("Неправильный источник:") do |result|
+    puts "Got link=#{result['source_link']} title=#{result['source_title']}"
+    case result['source_link'] 
+    when /\/user\//
+      actual_source = "Сайт IRR.RU"
+    when /#{BASE_URL}/
+      actual_source = "Интернет-партнёры"
+    else
+      actual_source = result['source_title']
+    end
 
-
+    actual_source.should be == expected_source
+    
+  end
+end
 
 То %{в каждом объявлении отображается загруженная фотография} do
   results_page_soft_assert("Не отображена загруженная фотография:") do |result|
@@ -121,6 +141,12 @@ end
     the_request = Net::HTTP::Get.new(url.path)
     the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
     the_response.code.should == 200.to_s
+  end
+end
+
+То %{в деталях каждого объявления отображается видео} do 
+  results_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
+      ad_page.should have_video
   end
 end
 

@@ -18,11 +18,15 @@
   case long_category
   when "Авто и мото -> Выкуп автомобилей. Спрос"
     @category_page = CarsRepaymentSearchPage 
+
+  when "Авто и мото -> Мототехника и Автодома -> Мотоциклы и мопеды"
+    @category_page = MotoPage 
   end
 end
 
 Когда %{я делаю поиск по следующим параметрам:} do |page_params|
   on @category_page do |page|
+    page.expand_all_parameters
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
