@@ -11,6 +11,7 @@ require 'nokogiri'
 require 'debugger'
 require 'net/http'
 require 'uri'
+require 'date'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'

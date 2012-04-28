@@ -1,13 +1,18 @@
+require 'json'
+
 class SearchResultsPage
   include PageObject
 
-  table :results_table, :class => "adListTable"
+  div :results_table, :class => "b-adList"
   unordered_list :pages, :class => "filter-pages"
   div :side_column, :class => "side-col"
 
   def search_results
     results = []
     doc = Nokogiri::HTML.parse(results_table_element.when_present.html)
+    json = /var additionalPopupMenuParams = (.*);/.match(doc.css("script").inner_html)[1]
+    parsed_json = JSON.parse(json)
+
     doc.css("tr").each do |row|
       # Skip of it is a banner or bottom 'not found' part
       if row['class'].include?('banner-listing-list') or row['class'].include?('dontSearch')
@@ -28,7 +33,10 @@ class SearchResultsPage
       rescue
       end
 
-      h['premium'] = row['class'].include? 'premium'
+      begin
+        h['premium'] = row['class'].include? 'premium'
+      rescue
+      end
 
       begin
         h['thumbnail'] = row.css('td.tdImg > a.wrapImg > img')[0]['src']
@@ -54,7 +62,14 @@ class SearchResultsPage
         h['price'] = row.css('td.tdPrise > div.prise')[0].content
       rescue
       end
-
+      
+      begin
+        ad_id = h['url'].match(/\/advert\/(.*)\//)[1]
+        date = parsed_json['items'][ad_id]['date']
+        h['date'] = Date.strptime(date, '%H:%M, %d.%m.%Y')
+      rescue
+      end
+      
       results << h
     end
     results

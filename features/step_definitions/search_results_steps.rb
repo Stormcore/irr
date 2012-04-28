@@ -100,6 +100,16 @@ end
   end
 end
 
+То %{каждое объявление подано не более $max_days дней назад} do |max_days|
+  results_page_soft_assert("Неправильное время подачи:") do |result|
+    ad_date = result['date']
+    (Time.now.to_date - ad_date).to_i.should be <= max_days.to_i
+  end
+end
+
+
+
+
 То %{в каждом объявлении отображается загруженная фотография} do
   results_page_soft_assert("Не отображена загруженная фотография:") do |result|
     thumbnail = result['thumbnail']
