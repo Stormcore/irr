@@ -39,7 +39,6 @@ class SearchResultsPage
         h['url'] = row.css('td.tdTxt > div.h3 > a')[0]['href']
       rescue
       end
-      puts "Got url #{h['url']}"
 
       begin
         h['description'] = row.css('td.tdTxt > p')[0].content
@@ -62,7 +61,6 @@ class SearchResultsPage
   end
 
   def highlight_result_by_url(url)
-    puts "Highlighting ad with '#{url}'"
     ad_link = results_table_element.link_element(:href => url)
     @browser.execute_script("arguments[0].style='background-color: red'", ad_link)
   end
@@ -73,6 +71,10 @@ class SearchResultsPage
 
   def banner_left_position
     self.side_column_element.wd.location.x
+  end
+  
+  def open_ad(url)
+    @browser.goto("#{BASE_URL}/#{url}")
   end
 
   def go_to_page(number)

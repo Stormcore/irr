@@ -101,6 +101,19 @@ end
   end
 end
 
+То %{в деталях каждого объявления "$field" $operator "$values"} do |field, operator, expected|
+  error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
+  results_details_soft_assert(error_text) do |ad_page, result|
+      actual_value = ad_page.get_parameter(field)
+      case operator
+      when "равно"
+        expected.should == actual_value
+      when "равно одному из"
+        expected.split(', ').should include actual_value
+      end
+  end
+end
+
 То %{объявление с заголовком "$header" присутствует на первых $n страницах поиска} do |header, n|
   ad_found = false
 
@@ -137,6 +150,32 @@ def results_page_soft_assert(description)
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
         validation_errors << result['title']
+      end
+    end
+  end
+
+  if !validation_errors.empty?
+    puts description
+    puts validation_errors
+    raise "Error occurred on page #{@browser.url}"
+  end
+end
+
+def results_details_soft_assert(description)
+  validation_errors = Hash.new
+  on SearchResultsPage do |page|
+    @results.each do |result|
+      begin
+        page.open_ad(result['url'])
+        on AdDetailsPage do |ad_page|
+          yield ad_page, result
+        end
+      rescue RSpec::Expectations::ExpectationNotMetError => verification_error
+        page.highlight_result_by_url(result['url'])
+        full_url = "#{BASE_URL}/#{result['url']}"
+        validation_errors[full_url] = verification_error
+      ensure
+        @browser.back
       end
     end
   end
