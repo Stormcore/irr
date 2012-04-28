@@ -9,6 +9,7 @@ class CarsRepaymentSearchPage
   div :type, :xpath => "//div[@data-item-name='type']//div[@class='controlSelect']"
   div :condition, :xpath => "//div[@data-item-name='condition']//div[@class='controlSelect']"
   div :madein, :xpath => "//div[@data-item-name='madein']//div[@class='controlSelect']"
+  checkbox :hasimages, :name => "hasimages"
   
   link :run_search, :id => "show-result-search"
   
@@ -36,6 +37,9 @@ class CarsRepaymentSearchPage
         
     when "Автомобили"
       multiselect(self.madein_element, hash['value'])
+        
+    when "С фото"
+      self.hasimages_element.click
     end
   end
 end
