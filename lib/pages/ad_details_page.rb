@@ -13,15 +13,15 @@ class AdDetailsPage
 
   def get_generic_parameter(field)
     # Open all params if present
-    if self.show_all_params_element.shown?
+    if self.show_all_params_element.visible?
       self.show_all_params
     end
     case field
     when "Заголовок"
-      result = self.title_element.text
+      result = self.title_element.when_present.text
     else
       # Custom field
-      xpath = "//tr[contains(.,'#{field}')]/td"
+      xpath = "//tr[contains(.,'#{field}')]"
       result = self.cell_element(:xpath => xpath, :index => 1).when_present.text
     end
     result
@@ -32,7 +32,7 @@ class AdDetailsPage
     if self.show_all_params_element.shown?
       self.show_all_params
     end
-    xpath = "//tr[contains(.,'#{field}')]/td"
+    xpath = "//tr[contains(.,'#{field}')]"
     self.cell_element(:xpath => xpath).when_present.text
   end
 end

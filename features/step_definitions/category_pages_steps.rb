@@ -19,6 +19,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Мототехника и Автодома -> Другое"
     @category_page = CategoryCarsMiscOtherPage
+    
+  when "Авто и мото -> Легковые автомобили -> Автомобили с пробегом"
+    @category_page = CategoryCarsPassangerUsedPage
   end
 end
 
@@ -81,6 +84,7 @@ def results_details_soft_assert(description)
       begin
         page.open_ad(result['url'])
         on @category_page do |ad_page|
+          ad_page.show_all_params
           yield ad_page, result
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
