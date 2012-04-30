@@ -73,6 +73,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Автозапчасти и принадлежности -> Колеса"
     @category_page = CategoryCarsPartsWheelsPage
+    
+  when "Авто и мото -> Автозапчасти и принадлежности -> Для коммерческих автомобилей"
+    @category_page = CategoryCarsPartsCommercialPage
   end
 end
 

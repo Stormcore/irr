@@ -1,9 +1,7 @@
 # encoding: utf-8
 
-class CategoryCarsPartsWheelsPage < AdDetailsPage
+class CategoryCarsPartsCommercialPage < AdDetailsPage
   include PageObject
-  div :offertype, :xpath => "//div[@data-item-name='offertype']"
-  div :condition_c, :xpath => "//div[@data-item-name='condition_c']"
 
   def set_parameter (hash)
     case hash['parameter']
@@ -14,12 +12,6 @@ class CategoryCarsPartsWheelsPage < AdDetailsPage
 
     when "Валюта"
       singleselect(self.currency_element, hash['value'])
-
-    when "Тип предложения"
-      multiselect(self.offertype_element, hash['value'])
-
-    when "Состояние"
-      multiselect(self.condition_c_element, hash['value'])
 
     when "С фото"
       self.hasimages_element.click
