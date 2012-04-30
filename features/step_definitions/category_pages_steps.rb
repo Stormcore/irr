@@ -3,19 +3,22 @@
 def select_class_for_category(category)
   case category
   when "Авто и мото -> Выкуп автомобилей. Спрос"
-    @category_page = CategoryCarsRepaymentSearchPage 
+    @category_page = CategoryCarsRepaymentSearchPage
 
   when "Авто и мото -> Мототехника и Автодома -> Мотоциклы и мопеды"
     @category_page = CategoryCarsMiscMotoPage
     
   when "Авто и мото -> Мототехника и Автодома -> Автодома и легковые прицепы"
-    @category_page = CategoryCarsMiscTrailersCaravansWagonsPage 
+    @category_page = CategoryCarsMiscTrailersCaravansWagonsPage
     
   when "Авто и мото -> Мототехника и Автодома -> Снегоходы и квадроциклы"
-    @category_page = CategoryCarsMiscSnowPage 
+    @category_page = CategoryCarsMiscSnowPage
     
   when "Авто и мото -> Мототехника и Автодома -> Водный транспорт"
-    @category_page = CategoryCarsMiscWaterPage 
+    @category_page = CategoryCarsMiscWaterPage
+    
+  when "Авто и мото -> Мототехника и Автодома -> Другое"
+    @category_page = CategoryCarsMiscOtherPage
   end
 end
 
