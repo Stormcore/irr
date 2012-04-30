@@ -41,6 +41,6 @@ class AdDetailsPage
   def get_unique_parameter(field)
     self.show_all_parameters
     xpath = "//tr[contains(.,'#{field}')]/td"
-    self.cell_element(:xpath => xpath).when_present.text
+    self.cell_element(:xpath => xpath, :index => 1).when_present.text
   end
 end

@@ -95,7 +95,9 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Объем внешнего багажника"
-      result = get_value_parameter(field)
+      result = get_unique_parameter(field)
+      # Вырезаем литры
+      result.gsub!(/ л/, '')
     else
       result = get_generic_parameter(field) 
     end
