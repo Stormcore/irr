@@ -99,7 +99,7 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
       self.hasvideo_element.click
 
     when "Источник"
-      multiselect(self.source_from_element, hash['value'])  
+      singleselect(self.source_from_element, hash['value'])  
 
     when "Поданные"
       singleselect(self.date_create_element, hash['value'])
@@ -112,13 +112,9 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Год выпуска"
-      result = get_generic_parameter(field)
-      # Вырезаем год
-      result.gsub!(/ г./, '')
+      result = get_value_parameter(field)
     when "Пробег"
-      result = get_generic_parameter(field)
-      # Вырезаем километры
-      result.gsub!(/ км/, '')
+      result = get_value_parameter(field)
     else
       result = get_generic_parameter(field) 
     end

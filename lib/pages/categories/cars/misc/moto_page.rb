@@ -91,9 +91,7 @@ class CategoryCarsMiscMotoPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Год выпуска"
-      result = get_generic_parameter(field)
-      # Вырезаем год
-      result.gsub!(/ г./, '')
+      result = get_value_parameter(field)
     else
       result = get_generic_parameter(field) 
     end
