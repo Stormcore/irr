@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CarsRepaymentSearchPage
+class CarsRepaymentSearchPage < AdDetailsPage
   include PageObject
   
   link :expand_extended_more, :class => "expand_extended_more"
@@ -75,5 +75,9 @@ class CarsRepaymentSearchPage
     else
       raise "Неизвестный параметр: #{hash['parameter']}"
     end
+  end
+
+  def get_parameter(field)
+    get_generic_parameter(field)
   end
 end
