@@ -10,6 +10,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Мототехника и Автодома -> Автодома и легковые прицепы"
     @category_page = TrailersCaravansWagonsPage 
+    
+  when "Авто и мото -> Мототехника и Автодома -> Снегоходы и квадроциклы"
+    @category_page = SnowPage 
    
   end
 end
