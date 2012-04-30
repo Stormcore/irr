@@ -79,6 +79,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Автозапчасти и принадлежности -> Средства для ухода"
     @category_page = CategoryCarsPartsCareProductsPage
+    
+  when "Авто и мото -> Автозапчасти и принадлежности -> Для мотоциклов и мопедов"
+    @category_page = CategoryCarsPartsMotoPage
   end
 end
 
