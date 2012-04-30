@@ -22,6 +22,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Легковые автомобили -> Автомобили с пробегом"
     @category_page = CategoryCarsPassangerUsedPage
+    
+  when "Авто и мото -> Легковые автомобили -> Новые автомобили"
+    @category_page = CategoryCarsPassangerNewPage
   end
 end
 
