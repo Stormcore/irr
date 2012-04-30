@@ -3,43 +3,9 @@
 class CategoryCarsRepaymentSearchPage < AdDetailsPage
   include PageObject
   
-  link :expand_extended_more, :class => "expand_extended_more"
-  
-  text_field :price_from, :name => "price[from]"
-  text_field :price_to, :name => "price[to]"
-  div :currency, :xpath => "//div[@data-item-name='price']"  
-
   div :type, :xpath => "//div[@data-item-name='type']"
   div :condition, :xpath => "//div[@data-item-name='condition']"
   div :madein, :xpath => "//div[@data-item-name='madein']"
-  
-  checkbox :hasimages, :name => "hasimages"
-  checkbox :hasvideo, :name => "isvideo"
-  
-  div :date_create, :xpath => "//div[@data-item-name='date_create']"
-  div :source_from, :xpath => "//div[@data-item-name='sourcefrom']"
-  
-  link :run_search, :id => "show-result-search"
-  
-  def multiselect(element, values)
-    element.div_element(:class => "controlSelect").click
-    values.split(",").each do |value|
-      xpath = "//label[contains(.,'#{value.strip}')]/input"
-      element.parent.checkbox_element(:xpath => xpath).check
-    end
-    element.div_element(:class => "controlSelect").click
-  end
-  
-  def singleselect(element, value)
-    element.div_element(:class => "controlSelectS").click
-    element.parent.div(:text => value.strip).click
-  end
-  
-  def expand_all_parameters
-    if self.expand_extended_more_element.exists?
-      self.expand_extended_more
-    end
-  end
   
   def set_parameter (hash)
     case hash['parameter']

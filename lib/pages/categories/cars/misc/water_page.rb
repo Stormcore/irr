@@ -2,25 +2,9 @@
 
 class CategoryCarsMiscWaterPage < AdDetailsPage
   include PageObject
-
-  link :expand_extended_more, :class => "expand_extended_more"
   
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
-  
-  #TODO: Переместить в общие
-  text_field :price_from, :name => "price[from]"
-  text_field :price_to, :name => "price[to]"
-  div :currency, :xpath => "//div[@data-item-name='price']"
 
-  #TODO: Переместить в общие
-  checkbox :hasimages, :name => "hasimages"
-  checkbox :hasvideo, :name => "isvideo"
-  
-  div :date_create, :xpath => "//div[@data-item-name='date_create']"
-  div :source_from, :xpath => "//div[@data-item-name='sourcefrom']"
-  
-  link :run_search, :id => "show-result-search"
-  
   #TODO: Переместить в общие для селекторов
   def multiselect(element, values)
     element.div_element(:class => "controlSelect").click

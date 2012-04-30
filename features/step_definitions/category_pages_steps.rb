@@ -61,6 +61,7 @@ end
 То %{в деталях каждого объявления "$field" $operator "$values"} do |field, operator, expected|
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
   results_details_soft_assert(error_text) do |ad_page, result|
+      puts "Страница #{@browser.url}"
       actual_value = ad_page.get_parameter(field)
       case operator
       when "равно"

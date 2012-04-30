@@ -3,13 +3,6 @@
 class CategoryCarsPassangerUsedPage < AdDetailsPage
   include PageObject
   
-  link :expand_extended_more, :class => "expand_extended_more"
-  
-  #TODO: Переместить в общие
-  text_field :price_from, :name => "price[from]"
-  text_field :price_to, :name => "price[to]"
-  div :currency, :xpath => "//div[@data-item-name='price']"
-  
   text_field :car_year_from, :name => "car-year[from]"
   text_field :car_year_to, :name => "car-year[to]"
 
@@ -23,38 +16,6 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
   
   text_field :mileage_from, :name => "mileage[from]"
   text_field :mileage_to, :name => "mileage[to]"
-  
-  #TODO: Переместить в общие
-  checkbox :hasimages, :name => "hasimages"
-  checkbox :hasvideo, :name => "isvideo"
-  
-  div :date_create, :xpath => "//div[@data-item-name='date_create']"
-  div :source_from, :xpath => "//div[@data-item-name='sourcefrom']"
-  
-  link :run_search, :id => "show-result-search"
-  
-  #TODO: Переместить в общие для селекторов
-  def multiselect(element, values)
-    element.div_element(:class => "controlSelect").click
-    values.split(",").each do |value|
-      xpath = "//label[contains(.,'#{value.strip}')]/input"
-      element.parent.checkbox_element(:xpath => xpath).check
-    end
-    element.div_element(:class => "controlSelect").click
-  end
-  
-  #TODO: Переместить в общие для селекторов
-  def singleselect(element, value)
-    element.div_element(:class => "controlSelectS").click
-    element.parent.div(:text => value.strip).click
-  end
-  
-  #TODO: Переместить в общие
-  def expand_all_parameters
-    if self.expand_extended_more_element.exists?
-      self.expand_extended_more
-    end
-  end
   
   def set_parameter (hash)
     case hash['parameter']
@@ -114,7 +75,11 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
     when "Год выпуска"
       result = get_value_parameter(field)
     when "Пробег"
-      result = get_value_parameter(field)
+      # Пробег вводиться в тыс. км, отображается в км.
+      # Делим отображаемый результат на 1000 
+      result = get_value_parameter(field).to_i / 1000
+    when "Марка", "Модель", "Тип кузова", "Тип двигателя", "Привод", "Тип трансмиссии"
+      result = get_unique_parameter(field)
     else
       result = get_generic_parameter(field) 
     end
