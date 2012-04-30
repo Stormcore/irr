@@ -43,6 +43,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Кредиты и ссуды"
     @category_page = CategoryCarsServicesLoansPage
+    
+  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Эвакуация и тех. помощь"
+    @category_page = CategoryCarsServicesAssistancePage
   end
 end
 
