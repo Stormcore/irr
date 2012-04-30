@@ -13,6 +13,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Мототехника и Автодома -> Снегоходы и квадроциклы"
     @category_page = SnowPage 
+    
+  when "Авто и мото -> Мототехника и Автодома -> Водный транспорт"
+    @category_page = WaterPage 
    
   end
 end
