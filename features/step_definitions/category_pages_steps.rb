@@ -55,6 +55,9 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Коммерческий транспорт -> Грузовые прицепы"
     @category_page = CategoryCarsCommercialTrailersPage
+    
+  when "Авто и мото -> Коммерческий транспорт -> Автобусы"
+    @category_page = CategoryCarsCommercialBusesPage
   end
 end
 
