@@ -26,26 +26,29 @@ def select_class_for_category(category)
   when "Авто и мото -> Легковые автомобили -> Новые автомобили"
     @category_page = CategoryCarsPassangerNewPage
     
-  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Эскпертиза и оценка"
+  when "Авто и мото -> Автосервис и услуги -> Эскпертиза и оценка"
     @category_page = CategoryCarsServicesEvalutionPage
     
-  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Ремонт и сервис легковых автомобилей"
+  when "Авто и мото -> Автосервис и услуги -> Ремонт и сервис легковых автомобилей"
     @category_page = CategoryCarsServicesPassengerPage
     
-  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Ремонт и сервис коммерческого транспорта"
+  when "Авто и мото -> Автосервис и услуги -> Ремонт и сервис коммерческого транспорта"
     @category_page = CategoryCarsServicesCommercialPage
     
-  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Ремонт и сервис мототехники и других видов транспорта"
+  when "Авто и мото -> Автосервис и услуги -> Ремонт и сервис мототехники и других видов транспорта"
     @category_page = CategoryCarsServicesMotoPage
     
-  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Комиссионное оформление и страхование"
+  when "Авто и мото -> Автосервис и услуги -> Комиссионное оформление и страхование"
     @category_page = CategoryCarsServicesInsurancePage
     
-  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Кредиты и ссуды"
+  when "Авто и мото -> Автосервис и услуги -> Кредиты и ссуды"
     @category_page = CategoryCarsServicesLoansPage
     
-  when "Авто и мото -> Авто и мото -> Автосервис и услуги -> Эвакуация и тех. помощь"
+  when "Авто и мото -> Автосервис и услуги -> Эвакуация и тех. помощь"
     @category_page = CategoryCarsServicesAssistancePage
+    
+  when "Авто и мото -> Коммерческий транспорт -> Малый коммерческий транспорт"
+    @category_page = CategoryCarsCommercialSmallPage
   end
 end
 
