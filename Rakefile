@@ -21,4 +21,8 @@ Cucumber::Rake::Task.new(:wip) do |task|
   task.cucumber_opts = ["-t", "@wip", "features"]
 end
 
+Cucumber::Rake::Task.new(:wip_html) do |task|
+  task.cucumber_opts = ["-t", "@wip", "features", "--format html", "--out cucumber.html",]
+end
+
 task :default => :all_tests

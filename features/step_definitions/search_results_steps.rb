@@ -1,6 +1,9 @@
 # encoding: utf-8
 Когда %{на странице поиска загружен список результатов} do 
-  on SearchResultsPage do |page| @results = page.search_results end
+  on SearchResultsPage do |page| 
+    puts "Обрабатываю результаты страницы #{@browser.url}"
+    @results = page.search_results
+  end
 end
 
 То %{я перехожу на страницу номер $page_number} do |page_number|
@@ -115,7 +118,6 @@ end
 
 То %{в каждом объявлении источник равен "$expected_source"} do |expected_source|
   results_page_soft_assert("Неправильный источник:") do |result|
-    puts "Got link=#{result['source_link']} title=#{result['source_title']}"
     case result['source_link'] 
     when /\/user\//
       actual_source = "Сайт IRR.RU"
@@ -141,25 +143,6 @@ end
     the_request = Net::HTTP::Get.new(url.path)
     the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
     the_response.code.should == 200.to_s
-  end
-end
-
-То %{в деталях каждого объявления отображается видео} do 
-  results_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
-      ad_page.should have_video
-  end
-end
-
-То %{в деталях каждого объявления "$field" $operator "$values"} do |field, operator, expected|
-  error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
-  results_details_soft_assert(error_text) do |ad_page, result|
-      actual_value = ad_page.get_parameter(field)
-      case operator
-      when "равно"
-        expected.should == actual_value
-      when "равно одному из"
-        expected.split(', ').should include actual_value
-      end
   end
 end
 
@@ -198,41 +181,13 @@ def results_page_soft_assert(description)
         yield result
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
-        full_url = "http://#{BASE_URL}#{result['url']}"
+        full_url = "#{BASE_URL}#{result['url']}"
         validation_errors[full_url] = verification_error
       end
     end
   end
 
   if !validation_errors.empty?
-    puts "URL: #{@browser.url}"
-    puts description
-    puts validation_errors
-    raise "Error occurred on page #{@browser.url}"
-  end
-end
-
-def results_details_soft_assert(description)
-  validation_errors = Hash.new
-  on SearchResultsPage do |page|
-    @results.each do |result|
-      begin
-        page.open_ad(result['url'])
-        on AdDetailsPage do |ad_page|
-          yield ad_page, result
-        end
-      rescue RSpec::Expectations::ExpectationNotMetError => verification_error
-        page.highlight_result_by_url(result['url'])
-        full_url = "#{BASE_URL}#{result['url']}"
-        validation_errors[full_url] = verification_error.message
-      ensure
-        @browser.back
-      end
-    end
-  end
-
-  if !validation_errors.empty?
-    puts "URL: #{@browser.url}"
     puts description
     puts validation_errors
     raise "Error occurred on page #{@browser.url}"

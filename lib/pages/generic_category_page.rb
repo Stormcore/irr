@@ -15,6 +15,6 @@ class GenericCategoryPage
     
     # Wait for list to appear
     subcategories_list = self.unordered_list_element(:xpath => "//div[@id='#{expected_popupList_id}']/ul")
-    subcategories_list.when_present.link_element(:link_text => /#{category}/).click
+    subcategories_list.when_present.link_element(:link_text => /#{category}/).when_present.click
   end
 end
