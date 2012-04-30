@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CarsRepaymentSearchPage < AdDetailsPage
+class CategoryCarsRepaymentSearchPage < AdDetailsPage
   include PageObject
   
   link :expand_extended_more, :class => "expand_extended_more"

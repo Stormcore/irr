@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-class TrailersCaravansWagonsPage < AdDetailsPage
+class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   include PageObject
-  
+
   link :expand_extended_more, :class => "expand_extended_more"
-  
+
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
-  
+
   #TODO: Переместить в общие
   text_field :price_from, :name => "price[from]"
   text_field :price_to, :name => "price[to]"

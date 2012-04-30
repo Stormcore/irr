@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-class WaterPage < AdDetailsPage
+class CategoryCarsMiscWaterPage < AdDetailsPage
   include PageObject
-  
+
   link :expand_extended_more, :class => "expand_extended_more"
   
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
