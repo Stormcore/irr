@@ -10,28 +10,8 @@ class CategoryCarsMiscSnowPage < AdDetailsPage
     when "Тип предложения"
       singleselect(self.offertype_element, hash['value'])
 
-    #TODO: Переместить в общие
-    when "Цена"
-      self.price_from = hash['min']
-      self.price_to = hash['max']
-    #TODO: Переместить в общие
-    when "Валюта"
-      singleselect(self.currency_element, hash['value'])
-
-    when "С фото"
-      self.hasimages_element.click
-      
-    when "С видео"
-      self.hasvideo_element.click
-      
-    when "Источник"
-      singleselect(self.source_from_element, hash['value'])  
-      
-    when "Поданные"
-      singleselect(self.date_create_element, hash['value'])
-      
     else
-      raise "Неизвестный параметр: #{hash['parameter']}"
+      super(hash)
     end
   end
   

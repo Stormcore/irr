@@ -5,6 +5,7 @@ class AdDetailsPage
 
   # Настройка параметров
   link :expand_extended_more, :class => "expand_extended_more"
+  text_field :keywords, :name => "keywords"
   text_field :price_from, :name => "price[from]"
   text_field :price_to, :name => "price[to]"
   div :currency, :xpath => "//div[@data-item-name='price']"
@@ -48,6 +49,35 @@ class AdDetailsPage
     # Open all params if present
     if self.show_all_params_element.visible?
       self.show_all_params
+    end
+  end
+
+  def set_parameter(hash)
+    case hash['parameter']
+    when "Цена"
+      self.price_from = hash['min']
+      self.price_to = hash['max']
+
+    when "Ключевое слово"
+      self.keywords = hash['value']
+
+    when "Валюта"
+      singleselect(self.currency_element, hash['value'])
+
+    when "С фото"
+      self.hasimages_element.click
+      
+    when "С видео"
+      self.hasvideo_element.click
+      
+    when "Источник"
+      singleselect(self.source_from_element, hash['value'])  
+      
+    when "Поданные"
+      singleselect(self.date_create_element, hash['value'])
+ 
+    else
+      raise "Неизвестный параметр: #{hash['parameter']}"
     end
   end
 

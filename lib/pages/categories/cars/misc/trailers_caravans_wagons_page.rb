@@ -24,32 +24,12 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
       self.car_year_from = hash['min']
       self.car_year_to = hash['max']
 
-    #TODO: Переместить в общие
-    when "Цена"
-      self.price_from = hash['min']
-      self.price_to = hash['max']
-    #TODO: Переместить в общие
-    when "Валюта"
-      singleselect(self.currency_element, hash['value'])
-
     when "Объем внешнего багажника"
       self.trunk_value_from = hash['min']
       self.trunk_value_to = hash['max']
 
-    when "С фото"
-      self.hasimages_element.click
-      
-    when "С видео"
-      self.hasvideo_element.click
-      
-    when "Источник"
-      singleselect(self.source_from_element, hash['value'])  
-      
-    when "Поданные"
-      singleselect(self.date_create_element, hash['value'])
-      
     else
-      raise "Неизвестный параметр: #{hash['parameter']}"
+      super(hash)
     end
   end
   

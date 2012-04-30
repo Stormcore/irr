@@ -11,13 +11,6 @@ class CategoryCarsMiscMotoPage < AdDetailsPage
 
   def set_parameter (hash)
     case hash['parameter']
-    #TODO: Переместить в общие
-    when "Цена"
-      self.price_from = hash['min']
-      self.price_to = hash['max']
-    #TODO: Переместить в общие
-    when "Валюта"
-      singleselect(self.currency_element, hash['value'])
 
     when "Новый или подержанный"
       multiselect(self.used_or_new_element, hash['value'])
@@ -32,20 +25,8 @@ class CategoryCarsMiscMotoPage < AdDetailsPage
     when "Модель"
       multiselect(self.model_element, hash['value'])
 
-    when "С фото"
-      self.hasimages_element.click
-
-    when "С видео"
-      self.hasvideo_element.click
-
-    when "Источник"
-      multiselect(self.source_from_element, hash['value'])  
-
-    when "Поданные"
-      singleselect(self.date_create_element, hash['value'])
-
     else
-      raise "Неизвестный параметр: #{hash['parameter']}"
+      super(hash)
     end
   end
   
