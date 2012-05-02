@@ -6,9 +6,12 @@ class CategoryCarsCommercialSpecialPage < AdDetailsPage
   div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
   text_field :car_year_from, :name => "car-year[from]"
   text_field :car_year_to, :name => "car-year[to]"
-  div :bustype, :xpath => "//div[@data-item-name='special-type']"
+  div :specialtype, :xpath => "//div[@data-item-name='special-type']"
   div :make, :xpath => "//div[@data-item-name='make']"
   div :model, :xpath => "//div[@data-item-name='model']"
+
+  text_field :mileage_from, :name => "mileage[from]"
+  text_field :mileage_to, :name => "mileage[to]"
 
   def set_parameter (hash)
     case hash['parameter']
@@ -32,6 +35,10 @@ class CategoryCarsCommercialSpecialPage < AdDetailsPage
     when "Пробег"
       self.mileage_from = hash['min']
       self.mileage_to = hash['max']
+
+    when "Источник"
+      # TODO: Множественный селект вместо единичного
+      multiselect(self.source_from_element, hash['value'])
 
     else
       super(hash)
