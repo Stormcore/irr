@@ -36,6 +36,10 @@ class CategoryCarsCommercialTrailersPage < AdDetailsPage
     when "Число осей"
       self.shafts = hash['value']
 
+    when "Источник"
+      # TODO: Множественный селект вместо единичного
+      multiselect(self.source_from_element, hash['value'])
+      
     else
       super(hash)
     end
