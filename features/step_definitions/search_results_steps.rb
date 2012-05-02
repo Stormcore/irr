@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 Когда %{на странице поиска загружен список результатов} do 
   on SearchResultsPage do |page| 
     puts "Обрабатываю результаты страницы #{@browser.url}"
@@ -182,7 +183,7 @@ def results_page_soft_assert(description)
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
         full_url = "#{BASE_URL}#{result['url']}"
-        validation_errors[full_url] = verification_error
+        validation_errors[full_url] = verification_error.message
       end
     end
   end

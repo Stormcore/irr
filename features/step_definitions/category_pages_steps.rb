@@ -117,7 +117,7 @@ end
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
-    page.run_search
+    page.run_search_element.when_present.click
   end
 end
 

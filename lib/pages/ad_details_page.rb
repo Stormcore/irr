@@ -22,12 +22,12 @@ class AdDetailsPage
 
   
   def multiselect(element, values)
-    element.div_element(:class => "controlSelect").click
+    element.div_element(:class => "controlSelect").when_present.click
     values.split(",").each do |value|
       xpath = "//label[text() = '#{value.strip}']/input"
-      element.parent.checkbox_element(:xpath => xpath).check
+      element.parent.checkbox_element(:xpath => xpath).when_present.check
     end
-    element.div_element(:class => "controlSelect").click
+    element.div_element(:class => "controlSelect").when_present.click
   end
   
   def singleselect(element, value)
@@ -71,7 +71,7 @@ class AdDetailsPage
       self.hasvideo_element.click
       
     when "Источник"
-      singleselect(self.source_from_element, hash['value'])  
+      singleselect(self.source_from_element, hash['value'])
       
     when "Поданные"
       singleselect(self.date_create_element, hash['value'])
