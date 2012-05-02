@@ -129,7 +129,7 @@ end
     end
 
     actual_source.should be == expected_source
-    
+
   end
 end
 
@@ -144,6 +144,12 @@ end
     the_request = Net::HTTP::Get.new(url.path)
     the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
     the_response.code.should == 200.to_s
+  end
+end
+
+То %{в каждом объявлении название содержит "$keyword"} do |keyword|
+  results_page_soft_assert("Нет ключевого слова в названии:") do |result|
+    UnicodeUtils.downcase(result['title']).should include UnicodeUtils.downcase(keyword)
   end
 end
 

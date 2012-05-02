@@ -12,7 +12,7 @@ require 'debugger'
 require 'net/http'
 require 'uri'
 require 'date'
-require 'pp'
+require 'unicode_utils/downcase'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'

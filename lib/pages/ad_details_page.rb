@@ -5,7 +5,7 @@ class AdDetailsPage
 
   # Настройка параметров
   link :expand_extended_more, :class => "expand_extended_more"
-  text_field :keywords, :name => "keywords"
+  text_field :keywords, :xpath => "//form[@id='filter']//input[@name='keywords']"
   text_field :price_from, :name => "price[from]"
   text_field :price_to, :name => "price[to]"
   div :currency, :xpath => "//div[@data-item-name='price']"
@@ -58,7 +58,7 @@ class AdDetailsPage
       self.price_from = hash['min']
       self.price_to = hash['max']
 
-    when "Ключевое слово"
+    when "Ключевые слова"
       self.keywords = hash['value']
 
     when "Валюта"

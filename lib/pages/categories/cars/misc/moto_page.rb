@@ -38,6 +38,8 @@ class CategoryCarsMiscMotoPage < AdDetailsPage
     case field
     when "Год выпуска"
       result = get_value_parameter(field)
+    when "Марка", "Модель"
+      result = get_unique_parameter(field)
     else
       result = get_generic_parameter(field) 
     end
