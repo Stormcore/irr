@@ -88,7 +88,7 @@ class AdDetailsPage
       result = self.title_element.when_present.text
     else
       # Custom field
-      xpath = "//tr[contains(.,'#{field}')]/td"
+      xpath = "//tr[contains(/th[text()='#{field}')]]/td"
       result = self.cell_element(:xpath => xpath).when_present.text
     end
     result
