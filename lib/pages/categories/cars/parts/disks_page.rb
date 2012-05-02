@@ -53,13 +53,14 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
   
   def get_parameter (field)
     case field
-    when "Тип предложения", "Состояние", "Тип дисков", "PCD", "Производитель"
+    when "Тип предложения", "Состояние", "Тип дисков", "Производитель"
       result = get_unique_parameter(field)
     when "Диаметр обода", "Ширина обода"
       result = get_unique_parameter(field)
       # Вырезаем дюймы
       result.gsub!(/ "/, '')
     when "ET", "PCD"
+      debugger
       result = get_unique_parameter(field)
       # Вырезаем миллиметры
       result.gsub!(/ мм/, '')
