@@ -25,6 +25,10 @@ class CategoryCarsMiscMotoPage < AdDetailsPage
     when "Модель"
       multiselect(self.model_element, hash['value'])
 
+    when "Источник"
+      # TODO: Множественный селект вместо единичного
+      multiselect(self.source_from_element, hash['value'])
+      
     else
       super(hash)
     end
