@@ -44,6 +44,20 @@ class CategoryCarsPartsTiresPage < AdDetailsPage
   end
   
   def get_parameter (field)
-    result = get_generic_parameter(field) 
+    case field
+    when "Тип предложения", "Состояние", "Тип автомобиля", "Сезонность", "Производитель"
+      result = get_unique_parameter(field)
+    when "Диаметр обода", "Диаметр"
+      result = get_unique_parameter(field)
+      # Вырезаем дюймы
+      result.gsub!(/ "/, '')
+    when "Высота профиля"
+      result = get_unique_parameter(field)
+      # Вырезаем проценты
+      result.gsub!(/ %/, '')
+    else
+      result = get_generic_parameter(field)
+    end 
+    result
   end
 end
