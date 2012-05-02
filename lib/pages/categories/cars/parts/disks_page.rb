@@ -42,12 +42,21 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
     when "ET"
       multiselect(self.et_element, hash['value'])
 
+    when "Источник"
+      # TODO: Множественный селект вместо единичного
+      multiselect(self.source_from_element, hash['value'])
+
     else
       super(hash)
     end
   end
   
   def get_parameter (field)
-    result = get_generic_parameter(field) 
+        case field
+    when "Тип предложения", "Состояние", "Тип дисков", "Производитель", "Диаметр обода", "Ширина обода", "PCD"
+      get_unique_parameter(field)
+    else
+      get_generic_parameter(field)
+    end 
   end
 end
