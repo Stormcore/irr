@@ -147,9 +147,15 @@ end
   end
 end
 
-То %{в каждом объявлении название содержит "$keyword"} do |keyword|
+То %{в каждом объявлении содержится ключевое слово "$keyword"} do |keyword|
   results_page_soft_assert("Нет ключевого слова в названии:") do |result|
-    UnicodeUtils.downcase(result['title']).should include UnicodeUtils.downcase(keyword)
+    # Заголовок
+    begin
+      UnicodeUtils.downcase(result['title']).should include UnicodeUtils.downcase(keyword)
+    rescue
+      # Содержимое
+      UnicodeUtils.downcase(result['description']).should include UnicodeUtils.downcase(keyword)
+    end
   end
 end
 
