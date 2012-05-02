@@ -39,6 +39,8 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
       result = get_unique_parameter(field)
       # Вырезаем литры
       result.gsub!(/ л/, '')
+    when "Тип предложения"
+      result = get_unique_parameter(field)
     else
       result = get_generic_parameter(field) 
     end
