@@ -20,6 +20,11 @@ class CategoryCarsPartsWheelsPage < AdDetailsPage
   end
   
   def get_parameter (field)
-      result = get_generic_parameter(field) 
+    case field
+    when "Тип предложения", "Состояние"
+      get_unique_parameter(field)
+    else
+      get_generic_parameter(field)
+    end 
   end
 end

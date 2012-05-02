@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryCarsPartsDisksPage < AdDetailsPage
+class CategoryCarsPartsTiresPage < AdDetailsPage
   include PageObject
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
   div :condition_c, :xpath => "//div[@data-item-name='condition_c']"
