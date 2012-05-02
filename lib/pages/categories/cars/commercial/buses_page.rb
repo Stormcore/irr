@@ -36,7 +36,7 @@ class CategoryCarsCommercialBusesPage < AdDetailsPage
 
     when "Число мест"
       self.seats = hash['value']
-      
+
     when "Источник"
       # TODO: Множественный селект вместо единичного
       multiselect(self.source_from_element, hash['value'])

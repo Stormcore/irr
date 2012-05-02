@@ -40,6 +40,10 @@ class CategoryCarsCommercialSmallPage < AdDetailsPage
       self.mileage_from = hash['min']
       self.mileage_to = hash['max']
 
+    when "Источник"
+      # TODO: Множественный селект вместо единичного
+      multiselect(self.source_from_element, hash['value'])
+
     else
       super(hash)
     end
