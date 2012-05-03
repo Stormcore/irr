@@ -148,7 +148,7 @@ end
 end
 
 То %{в заголовке каждого объявления содержится "$keywords"} do |keywords|
-  steps %Q{в заголовке каждого объявления содержится одно из "#{keywords}"}
+  steps %Q{Then в заголовке каждого объявления содержится одно из "#{keywords}"}
 end
 
 То %{в заголовке каждого объявления содержится одно из "$keywords"} do |keywords|
@@ -167,7 +167,7 @@ end
 end
 
 То %{в каждом объявлении содержится "$keywords"} do |keywords|
-  steps %Q{в каждом объявлении содержится одно из "#{keywords}"}
+  steps %Q{Then в каждом объявлении содержится одно из "#{keywords}"}
 end
 
 То %{в каждом объявлении содержится одно из "$keyword"} do |keywords|
@@ -177,20 +177,20 @@ end
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
       if UnicodeUtils.downcase(result['title']).include? downcased_keyword
-        puts "URL #{result['url']}: найдено ключевое слово #{keyword} в заголовке"
+        puts "URL #{BASE_URL+result['url']}: найдено ключевое слово #{keyword} в заголовке"
         keyword_found = true
         break
       else
         # Текст объявления на странице
         if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-          puts "URL #{result['url']}: найдено ключевое слово #{keyword} в тексте на странице поиска"
+          puts "URL #{BASE_URL+result['url']}: найдено ключевое слово #{keyword} в тексте на странице поиска"
           keyword_found = true
           break
         else
           full_url = BASE_URL+result['url']
           @browser.goto(full_url)
           if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-            puts "URL #{result['url']}: найдено ключевое слово #{keyword} в полном тексте объявления"
+            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово #{keyword} в полном тексте объявления"
             keyword_found = true
           end
           @browser.back
@@ -198,6 +198,8 @@ end
         end
       end
     end
+    message = "Ключевое слово не найдено в объявлениях'"
+    raise RSpec::Expectations::ExpectationNotMetError, message unless keyword_found
   end
 end
 
