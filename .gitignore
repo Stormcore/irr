@@ -27,3 +27,6 @@ SCCS
 _$*
 screenshots
 cucumber.html
+/junit
+/cucumber_failing.html
+/cuucmber.json
