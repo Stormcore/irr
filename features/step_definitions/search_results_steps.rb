@@ -147,6 +147,10 @@ end
   end
 end
 
+То %{в заголовке каждого объявления содержится "$keywords"} do |keywords|
+  steps %Q{в заголовке каждого объявления содержится одно из "#{keywords}"}
+end
+
 То %{в заголовке каждого объявления содержится одно из "$keywords"} do |keywords|
   results_page_soft_assert("Нет ключевых слов в названии:") do |result|
     keyword_found = false
