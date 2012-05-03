@@ -16,7 +16,7 @@ class AdDetailsPage
   link :run_search, :id => "show-result-search"
   
   # Показ параметров 
-  link :show_all_params, :id => "showAllParamsLink"  
+  link :show_all_params, :id => "showAllParamsLink"
   div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
   div :video, :class => "b-video"
 

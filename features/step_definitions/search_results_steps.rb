@@ -162,14 +162,33 @@ end
   end
 end
 
-То %{в каждом объявлении содержится ключевое слово "$keyword"} do |keyword|
+То %{в каждом объявлении содержится одно из "$keyword"} do |keywords|
   results_page_soft_assert("Нет ключевого слова в объявлении") do |result|
-    # Заголовок
-    begin
-      UnicodeUtils.downcase(result['title']).should include UnicodeUtils.downcase(keyword)
-    rescue
-      # Содержимое
-      UnicodeUtils.downcase(result['description']).should include UnicodeUtils.downcase(keyword)
+    keyword_found = false
+    keywords.split(", ").each do |keyword|
+      downcased_keyword = UnicodeUtils.downcase(keyword)
+      # Заголовок
+      if UnicodeUtils.downcase(result['title']).include? downcased_keyword
+        puts "URL #{result['url']}: найдено ключевое слово #{keyword} в заголовке"
+        keyword_found = true
+        break
+      else
+        # Текст объявления на странице
+        if UnicodeUtils.downcase(result['description']).include? downcased_keyword
+          puts "URL #{result['url']}: найдено ключевое слово #{keyword} в тексте на странице поиска"
+          keyword_found = true
+          break
+        else
+          full_url = BASE_URL+result['url']
+          @browser.goto(full_url)
+          if UnicodeUtils.downcase(result['description']).include? downcased_keyword
+            puts "URL #{result['url']}: найдено ключевое слово #{keyword} в полном тексте объявления"
+            keyword_found = true
+          end
+          @browser.back
+          break if keyword_found
+        end
+      end
     end
   end
 end
