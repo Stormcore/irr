@@ -60,7 +60,6 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
       # Вырезаем дюймы
       result.gsub!(/ "/, '')
     when "ET", "PCD"
-      debugger
       result = get_unique_parameter(field)
       # Вырезаем миллиметры
       result.gsub!(/ мм/, '')
