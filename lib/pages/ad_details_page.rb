@@ -24,7 +24,7 @@ class AdDetailsPage
   def multiselect(element, values)
     element.div_element(:class => "controlSelect").when_present.click
     values.split(",").each do |value|
-      element.label_element(:text => '4').when_present.checkbox_element.check
+      element.label_element(:text => value).when_present.checkbox_element.check
     end
     element.div_element(:class => "controlSelect").when_present.click
   end
