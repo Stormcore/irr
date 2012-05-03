@@ -17,6 +17,7 @@ class MainPage
   
   link :add_advert, :link_text => "Подать объявление"
   
+  checkbox :only_title, :name => "only_title"
   link :find, :xpath => "//div[@class='button-style']/a"
   text_field :keywords, :id => "id_keywords"
   

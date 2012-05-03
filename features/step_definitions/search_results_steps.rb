@@ -147,8 +147,23 @@ end
   end
 end
 
+То %{в заголовке каждого объявления содержится одно из "$keywords"} do |keywords|
+  results_page_soft_assert("Нет ключевых слов в названии:") do |result|
+    keyword_found = false
+    keywords.split(", ").each do |keyword|
+      if UnicodeUtils.downcase(result['title']).include? UnicodeUtils.downcase(keyword)
+        puts "URL #{result['url']}: найдено ключевое слово #{keyword}"
+        keyword_found = true
+        break
+      end
+    end
+    message = "Ключевое слово не найдено в заголовке '#{result['title']}'"
+    raise RSpec::Expectations::ExpectationNotMetError, message unless keyword_found
+  end
+end
+
 То %{в каждом объявлении содержится ключевое слово "$keyword"} do |keyword|
-  results_page_soft_assert("Нет ключевого слова в названии:") do |result|
+  results_page_soft_assert("Нет ключевого слова в объявлении") do |result|
     # Заголовок
     begin
       UnicodeUtils.downcase(result['title']).should include UnicodeUtils.downcase(keyword)

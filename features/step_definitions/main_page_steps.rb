@@ -3,6 +3,10 @@
   on MainPage do |page| page.selected_region_element.text.should == region end
 end
 
+Если %{я указываю искать только в заголовках объявления} do
+  on MainPage do |page| page.only_title_element.when_present.check end
+end
+
 Если %{я ищу "$keywords"} do |keywords|
   @keywords = keywords
   on MainPage do |page|
