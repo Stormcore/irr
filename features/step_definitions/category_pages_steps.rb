@@ -154,7 +154,7 @@ def results_details_soft_assert(description)
       begin
         page.open_ad(result['url'])
         on @category_page do |ad_page|
-          ad_page.show_all_params
+          ad_page.show_all_params_element.when_present.click
           yield ad_page, result
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
