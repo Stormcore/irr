@@ -29,8 +29,12 @@ Cucumber::Rake::Task.new(:wip) do |task|
   task.cucumber_opts = ["-t", "@wip", "features"]
 end
 
-Cucumber::Rake::Task.new(:wip_html) do |task|
-  task.cucumber_opts = ["-t", "@wip", "features", "--format html", "--out cucumber.html",]
+Cucumber::Rake::Task.new(:wip_headless) do |task|
+    task.cucumber_opts = ["HEADLESS=true",
+                        "-t @wip",
+                        "--format junit --out junit",
+                        "--format html --out cucumber.html",
+                         "features"]
 end
 
 Cucumber::Rake::Task.new(:stable) do |task|
