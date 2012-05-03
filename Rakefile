@@ -22,6 +22,7 @@ Cucumber::Rake::Task.new(:compile_headless) do |task|
                         "-t @compile",
                         "--format junit --out junit",
                         "--format html --out cucumber.html",
+                        "--format pretty",
                          "features"]
 end
 
@@ -32,8 +33,9 @@ end
 Cucumber::Rake::Task.new(:wip_headless) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "-t @wip",
-                        "--format junit --out junit",
-                        "--format html --out cucumber.html",
+                        "--format junit  --out junit",
+                        "--format html   --out cucumber.html",
+                        "--format pretty",
                          "features"]
 end
 
