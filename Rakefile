@@ -5,8 +5,13 @@ Cucumber::Rake::Task.new(:all_tests) do |task|
   task.cucumber_opts = ["--format pretty", "features"]
 end
 
-Cucumber::Rake::Task.new(:html) do |task|
-  task.cucumber_opts = ["--format html", "--out cucumber.html", "features"]
+Cucumber::Rake::Task.new(:html_headless) do |task|
+  task.cucumber_opts = ["HEADLESS=true",
+                      "--format json  --out cucumber.json",
+                      "--format junit --out junit",
+                      "--format html  --out cucumber.html",
+                      "--format pretty",
+                      "features"]
 end
 
 Cucumber::Rake::Task.new(:run) do |task|
