@@ -166,6 +166,10 @@ end
   end
 end
 
+То %{в каждом объявлении содержится "$keywords"} do |keywords|
+  steps %Q{в каждом объявлении содержится одно из "#{keywords}"}
+end
+
 То %{в каждом объявлении содержится одно из "$keyword"} do |keywords|
   results_page_soft_assert("Нет ключевого слова в объявлении") do |result|
     keyword_found = false
