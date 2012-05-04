@@ -36,9 +36,24 @@ if DRIVER ==:firefox
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.native_events = false
   profile['toolkit.telemetry.prompted'] = true
+  profile.add_extension "features/support/JSErrorCollector.xpi"
 end
 
 browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
+
+#Function that returns a string that presents the details of the occurred JS errors
+def get_js_error_feedback()
+  jserror_descriptions = ""
+  begin
+    jserrors = @browser.execute_script("return window.JSErrorCollector_errors.pump()")
+    jserrors.each do |jserror|
+      jserror_descriptions << "JS error detected: #{jserror["errorMessage"]} (#{jserror["sourceName"]}:#{jserror["lineNumber"]})"
+    end
+  rescue Exception => e
+    #puts "Checking for JS errors failed with: #{e}"
+  end
+  jserror_descriptions
+end
 
 Before do |scenario|
   browser.cookies.clear
@@ -47,6 +62,10 @@ end
 
 AfterConfiguration do |config|
   puts "Tests have been configured, starting up.."
+end
+
+AfterStep do |scenario|
+  raise get_js_error_feedback() unless get_js_error_feedback().empty?
 end
 
 After do |scenario|
