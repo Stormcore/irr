@@ -14,8 +14,8 @@ Cucumber::Rake::Task.new(:html_headless) do |task|
                       "features"]
 end
 
-Cucumber::Rake::Task.new(:run) do |task|
-  task.cucumber_opts = ["-t", "@#{ENV["TAG"] || "all" }", "features"]
+Cucumber::Rake::Task.new(:run, :tag) do |task, args|
+  task.cucumber_opts = ["-t", "@#{args['tag'] || all}", "features"]
 end
 
 Cucumber::Rake::Task.new(:compile) do |task|
@@ -46,8 +46,15 @@ Cucumber::Rake::Task.new(:wip_headless) do |task|
                         "features"]
 end
 
-Cucumber::Rake::Task.new(:stable) do |task|
-  task.cucumber_opts = ["-t", "~@wip", "features", "--format html", "--out cucumber.html",]
+Cucumber::Rake::Task.new(:feature_headless, :feature) do |task, args|
+    task.cucumber_opts = ["HEADLESS=true",
+                        "-r features/",
+                        "#{args['feature']}",
+                        "--format json  --out cucumber.json",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format pretty",
+                        "features"]
 end
 
 task :default => :all_tests
