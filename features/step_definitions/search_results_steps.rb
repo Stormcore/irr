@@ -200,7 +200,7 @@ end
           downcased_keyword = UnicodeUtils.downcase(keyword)
           # Полный текст объявления
           if UnicodeUtils.downcase(page.advert_text_element.text).include? downcased_keyword
-            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в полном объявления"
+            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в полном тексте объявления"
             keyword_found = true
             break
           end
