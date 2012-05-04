@@ -36,6 +36,7 @@ if DRIVER ==:firefox
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.native_events = false
   profile['toolkit.telemetry.prompted'] = true
+  profile['plugin.click_to_play'] = true
   profile.add_extension "features/support/JSErrorCollector.xpi"
 end
 
@@ -77,7 +78,7 @@ After do |scenario|
   end
 
   #Keep browser open for pending steps
-  KEEP_OPEN = true if scenario.status == :pending or scenario.status == :undefined
+  KEEP_OPEN = true if defined?(scenario.status) or scenario.status == :pending or scenario.status == :undefined
 end
 
 at_exit do
