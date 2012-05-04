@@ -70,7 +70,7 @@ end
 
 After do |scenario|
   Dir::mkdir('screenshots') if not File.directory?('screenshots')
-  screenshot = "./screenshots/FAILED_#{scenario.file_colon_line}.png"
+  screenshot = "./screenshots/FAILED_#{scenario.file_colon_line.gsub!('/','_')}.png"
   if scenario.failed?
     @browser.driver.save_screenshot(screenshot)
     embed screenshot, 'image/png'
