@@ -20,7 +20,11 @@ class AdDetailsPage
   div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
   div :video, :class => "b-video"
 
-  
+  # Весь текст объявления
+  div :advert_text, :class => "txtAdvert"
+  table :all_params, :id => "allParams"
+  # Все параметры
+
   def multiselect(element, values)
     element.div_element(:class => "controlSelect").when_present.click
     values.split(",").each do |value|

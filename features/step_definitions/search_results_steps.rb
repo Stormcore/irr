@@ -173,6 +173,7 @@ end
 То %{в каждом объявлении содержится одно из "$keyword"} do |keywords|
   results_page_soft_assert("Нет ключевого слова в объявлении") do |result|
     keyword_found = false
+    # Проверяем результаты поиск
     keywords.split(", ").each do |keyword|
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
@@ -180,24 +181,41 @@ end
         puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в заголовке"
         keyword_found = true
         break
-      else
-        # Текст объявления на странице
-        if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-          puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в тексте на странице поиска"
-          keyword_found = true
-          break
-        else
-          full_url = BASE_URL+result['url']
-          @browser.goto(full_url)
-          if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в полном тексте объявления"
-            keyword_found = true
-          end
-          @browser.back
-          break if keyword_found
-        end
+      end
+      
+      # Текст объявления на странице
+      if UnicodeUtils.downcase(result['description']).include? downcased_keyword
+        puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в тексте на странице поиска"
+        keyword_found = true
+        break
       end
     end
+
+    # Если не нашли объявление нигде раньше, то ищем в деталях объявления
+    unless keyword_found
+      full_url = BASE_URL+result['url']
+      @browser.goto(full_url)
+      on AdDetailsPage do |page|
+        keywords.split(", ").each do |keyword|
+          downcased_keyword = UnicodeUtils.downcase(keyword)
+          # Полный текст объявления
+          if UnicodeUtils.downcase(page.advert_text_element.text).include? downcased_keyword
+            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в полном объявления"
+            keyword_found = true
+            break
+          end
+
+          # Текст параметров
+          if UnicodeUtils.downcase(page.all_params_element.html).include? downcased_keyword
+            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в параметрах объявления"
+            keyword_found = true
+            break
+          end
+        end
+      end
+      @browser.back
+    end
+
     message = "Ключевое слово не найдено"
     raise RSpec::Expectations::ExpectationNotMetError, message unless keyword_found
   end
