@@ -38,6 +38,7 @@ if DRIVER ==:firefox
   profile['toolkit.telemetry.prompted'] = true
   profile['plugin.click_to_play'] = true
   profile.add_extension "features/support/JSErrorCollector.xpi"
+  profile.add_extension "features/support/flashblock.xpi"
 end
 
 browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
