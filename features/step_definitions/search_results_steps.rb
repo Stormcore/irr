@@ -177,20 +177,20 @@ end
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
       if UnicodeUtils.downcase(result['title']).include? downcased_keyword
-        puts "URL #{BASE_URL+result['url']}: найдено ключевое слово #{keyword} в заголовке"
+        puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в заголовке"
         keyword_found = true
         break
       else
         # Текст объявления на странице
         if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-          puts "URL #{BASE_URL+result['url']}: найдено ключевое слово #{keyword} в тексте на странице поиска"
+          puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в тексте на странице поиска"
           keyword_found = true
           break
         else
           full_url = BASE_URL+result['url']
           @browser.goto(full_url)
           if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово #{keyword} в полном тексте объявления"
+            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в полном тексте объявления"
             keyword_found = true
           end
           @browser.back
@@ -198,7 +198,7 @@ end
         end
       end
     end
-    message = "Ключевое слово не найдено в объявлениях'"
+    message = "Ключевое слово не найдено"
     raise RSpec::Expectations::ExpectationNotMetError, message unless keyword_found
   end
 end
@@ -247,6 +247,6 @@ def results_page_soft_assert(description)
   if !validation_errors.empty?
     puts description
     puts validation_errors
-    raise "Error #{@browser.url}, see output below"
+    raise "Ошибка на странице #{@browser.url}:\n #{description}:\n#{validation_errors}"
   end
 end
