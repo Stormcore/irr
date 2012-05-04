@@ -34,13 +34,12 @@ end
 
 Cucumber::Rake::Task.new(:feature) do |task|
     task.cucumber_opts = ["HEADLESS=true",
-                        "-r features/",
                         "#{ENV['FEATURE']}",
+                        "-r features",
                         "--format json  --out cucumber.json",
                         "--format junit --out junit",
                         #"--format html  --out cucumber.html",
-                        "--format pretty",
-                        "features"]
+                        "--format pretty"]
 end
 
 Cucumber::Rake::Task.new(:all) do |task|
