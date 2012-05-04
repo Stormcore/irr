@@ -21,6 +21,16 @@ Cucumber::Rake::Task.new(:wip) do |task|
                         "features"]
 end
 
+Cucumber::Rake::Task.new(:failing) do |task|
+    task.cucumber_opts = ["HEADLESS=true",
+                        "-t @failing",
+                        "--format json  --out cucumber.json",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format pretty",
+                        "features"]
+end
+
 Cucumber::Rake::Task.new(:tag) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "-t @#{ENV['TAG'] || "all"}",
@@ -30,7 +40,6 @@ Cucumber::Rake::Task.new(:tag) do |task|
                         "--format pretty",
                         "features"]
 end
-
 
 Cucumber::Rake::Task.new(:feature) do |task|
     task.cucumber_opts = ["HEADLESS=true",
