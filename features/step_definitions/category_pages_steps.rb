@@ -27,7 +27,7 @@ def select_class_for_category(category)
     @category_page = CategoryCarsPassangerNewPage
     
   when "Авто и мото -> Автосервис и услуги -> Эскпертиза и оценка"
-    @category_page = CategoryCarsServicesEvalutionPage
+    @category_page = CategoryCarsServicesEvaluationPage
     
   when "Авто и мото -> Автосервис и услуги -> Ремонт и сервис легковых автомобилей"
     @category_page = CategoryCarsServicesPassengerPage

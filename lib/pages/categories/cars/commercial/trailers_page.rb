@@ -53,7 +53,7 @@ class CategoryCarsCommercialTrailersPage < AdDetailsPage
       # Пробег вводиться в тыс. км, отображается в км.
       # Делим отображаемый результат на 1000 
       result = get_value_parameter(field).to_i / 1000
-    when "Марка", "Модель", "Тип кузова", "Тип трансмиссии", "Число осей"
+    when "Марка", "Модель", "Тип кузова", "Тип прицепа", "Тип трансмиссии", "Число осей"
       result = get_unique_parameter(field)
     else
       result = get_generic_parameter(field) 
