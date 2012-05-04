@@ -38,7 +38,7 @@ Cucumber::Rake::Task.new(:feature) do |task|
                         "-r features",
                         "--format json  --out cucumber.json",
                         "--format junit --out junit",
-                        #"--format html  --out cucumber.html",
+                        "--format html  --out cucumber.html",
                         "--format pretty"]
 end
 
