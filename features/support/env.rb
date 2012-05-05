@@ -31,7 +31,8 @@ puts "Starting webdriver.."
 client = Selenium::WebDriver::Remote::Http::Default.new
 client.timeout = 180
 
-if DRIVER == :firefox
+case DRIVER
+when :firefox
   puts "Setting up firefox profile..."
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.native_events = false
@@ -39,9 +40,23 @@ if DRIVER == :firefox
   profile['plugin.click_to_play'] = true
   profile.add_extension "features/support/JSErrorCollector.xpi"
   profile.add_extension "features/support/flashblock.xpi"
-end
+  browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
+  
+when :chrome
+  puts "Setting up chrome profile"
+  profile = Selenium::WebDriver::Chrome::Profile.new
+  switches  = %w[--bwsi]
+  browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
 
-browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
+  # WORKAROUND: Disable flash
+  browser.goto "chrome://plugins"
+  browser.span(:text => "Flash").parent.parent.parent.a(:class => "disable-group-link").click
+  browser.goto "about:blank"
+
+else
+  puts "Setting up htmlunit"
+  browser = Watir::Browser.start "about:blank"
+end
 
 #Function that returns a string that presents the details of the occurred JS errors
 def get_js_error_feedback()
