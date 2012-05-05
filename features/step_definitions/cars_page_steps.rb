@@ -2,20 +2,26 @@
 
 Когда %{на странице отображен блок "Автосалоны и дилеры"} do
   on CategoryCarsPage do |page|
-    page.dealers_section_element.should be_visible
+    lambda {page.dealers_section_element.when_present}.should_not
+     raise Watir::Wait::TimeoutError,
+     "Блок 'Автосалоны и дилеры' не отображен"
   end
 end
 
 Когда %{у каждого дилера отображена эмблема} do
   dealer_info_soft_assert do |dealer|
-    check_http_code(dealer.get_thumbnail_url,
-      "Ошибка при проверке эмблемы")
+    response = fetch(dealer.get_thumbnail_url)
+    check_http_code(response,
+      "Ошибка при получении эмблемы")
+    check_size(response,
+      "Ошибка при проверке размера эмблемы")
   end
 end
 
 Когда %{у каждого дилера отображена активная ссылка} do
   dealer_info_soft_assert do |dealer|
-    check_http_code(dealer.get_dealer_url,
+    response = fetch(dealer.get_dealer_url)
+    check_http_code(response,
       "Ошибка при проверке ссылки на дилера")
   end
 end
@@ -40,12 +46,25 @@ end
   end
 end
 
-def check_http_code(url, description)
+def fetch(url)
   uri = URI.parse(url)
   req = Net::HTTP::Get.new(uri.path)
   response = Net::HTTP.start(uri.host, uri.port) do |http|
     http.request(req)
   end
+  response
+end
+
+def check_size(response, description)
+  actual_size = response.content_length
+  expected.size = 100
+  (actual_size > expected_size).should be_true,
+    description + ", " +
+    "ожидается размер #{expected_size}, " +
+    "получен #{actual_size}"
+end
+
+def check_http_code(response, description)
   actual_result_code = response.code
   expected_result_codes = %w[200 302]
   expected_result_codes.should include(actual_result_code),

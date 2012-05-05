@@ -2,6 +2,8 @@
 
 class GenericCategoryPage
   include PageObject
+
+  element :left_banner, :embed
   
   link :subcategory_select, :link_text => "Выбор подрубрики"
   

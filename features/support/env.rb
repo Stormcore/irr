@@ -3,6 +3,7 @@ BASE_URL = ENV['BASE_URL'] || "http://irr.ru"
 KEEP_OPEN = ENV['KEEP_OPEN'] || false
 HEADLESS = ENV['HEADLESS'] || false
 DRIVER = (ENV['WEB_DRIVER'] || :firefox).to_sym
+ENABLE_FLASH = ENV['FLASH'] || false
 
 
 require 'watir-webdriver'
@@ -40,7 +41,7 @@ when :firefox
   profile['toolkit.telemetry.prompted'] = true
   profile['plugin.click_to_play'] = true
   profile.add_extension "features/support/JSErrorCollector.xpi"
-  profile.add_extension "features/support/flashblock.xpi"
+  profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
   browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
   
 when :chrome
@@ -49,10 +50,12 @@ when :chrome
   switches  = %w[--bwsi]
   browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
 
-  # WORKAROUND: Disable flash
-  browser.goto "chrome://plugins"
-  browser.span(:text => "Flash").parent.parent.parent.a(:class => "disable-group-link").click
-  browser.goto "about:blank"
+  unless ENABLE_FLASH
+    # WORKAROUND: Disable flash
+    browser.goto "chrome://plugins"
+    browser.span(:text => "Flash").parent.parent.parent.a(:class => "disable-group-link").click
+    browser.goto "about:blank"
+  end
 
 else
   puts "Setting up htmlunit"

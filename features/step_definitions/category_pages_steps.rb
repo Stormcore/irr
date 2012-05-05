@@ -164,6 +164,17 @@ end
   end
 end
 
+То %{на странице категории отображен баннер справа} do
+  on GenericCategoryPage do |page|
+    (1..3).each do |attempt|
+      puts "Attempt #{attempt}"
+      break if page.left_banner_element.element.visible?
+      @browser.refresh
+    end
+    page.left_banner_element.should be_visible, "Баннер справа отсуствует"
+  end
+end
+
 def results_details_soft_assert(description)
   validation_errors = Hash.new
   on SearchResultsPage do |page|

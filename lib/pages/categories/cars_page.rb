@@ -5,12 +5,12 @@ class CategoryCarsPage < AdDetailsPage
 
   @@url_suffix = "/cars/"
 
-  # Page layout
+  # Дилеры
   div :dealers_section, :class => "b-dillers"
   unordered_list :dealers, :xpath => "//div[@class='b-blockInf b-dillers']/div[@class='b-body']/ul"
   link :all_dealers, :xpath => "//div[@class='b-blockInf b-dillers']/div[@class='b-body']/div[@class='b-bottom']/a"
 
-  # Search parameters
+  # Параметры поиска
   text_field :car_year_from, :name => "car-year[from]"
   text_field :car_year_to, :name => "car-year[to]"
 
