@@ -31,7 +31,7 @@ puts "Starting webdriver.."
 client = Selenium::WebDriver::Remote::Http::Default.new
 client.timeout = 180
 
-if DRIVER ==:firefox
+if DRIVER == :firefox
   puts "Setting up firefox profile..."
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.native_events = false
@@ -79,7 +79,9 @@ After do |scenario|
   end
 
   #Keep browser open for pending steps
-  KEEP_OPEN = true if defined?(scenario.status) or scenario.status == :pending or scenario.status == :undefined
+  if defined?(scenario.status)
+    KEEP_OPEN = true if scenario.status == :pending or scenario.status == :undefined
+  end
 end
 
 at_exit do
