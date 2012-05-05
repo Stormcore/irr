@@ -97,7 +97,7 @@ def select_class_for_category(category)
   end
 end
 
-Когда %{на главной странице я перехожу в категорию "$long_category"} do |long_category|
+Когда %{на главной странице я перехожу в категорию "$long_category" через меню} do |long_category|
   # Open category via menu
   long_category.split(' -> ').each_with_index do |category, index|
     if index == 0
@@ -112,6 +112,18 @@ end
   end
   
   select_class_for_category(long_category)
+end
+
+Когда %{на главной странице я перехожу в категорию "$long_category"} do |long_category|
+  # Пытаемся перейти в категорию по прямой ссылке, если она указана
+  select_class_for_category(long_category)
+  ad_class = Kernel.const_get(@category_page.to_s)
+  if ad_class.class_variables.include? :@@url_suffix
+    full_url = @url_prefix+ad_class.class_variable_get("@@url_suffix")
+    @browser.goto full_url
+  else
+    steps %Q{на главной странице я перехожу в категорию "#{long_category}" через меню}
+  end
 end
 
 Когда %{я делаю поиск по следующим параметрам:} do |page_params|

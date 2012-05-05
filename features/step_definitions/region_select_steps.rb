@@ -19,10 +19,16 @@ end
   on RegionSelectPage do |page| page.selected_region.should == region end
 end
 
-Допустим %{открыта страница для города "$region"} do |region|
-  if region == "Москва"
-    @browser.goto BASE_URL+'/moskva-gorod/'
+Допустим /^открыта страница для (города|региона) "(.*)"$/ do |other, region|
+  case region
+  when "Москва"
+    @url_prefix = BASE_URL+'/moskva-gorod/'
+    @browser.goto(@url_prefix)
+  when "Россия"
+    @url_prefix = BASE_URL.gsub("http://", "http://russia.")
+    @browser.goto(@url_prefix)
   else
+    @url_prefix = BASE_URL
     steps %Q{
       Given открыта главная страница
         And я выбираю страну "Популярные города"
