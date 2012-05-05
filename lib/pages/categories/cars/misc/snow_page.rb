@@ -2,6 +2,9 @@
 
 class CategoryCarsMiscSnowPage < AdDetailsPage
   include PageObject
+
+  @@url_suffix = "/cars/misc/snow"
+
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
 
   def set_parameter (hash)

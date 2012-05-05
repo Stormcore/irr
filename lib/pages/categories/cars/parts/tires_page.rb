@@ -2,6 +2,9 @@
 
 class CategoryCarsPartsTiresPage < AdDetailsPage
   include PageObject
+
+  @@url_suffix = "/cars/parts/tires"
+
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
   div :condition_c, :xpath => "//div[@data-item-name='condition_c']"
   div :cartype, :xpath => "//div[@data-item-name='cartype']"

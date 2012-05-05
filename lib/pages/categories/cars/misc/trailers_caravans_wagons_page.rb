@@ -3,6 +3,8 @@
 class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   include PageObject
 
+  @@url_suffix = "/cars/misc/trailers-caravans-wagons"
+
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
 
   div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"

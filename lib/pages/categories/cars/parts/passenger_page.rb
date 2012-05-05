@@ -3,6 +3,8 @@
 class CategoryCarsPartsPassengerPage < AdDetailsPage
   include PageObject
 
+  @@url_suffix = "/cars/parts/passenger"
+
   div :make, :xpath => "//div[@data-item-name='make']"
 
   def set_parameter (hash)

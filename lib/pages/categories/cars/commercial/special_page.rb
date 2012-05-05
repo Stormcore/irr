@@ -3,6 +3,8 @@
 class CategoryCarsCommercialSpecialPage < AdDetailsPage
   include PageObject
 
+  @@url_suffix = "/cars/commercial/special"
+
   div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
   text_field :car_year_from, :name => "car-year[from]"
   text_field :car_year_to, :name => "car-year[to]"

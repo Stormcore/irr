@@ -2,7 +2,9 @@
 
 class CategoryCarsPassangerNewPage < AdDetailsPage
   include PageObject
-  
+
+  @@url_suffix = "/cars/passenger/new"
+
   text_field :car_year_from, :name => "car-year[from]"
   text_field :car_year_to, :name => "car-year[to]"
 
