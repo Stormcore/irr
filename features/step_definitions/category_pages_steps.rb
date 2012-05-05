@@ -2,6 +2,9 @@
 
 def select_class_for_category(category)
   case category
+  when "Авто и мото"
+    @category_page = CategoryCarsPage
+  
   when "Авто и мото -> Выкуп автомобилей. Спрос"
     @category_page = CategoryCarsRepaymentSearchPage
 
@@ -115,14 +118,13 @@ end
 end
 
 Когда %{на главной странице я перехожу в категорию "$long_category"} do |long_category|
-  # Пытаемся перейти в категорию по прямой ссылке, если она указана
   select_class_for_category(long_category)
   ad_class = Kernel.const_get(@category_page.to_s)
   if ad_class.class_variables.include? :@@url_suffix
     full_url = @url_prefix+ad_class.class_variable_get("@@url_suffix")
     @browser.goto full_url
   else
-    steps %Q{на главной странице я перехожу в категорию "#{long_category}" через меню}
+    steps %Q{When на главной странице я перехожу в категорию "#{long_category}" через меню}
   end
 end
 

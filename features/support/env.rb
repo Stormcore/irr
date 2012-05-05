@@ -1,3 +1,4 @@
+# encoding: utf-8
 BASE_URL = ENV['BASE_URL'] || "http://irr.ru"
 KEEP_OPEN = ENV['KEEP_OPEN'] || false
 HEADLESS = ENV['HEADLESS'] || false
@@ -87,7 +88,7 @@ end
 
 After do |scenario|
   Dir::mkdir('screenshots') if not File.directory?('screenshots')
-  screenshot = "./screenshots/FAILED_#{scenario.file_colon_line.gsub!('/','_')}.png"
+  screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
   if scenario.failed?
     @browser.driver.save_screenshot(screenshot)
     embed screenshot, 'image/png'
@@ -102,6 +103,14 @@ end
 at_exit do
   browser.close if not KEEP_OPEN
   headless.destroy if HEADLESS
+end
+
+Around('@soft_assert') do |scenario, block|
+  @validation_errors = Hash.new
+  block.call
+  if !@validation_errors.empty?
+    raise "Найдены следующие ошибки: \n #{@validation_errors}"
+  end
 end
 
 # Patch Element class to have 'element.should be_shown' instead of 'be_exists'
