@@ -4,7 +4,6 @@ def select_class_for_category(category)
   case category
   when "Авто и мото"
     @category_page = CategoryCarsPage
-  
   when "Авто и мото -> Выкуп автомобилей. Спрос"
     @category_page = CategoryCarsRepaymentSearchPage
 
@@ -106,6 +105,9 @@ def select_class_for_category(category)
     
   when "Компьютерная техника -> Ноутбуки -> Сумки и кейсы для ноутбуков"
     @category_page = CategoryComputerDevicesNotebooksCasesPage
+
+  when "Компьютерная техника -> Ноутбуки -> Аксессуары"
+    @category_page = CategoryComputerDevicesNotebooksAccessoriesPage
   end
 end
 
