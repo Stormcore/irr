@@ -83,11 +83,7 @@ end
 
 То %{в каждом объявлении не более $n знаков} do |n|
   results_page_soft_assert("Слишком длинное описание:") do |result|
-    unless @sc.source_tag_names.include?('@empty_results') and @results.length == 0
-      result['description'].length.should be < n
-    else
-      puts "У сценария указан тег @empty_resutls, пропускаем проверку"
-    end
+    result['description'].length.should be < n.to_i
   end
 end
 
