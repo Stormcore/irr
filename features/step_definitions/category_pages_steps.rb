@@ -100,6 +100,12 @@ def select_class_for_category(category)
     
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
+
+  when "Компьютерная техника -> Ноутбуки -> Нетбуки и UMPC"
+    @category_page = CategoryComputerDevicesNotebooksNetbooksUMPCPage
+    
+  when "Компьютерная техника -> Ноутбуки -> Сумки и кейсы для ноутбуков"
+    @category_page = CategoryComputerDevicesNotebooksCasesPage
   end
 end
 

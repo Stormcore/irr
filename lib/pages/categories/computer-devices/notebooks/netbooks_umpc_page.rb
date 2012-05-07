@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryComputerDevicesNotebooksNotebooksPage < AdDetailsPage
+class CategoryComputerDevicesNotebooksNetbooksUMPCPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/computers-devices/notebooks/netbooks_umpc/"
