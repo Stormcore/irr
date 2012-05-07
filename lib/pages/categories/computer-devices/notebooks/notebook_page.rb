@@ -3,7 +3,7 @@
 class CategoryComputerDevicesNotebooksNotebooksPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "computers-devices/notebooks/notebooks/"
+  @@url_suffix = "/computers-devices/notebooks/notebooks/"
 
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
   div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"

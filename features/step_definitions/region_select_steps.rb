@@ -22,7 +22,8 @@ end
 Допустим /^открыта страница для (города|региона) "(.*)"$/ do |other, region|
   case region
   when "Москва"
-    @url_prefix = BASE_URL+'/moskva-gorod/'
+    @url_prefix = BASE_URL
+    @url_suffix = '/moskva-gorod/'
     @browser.goto(@url_prefix)
   when "Россия"
     @url_prefix = BASE_URL.gsub("http://", "http://russia.")

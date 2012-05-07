@@ -124,7 +124,7 @@ end
   select_class_for_category(long_category)
   ad_class = Kernel.const_get(@category_page.to_s)
   if ad_class.class_variables.include? :@@url_suffix
-    full_url = @url_prefix+ad_class.class_variable_get("@@url_suffix")
+    full_url = @url_prefix+ad_class.class_variable_get("@@url_suffix")+@url_suffix
     @browser.goto full_url
   else
     steps %Q{When на главной странице я перехожу в категорию "#{long_category}" через меню}
