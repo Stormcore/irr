@@ -10,10 +10,14 @@ class SearchResultsPage
 
   def search_results
     results = []
+    attempts = 3
     begin
       doc = Nokogiri::HTML.parse(results_table_element.when_present.element.html)
     rescue
-      raise "Список результатов не отображен"
+      raise "Список результатов не отображен" if attempts == 0
+      self.refresh
+      attempts.decc
+      retry
     end
     json = /var additionalPopupMenuParams = (.*);/.match(doc.css("script").inner_html)[1]
     parsed_json = JSON.parse(json)
