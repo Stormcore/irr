@@ -91,7 +91,7 @@ class AdDetailsPage
       result = self.title_element.when_present.text
     else
       # Custom field
-      xpath = "//tr[contains(/th[text()='#{field}'])]/td"
+      xpath = "//table[@id='mainParams]/tbody/tr[contains(/th[text()='#{field}'])]/td"
       result = self.cell_element(:xpath => xpath).when_present.text
     end
     result
@@ -99,13 +99,13 @@ class AdDetailsPage
   
   def get_value_parameter(field)
     self.show_all_parameters
-    xpath = "//tr[contains(.,'#{field}')]/td/span[@class='value']"
+    xpath = "//table[@id='mainParams]/tbody/tr[contains(.,'#{field}')]/td/span[@class='value']"
     self.span_element(:xpath => xpath).when_present.text
   end
   
   def get_unique_parameter(field)
     self.show_all_parameters
-    xpath = "//tr[contains(.,'#{field}')]/td"
-    self.cell_element(:xpath => xpath, :index => 1).when_present.text
+    xpath = "//table[@id='allParams]/tbody/tr[contains(.,'#{field}')]/td"
+    self.cell_element(:xpath => xpath).when_present.text
   end
 end
