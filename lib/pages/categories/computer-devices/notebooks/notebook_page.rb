@@ -11,7 +11,7 @@ class CategoryComputerDevicesNotebooksNotebooksPage < AdDetailsPage
   text_field :diagonal_from, :name => "diagonal[from]"
   text_field :diagonal_to, :name => "diagonal[to]"
   div :cpu, :xpath => "//div[@data-item-name='cpu']"
-  div :ram_size, :xpath => "//div[@data-item-name='ram-size']"
+  div :ram_size, :xpath => "//div[@data-item-name='ram_size']"
   text_field :hdd_from, :name => "hdd[from]"
   text_field :hdd_to, :name => "hdd[to]"
   div :vgatype, :xpath => "//div[@data-item-name='vgatype']"
@@ -27,13 +27,13 @@ class CategoryComputerDevicesNotebooksNotebooksPage < AdDetailsPage
     when "Тип предложения"
       multiselect(self.offertype_element, hash['value'])
 
-    when "Новый или подержанный"
+    when "Состояние"
       multiselect(self.used_or_new_element, hash['value'])
 
-    when "Модель"
+    when "Марка"
       multiselect(self.make_element, hash['value'])
 
-    when "Диагональ"
+    when "Диагональ экрана"
       self.diagonal_from = hash['min']
       self.diagonal_to = hash['max']
 
