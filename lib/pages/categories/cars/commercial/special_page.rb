@@ -50,12 +50,12 @@ class CategoryCarsCommercialSpecialPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Год выпуска"
-      result = get_value_parameter(field)
+      result = get_unique_parameter(field).gsub(/ г./, '')
     when "Пробег"
       # Пробег вводиться в тыс. км, отображается в км.
       # Делим отображаемый результат на 1000 
       result = get_value_parameter(field).to_i / 1000
-    when "Марка", "Модель", "Тип кузова", "Тип трансмиссии"
+    when "Марка", "Модель", "Тип техники", "Новый или подержанный"
       result = get_unique_parameter(field)
     else
       result = get_generic_parameter(field) 
