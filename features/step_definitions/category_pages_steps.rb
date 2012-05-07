@@ -112,8 +112,8 @@ def select_class_for_category(category)
   when "Компьютерная техника -> Настольные компьютеры"
     @category_page = CategoryComputerDevicesDesktopsPage
 
-  when "Компьютерная техника -> КПК"
-    @category_page = CategoryComputerDevicesPDAsPage
+  when "Компьютерная техника -> КПК -> КПК"
+    @category_page = CategoryComputerDevicesPDAsPDAPage
   end
 end
 
