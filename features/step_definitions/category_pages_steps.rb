@@ -97,6 +97,9 @@ def select_class_for_category(category)
   when "Авто и мото -> Автозапчасти и принадлежности -> Аксессуары"
     @category_page = CategoryCarsPartsAccessoriesPage
     
+  when "Недвижимость -> Квартиры. Продажа -> Новостройки"
+    @category_page = CategoryRealEstateApartmentsSaleNewPage
+    
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
 
