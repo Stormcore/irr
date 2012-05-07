@@ -50,8 +50,8 @@ class AdDetailsPage
 
   def show_all_parameters
     # Open all params if present
-    if self.show_all_params_element.visible?
-      self.show_all_params
+    if self.show_all_params_element.when_present.visible?
+      self.show_all_params_element.when_present.click
     end
   end
 
