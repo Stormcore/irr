@@ -11,7 +11,7 @@ class SearchResultsPage
   def search_results
     results = []
     begin
-      doc = Nokogiri::HTML.parse(results_table_element.when_present.html)
+      doc = Nokogiri::HTML.parse(results_table_element.when_present.element.html)
     rescue
       raise "Список результатов не отображен"
     end

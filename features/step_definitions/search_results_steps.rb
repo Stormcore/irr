@@ -47,8 +47,12 @@ end
 end
 
 То %{на странице показано $operator $number объявлений} do |operator,number|
-  on SearchResultsPage do |page| 
-    eval "@results.length.should #{operator} #{number}" 
+  on SearchResultsPage do |page|
+    unless @sc.source_tag_names.include?('@empty_results') and @results.length == 0
+      eval "@results.length.should #{operator} #{number}"
+    else
+      puts "У сценария указан тег @empty_resutls, пропускаем проверку"
+    end
   end
 end
 

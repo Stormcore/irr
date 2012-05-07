@@ -79,6 +79,9 @@ end
 Before do |scenario|
   browser.cookies.clear
   @browser = browser
+  
+  # Сохраняем экземпляр сценария
+  @sc = scenario
 end
 
 AfterConfiguration do |config|
