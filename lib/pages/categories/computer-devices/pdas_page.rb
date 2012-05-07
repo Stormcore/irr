@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-class CategoryComputerDevicesDesktopsPage < AdDetailsPage
+class CategoryComputerDevicesPDAsPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/computers-devices/desktops/"
+  @@url_suffix = "/computers-devices/pdas_communicators/"
 
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
   div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
