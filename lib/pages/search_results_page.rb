@@ -16,7 +16,7 @@ class SearchResultsPage
     rescue
       raise "Список результатов не отображен" if attempts == 0
       self.refresh
-      attempts.decc
+      attempts -= 1
       retry
     end
     json = /var additionalPopupMenuParams = (.*);/.match(doc.css("script").inner_html)[1]
