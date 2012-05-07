@@ -8,6 +8,9 @@ class CategoryComputerDevicesPDAsPDAPage < AdDetailsPage
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
   div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
   div :make, :xpath => "//div[@data-item-name='make']"
+  div :os, :xpath => "//div[@data-item-name='os']"
+  checkbox :wifi, :name => "wifi"
+  checkbox :gps, :name => "gps"
 
   def set_parameter (hash)
     case hash['parameter']
@@ -20,6 +23,15 @@ class CategoryComputerDevicesPDAsPDAPage < AdDetailsPage
 
     when "Марка"
       multiselect(self.make_element, hash['value'])
+      
+    when "Тип ОС"
+      singleselect(self.os_element, hash['value'])
+
+    when "Wi-Fi"
+      self.wifi_element.check
+
+    when "GPS"
+      self.gps_element.check
 
     else
       super(hash)
@@ -30,6 +42,8 @@ class CategoryComputerDevicesPDAsPDAPage < AdDetailsPage
     case field
     when "Новый или подержанный", "Тип предложения", "Марка"
       result = get_unique_parameter(field)
+    when "Wi-Fi", "GPS"
+      result = get_checkbox_parameter(field)
     else
       result = get_generic_parameter(field) 
     end
