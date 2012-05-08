@@ -59,7 +59,6 @@ class SearchResultsPage
       end
 
       begin
-        debugger
         h['description'] = row.css('td.tdTxt > p')[0].content
       rescue
       end
