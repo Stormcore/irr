@@ -172,19 +172,20 @@ end
   end
 end
 
-То %{в деталях каждого объявления этаж не первый} do
+То %{в деталях каждого объявления этаж $condition} do |condition|
   error_text = "Ошибка проверки деталей объявления: неправильно выбран этаж"
   results_details_soft_assert(error_text) do |ad_page, result|
     puts "DEBUG: Страница #{@browser.url}"
-    ad_page.get_parameter("Этаж").to_i.should_not == 1
-  end
-end
-
-То %{в деталях каждого объявления этаж не первый} do
-  error_text = "Ошибка проверки деталей объявления: неправильно выбран этаж"
-  results_details_soft_assert(error_text) do |ad_page, result|
-    puts "DEBUG: Страница #{@browser.url}"
-    ad_page.get_parameter("Этаж").to_i.should_not == 1
+    case condition
+    when "первый"
+      ad_page.get_parameter("Этаж").to_i.should == 1
+    when "не первый"
+      ad_page.get_parameter("Этаж").to_i.should_not == 1
+    when "не последний"
+      current_floor = ad_page.get_parameter("Этаж").to_i
+      max_floor = ad_page.get_parameter("Этажей в здании").to_i
+      current_floor.should_not == max_floor
+    end
   end
 end
 
