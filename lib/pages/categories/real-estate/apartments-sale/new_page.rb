@@ -30,7 +30,7 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   checkbox :gas, :name => "gas"
   
   # Параметры объявления
-  div :ad_details_metro, :xpath => "//div[@class='b-content']//div[@class='b-adressAdv']/div"
+  div :ad_content, :xpath => "//div[@class='b-content']"
   
   def set_parameter (hash)
     case hash['parameter']
@@ -91,10 +91,6 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
     end
   end
 
-  def get_metro_station
-    
-  end
-
   def get_parameter(field)
     case field
     when "АО", "Район города", "Станция метро",
@@ -102,7 +98,9 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
          "Газ в доме"
       result = get_unique_parameter(field)
     when "Линия метро"
-      result = self.ad_details_metro_element.text
+      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
+      metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
+      result = metro_and_region.split()[0]
     else
       result = get_generic_parameter(field) 
     end
