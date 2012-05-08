@@ -103,8 +103,8 @@ class AdDetailsPage
   
   def get_checkbox_parameter(field)
     self.show_all_parameters
-    xpath = "//table[@id='mainParams']/tbody/tr[contains(.,'#{field}')]/td/span[@class='value']"
-    self.span_element(:xpath => xpath).when_present.text
+    xpath = "//table[@id='allParams']/tbody/tr[contains(.,'#{field}')]/td/div[@class='bird']"
+    self.div_element(:xpath => xpath).exists?
   end
   
   def get_value_parameter(field)
