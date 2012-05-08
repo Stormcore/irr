@@ -24,8 +24,8 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   checkbox :private, :name => "private"
   div :state, :xpath => "//div[@data-item-name='state']"
   checkbox :balcony, :name => "balcony"
-  text_field :etage_from, :name => "etage[from]"
-  text_field :etage_to, :name => "etage[to]"
+  text_field :etage_from, :name => "etage-all[from]"
+  text_field :etage_to, :name => "etage-all[to]"
   checkbox :house_lift, :name => "house-lift"
   checkbox :gas, :name => "gas"
   
@@ -90,7 +90,9 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города"
+    when "АО", "Район города", "Линия метро", "Станция метро",
+         "До метро", "Общая площадь", "Балкон/Лоджия", "Лифты в здании", 
+         "Газ в доме"
       result = get_unique_parameter(field)
     else
       result = get_generic_parameter(field) 

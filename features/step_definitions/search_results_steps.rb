@@ -8,6 +8,14 @@
   end
 end
 
+Когда %{на странице поиска загружен список результатов для недвижимости} do 
+  on SearchResultsForRealEstatePage do |page| 
+    puts "Обрабатываю результаты страницы #{@browser.url}"
+    $stdout.flush
+    @results = page.search_results
+  end
+end
+
 То %{я перехожу на страницу номер $page_number} do |page_number|
   on SearchResultsPage do |page|
     page.go_to_page(page_number)

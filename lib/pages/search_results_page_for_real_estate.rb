@@ -1,12 +1,8 @@
 # encoding: utf-8
 require 'json'
 
-class SearchResultsPage
+class SearchResultsForRealEstatePage < SearchResultsPage
   include PageObject
-
-  div :results_table, :class => "b-adList"
-  unordered_list :pages, :class => "filter-pages"
-  div :side_column, :class => "side-col"
 
   def search_results
     results = []
@@ -27,12 +23,17 @@ class SearchResultsPage
       if row['class'].include?('banner-listing-list') or row['class'].include?('dontSearch')
         next
       end
-      # city data
       if row['class'].include? 'bottomParams'
+        # city data
         begin
-          city = row.css('td.tdTxt > span.location')[0].content
-          results.last['city'] = city.strip!
+          results.last['city'] = row.css('td.tdTxt > span.location')[0].content.strip!
           next
+        end
+        
+        # description
+        begin
+          results.last['description'] = row.css('td.tdTxt > p')[0].content
+        rescue
         end
       end
   
@@ -55,17 +56,6 @@ class SearchResultsPage
       begin
         h['url'] = row.css('td.tdTxt > div.h3 > a')[0]['href']
         ad_id = h['url'].match(/\/advert\/(.*)\//)[1]
-      rescue
-      end
-
-      begin
-        debugger
-        h['description'] = row.css('td.tdTxt > p')[0].content
-      rescue
-      end
-
-      begin
-        h['snippet'] = row.css('td.tdTxt span.snippet')[0].content
       rescue
       end
 
@@ -97,27 +87,4 @@ class SearchResultsPage
     results
   end
 
-  def highlight_result_by_url(url)
-    ad_link = results_table_element.link_element(:href => url)
-    @browser.execute_script("arguments[0].style='background-color: red'", ad_link)
-  end
-
-  def table_right_position
-    self.results_table_element.wd.location.x + self.results_table_element.wd.size.width
-  end
-
-  def banner_left_position
-    self.side_column_element.wd.location.x
-  end
-  
-  def open_ad(url)
-    @browser.goto("#{BASE_URL}#{url}")
-  end
-
-  def go_to_page(number)
-    next_page = self.pages_element.link_element(:link_text => number.to_s)
-    next_page.when_present
-    puts "Moving to page #{number}"
-    next_page.click
-  end
 end
