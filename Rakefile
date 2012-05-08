@@ -13,7 +13,7 @@ end
 
 Cucumber::Rake::Task.new(:wip) do |task|
     task.cucumber_opts = ["HEADLESS=true",
-                        "-t @wip",
+                        "-t @compile,@wip",
                         "--format json  --out cucumber.json",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
@@ -23,7 +23,7 @@ end
 
 Cucumber::Rake::Task.new(:failing) do |task|
     task.cucumber_opts = ["HEADLESS=true",
-                        "-t @failing",
+                        "-t @compile,@failing",
                         "--format json  --out cucumber.json",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
