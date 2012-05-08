@@ -14,7 +14,7 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   text_field :meters_total_from, :name => "meters-total[from]"
   text_field :meters_total_to, :name => "meters-total[to]"
   
-  span :show_kitchen_params, :xpath => "//a[@class='ev_hide'][0]"
+  span :show_kitchen_params, :text => 'Площадь Жилая/Кухня'
   text_field :meters_living_from, :name => "meters-living[from]"
   text_field :meters_living_to, :name => "meters-living[to]"
   text_field :kitchen_from, :name => "kitchen[from]"
@@ -58,10 +58,16 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
       self.meters_total_to = hash['max']
 
     when "Жилая площадь"
+      unless self.meters_living_from_element.visible?
+        self.show_kitchen_params_element.parent.click
+      end
       self.meters_living_from = hash['min']
       self.meters_living_to = hash['max']
 
     when "Площадь кухни"
+      unless self.kitchen_from_element.visible?
+        self.show_kitchen_params_element.parent.click
+      end
       self.kitchen_from = hash['min']
       self.kitchen_to = hash['max']
 
@@ -95,7 +101,8 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Балкон/Лоджия", "Лифты в здании", "Газ в доме"
+         "Жилая площадь", "Площадь кухни", "Балкон/Лоджия", "Лифты в здании",
+         "Газ в доме"
       result = get_unique_parameter(field)
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
