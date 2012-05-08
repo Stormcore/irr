@@ -31,6 +31,7 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
+  span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)
     case hash['parameter']
@@ -93,14 +94,26 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Станция метро",
-         "До метро", "Общая площадь", "Балкон/Лоджия", "Лифты в здании", 
-         "Газ в доме"
+    when "АО", "Район города", "Общая площадь", 
+         "Балкон/Лоджия", "Лифты в здании", "Газ в доме"
       result = get_unique_parameter(field)
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
       metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
-      result = metro_and_region.split()[0]
+      result = metro_and_region.split[0]
+
+    when "Станция метро"
+      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
+      metro_and_region = hidden_comment[0][0].strip.split(', ')[1]
+      result = metro_and_region.split[0]
+
+    when "До метро"
+      begin
+        result = self.peshkom_element.text.split[0].to_i
+      rescue Watir::Exception::UnknownObjectException
+        result = 0
+      end
+
     else
       result = get_generic_parameter(field) 
     end

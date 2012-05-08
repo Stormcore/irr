@@ -25,6 +25,12 @@ class AdDetailsPage
   table :all_params, :id => "allParams"
   # Все параметры
 
+  def multiselect_inline(element, values)
+    values.split(",").each do |value|
+      element.link_element(:text => value).when_present.click
+    end
+  end
+
   def multiselect(element, values)
     element.div_element(:class => "controlSelect").when_present.click
     values.split(",").each do |value|

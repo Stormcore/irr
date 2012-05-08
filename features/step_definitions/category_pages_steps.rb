@@ -160,7 +160,8 @@ end
 
 То %{в деталях каждого объявления отображается видео} do 
   results_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
-      ad_page.should have_video
+    debugger
+    ad_page.should have_video, "Видео не показано"
   end
 end
 
