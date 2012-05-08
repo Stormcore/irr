@@ -53,7 +53,7 @@ class CategoryCarsPassangerNewPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Год выпуска"
-      result = get_value_parameter(field)
+      result = get_unique_parameter(field).gsub(/ г/,'')
     when "Марка", "Модель", "Тип кузова", "Тип двигателя", "Привод", "Тип трансмиссии"
       result = get_unique_parameter(field)
     else

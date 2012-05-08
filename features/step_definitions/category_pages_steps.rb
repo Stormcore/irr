@@ -160,29 +160,52 @@ end
 
 То %{в деталях каждого объявления отображается видео} do 
   results_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
-    debugger
     ad_page.should have_video, "Видео не показано"
+  end
+end
+
+То %{в деталях каждого объявления присутсвует "$field"} do |field|
+  error_text = "Ошибка проверки деталей объявления: отсутствует #{field}"
+  results_details_soft_assert(error_text) do |ad_page, result|
+    puts "DEBUG: Страница #{@browser.url}"
+    ad_page.get_parameter(field).should be_true
+  end
+end
+
+То %{в деталях каждого объявления этаж не первый} do
+  error_text = "Ошибка проверки деталей объявления: неправильно выбран этаж"
+  results_details_soft_assert(error_text) do |ad_page, result|
+    puts "DEBUG: Страница #{@browser.url}"
+    ad_page.get_parameter("Этаж").to_i.should_not == 1
+  end
+end
+
+То %{в деталях каждого объявления этаж не первый} do
+  error_text = "Ошибка проверки деталей объявления: неправильно выбран этаж"
+  results_details_soft_assert(error_text) do |ad_page, result|
+    puts "DEBUG: Страница #{@browser.url}"
+    ad_page.get_parameter("Этаж").to_i.should_not == 1
   end
 end
 
 То %{в деталях каждого объявления "$field" $operator "$values"} do |field, operator, expected|
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
   results_details_soft_assert(error_text) do |ad_page, result|
-      puts "DEBUG: Страница #{@browser.url}"
-      $stdout.flush
-      actual_value = ad_page.get_parameter(field)
-      case operator
-      when "равно"
-        actual_value.should == expected 
-      when "равно одному из"
-        expected.split(', ').should include actual_value
-      when "в границах"
-        expected_array = expected.split(" - ")
-        actual_value.to_i.should be >= expected_array[0].to_i
-        actual_value.to_i.should be <= expected_array[1].to_i
-      else
-        eval("actual_value.to_i.should be #{operator} expected.to_i")
-      end
+    puts "DEBUG: Страница #{@browser.url}"
+    $stdout.flush
+    actual_value = ad_page.get_parameter(field)
+    case operator
+    when "равно"
+      actual_value.should == expected 
+    when "равно одному из"
+      expected.split(', ').should include actual_value
+    when "в границах"
+      expected_array = expected.split(" - ")
+      actual_value.to_i.should be >= expected_array[0].to_i
+      actual_value.to_i.should be <= expected_array[1].to_i
+    else
+      eval("actual_value.to_i.should be #{operator} expected.to_i")
+    end
   end
 end
 

@@ -101,8 +101,7 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Балкон/Лоджия", "Лифты в здании",
-         "Газ в доме"
+         "Жилая площадь", "Площадь кухни"
       result = get_unique_parameter(field)
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
@@ -120,6 +119,10 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
       rescue Watir::Exception::UnknownObjectException
         result = 0
       end
+
+    when "Балкон/Лоджия", "Приватизированная квартира", "Лифты в здании",
+         "Газ в доме"
+      result = get_checkbox_parameter(field)
 
     else
       result = get_generic_parameter(field) 
