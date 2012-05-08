@@ -3,6 +3,7 @@
 Когда %{на странице поиска загружен список результатов} do 
   on SearchResultsPage do |page| 
     puts "Обрабатываю результаты страницы #{@browser.url}"
+    $stdout.flush
     @results = page.search_results
   end
 end
@@ -51,7 +52,8 @@ end
     unless @sc.source_tag_names.include?('@empty_results') and @results.length == 0
       eval "@results.length.should #{operator} #{number}"
     else
-      puts "У сценария указан тег @empty_resutls, пропускаем проверку"
+      puts "У сценария указан тег @empty_results, пропускаем проверку"
+      $stdout.flush
     end
   end
 end
@@ -161,6 +163,7 @@ end
     keywords.split(", ").each do |keyword|
       if UnicodeUtils.downcase(result['title']).include? UnicodeUtils.downcase(keyword)
         puts "URL #{result['url']}: найдено ключевое слово #{keyword}"
+        $stdout.flush
         keyword_found = true
         break
       end
@@ -190,6 +193,7 @@ end
       # Текст объявления на странице
       if UnicodeUtils.downcase(result['description']).include? downcased_keyword
         puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в тексте на странице поиска"
+        $stdout.flush
         keyword_found = true
         break
       end

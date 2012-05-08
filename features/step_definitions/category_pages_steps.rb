@@ -167,7 +167,8 @@ end
 То %{в деталях каждого объявления "$field" $operator "$values"} do |field, operator, expected|
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
   results_details_soft_assert(error_text) do |ad_page, result|
-      puts "Страница #{@browser.url}"
+      puts "DEBUG: Страница #{@browser.url}"
+      $stdout.flush
       actual_value = ad_page.get_parameter(field)
       case operator
       when "равно"
@@ -187,7 +188,8 @@ end
 То %{на странице категории отображен баннер справа} do
   on GenericCategoryPage do |page|
     (1..3).each do |attempt|
-      puts "Attempt #{attempt}"
+      puts "DEBUG: Attempt #{attempt}"
+      $stdout.flush
       break if page.left_banner_element.element.visible?
       @browser.refresh
     end
@@ -218,6 +220,7 @@ def results_details_soft_assert(description)
     puts "URL: #{@browser.url}"
     puts description
     puts validation_errors
+    $stdout.flush
     raise "Error occurred on page #{@browser.url}"
   end
 end
