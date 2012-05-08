@@ -27,7 +27,6 @@ class SearchResultsForRealEstatePage < SearchResultsPage
         # city data
         begin
           results.last['city'] = row.css('td.tdTxt > span.location')[0].content.strip!
-          next
         end
         
         # description
@@ -35,6 +34,7 @@ class SearchResultsForRealEstatePage < SearchResultsPage
           results.last['description'] = row.css('td.tdTxt > p')[0].content
         rescue
         end
+        next
       end
   
       h = Hash.new
