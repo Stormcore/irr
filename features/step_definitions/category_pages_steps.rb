@@ -118,6 +118,9 @@ def select_class_for_category(category)
   when "Недвижимость -> Дома, дачи и участки. Продажа -> Участки"
     @category_page = CategoryRealEstateOutoftownLandsPage
 
+  when "Недвижимость -> Дома, дачи и участки. Продажа -> Коттеджные поселки"
+    @category_page = CategoryRealEstateOutoftownCottagePage
+
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
 
