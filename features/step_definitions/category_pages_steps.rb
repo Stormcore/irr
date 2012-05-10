@@ -227,7 +227,10 @@ end
 def results_details_soft_assert(description)
   validation_errors = Hash.new
   on SearchResultsPage do |page|
-    @results.each do |result|
+    #@results.each do |result|
+    # Проверяем только первый результат
+    result = @results[0]
+    begin
       begin
         page.open_ad(result['url'])
         on @category_page do |ad_page|
