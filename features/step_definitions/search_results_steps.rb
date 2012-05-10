@@ -212,7 +212,7 @@ end
       full_url = BASE_URL+result['url']
       @browser.goto(full_url)
       on AdDetailsPage do |page|
-        page.showAll if page.showAll_element.exists?
+        page.show_all_text if page.show_all_text_element.exists?
         keywords.split(", ").each do |keyword|
           downcased_keyword = UnicodeUtils.downcase(keyword)
           # Полный текст объявления
