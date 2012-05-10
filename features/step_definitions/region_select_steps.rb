@@ -27,6 +27,7 @@ end
     @browser.goto(@url_prefix)
   when "Россия"
     @url_prefix = BASE_URL.gsub("http://", "http://russia.")
+    @url_suffix = ''
     @browser.goto(@url_prefix)
   when "Москва и область"
     @url_prefix = BASE_URL
