@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'json'
+require "#{File.dirname(__FILE__)}/search_results_page.rb"
 
 class SearchResultsForRealEstatePage < SearchResultsPage
   include PageObject
