@@ -106,6 +106,9 @@ def select_class_for_category(category)
   when "Недвижимость -> Квартиры. Аренда"
     @category_page = CategoryRealEstateRentPage
 
+  when "Недвижимость -> Комнаты и доли. Продажа"
+    @category_page = CategoryRealEstateRoomsSalePage
+
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
 
