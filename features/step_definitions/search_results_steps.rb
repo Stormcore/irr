@@ -268,7 +268,10 @@ end
 def results_page_soft_assert(description)
   validation_errors = Hash.new
   on SearchResultsPage do |page|
-    @results.each do |result|
+    # Проверяем только первый результат
+    #@results.each do |result|
+    result = @results[0]
+    begin
       begin
         yield result
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
