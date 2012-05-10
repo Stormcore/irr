@@ -31,7 +31,7 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :distance, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
+  span :location, :xpath => "//div[@class='b-adressAdv']/div[@class='h2']"
   
   def set_parameter (hash)
     case hash['parameter']
@@ -48,32 +48,27 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
       self.distance_mkad_from = hash['min']
       self.distance_mkad_to = hash['max']
 
-    when "Комнат в квартире"
-      multiselect_inline(self.rooms_element, hash['value'])
+    when "Год постройки/сдачи"
+      self.house_year_from = hash['min']
+      self.house_year_to = hash['max']
 
-    when "Общая площадь"
+    when "Площадь участка"
       self.meters_total_from = hash['min']
       self.meters_total_to = hash['max']
 
-    when "Жилая площадь"
-      unless self.meters_living_from_element.visible?
-        self.show_kitchen_params_element.parent.click
-      end
-      self.meters_living_from = hash['min']
-      self.meters_living_to = hash['max']
+    when "Количество комнат"
+      self.rooms_from = hash['min']
+      self.rooms_to = hash['max']
 
-    when "Площадь кухни"
-      unless self.kitchen_from_element.visible?
-        self.show_kitchen_params_element.parent.click
-      end
-      self.kitchen_from = hash['min']
-      self.kitchen_to = hash['max']
+    when "Количество спален"
+      self.rooms_sleep_from = hash['min']
+      self.rooms_sleep_to = hash['max']
 
-    when "Этаж"
-      multiselect(self.floor_house_element, hash['value'])
+    when "Материал стен"
+      singleselect(self.walltype_element, hash['value'])
 
-    when "Ремонт"
-      singleselect(self.state_element, hash['value'])
+    when "Строение"
+      singleselect(self.object_element, hash['value'])
 
     when "Телефон"
       self.telephone_element.check
@@ -81,17 +76,10 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
       self.furniture_element.check
     when "Бытовая техника"
       self.household_element.check
-
-
-    when "Этаж в здании"
-      self.etage_from = hash['min']
-      self.etage_to = hash['max']
-
-    when "Лифты в здании"
-      self.house_lift_element.check
-
-    when "Газ в доме"
-      self.gas_element.check
+    when "Интернет"
+      self.internet_element.check
+    when "Телефон"
+      self.telephone_element.check
 
     else
       super(hash)
@@ -100,28 +88,20 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Ремонт"
+    when "Направление", "Район города", "Общая площадь",
+         "Комнат в квартире", "Жилая площадь", "Площадь кухни", "Ремонт"
       result = get_unique_parameter(field)
-    when "Линия метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
-      result = metro_and_region.split[0]
 
-    when "Станция метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[1]
-      result = metro_and_region.split[0]
+    when "Расположение"
+      result = get_unique_parameter("Регион").split(', ')[1]
 
-    when "До метро"
-      begin
-        result = self.peshkom_element.text.split[0].to_i
-      rescue Watir::Exception::UnknownObjectException
-        result = 0
-      end
+    when "Шоссе"
+      result = self.location_element.text.split(', ')[0]
+      
+    when "Удаленность"
+      result = self.location_element.text.split(', ')[1].split[0].to_i
 
-    when "Телефон", "Мебель", "Бытовая техника", "Лифты в здании",
-         "Газ в доме"
+    when "Телефон", "Мебель", "Бытовая техника", "Интернет", "Телефон"
       result = get_checkbox_parameter(field)
 
     else
