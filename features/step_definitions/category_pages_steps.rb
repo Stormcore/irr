@@ -181,8 +181,13 @@ end
 
 То %{в деталях каждого объявления отображается видео} do 
   results_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
-    debugger
     ad_page.should have_video, "Видео не показано"
+  end
+end
+
+То %{в деталях каждого объявления присутствует "$parameter"} do |parameter|
+  results_details_soft_assert("Значение '#{parameter}' не установлено:") do |ad_page, result|
+    ad_page.get_checkbox_parameter(parameter).should be_true, ""
   end
 end
 
