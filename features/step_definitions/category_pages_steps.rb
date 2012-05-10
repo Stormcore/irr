@@ -93,12 +93,15 @@ def select_class_for_category(category)
     
   when "Авто и мото -> Автозапчасти и принадлежности -> Стекла и оптика"
     @category_page = CategoryCarsPartsOpticsPage
-    
+
   when "Авто и мото -> Автозапчасти и принадлежности -> Аксессуары"
     @category_page = CategoryCarsPartsAccessoriesPage
     
   when "Недвижимость -> Квартиры. Продажа -> Новостройки"
     @category_page = CategoryRealEstateApartmentsSaleNewPage
+
+  when "Недвижимость -> Квартиры. Продажа -> Вторичный рынок"
+    @category_page = CategoryRealEstateApartmentsSaleSecondaryPage
     
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
