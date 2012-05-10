@@ -19,6 +19,7 @@ class AdDetailsPage
   link :show_all_params, :id => "showAllParamsLink"
   div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
   div :video, :class => "b-video"
+  link :show_all_text, :class => "showAll"
 
   # Весь текст объявления
   div :advert_text, :class => "txtAdvert"

@@ -212,6 +212,7 @@ end
       full_url = BASE_URL+result['url']
       @browser.goto(full_url)
       on AdDetailsPage do |page|
+        page.showAll if page.showAll_element.exists?
         keywords.split(", ").each do |keyword|
           downcased_keyword = UnicodeUtils.downcase(keyword)
           # Полный текст объявления
@@ -222,7 +223,7 @@ end
           end
 
           # Текст параметров
-          if UnicodeUtils.downcase(page.all_params_element.html).include? downcased_keyword
+          if UnicodeUtils.downcase(page.all_params_element.element.html).include? downcased_keyword
             puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в параметрах объявления"
             keyword_found = true
             break
