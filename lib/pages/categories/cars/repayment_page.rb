@@ -27,7 +27,7 @@ class CategoryCarsRepaymentSearchPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "Состояние", "Автомобили"
+    when "Состояние", "Автомобили", "Тип автомобиля"
       result = get_unique_parameter(field)
     else
       result = get_generic_parameter(field) 
