@@ -48,7 +48,8 @@ class CategoryCarsPartsTiresPage < AdDetailsPage
   
   def get_parameter (field)
     case field
-    when "Тип предложения", "Состояние", "Тип автомобиля", "Сезонность", "Производитель"
+    when "Тип предложения", "Состояние", "Тип автомобиля", "Сезонность", 
+         "Производитель", "Ширина профиля"
       result = get_unique_parameter(field)
     when "Диаметр обода", "Диаметр"
       result = get_unique_parameter(field)
