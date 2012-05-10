@@ -115,7 +115,7 @@ end
 То %{в каждом объявлении отображается рисунок} do
   results_page_soft_assert("Не отображен рисунок:") do |result|
     thumbnail = result['thumbnail']
-    thumbnail.should_not be_empty 
+    thumbnail.should_not be_empty
     # Verify that  thumbnail url doesn't throw any error
     url = URI.parse(thumbnail)
     the_request = Net::HTTP::Get.new(url.path)
