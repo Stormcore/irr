@@ -23,6 +23,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
+  span :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)
