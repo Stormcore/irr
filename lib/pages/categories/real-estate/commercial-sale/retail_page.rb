@@ -15,7 +15,7 @@ class CategoryRealEstateCommercialsaleRetailPage < AdDetailsPage
   text_field :square_min_to, :name => "square-min[to]"
   div :trading_purpose, :xpath => "//div[@data-item-name='trading_purpose']"
   div :state, :xpath => "//div[@data-item-name='state']"
-  
+
   checkbox :first_line, :name => "first-line"
   checkbox :entrance, :name => "entrance"
   text_field :house_ceiling_height, :name => "house-ceiling-height"
