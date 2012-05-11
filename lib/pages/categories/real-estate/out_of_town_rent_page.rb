@@ -13,10 +13,12 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
   text_field :distance_mkad_to, :name => "distance_mkad[to]"
   div :currency, :xpath => "//div[@class='price_combo']/div[@class='lbl']"
   div :time, :class => "b-bFloat"
-  text_field :house_year_from, :name => "house_year[from]"
-  text_field :house_year_to, :name => "house_year[to]"
-  text_field :meters_total_from, :name => "meters_total[from]"
-  text_field :meters_total_to, :name => "meters_total[to]"
+  text_field :house_year_from, :name => "house-year[from]"
+  text_field :house_year_to, :name => "house-year[to]"
+  text_field :land_from, :name => "land[from]"
+  text_field :land_to, :name => "land[to]"
+  text_field :meters_total_from, :name => "meters-total[from]"
+  text_field :meters_total_to, :name => "meters-total[to]"
   text_field :rooms_from, :name => "rooms[from]"
   text_field :rooms_to, :name => "rooms[to]"
   text_field :rooms_sleep_from, :name => "rooms_sleep[from]"
@@ -61,8 +63,12 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
       self.house_year_to = hash['max']
 
     when "Площадь участка"
-      self.meters_total_from = hash['min']
-      self.meters_total_to = hash['max']
+      self.land_from = hash['min']
+      self.land_to = hash['max']
+
+    when "Площадь строения"
+      self.land_from = hash['min']
+      self.land_to = hash['max']
 
     when "Количество комнат"
       self.rooms_from = hash['min']
@@ -96,7 +102,7 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "Направление", "Район города", "Общая площадь",
+    when "Направление", "Район города", "Общая площадь", "Год постройки/сдачи", 
          "Комнат в квартире", "Жилая площадь", "Площадь кухни", "Ремонт"
       result = get_unique_parameter(field)
 
