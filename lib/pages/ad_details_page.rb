@@ -96,7 +96,7 @@ class AdDetailsPage
       result = self.title_element.when_present.text
     else
       # Custom field
-      xpath = "//table[@id='mainParams']/tbody/tr[contains(/th[text()='#{field}'])]/td"
+      xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
       result = self.cell_element(:xpath => xpath).when_present.text
     end
     result
@@ -104,19 +104,19 @@ class AdDetailsPage
   
   def get_checkbox_parameter(field)
     self.show_all_parameters
-    xpath = "//table[@id='allParams']/tbody/tr[contains(.,'#{field}')]/td/div[@class='bird']"
+    xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{field}']]/td/div[@class='bird']"
     self.div_element(:xpath => xpath).exists?
   end
   
   def get_value_parameter(field)
     self.show_all_parameters
-    xpath = "//table[@id='mainParams']/tbody/tr[contains(.,'#{field}')]/td/span[@class='value']"
+    xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td/span[@class='value']"
     self.span_element(:xpath => xpath).when_present.text
   end
   
   def get_unique_parameter(field)
     self.show_all_parameters
-    xpath = "//table[@id='allParams']/tbody/tr[contains(.,'#{field}')]/td"
+    xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{field}']]/td"
     self.cell_element(:xpath => xpath).when_present.text
   end
 end
