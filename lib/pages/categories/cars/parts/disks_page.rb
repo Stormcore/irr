@@ -62,7 +62,7 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
       result = get_unique_parameter(field)
       # Вырезаем дюймы
       result.gsub!(/ "/, '')
-    when "ET", "PCD"
+    when "Вылет (ET)", "Расстояние между болтами (PCD)"
       result = get_unique_parameter(field)
       # Вырезаем миллиметры
       result.gsub!(/ мм/, '')
