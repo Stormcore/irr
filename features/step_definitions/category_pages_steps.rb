@@ -182,54 +182,33 @@ end
   end
 end
 
-То %{в деталях каждого объявления отображается видео} do 
-  results_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
+def select_soft_assert_function(option)
+  case option
+  when "каждого"
+    alias soft_assert_function results_details_soft_assert
+  when "первого"
+    alias soft_assert_function first_result_details_soft_assert
+  end
+end
+
+То %{в деталях $option объявления отображается видео} do |option|
+  select_soft_assert_function(option)
+  soft_assert_function("Видео отсутсвует:") do |ad_page, result|
     ad_page.should have_video, "Видео не показано"
   end
 end
 
-То %{в деталях первого объявления отображается видео} do 
-  first_result_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
-    ad_page.should have_video, "Видео не показано"
-  end
-end
-
-То %{в деталях каждого объявления присутствует "$parameter"} do |parameter|
-  first_result_details_soft_assert("Значение '#{parameter}' не установлено:") do |ad_page, result|
+То %{в деталях $option объявления присутствует "$parameter"} do |option, parameter|
+  select_soft_assert_function(option)
+  soft_assert_function("Значение '#{parameter}' не установлено:") do |ad_page, result|
     ad_page.get_checkbox_parameter(parameter).should be_true, ""
   end
 end
 
-То %{в деталях первого объявления присутствует "$parameter"} do |parameter|
-  results_details_soft_assert("Значение '#{parameter}' не установлено:") do |ad_page, result|
-    ad_page.get_checkbox_parameter(parameter).should be_true, ""
-  end
-end
-
-То %{в деталях каждого объявления "$field" $operator "$values"} do |field, operator, expected|
+То %{в деталях $option объявления "$field" $operator "$values"} do |option, field, operator, expected|
+  select_soft_assert_function(option)
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
-  results_details_soft_assert(error_text) do |ad_page, result|
-      puts "DEBUG: Страница #{@browser.url}"
-      $stdout.flush
-      actual_value = ad_page.get_parameter(field)
-      case operator
-      when "равно"
-        actual_value.should == expected 
-      when "равно одному из"
-        expected.split(', ').should include actual_value
-      when "в границах"
-        expected_array = expected.split(" - ")
-        actual_value.to_i.should be >= expected_array[0].to_i
-        actual_value.to_i.should be <= expected_array[1].to_i
-      else
-        eval("actual_value.to_i.should be #{operator} expected.to_i")
-      end
-  end
-end
-
-То %{в деталях первого объявления "$field" $operator "$values"} do |field, operator, expected|
-  error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
-  first_result_details_soft_assert(error_text) do |ad_page, result|
+  soft_assert_function(error_text) do |ad_page, result|
       puts "DEBUG: Страница #{@browser.url}"
       $stdout.flush
       actual_value = ad_page.get_parameter(field)
@@ -265,9 +244,11 @@ def results_details_soft_assert(description)
   on SearchResultsPage do |page|
     @results.each do |result|
       begin
-        page.open_ad(result['url'])
-        on @category_page do |ad_page|
-          yield ad_page, result
+        if result and result.has_key?('url')
+          page.open_ad(result['url'])
+          on @category_page do |ad_page|
+            yield ad_page, result
+          end
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
@@ -295,9 +276,11 @@ def first_result_details_soft_assert(description)
     result = @results[0]
     begin
       begin
-        page.open_ad(result['url'])
-        on @category_page do |ad_page|
-          yield ad_page, result
+        if result and result.has_key?('url')
+          page.open_ad(result['url'])
+          on @category_page do |ad_page|
+            yield ad_page, result
+          end
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
