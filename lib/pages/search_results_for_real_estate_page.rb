@@ -19,11 +19,18 @@ class SearchResultsForRealEstatePage < SearchResultsPage
     json = /var additionalPopupMenuParams = (.*);/.match(doc.css("script").inner_html)[1]
     parsed_json = JSON.parse(json)
 
+    banned_classes = %w[multy-list-table banner-listing-list dontSearch]
+
     doc.css("tr").each do |row|
       # Skip of it is a banner or bottom 'not found' part
-      if row['class'].include?('banner-listing-list') or row['class'].include?('dontSearch')
-        next
+      banned_class_found = false
+      banned_classes.each do |banned_class|
+        if row['class'].include?(banned_class)
+          banned_class_found = true
+          break
+        end
       end
+      next if banned_class_found
       if row['class'].include? 'bottomParams'
         # city data
         begin
