@@ -28,7 +28,7 @@ class CategoryRealEstateOutoftownCottagePage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "Площадь дома", "Площадь участка"
+    when "Площадь строения", "Площадь участка"
       result = get_unique_parameter(field)
 
     else
