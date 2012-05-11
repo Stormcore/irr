@@ -188,6 +188,12 @@ end
   end
 end
 
+То %{в деталях первого объявления отображается видео} do 
+  first_result_details_soft_assert("Видео отсутсвует:") do |ad_page, result|
+    ad_page.should have_video, "Видео не показано"
+  end
+end
+
 То %{в деталях каждого объявления присутствует "$parameter"} do |parameter|
   results_details_soft_assert("Значение '#{parameter}' не установлено:") do |ad_page, result|
     ad_page.get_checkbox_parameter(parameter).should be_true, ""
@@ -197,6 +203,27 @@ end
 То %{в деталях каждого объявления "$field" $operator "$values"} do |field, operator, expected|
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
   results_details_soft_assert(error_text) do |ad_page, result|
+      puts "DEBUG: Страница #{@browser.url}"
+      $stdout.flush
+      actual_value = ad_page.get_parameter(field)
+      case operator
+      when "равно"
+        actual_value.should == expected 
+      when "равно одному из"
+        expected.split(', ').should include actual_value
+      when "в границах"
+        expected_array = expected.split(" - ")
+        actual_value.to_i.should be >= expected_array[0].to_i
+        actual_value.to_i.should be <= expected_array[1].to_i
+      else
+        eval("actual_value.to_i.should be #{operator} expected.to_i")
+      end
+  end
+end
+
+То %{в деталях первого объявления "$field" $operator "$values"} do |field, operator, expected|
+  error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
+  first_result_details_soft_assert(error_text) do |ad_page, result|
       puts "DEBUG: Страница #{@browser.url}"
       $stdout.flush
       actual_value = ad_page.get_parameter(field)
@@ -230,7 +257,34 @@ end
 def results_details_soft_assert(description)
   validation_errors = Hash.new
   on SearchResultsPage do |page|
-    #@results.each do |result|
+    @results.each do |result|
+      begin
+        page.open_ad(result['url'])
+        on @category_page do |ad_page|
+          yield ad_page, result
+        end
+      rescue RSpec::Expectations::ExpectationNotMetError => verification_error
+        page.highlight_result_by_url(result['url'])
+        full_url = "#{BASE_URL}#{result['url']}"
+        validation_errors[full_url] = verification_error.message
+      ensure
+        @browser.back
+      end
+    end
+  end
+
+  if !validation_errors.empty?
+    puts "URL: #{@browser.url}"
+    puts description
+    puts validation_errors
+    $stdout.flush
+    raise "Error occurred on page #{@browser.url}"
+  end
+end
+
+def first_result_details_soft_assert(description)
+  validation_errors = Hash.new
+  on SearchResultsPage do |page|
     # Проверяем только первый результат
     result = @results[0]
     begin
