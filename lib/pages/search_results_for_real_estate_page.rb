@@ -71,6 +71,12 @@ class SearchResultsForRealEstatePage < SearchResultsPage
         end
       rescue
       end
+      
+      begin
+        h['time'] = row.css('td.tdPrise > div.gray')[0].content
+      rescue
+      end
+
 
       begin
         date = parsed_json['items'][ad_id]['date']
@@ -79,7 +85,7 @@ class SearchResultsForRealEstatePage < SearchResultsPage
       end
 
       begin
-        results.last['description'] = row.css('td.tdTxt > p')[0].content
+        h['description'] = row.css('td.tdTxt > p')[0].content
       rescue
       end
 

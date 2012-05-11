@@ -106,6 +106,12 @@ end
   end
 end
 
+То %{в каждом объявлении срок сдачи равен "$parameter"} do |parameter|
+  results_page_soft_assert("Неправильный срок сдачи:") do |result|
+    result['time'].should eql("в #{parameter}")
+  end
+end
+
 То %{в каждом объявлении валюта равна "$price"} do |currency|
   results_page_soft_assert("Некорректная валюта:") do |result|
     result['currency'].should be == currency

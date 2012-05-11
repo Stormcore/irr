@@ -101,7 +101,7 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Отделка", "Этаж"
+         "Жилая площадь", "Площадь кухни", "Отделка", "Ремонт", "Этаж"
       result = get_unique_parameter(field)
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)

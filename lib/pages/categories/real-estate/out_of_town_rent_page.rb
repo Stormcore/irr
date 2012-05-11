@@ -11,6 +11,8 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
 
   text_field :distance_mkad_from, :name => "distance_mkad[from]"
   text_field :distance_mkad_to, :name => "distance_mkad[to]"
+  div :currency, :xpath => "//div[@class='price_combo']/div[@class='lbl']"
+  div :time, :class => "b-bFloat"
   text_field :house_year_from, :name => "house_year[from]"
   text_field :house_year_to, :name => "house_year[to]"
   text_field :meters_total_from, :name => "meters_total[from]"
@@ -47,6 +49,12 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
     when "Удаленность"
       self.distance_mkad_from = hash['min']
       self.distance_mkad_to = hash['max']
+
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
 
     when "Год постройки/сдачи"
       self.house_year_from = hash['min']

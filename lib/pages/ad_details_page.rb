@@ -45,6 +45,11 @@ class AdDetailsPage
     element.parent.element.div(:text => value.strip).when_present.click
   end
   
+  def linkcombo(element, list_name, value)
+    element.link_element(:class => "combo_drop_link").when_present.click
+    element.parent.div_element(:class => list_name).link_element(:text => value).when_present.click
+  end
+  
   def expand_all_parameters
     if self.expand_extended_more_element.exists?
       self.expand_extended_more
