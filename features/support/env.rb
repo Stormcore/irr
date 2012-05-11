@@ -31,7 +31,7 @@ end
 
 puts "Starting webdriver.."
 client = Selenium::WebDriver::Remote::Http::Default.new
-client.timeout = 180
+client.timeout = 240
 
 case DRIVER
 when :firefox
