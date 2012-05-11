@@ -41,8 +41,8 @@ class AdDetailsPage
   end
   
   def singleselect(element, value)
-    element.div_element(:class => "controlSelectS").click
-    element.parent.element.div(:text => value.strip).click
+    element.div_element(:class => "controlSelectS").when_present.click
+    element.parent.element.div(:text => value.strip).when_present.click
   end
   
   def expand_all_parameters
