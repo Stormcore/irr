@@ -195,6 +195,12 @@ end
 end
 
 То %{в деталях каждого объявления присутствует "$parameter"} do |parameter|
+  first_result_details_soft_assert("Значение '#{parameter}' не установлено:") do |ad_page, result|
+    ad_page.get_checkbox_parameter(parameter).should be_true, ""
+  end
+end
+
+То %{в деталях первого объявления присутствует "$parameter"} do |parameter|
   results_details_soft_assert("Значение '#{parameter}' не установлено:") do |ad_page, result|
     ad_page.get_checkbox_parameter(parameter).should be_true, ""
   end
