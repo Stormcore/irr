@@ -39,9 +39,12 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
     when "Станция метро"
       multiselect(self.metro_element, hash['value'])
 
+    when "До метро"
+      self.distance = hash['value']
+
     when "Общая площадь"
-      self.meters_total_from = hash['min']
-      self.meters_total_to = hash['max']
+      self.square_min_from = hash['min']
+      self.square_min_to = hash['max']
 
     when "Ремонт"
       singleselect(self.state_element, hash['value'])
