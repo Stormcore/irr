@@ -31,7 +31,7 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :location, :xpath => "//div[@class='b-adressAdv']/div[@class='h2']"
+  div :location, :xpath => "//div[@class='b-adressAdv']/div[@class='h2']"
   
   def set_parameter (hash)
     case hash['parameter']

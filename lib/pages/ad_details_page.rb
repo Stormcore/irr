@@ -90,7 +90,6 @@ class AdDetailsPage
   end
 
   def get_generic_parameter(field)
-    self.show_all_parameters
     case field
     when "Заголовок"
       result = self.title_element.when_present.text
