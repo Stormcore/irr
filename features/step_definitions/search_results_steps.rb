@@ -282,6 +282,6 @@ def results_page_soft_assert(description)
   if !validation_errors.empty?
     puts description
     puts validation_errors
-    raise "Ошибка на странице #{@browser.url}:\n #{description}:\n#{validation_errors}"
+    raise "Error on #{@browser.url}:"
   end
 end
