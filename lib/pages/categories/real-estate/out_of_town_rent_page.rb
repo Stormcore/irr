@@ -93,7 +93,7 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
       result = get_unique_parameter(field)
 
     when "Расположение"
-      result = get_unique_parameter("Регион").split(', ')[1]
+      result = get_generic_parameter("Регион").split(', ')[1]
 
     when "Шоссе"
       result = self.location_element.text.split(', ')[0]
