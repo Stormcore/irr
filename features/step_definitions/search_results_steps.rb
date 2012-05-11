@@ -199,9 +199,9 @@ end
       end
       
       # Текст объявления на странице
+      next if result['description'].nil?
       if UnicodeUtils.downcase(result['description']).include? downcased_keyword
         puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в тексте на странице поиска"
-        $stdout.flush
         keyword_found = true
         break
       end

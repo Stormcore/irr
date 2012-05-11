@@ -36,12 +36,6 @@ class SearchResultsForRealEstatePage < SearchResultsPage
         begin
           results.last['city'] = row.css('td.tdTxt > span.location')[0].content.strip!
         end
-        
-        # description
-        begin
-          results.last['description'] = row.css('td.tdTxt > p')[0].content
-        rescue
-        end
         next
       end
   
@@ -83,7 +77,12 @@ class SearchResultsForRealEstatePage < SearchResultsPage
         h['date'] = Date.strptime(date, '%H:%M, %d.%m.%Y')
       rescue
       end
-      
+
+      begin
+        results.last['description'] = row.css('td.tdTxt > p')[0].content
+      rescue
+      end
+
       begin
         h['source_title'] = parsed_json['items'][ad_id]['source_title']
         h['source_link'] = parsed_json['items'][ad_id]['source_link']
