@@ -41,6 +41,9 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
 
     when "До метро"
       self.distance = hash['value']
+      
+    when "Назначение помещения"
+      self.
 
     when "Общая площадь"
       self.square_min_from = hash['min']
@@ -72,17 +75,16 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Ремонт"
+         "Жилая площадь", "Площадь кухни", "Ремонт", "Назначение помещения"
       result = get_unique_parameter(field)
+      
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
+      metro_and_region = hidden_comment[0][0].split("\n")[2].strip.split(', ')[0]
       result = metro_and_region.split[0]
 
     when "Станция метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[1]
-      result = metro_and_region.split[0]
+      result = self.metro_station.text
 
     when "До метро"
       begin
@@ -91,7 +93,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
         result = 0
       end
 
-    when "Отказ получен", "Лифты в здании", "Газ в доме"
+    when "Лифты в здании", "Газ в доме"
       result = get_checkbox_parameter(field)
 
     else
