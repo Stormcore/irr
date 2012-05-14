@@ -75,8 +75,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Ремонт", "Назначение помещения"
+    when "АО", "Район города", "Общая площадь", "Ремонт", "Высота потолков"
       result = get_unique_parameter(field)
       
     when "Линия метро"
@@ -94,7 +93,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
         result = 0
       end
 
-    when "Лифты в здании", "Газ в доме"
+    when "1-я линия", "Отдельный вход", "Лифты в здании", "Охрана здания"
       result = get_checkbox_parameter(field)
 
     else
