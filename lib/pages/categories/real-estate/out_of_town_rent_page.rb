@@ -84,6 +84,10 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
     when "Строение"
       multiselect(self.object_element, hash['value'])
 
+    when "Отапливаемый"
+      self.heating_element.check
+    when "Гараж"
+      self.garage_element.check
     when "Телефон"
       self.telephone_element.check
     when "Мебель"
