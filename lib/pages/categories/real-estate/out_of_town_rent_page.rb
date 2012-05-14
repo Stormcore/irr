@@ -67,8 +67,8 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
       self.land_to = hash['max']
 
     when "Площадь строения"
-      self.land_from = hash['min']
-      self.land_to = hash['max']
+      self.meters_total_from = hash['min']
+      self.meters_total_to = hash['max']
 
     when "Количество комнат"
       self.rooms_from = hash['min']
