@@ -239,7 +239,6 @@ end
       @browser.back
     end
 
-    puts "Ключевое слово не найдено"
     raise RSpec::Expectations::ExpectationNotMetError, "Keyword not found" unless keyword_found
   end
 end
