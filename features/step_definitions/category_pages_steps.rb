@@ -133,6 +133,10 @@ def select_class_for_category(category)
   when "Недвижимость -> Коммерческая. Продажа -> Производство и склады"
     @category_page = CategoryRealEstateCommercialsaleProductionWarehousesPage
 
+  when "Недвижимость -> Коммерческая. Продажа -> Кафе. Бары. Рестораны"
+    @category_page = CategoryRealEstateCommercialsaleEatingPage
+
+
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
 
