@@ -75,7 +75,7 @@ class CategoryRealEstateOutoftownHousesPage < AdDetailsPage
       singleselect(self.walltype_element, hash['value'])
 
     when "Строение"
-      singleselect(self.object_element, hash['value'])
+      multiselect(self.object_element, hash['value'])
 
     when "Ремонт"
       singleselect(self.state_element, hash['value'])
