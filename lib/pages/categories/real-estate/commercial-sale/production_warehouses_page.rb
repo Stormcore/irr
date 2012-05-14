@@ -1,24 +1,26 @@
 # encoding: utf-8
 
-class CategoryRealEstateCommercialsaleRetailPage < AdDetailsPage
+class CategoryRealEstateCommercialsaleProductionWarehousesPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/real-estate/commercial-sale/retail"
+  @@url_suffix = "/real-estate/commercial-sale/production-warehouses"
 
   div :ao, :xpath => "//div[@data-name='ab_ao']"
   div :district, :xpath => "//div[@data-name='ab_district']"
   div :metro_lane, :xpath => "//div[@data-name='address_metro_lane']"
   div :metro, :xpath => "//div[@data-name='metro']"
   text_field :distance, :name => "distance"
-  
+
+  div :warehouse_type_object, :xpath => "//div[@data-item-name='warehouse_type_object']"
   text_field :square_min_from, :name => "square-min[from]"
   text_field :square_min_to, :name => "square-min[to]"
-  div :trading_purpose, :xpath => "//div[@data-item-name='trading_purpose']"
-  div :state, :xpath => "//div[@data-item-name='state']"
-
-  checkbox :first_line, :name => "first-line"
-  checkbox :entrance, :name => "entrance"
   text_field :house_ceiling_height, :name => "house-ceiling-height"
+  
+  checkbox :heating2, :name => "heating2"
+  checkbox :security, :name => "security"
+  checkbox :railway, :name => "railway"
+  text_field :electro_from, :name => "electro[from]"
+  text_field :electro_to, :name => "electro[to]"
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
@@ -42,27 +44,28 @@ class CategoryRealEstateCommercialsaleRetailPage < AdDetailsPage
     when "До метро"
       self.distance = hash['value']
 
+    when "Назначение помещения"
+      singleselect(self.warehouse_type_object_element, hash['value'])
+
     when "Общая площадь"
       self.square_min_from = hash['min']
       self.square_min_to = hash['max']
 
-    when "Ремонт"
-      singleselect(self.state_element, hash['value'])
-
-    when "1-я линия"
-      self.first_line_element.check
-
-    when "Отдельный вход"
-      self.entrance_element.check
-
-    when "Назначение помещения"
-      singleselect(self.trading_purpose_element, hash['value'])
-
-    when "Охрана здания"
-      self.house_lift_element.check
-
     when "Высота потолков"
-      self.house_ceiling_height_element.check
+      self.house_ceiling_height = hash['value']
+
+    when "Отапливаемое"
+      self.heating2_element.check
+
+    when "Охрана"
+      self.security_element.check
+
+    when "Ж/д пути"
+      self.railway_element.check
+
+    when "Подключенная мощность"
+      self.electro_from = hash['min']
+      self.electro_to = hash['max']
 
     else
       super(hash)
@@ -71,8 +74,8 @@ class CategoryRealEstateCommercialsaleRetailPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Ремонт"
+    when "АО", "Район города", "Назначение помещения", "Общая площадь", 
+         "Высота потолков", "Подключенная мощность"
       result = get_unique_parameter(field)
 
     when "Линия метро"
@@ -90,7 +93,7 @@ class CategoryRealEstateCommercialsaleRetailPage < AdDetailsPage
         result = 0
       end
 
-    when "Отказ получен", "Лифты в здании", "Газ в доме"
+    when "Отапливаемое", "Охрана", "Ж/д пути"
       result = get_checkbox_parameter(field)
 
     else
