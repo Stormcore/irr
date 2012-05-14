@@ -163,6 +163,9 @@ def select_class_for_category(category)
   when "Недвижимость -> Гаражи и стоянки. Продажа -> Машиноместо"
     @category_page = CategoryRealEstateGarageParkingPage
 
+  when "Недвижимость -> Гаражи и стоянки. Продажа -> Гаражи и боксы"
+    @category_page = CategoryRealEstateGarageStallPage
+
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
 

@@ -11,16 +11,9 @@ class CategoryRealEstateGarageParkingPage < AdDetailsPage
   div :metro, :xpath => "//div[@data-name='metro']"
   text_field :distance, :name => "distance"
 
-  text_field :meters_total_from, :name => "meters-total[from]"
-  text_field :meters_total_to, :name => "meters-total[to]"
-  text_field :square_hall_from, :name => "square-hall[from]"
-  text_field :square_hall_to, :name => "square-hall[to]"
-  checkbox :entrance, :name => "entrance"
-  checkbox :first_line, :name => "first-line"
-  checkbox :equipment, :name => "equipment"
-
-  div :heating, :xpath => "//div[@data-name='heating']"
-  div :water, :xpath => "//div[@data-name='water']"
+  div :carplace_type, :xpath => "//div[@data-item-name='carplace_type']"
+  checkbox :heating1, :name => "heating1"
+  checkbox :gsk, :name => "gsk"
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
@@ -44,28 +37,14 @@ class CategoryRealEstateGarageParkingPage < AdDetailsPage
     when "До метро"
       self.distance = hash['value']
 
-    when "Общая площадь"
-      self.meters_total_from = hash['min']
-      self.meters_total_to = hash['max']
+    when "Тип стоянки"
+      multiselect(self.carplace_element, hash['value'])
 
-    when "Площадь зала"
-      self.square_hall_from = hash['min']
-      self.square_hall_to = hash['max']
+    when "Отапливаемый"
+      self.heating1_element.check
 
-    when "Отдельный вход"
-      self.entrance_element.check
-
-    when "1-я линия"
-      self.first_line_element.check
-
-    when "Оборудование"
-      self.equipment_element.check
-
-    when "Система отопления"
-      multiselect(self.heating_element, hash['value'])
-
-    when "Система водоснабжения"
-      multiselect(self.water_element, hash['value'])
+    when "На территории ГСК или ГК"
+      self.gsk_element.check
 
     else
       super(hash)
@@ -74,8 +53,7 @@ class CategoryRealEstateGarageParkingPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Общая площадь", "Площадь зала",
-         "Система отопления", "Система водоснабжения"
+    when "АО", "Район города", "Тип стоянки"
       result = get_unique_parameter(field)
 
     when "Линия метро"
@@ -93,7 +71,7 @@ class CategoryRealEstateGarageParkingPage < AdDetailsPage
         result = 0
       end
 
-    when "Отдельный вход", "1-я линия", "Оборудование"
+    when "Отапливаемый", "На территории ГСК или ГК"
       result = get_checkbox_parameter(field)
 
     else
