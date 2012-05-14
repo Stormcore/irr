@@ -46,6 +46,12 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
     when "Станция метро"
       multiselect(self.metro_element, hash['value'])
 
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
+
     when "До метро"
       self.distance = hash['value']
 

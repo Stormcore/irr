@@ -3,7 +3,7 @@
 class CategoryRealEstateRoomsRentPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/real-estate/rent"
+  @@url_suffix = "/real-estate/rooms-rent"
 
   div :ao, :xpath => "//div[@data-name='ab_ao']"
   div :district, :xpath => "//div[@data-name='ab_district']"
@@ -88,8 +88,9 @@ class CategoryRealEstateRoomsRentPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат сдается", 
-         "Площадь арендуемой комнаты", "Ремонт"
+         "Ремонт"
       result = get_unique_parameter(field)
+      
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
       metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
