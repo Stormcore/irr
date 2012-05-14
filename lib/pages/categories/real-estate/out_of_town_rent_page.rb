@@ -82,7 +82,7 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
       singleselect(self.walltype_element, hash['value'])
 
     when "Строение"
-      singleselect(self.object_element, hash['value'])
+      multiselect(self.object_element, hash['value'])
 
     when "Телефон"
       self.telephone_element.check
@@ -103,7 +103,8 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "Направление", "Район города", "Общая площадь", "Год постройки/сдачи", 
-         "Комнат в квартире", "Жилая площадь", "Площадь кухни", "Ремонт"
+         "Комнат в квартире", "Жилая площадь", "Площадь кухни", "Ремонт",
+         "Этаж в здании"
       result = get_unique_parameter(field)
 
     when "Расположение"
@@ -115,7 +116,8 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
     when "Удаленность"
       result = self.location_element.text.split(', ')[1].split[0].to_i
 
-    when "Телефон", "Мебель", "Бытовая техника", "Интернет", "Телефон"
+    when "Телефон", "Мебель", "Бытовая техника", "Интернет", "Телефон",
+         "Отапливаемый", "Гараж"
       result = get_checkbox_parameter(field)
 
     else

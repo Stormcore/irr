@@ -51,6 +51,12 @@ class CategoryRealEstateRentPage < AdDetailsPage
     when "До метро"
       self.distance = hash['value']
 
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
+
     when "Комнат в квартире"
       multiselect_inline(self.rooms_element, hash['value'])
 
@@ -84,7 +90,6 @@ class CategoryRealEstateRentPage < AdDetailsPage
       self.furniture_element.check
     when "Бытовая техника"
       self.household_element.check
-
 
     when "Этаж в здании"
       self.etage_from = hash['min']
