@@ -115,7 +115,7 @@ Around('@soft_assert') do |scenario, block|
   @validation_errors = Hash.new
   block.call
   if !@validation_errors.empty?
-    raise "Найдены следующие ошибки: \n #{@validation_errors}"
+    raise "Found JS errors: \n #{@validation_errors}"
   end
 end
 

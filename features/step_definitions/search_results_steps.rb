@@ -182,8 +182,8 @@ end
         break
       end
     end
-    message = "Ключевое слово не найдено в заголовке '#{result['title']}'"
-    raise RSpec::Expectations::ExpectationNotMetError, message unless keyword_found
+    puts "Ключевое слово не найдено в заголовке '#{result['title']}'"
+    raise RSpec::Expectations::ExpectationNotMetError, "Error occured" unless keyword_found
   end
 end
 
@@ -239,8 +239,8 @@ end
       @browser.back
     end
 
-    message = "Ключевое слово не найдено"
-    raise RSpec::Expectations::ExpectationNotMetError, message unless keyword_found
+    puts "Ключевое слово не найдено"
+    raise RSpec::Expectations::ExpectationNotMetError, "Keyword not found" unless keyword_found
   end
 end
 
@@ -267,7 +267,7 @@ end
         steps %Q{Then я перехожу на страницу #{@current_page_number+1}}
       end
     end 
-    raise "Объявление не найдено" unless ad_found
+    raise "Ad was not found" unless ad_found
   end
 end
 

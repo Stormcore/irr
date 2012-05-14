@@ -14,7 +14,7 @@ class SearchResultsPage
     begin
       doc = Nokogiri::HTML.parse(results_table_element.when_present.element.html)
     rescue
-      raise "Список результатов не отображен" if attempts == 0
+      raise "Result list was not displayed" if attempts == 0
       self.refresh
       attempts -= 1
       retry

@@ -90,7 +90,8 @@ class AdDetailsPage
       singleselect(self.date_create_element, hash['value'])
  
     else
-      raise "Неизвестный параметр: #{hash['parameter']}"
+      puts "Неизвестный параметр: #{hash['parameter']}"
+      raise "Unknown parameter"
     end
   end
 

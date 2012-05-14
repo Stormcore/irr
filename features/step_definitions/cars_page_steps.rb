@@ -3,8 +3,7 @@
 Когда %{на странице отображен блок "Автосалоны и дилеры"} do
   on CategoryCarsPage do |page|
     lambda {page.dealers_section_element.when_present}.should_not
-     raise Watir::Wait::TimeoutError,
-     "Блок 'Автосалоны и дилеры' не отображен"
+     raise Watir::Wait::TimeoutError, "Autodealers block is not displayed"
   end
 end
 
