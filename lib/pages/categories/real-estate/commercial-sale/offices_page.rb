@@ -23,7 +23,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
+  div :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)
@@ -44,7 +44,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
       self.distance = hash['value']
       
     when "Назначение помещения"
-      self.
+      singleselect(self.state, hash['value'])
 
     when "Общая площадь"
       self.square_min_from = hash['min']
@@ -85,7 +85,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
       result = metro_and_region.split[0]
 
     when "Станция метро"
-      result = self.metro_station.text
+      result = self.metro_station.split(', ')[0]
 
     when "До метро"
       begin
