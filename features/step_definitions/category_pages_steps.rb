@@ -178,6 +178,9 @@ def select_class_for_category(category)
   when "Недвижимость -> Обмен"
     @category_page = CategoryRealEstateExchangePage
 
+  when "Недвижимость -> Другое"
+    @category_page = CategoryRealEstateOtherPage
+
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
 
