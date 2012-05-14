@@ -42,13 +42,13 @@ class CategoryRealEstateOutoftownLandsPage < AdDetailsPage
       self.distance = hash['value']
 
     when "Категория земли"
-      singleselect(self.land_purpose, hash['value'])
+      singleselect(self.land_purpose_element, hash['value'])
 
     when "Вид разрешенного использования"
-      singleselect(self.land_usage, hash['value'])
+      singleselect(self.land_usage_element, hash['value'])
 
     when "Вид права"
-      singleselect(self.land_law, hash['value'])
+      singleselect(self.land_law_element, hash['value'])
 
     when "Площадь участка"
       self.land_from = hash['min']
