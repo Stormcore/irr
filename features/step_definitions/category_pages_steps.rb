@@ -142,6 +142,24 @@ def select_class_for_category(category)
   when "Недвижимость -> Коммерческая. Продажа -> Другие и свободного назначения"
     @category_page = CategoryRealEstateCommercialsaleMiscPage
 
+  when "Недвижимость -> Коммерческая. Аренда -> Офисы"
+    @category_page = CategoryRealEstateCommercialRentOfficesPage
+
+  when "Недвижимость -> Коммерческая. Аренда -> Торговля и сервис"
+    @category_page = CategoryRealEstateCommercialRentRetailPage
+
+  when "Недвижимость -> Коммерческая. Аренда -> Производство и склады"
+    @category_page = CategoryRealEstateCommercialRentProductionWarehousesPage
+
+  when "Недвижимость -> Коммерческая. Аренда -> Кафе. Бары. Рестораны"
+    @category_page = CategoryRealEstateCommercialRentEatingPage
+
+  when "Недвижимость -> Коммерческая. Аренда -> Здания и особняки"
+    @category_page = CategoryRealEstateCommercialRentHousesPage
+
+  when "Недвижимость -> Коммерческая. Аренда -> Другие и свободного назначения"
+    @category_page = CategoryRealEstateCommercialRentMiscPage
+
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage
 
