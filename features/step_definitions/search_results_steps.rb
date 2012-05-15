@@ -182,8 +182,10 @@ end
         break
       end
     end
-    puts "Ключевое слово не найдено в заголовке '#{result['title']}'"
-    raise RSpec::Expectations::ExpectationNotMetError, "Error occured" unless keyword_found
+    unless keyword_found
+      puts "Ключевое слово не найдено в заголовке '#{result['title']}'"
+      raise RSpec::Expectations::ExpectationNotMetError, "Error occured"
+    end
   end
 end
 
