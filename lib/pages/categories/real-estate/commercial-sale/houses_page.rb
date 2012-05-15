@@ -44,7 +44,7 @@ class CategoryRealEstateCommercialsaleHousesPage < AdDetailsPage
       self.meters_total_to = hash['max']
 
     when "Ремонт"
-      multiselect(self.state_element, hash['value'])
+      singleselect(self.state_element, hash['value'])
 
     when "1-я линия"
       self.first_line_element.check
