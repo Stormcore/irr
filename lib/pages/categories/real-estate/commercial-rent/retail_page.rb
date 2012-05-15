@@ -22,7 +22,7 @@ class CategoryRealEstateCommercialRentRetailPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
+  div :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)
@@ -46,6 +46,12 @@ class CategoryRealEstateCommercialRentRetailPage < AdDetailsPage
       self.square_min_from = hash['min']
       self.square_min_to = hash['max']
 
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
+
     when "Ремонт"
       singleselect(self.state_element, hash['value'])
 
@@ -62,7 +68,7 @@ class CategoryRealEstateCommercialRentRetailPage < AdDetailsPage
       self.house_lift_element.check
 
     when "Высота потолков"
-      self.house_ceiling_height_element.check
+      self.house_ceiling_height = hash['value']
 
     else
       super(hash)
@@ -72,7 +78,7 @@ class CategoryRealEstateCommercialRentRetailPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Ремонт"
+         "Жилая площадь", "Площадь кухни", "Ремонт", "Назначение помещения"
       result = get_unique_parameter(field)
 
     when "Линия метро"

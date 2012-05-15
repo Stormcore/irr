@@ -42,7 +42,13 @@ class CategoryRealEstateCommercialRentOfficesPage < AdDetailsPage
 
     when "До метро"
       self.distance = hash['value']
-      
+
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
+
     when "Назначение помещения"
       singleselect(self.state, hash['value'])
 

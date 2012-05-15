@@ -19,12 +19,12 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
   checkbox :first_line, :name => "first-line"
   checkbox :equipment, :name => "equipment"
 
-  div :heating, :xpath => "//div[@data-name='heating']"
-  div :water, :xpath => "//div[@data-name='water']"
+  div :heating, :xpath => "//div[@data-item-name='heating']"
+  div :water, :xpath => "//div[@data-item-name='water']"
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
+  div :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)
@@ -44,6 +44,12 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
     when "До метро"
       self.distance = hash['value']
 
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
+
     when "Общая площадь"
       self.meters_total_from = hash['min']
       self.meters_total_to = hash['max']
@@ -62,10 +68,10 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
       self.equipment_element.check
 
     when "Система отопления"
-      multiselect(self.heating_element, hash['value'])
+      singleselect(self.heating_element, hash['value'])
 
     when "Система водоснабжения"
-      multiselect(self.water_element, hash['value'])
+      singleselect(self.water_element, hash['value'])
 
     else
       super(hash)
@@ -84,11 +90,11 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
       result = metro_and_region.split[0]
 
     when "Станция метро"
-      result = self.metro_station.text
+      result = self.metro_station
 
     when "До метро"
       begin
-        result = self.peshkom_element.text.split[0].to_i
+        result = self.peshkom.split[0].to_i
       rescue Watir::Exception::UnknownObjectException
         result = 0
       end

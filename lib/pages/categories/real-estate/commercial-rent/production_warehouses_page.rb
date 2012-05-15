@@ -24,7 +24,7 @@ class CategoryRealEstateCommercialRentProductionWarehousesPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
+  div :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)
@@ -43,6 +43,12 @@ class CategoryRealEstateCommercialRentProductionWarehousesPage < AdDetailsPage
 
     when "До метро"
       self.distance = hash['value']
+
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
 
     when "Назначение помещения"
       singleselect(self.warehouse_type_object_element, hash['value'])
