@@ -4,7 +4,6 @@ require 'cucumber/rake/task'
 Cucumber::Rake::Task.new(:compile) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                         "-t @compile",
-                        "--format json  --out cucumber.json",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty",
@@ -14,7 +13,6 @@ end
 Cucumber::Rake::Task.new(:wip) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "-t @compile,@wip",
-                        "--format json  --out cucumber.json",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty",
@@ -25,7 +23,6 @@ Cucumber::Rake::Task.new(:failing) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "-r features",
                         "-t @compile,@failing",
-                        "--format json  --out cucumber.json",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty"]
@@ -35,7 +32,16 @@ Cucumber::Rake::Task.new(:tag) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "-r features",
                         "-t @#{ENV['TAG'] || "all"}",
-                        "--format json  --out cucumber.json",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format pretty"]
+end
+
+Cucumber::Rake::Task.new(:bug) do |task|
+    task.cucumber_opts = ["HEADLESS=true",
+                        "FAILFAST=true",
+                        "-r features",
+                        "-t @#{ENV['BUG']}",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty"]
@@ -46,7 +52,6 @@ Cucumber::Rake::Task.new(:feature) do |task|
                         "#{ENV['FEATURE']}",
                         "-r features",
                         "-t ~@wip -t ~@bugs",
-                        "--format json  --out cucumber.json",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty"]
@@ -55,7 +60,6 @@ end
 Cucumber::Rake::Task.new(:all) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                       "-t @compile,~@wip",
-                      "--format json  --out cucumber.json",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format pretty",
