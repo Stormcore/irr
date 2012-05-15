@@ -189,12 +189,13 @@ end
   end
 end
 
-То %{в каждом объявлении содержится "$keywords"} do |keywords|
-  steps %Q{Then в каждом объявлении содержится одно из "#{keywords}"}
+То %{в $option объявлении содержится "$keywords"} do |option, keywords|
+  steps %Q{Then в #{option} объявлении содержится одно из "#{keywords}"}
 end
 
-То %{в каждом объявлении содержится одно из "$keyword"} do |keywords|
-  results_page_soft_assert("Нет ключевого слова в объявлении") do |result|
+То %{в $option объявлении содержится одно из "$keyword"} do |option, keywords|
+  select_soft_assert_function(option)
+  soft_assert_function("Нет ключевого слова в объявлении") do |result|
     keyword_found = false
     # Проверяем результаты поиск
     keywords.split(", ").each do |keyword|
@@ -269,6 +270,55 @@ end
       end
     end 
     raise "Ad was not found" unless ad_found
+  end
+end
+
+
+
+То %{объявление с заголовком "$header" присутствует на первых $n страницах поиска} do |header, n|
+  ad_found = false
+
+  steps %Q{When я ищу "#{header}"}
+  on SearchResultsPage do |page|
+    unless defined?(@current_page_number)
+        @current_page_number = 1
+    end
+    while @current_page_number < n.to_i
+      steps %Q{When на странице поиска загружен список результатов}
+      @results.each do |result|
+        if result['title'] == header
+          puts "Найдено объявление на странице №#{@current_page_number}"
+          ad_found = true
+          break
+        end
+      end
+      if ad_found
+        break
+      else
+        steps %Q{Then я перехожу на страницу #{@current_page_number+1}}
+      end
+    end 
+    raise "Ad was not found" unless ad_found
+  end
+end
+
+def first_result_page_soft_assert(description)
+  validation_errors = Hash.new
+  on SearchResultsPage do |page|
+    result = @results[0]
+    begin
+      yield result
+    rescue RSpec::Expectations::ExpectationNotMetError => verification_error
+      page.highlight_result_by_url(result['url'])
+      full_url = "#{BASE_URL}#{result['url']}"
+      validation_errors[full_url] = verification_error.message
+    end
+  end
+
+  if !validation_errors.empty?
+    puts description
+    puts validation_errors
+    raise "Error on #{@browser.url}:"
   end
 end
 

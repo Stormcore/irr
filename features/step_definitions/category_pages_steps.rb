@@ -243,8 +243,12 @@ def select_soft_assert_function(option)
   case option
   when "каждого"
     alias soft_assert_function results_details_soft_assert
+  when "каждом"
+    alias soft_assert_function results_page_soft_assert
   when "первого"
     alias soft_assert_function first_result_details_soft_assert
+  when "первом"
+    alias soft_assert_function first_result_page_soft_assert
   end
 end
 
@@ -343,8 +347,6 @@ def first_result_details_soft_assert(description)
         page.highlight_result_by_url(result['url'])
         full_url = "#{BASE_URL}#{result['url']}"
         validation_errors[full_url] = verification_error.message
-      ensure
-        @browser.back
       end
     end
   end

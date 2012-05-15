@@ -10,16 +10,17 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
   div :metro_lane, :xpath => "//div[@data-name='address_metro_lane']"
   div :metro, :xpath => "//div[@data-name='metro']"
   text_field :distance, :name => "distance"
-  div :rooms, :xpath => "//div[@data-item-name='rooms']"
+  div :rooms, :xpath => "//div[@data-item-name='rooms-for-sale']"
   text_field :meters_total_from, :name => "meters-total[from]"
   text_field :meters_total_to, :name => "meters-total[to]"
   
-  span :show_kitchen_params, :text => 'Площадь Жилая/Кухня'
+  span :show_kitchen_params, :text => 'Квартира'
   text_field :meters_living_from, :name => "meters-living[from]"
   text_field :meters_living_to, :name => "meters-living[to]"
   text_field :kitchen_from, :name => "kitchen[from]"
   text_field :kitchen_to, :name => "kitchen[to]"
   
+  span :show_building_params, :text => 'Здание'
   div :floor_house, :xpath => "//div[@data-item-name='floor_house']"
   div :state, :xpath => "//div[@data-item-name='state']"
   checkbox :refuse, :name => "refuse"
@@ -46,12 +47,6 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
     when "Станция метро"
       multiselect(self.metro_element, hash['value'])
 
-    when "Валюта"
-      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
-
-    when "Срок сдачи"
-      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
-
     when "До метро"
       self.distance = hash['value']
 
@@ -62,37 +57,23 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
       self.meters_total_from = hash['min']
       self.meters_total_to = hash['max']
 
-    when "Жилая площадь"
-      unless self.meters_living_from_element.visible?
-        self.show_kitchen_params_element.parent.click
-      end
-      self.meters_living_from = hash['min']
-      self.meters_living_to = hash['max']
-
-    when "Площадь кухни"
-      unless self.kitchen_from_element.visible?
-        self.show_kitchen_params_element.parent.click
-      end
-      self.kitchen_from = hash['min']
-      self.kitchen_to = hash['max']
-
-    when "Этаж"
-      multiselect(self.floor_house_element, hash['value'])
-
     when "Ремонт"
       singleselect(self.state_element, hash['value'])
 
     when "Отказ получен"
       self.refuse_element.check
 
-    when "Этаж в здании"
+    when "Этажей в здании"
+      self.show_building_params_element.parent.click unless self.etage_from_element.visible?
       self.etage_from = hash['min']
       self.etage_to = hash['max']
 
     when "Лифты в здании"
+      self.show_building_params_element.parent.click unless self.house_lift_element.visible?
       self.house_lift_element.check
 
     when "Газ в доме"
+      self.show_building_params_element.parent.click unless self.gas_element.visible?
       self.gas_element.check
 
     else
@@ -102,7 +83,7 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
+    when "АО", "Район города", "Площадь продажи", "Комнат в квартире", 
          "Жилая площадь", "Площадь кухни", "Ремонт"
       result = get_unique_parameter(field)
     when "Линия метро"

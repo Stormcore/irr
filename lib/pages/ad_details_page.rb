@@ -28,7 +28,7 @@ class AdDetailsPage
 
   def multiselect_inline(element, values)
     values.split(",").each do |value|
-      element.link_element(:text => value).when_present.click
+      element.link_element(:xpath => "//a[./span[text()='#{value}']]").when_present.click
     end
   end
 
