@@ -1,5 +1,6 @@
 # language:ru
 # encoding: utf-8
+@empty_results
 Функционал: Недвижимость -> Другое
 
   Контекст:
