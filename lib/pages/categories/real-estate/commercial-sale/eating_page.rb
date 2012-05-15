@@ -24,7 +24,7 @@ class CategoryRealEstateCommercialsaleEatingPage < AdDetailsPage
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
+  div :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)
@@ -62,10 +62,10 @@ class CategoryRealEstateCommercialsaleEatingPage < AdDetailsPage
       self.equipment_element.check
 
     when "Система отопления"
-      multiselect(self.heating_element, hash['value'])
+      singleselect(self.heating_element, hash['value'])
 
     when "Система водоснабжения"
-      multiselect(self.water_element, hash['value'])
+      singleselect(self.water_element, hash['value'])
 
     else
       super(hash)
