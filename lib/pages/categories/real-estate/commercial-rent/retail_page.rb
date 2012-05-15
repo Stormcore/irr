@@ -78,7 +78,8 @@ class CategoryRealEstateCommercialRentRetailPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат в квартире", 
-         "Жилая площадь", "Площадь кухни", "Ремонт", "Назначение помещения"
+         "Жилая площадь", "Площадь кухни", "Ремонт", "Назначение помещения",
+         "Высота потолков"
       result = get_unique_parameter(field)
 
     when "Линия метро"
