@@ -10,6 +10,8 @@ class CategoryRealEstateRentPage < AdDetailsPage
   div :metro_lane, :xpath => "//div[@data-name='address_metro_lane']"
   div :metro, :xpath => "//div[@data-name='metro']"
   text_field :distance, :name => "distance"
+  div :currency, :xpath => "//div[@class='price_combo']/div[@class='lbl']"
+  div :time, :class => "b-bFloat"
   div :rooms, :xpath => "//div[@data-item-name='rooms']"
   text_field :meters_total_from, :name => "meters-total[from]"
   text_field :meters_total_to, :name => "meters-total[to]"

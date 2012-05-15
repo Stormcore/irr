@@ -10,12 +10,15 @@ class CategoryRealEstateRoomsRentPage < AdDetailsPage
   div :metro_lane, :xpath => "//div[@data-name='address_metro_lane']"
   div :metro, :xpath => "//div[@data-name='metro']"
   text_field :distance, :name => "distance"
+  div :currency, :xpath => "//div[@class='price_combo']/div[@class='lbl']"
+  div :time, :class => "b-bFloat"
   div :rooms, :xpath => "//div[@data-item-name='roomsForRent']"
   
-  span :show_kitchen_params, :text => 'Площадь Жилая/Кухня'
+  span :show_kitchen_params, :text => 'Квартира'
   text_field :meters_living_from, :name => "meters-living[from]"
   text_field :meters_living_to, :name => "meters-living[to]"
   
+  span :show_building_params, :text => 'Здание'
   div :floor_house, :xpath => "//div[@data-item-name='floor_house']"
   div :state, :xpath => "//div[@data-item-name='state']"
   checkbox :furniture, :name => "furniture"
@@ -56,6 +59,12 @@ class CategoryRealEstateRoomsRentPage < AdDetailsPage
       self.meters_living_from = hash['min']
       self.meters_living_to = hash['max']
 
+    when "Валюта"
+      linkcombo(self.currency_element, "popupComboPriceCurrency", hash['value'])
+
+    when "Срок сдачи"
+      linkcombo(self.time_element, "popupComboPricePeriod", hash['value'])
+
     when "Этаж"
       multiselect(self.floor_house_element, hash['value'])
 
@@ -71,13 +80,22 @@ class CategoryRealEstateRoomsRentPage < AdDetailsPage
 
 
     when "Этаж в здании"
+      unless self.etage_from_element.visible?
+        self.show_building_params_element.parent.click
+      end
       self.etage_from = hash['min']
       self.etage_to = hash['max']
 
     when "Лифты в здании"
+      unless self.house_lift_element.visible?
+        self.show_building_params_element.parent.click
+      end
       self.house_lift_element.check
 
     when "Газ в доме"
+      unless self.gas_element.visible?
+        self.show_building_params_element.parent.click
+      end
       self.gas_element.check
 
     else
@@ -88,7 +106,7 @@ class CategoryRealEstateRoomsRentPage < AdDetailsPage
   def get_parameter(field)
     case field
     when "АО", "Район города", "Общая площадь", "Комнат сдается", 
-         "Ремонт"
+         "Ремонт", "Площадь арендуемой комнаты"
       result = get_unique_parameter(field)
       
     when "Линия метро"
