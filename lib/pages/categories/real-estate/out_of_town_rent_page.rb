@@ -108,7 +108,7 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
     case field
     when "Направление", "Район города", "Общая площадь", "Год постройки/сдачи", 
          "Комнат в квартире", "Жилая площадь", "Площадь кухни", "Ремонт",
-         "Этаж в здании"
+         "Этаж в здании", "Строение"
       result = get_unique_parameter(field)
 
     when "Расположение"
