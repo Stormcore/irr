@@ -19,8 +19,8 @@ class CategoryRealEstateCommercialsaleEatingPage < AdDetailsPage
   checkbox :first_line, :name => "first-line"
   checkbox :equipment, :name => "equipment"
 
-  div :heating, :xpath => "//div[@data-name='heating']"
-  div :water, :xpath => "//div[@data-name='water']"
+  div :heating, :xpath => "//div[@data-item-name='heating']"
+  div :water, :xpath => "//div[@data-item-name='water']"
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"

@@ -13,13 +13,13 @@ class CategoryRealEstateCommercialsaleHousesPage < AdDetailsPage
 
   text_field :meters_total_from, :name => "meters-total[from]"
   text_field :meters_total_to, :name => "meters-total[to]"
-  div :state, :xpath => "//div[@data-name='state']"
+  div :state, :xpath => "//div[@data-item-name='state']"
   checkbox :first_line, :name => "first-line"
   checkbox :parking, :name => "parking"
   
   # Параметры объявления
   div :ad_content, :xpath => "//div[@class='b-content']"
-  span :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
+  div :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
   
   def set_parameter (hash)

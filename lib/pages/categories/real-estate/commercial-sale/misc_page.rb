@@ -13,7 +13,7 @@ class CategoryRealEstateCommercialsaleMiscPage < AdDetailsPage
 
   text_field :meters_total_from, :name => "square-min[from]"
   text_field :meters_total_to, :name => "square-min[to]"
-  div :state, :xpath => "//div[@data-name='state']"
+  div :state, :xpath => "//div[@data-item-name='state']"
   checkbox :first_line, :name => "first-line"
   checkbox :entrance, :name => "entrance"
   
