@@ -41,7 +41,7 @@ Cucumber::Rake::Task.new(:bug) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "FAILFAST=true",
                         "-r features",
-                        "-t @#{ENV['BUG']}",
+                        "-t @bug#{ENV['BUG']}",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty"]
