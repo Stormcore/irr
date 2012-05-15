@@ -107,6 +107,12 @@ After do |scenario|
   end
 end
 
+if(ENV['FAILFAST'])
+  After do |s| 
+    Cucumber.wants_to_quit = true if s.failed?
+  end
+end
+
 at_exit do
   browser.close if not KEEP_OPEN
   headless.destroy if HEADLESS
