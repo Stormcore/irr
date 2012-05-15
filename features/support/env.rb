@@ -15,6 +15,7 @@ require 'net/http'
 require 'uri'
 require 'date'
 require 'unicode_utils/downcase'
+require 'cucumber/formatter/unicode'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'

@@ -62,4 +62,4 @@ Cucumber::Rake::Task.new(:all) do |task|
                       "features"]
 end
 
-task :default => :all_tests
+task :default => :all
