@@ -84,7 +84,7 @@ class CategoryRealEstateCommercialsaleProductionWarehousesPage < AdDetailsPage
       result = metro_and_region.split[0]
 
     when "Станция метро"
-      result = self.metro_station.text
+      result = self.metro_station
 
     when "До метро"
       begin

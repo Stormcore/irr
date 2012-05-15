@@ -90,7 +90,8 @@ AfterConfiguration do |config|
 end
 
 AfterStep do |scenario|
-  raise get_js_error_feedback() unless get_js_error_feedback().empty?
+  js_errors = get_js_error_feedback()
+  raise js_errors unless js_errors.empty?
 end
 
 After do |scenario|
