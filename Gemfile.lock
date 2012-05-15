@@ -52,8 +52,9 @@ GEM
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
+    syntax (1.0.0)
     unicode_utils (1.3.0)
-    watir-webdriver (0.5.7)
+    watir-webdriver (0.5.8)
       selenium-webdriver (>= 2.18.0)
 
 PLATFORMS
