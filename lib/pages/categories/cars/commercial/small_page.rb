@@ -29,7 +29,11 @@ class CategoryCarsCommercialSmallPage < AdDetailsPage
       # Делим отображаемый результат на 1000 
       result = self.send("#{@@getter_functions[field]}").to_i / 1000
     else
-      result = self.send("#{@@getter_functions[field]}")
+      if @@getter_functions.has_key?(field)
+        result = self.send("#{@@getter_functions[field]}")
+      else
+        result = get_generic_parameter(field)
+      end
     end
     result
   end

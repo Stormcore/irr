@@ -19,6 +19,10 @@ class CategoryCarsMiscMotoPage < AdDetailsPage
   end
   
   def get_parameter (field)
-    self.send("#{@@getter_functions[field]}")
+    if @@getter_functions.has_key?(field)
+      self.send("#{@@getter_functions[field]}")
+    else
+      get_generic_parameter(field)
+    end
   end
 end

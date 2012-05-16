@@ -24,7 +24,11 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
       # Вырезаем литры
       result = self.send("#{@@getter_functions[field]}").gsub(/ л/, '')
     else
-      result = self.send("#{@@getter_functions[field]}")
+      if @@getter_functions.has_key?(field)
+        result = self.send("#{@@getter_functions[field]}")
+      else
+        result = get_generic_parameter(field)
+      end
     end
     result
   end
