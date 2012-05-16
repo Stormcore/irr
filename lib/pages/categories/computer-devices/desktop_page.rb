@@ -5,30 +5,22 @@ class CategoryComputerDevicesDesktopsPage < AdDetailsPage
 
   @@url_suffix = "/computers-devices/desktops/"
 
-  div :offertype, :xpath => "//div[@data-item-name='offertype']"
-  div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
+  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Новый или подержанный", "used-or-new"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Тип предложения"
-      multiselect(self.offertype_element, hash['value'])
-
-    when "Состояние"
-      multiselect(self.used_or_new_element, hash['value'])
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
   end
   
   def get_parameter (field)
-    case field
-    when "Новый или подержанный", "Тип предложения"
-      result = get_unique_parameter(field)
+    if @@getter_functions.has_key?(field)
+      self.send("#{@@getter_functions[field]}")
     else
-      result = get_generic_parameter(field) 
+      get_generic_parameter(field)
     end
-    result
   end
 end
