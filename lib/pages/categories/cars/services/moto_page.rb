@@ -5,20 +5,21 @@ class CategoryCarsServicesMotoPage < AdDetailsPage
 
   @@url_suffix = "/cars/services/moto"
 
-  div :offertype, :xpath => "//div[@data-item-name='offertype']"
+  irr_single_select "Тип предложения", "offertype"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Тип предложения"
-      singleselect(self.offertype_element, hash['value'])
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
   end
   
   def get_parameter (field)
-    get_generic_parameter(field) 
+    if @@getter_functions.has_key?(field)
+      self.send("#{@@getter_functions[field]}")
+    else
+      get_generic_parameter(field)
+    end
   end
 end

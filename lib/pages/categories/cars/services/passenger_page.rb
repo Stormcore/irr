@@ -5,7 +5,6 @@ class CategoryCarsServicesPassengerPage < AdDetailsPage
 
   @@url_suffix = "/cars/services/passenger"
 
-  def get_parameter (field)
-    get_generic_parameter(field) 
-  end
+  alias get_parameter get_generic_parameter
+
 end
