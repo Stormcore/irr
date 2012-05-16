@@ -5,30 +5,14 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
 
   @@url_suffix = "/cars/misc/trailers-caravans-wagons"
 
-  div :offertype, :xpath => "//div[@data-item-name='offertype']"
-  div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
-  text_field :car_year_from, :name => "car-year[from]"
-  text_field :car_year_to, :name => "car-year[to]"
-  text_field :trunk_value_from, :name => "trunk_value[from]"
-  text_field :trunk_value_to, :name => "trunk_value[to]"
+  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Новый или подержанный", "used-or-new"
+  irr_range_select "Год выпуска", "car-year"
+  irr_range_select "Объем внешнего багажника", "trunk_value"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Тип предложения"
-      singleselect(self.offertype_element, hash['value'])
-
-    when "Новый или подержанный"
-      singleselect(self.used_or_new_element, hash['value'])
-
-    when "Год выпуска"
-      self.car_year_from = hash['min']
-      self.car_year_to = hash['max']
-
-    when "Объем внешнего багажника"
-      self.trunk_value_from = hash['min']
-      self.trunk_value_to = hash['max']
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
@@ -37,13 +21,10 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Объем внешнего багажника"
-      result = get_unique_parameter(field)
       # Вырезаем литры
-      result.gsub!(/ л/, '')
-    when "Тип предложения"
-      result = get_unique_parameter(field)
+      result = self.send("#{@@getter_functions[field]}").gsub(/ л/, '')
     else
-      result = get_generic_parameter(field) 
+      result = self.send("#{@@getter_functions[field]}")
     end
     result
   end

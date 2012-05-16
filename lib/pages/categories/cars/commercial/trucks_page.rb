@@ -12,6 +12,7 @@ class CategoryCarsCommercialTruckPage < AdDetailsPage
   irr_multi_select "Тип кузова", "bodytype"
   irr_multi_select "Тип трансмиссии", "transmittion"
   irr_range_select "Пробег", "mileage"
+
   def set_parameter (hash)
     if @@setter_functions.has_key?(hash['parameter'])
       self.send "#{@@setter_functions[hash['parameter']]}", hash

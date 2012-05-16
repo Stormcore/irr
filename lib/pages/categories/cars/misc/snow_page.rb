@@ -5,25 +5,17 @@ class CategoryCarsMiscSnowPage < AdDetailsPage
 
   @@url_suffix = "/cars/misc/snow"
 
-  div :offertype, :xpath => "//div[@data-item-name='offertype']"
+  irr_multi_select "Тип предложения", "offertype"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Тип предложения"
-      singleselect(self.offertype_element, hash['value'])
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
   end
   
   def get_parameter (field)
-    case field
-    when "Тип предложения"
-      get_unique_parameter(field)
-    else
-      get_generic_parameter(field)
-    end 
+    self.send("#{@@getter_functions[field]}")
   end
 end
