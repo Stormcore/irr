@@ -9,64 +9,19 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
 
   irr_text_field "Общая площадь", "meters-total"
   irr_text_field "Площадь зала", "square-hall"
-  checkbox :entrance, :name => "entrance"
-  checkbox :first_line, :name => "first-line"
-  checkbox :equipment, :name => "equipment"
+  irr_checkbox "Отдельный вход", "entrance"
+  irr_checkbox "1-я линия", "first-line"
+  irr_checkbox "Оборудование", "equipment"
 
-  div :heating, :xpath => "//div[@data-item-name='heating']"
-  div :water, :xpath => "//div[@data-item-name='water']"
-  
-  def set_parameter (hash)
-    case hash['parameter']
+  irr_multi_select "Система отопления", "heating"
+  irr_multi_select "Система водоснабжения", "water"
 
-    when ""
-      self.meters_total_from = hash['min']
-      self.meters_total_to = hash['max']
-
-    when ""
-      self.square_hall_from = hash['min']
-      self.square_hall_to = hash['max']
-
-    when "Отдельный вход"
-      self.entrance_element.check
-
-    when "1-я линия"
-      self.first_line_element.check
-
-    when "Оборудование"
-      self.equipment_element.check
-
-    when "Система отопления"
-      singleselect(self.heating_element, hash['value'])
-
-    when "Система водоснабжения"
-      singleselect(self.water_element, hash['value'])
-
-    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
-      set_metro_parameter(hash)
-
-    when "Валюта", "Срок сдачи"
-      set_rent_parameter(hash)
-
-    else
-      super(hash)
-    end
-  end
-
-  def get_parameter(field)
+  def get_parameter (field)
     case field
-    when "АО", "Район города", "Микрорайон", "Линия метро", "Станция метро", "До метро"
-      result = get_metro_parameter(field)
-
-    when "Общая площадь", "Площадь зала", "Система отопления", "Система водоснабжения"
-      result = get_unique_parameter(field)
-
-    when "Отдельный вход", "1-я линия", "Оборудование"
-      result = get_checkbox_parameter(field)
-
+    when "Линия метро", "Станция метро", "До метро"
+      return get_metro_parameter(field)
     else
-      result = get_generic_parameter(field) 
+      super(field)
     end
-    result
   end
 end

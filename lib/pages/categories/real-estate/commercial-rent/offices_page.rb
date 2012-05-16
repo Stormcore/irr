@@ -7,68 +7,22 @@ class CategoryRealEstateCommercialRentOfficesPage < AdDetailsPage
 
   @@url_suffix = "/real-estate/commercial/offices"
 
-  text_field :square_min_from, :name => "square-min[from]"
-  text_field :square_min_to, :name => "square-min[to]"
-  div :state, :xpath => "//div[@data-item-name='state']"
+  irr_text_field   "Общая площадь", "square-min"
+  irr_multi_select "Назначение помещения", "heating"
   
-  checkbox :first_line, :name => "first-line"
-  checkbox :entrance, :name => "entrance"
-  checkbox :house_lift, :name => "house-lift"
-  checkbox :security, :name => "security"
-  text_field :house_ceiling_height, :name => "house-ceiling-height"
+  irr_checkbox     "1-я линия", "first-line"
+  irr_checkbox     "Отдельный вход", "equipment"
+  irr_checkbox     "Лифты в здании", "house-lift"
+  irr_checkbox     "Охрана здания", "security"
+  irr_text_field   "Высота потолков", "house-ceiling-height"
+  text_field :house_ceiling_height, :name => ""
 
-  def set_parameter (hash)
-    case hash['parameter']
-    when "Назначение помещения"
-      singleselect(self.state, hash['value'])
-
-    when "Общая площадь"
-      self.square_min_from = hash['min']
-      self.square_min_to = hash['max']
-
-    when "Ремонт"
-      singleselect(self.state_element, hash['value'])
-
-    when "1-я линия"
-      self.first_line_element.check
-
-    when "Отдельный вход"
-      self.entrance_element.check
-
-    when "Лифты в здании"
-      self.house_lift_element.check
-
-    when "Охрана здания"
-      self.house_lift_element.check
-
-    when "Высота потолков"
-      self.house_ceiling_height_element.check
-
-    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
-      set_metro_parameter(hash)
-
-    when "Валюта", "Срок сдачи"
-      set_rent_parameter(hash)
-
-    else
-      super(hash)
-    end
-  end
-
-  def get_parameter(field)
+  def get_parameter (field)
     case field
-    when "Общая площадь", "Ремонт", "Высота потолков"
-      result = get_unique_parameter(field)
-
-    when "1-я линия", "Отдельный вход", "Лифты в здании", "Охрана здания"
-      result = get_checkbox_parameter(field)
-
-    when "АО", "Район города", "Микрорайон", "Линия метро", "Станция метро", "До метро"
-      result = get_metro_parameter(field)
-
+    when "Линия метро", "Станция метро", "До метро"
+      return get_metro_parameter(field)
     else
-      result = get_generic_parameter(field) 
+      super(field)
     end
-    result
   end
 end

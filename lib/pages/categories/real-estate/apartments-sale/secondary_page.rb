@@ -21,16 +21,14 @@ class CategoryRealEstateApartmentsSaleSecondaryPage < AdDetailsPage
   irr_checkbox      "Газ в доме", "gas"
 
   def set_parameter (hash)
-    unless self.kitchen_from_element.visible?
-      self.show_kitchen_params_element.parent.click
-    end
+    self.show_kitchen_params_element.parent.click
     super(hash)
   end
   
   def get_parameter (field)
     case field
     when "Линия метро", "Станция метро", "До метро"
-      result = get_metro_parameter(field)
+      return get_metro_parameter(field)
     else
       super(field)
     end
