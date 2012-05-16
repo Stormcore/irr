@@ -3,7 +3,8 @@
 class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   include PageObject
   include CityWithMetro
-
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
   @@url_suffix = "/real-estate/apartments-sale/new"
 
   irr_inline_select "Комнат в квартире", "rooms"

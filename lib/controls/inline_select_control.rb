@@ -22,14 +22,7 @@ module PageObject
         end
       end
 
-      # store getter and setter in hash
-      getters = self.class_variable_get(:@@getter_functions)
-      getters[nice_name] = "#{function_name}"
-      self.class_variable_set(:@@getter_functions, getters)
-      
-      setters = self.class_variable_get(:@@setter_functions)
-      setters[nice_name] = "#{function_name}="
-      self.class_variable_set(:@@setter_functions, setters)
+      add_getters_and_setters(function_name, nice_name)
     end
   end
 end

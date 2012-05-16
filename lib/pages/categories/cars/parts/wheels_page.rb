@@ -2,7 +2,8 @@
 
 class CategoryCarsPartsWheelsPage < AdDetailsPage
   include PageObject
-
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
   @@url_suffix = "/cars/parts/wheels"
 
   irr_multi_select "Тип предложения", "offertype"

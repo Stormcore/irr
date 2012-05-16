@@ -2,7 +2,8 @@
 
 class CategoryCarsServicesAssistancePage < AdDetailsPage
   include PageObject
-
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
   @@url_suffix = "/cars/services/assistance"
 
   irr_single_select "Тип предложения", "offertype"

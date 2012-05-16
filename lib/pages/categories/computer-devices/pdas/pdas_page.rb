@@ -9,8 +9,8 @@ class CategoryComputerDevicesPDAsPDAPage < AdDetailsPage
   irr_multi_select "Новый или подержанный", "used-or-new"
   irr_multi_select "Модель", "make"
   irr_multi_select "Тип ОС", "os"
-  irr_chechbox "Wi-Fi", "wifi"
-  irr_chechbox "GPS", "gps"
+  irr_checkbox "Wi-Fi", "wifi"
+  irr_checkbox "GPS", "gps"
 
   def set_parameter (hash)
     if @@setter_functions.has_key?(hash['parameter'])

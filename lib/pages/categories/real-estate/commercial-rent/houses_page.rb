@@ -4,7 +4,8 @@ class CategoryRealEstateCommercialRentHousesPage < AdDetailsPage
   include PageObject
   include CityWithMetro
   include Rent
-
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
   @@url_suffix = "/real-estate/commercial/houses"
 
   text_field :meters_total_from, :name => "meters-total[from]"

@@ -2,7 +2,8 @@
 
 class CategoryCarsPassangerUsedPage < AdDetailsPage
   include PageObject
-
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
   @@url_suffix = "/cars/passenger/used"
 
   irr_range_select "Год выпуска", "car-year"

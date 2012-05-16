@@ -3,9 +3,6 @@
 class AdDetailsPage
   include PageObject
   
-  @@getter_functions = Hash.new
-  @@setter_functions = Hash.new
-
   # Настройка параметров
   link :expand_extended_more, :class => "expand_extended_more"
   text_field :keywords, :xpath => "//form[@id='filter']//input[@name='keywords']"
@@ -50,7 +47,7 @@ class AdDetailsPage
     self.show_all_params_element.when_present.click
   end
 
-  def set_parameter(hash)
+  def set_generic_parameter(hash)
     case hash['parameter']
     when "Цена"
       self.price_from = hash['min']
@@ -79,10 +76,26 @@ class AdDetailsPage
       raise "Unknown parameter"
     end
   end
-  
+
   def get_generic_parameter(field)
     xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
     self.cell_element(:xpath => xpath).when_present.text
+  end
+
+  def set_parameter (hash)
+    if self.class.class_variable_get(:@@setter_functions).has_key?(hash['parameter'])
+      self.send "#{self.class.class_variable_get(:@@setter_functions)[hash['parameter']]}", hash
+    else
+      set_generic_parameter(hash)
+    end
+  end
+  
+  def get_parameter (field)
+    if self.class.class_variable_get(:@@getter_functions).has_key?(field)
+      self.send("#{self.class.class_variable_get(:@@getter_functions)[field]}")
+    else
+      get_generic_parameter(field)
+    end
   end
 
 end

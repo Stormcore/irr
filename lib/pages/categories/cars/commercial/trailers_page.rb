@@ -2,7 +2,8 @@
 
 class CategoryCarsCommercialTrailersPage < AdDetailsPage
   include PageObject
-
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
   @@url_suffix = "/cars/commercial/trailers"
 
   irr_multi_select "Новый или подержанный", "used-or-new"

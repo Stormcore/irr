@@ -2,7 +2,8 @@
 
 class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   include PageObject
-
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
   @@url_suffix = "/cars/misc/trailers-caravans-wagons"
 
   irr_multi_select "Тип предложения", "offertype"
