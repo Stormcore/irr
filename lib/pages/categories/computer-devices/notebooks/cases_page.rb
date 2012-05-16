@@ -5,7 +5,5 @@ class CategoryComputerDevicesNotebooksCasesPage < AdDetailsPage
 
   @@url_suffix = "/computers-devices/notebooks/cases_for_notebooks/"
 
-  def get_parameter (field)
-    get_generic_parameter(field)
-  end
+  alias get_parameter get_generic_parameter
 end
