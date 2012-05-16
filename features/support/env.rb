@@ -126,10 +126,3 @@ Around('@soft_assert') do |scenario, block|
     raise "Found JS errors: \n #{@validation_errors}"
   end
 end
-
-# Patch Element class to have 'element.should be_shown' instead of 'be_exists'
-module Watir
-  class Element
-    alias_method :shown?, :exists?
-  end
-end

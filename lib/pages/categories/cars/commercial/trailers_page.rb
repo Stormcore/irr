@@ -5,43 +5,17 @@ class CategoryCarsCommercialTrailersPage < AdDetailsPage
 
   @@url_suffix = "/cars/commercial/trailers"
 
-  div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
-  text_field :car_year_from, :name => "car-year[from]"
-  text_field :car_year_to, :name => "car-year[to]"
-  div :bodytype, :xpath => "//div[@data-item-name='trailertype']"
-  div :make, :xpath => "//div[@data-item-name='make']"
-  div :model, :xpath => "//div[@data-item-name='model']"
-  text_field :shafts, :name => "shafts"
-  
-  text_field :mileage_from, :name => "mileage[from]"
-  text_field :mileage_to, :name => "mileage[to]"
+  irr_multi_select "Новый или подержанный", "used-or-new"
+  irr_range_select "Год выпуска", "car-year"
+  irr_multi_select "Тип кузова", "trailertype"
+  irr_multi_select "Марка", "make"
+  irr_multi_select "Модель", "model"
+  irr_text_field   "Число осей", "shafts"
+  irr_range_select "Пробег", "mileage"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Новый или подержанный"
-      multiselect(self.used_or_new_element, hash['value'])
-
-    when "Год выпуска"
-      self.car_year_from = hash['min']
-      self.car_year_to = hash['max']
-
-    when "Тип прицепа"
-      multiselect(self.bodytype_element, hash['value'])
-
-    when "Марка"
-      multiselect(self.make_element, hash['value'])
-
-    when "Модель"
-      multiselect(self.model_element, hash['value'])
-
-    when "Число осей"
-      self.shafts = hash['value']
-
-    when "Источник"
-      # TODO: Множественный селект вместо единичного
-      multiselect(self.source_from_element, hash['value'])
-      
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
@@ -49,17 +23,12 @@ class CategoryCarsCommercialTrailersPage < AdDetailsPage
   
   def get_parameter (field)
     case field
-    when "Год выпуска"
-      result = get_unique_parameter(field).gsub(/ г./, '')
     when "Пробег"
       # Пробег вводиться в тыс. км, отображается в км.
       # Делим отображаемый результат на 1000 
-      result = get_value_parameter(field).to_i / 1000
-    when "Марка", "Модель", "Тип кузова", "Тип прицепа", "Тип трансмиссии",
-         "Число осей", "Новый или подержанный"
-      result = get_unique_parameter(field)
+      result = self.send("#{@@getter_functions[field]}").to_i / 1000
     else
-      result = get_generic_parameter(field) 
+      result = self.send("#{@@getter_functions[field]}")
     end
     result
   end

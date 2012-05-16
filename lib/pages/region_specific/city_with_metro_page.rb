@@ -9,7 +9,7 @@ module CityWithMetro
   div :metro, :xpath => "//div[@data-name='metro']"
   text_field :distance, :name => "distance"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
-  
+
   def set_metro_parameter(hash)
     case hash['parameter']
     when "Округ"

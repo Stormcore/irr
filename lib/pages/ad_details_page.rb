@@ -2,6 +2,9 @@
 
 class AdDetailsPage
   include PageObject
+  
+  @@getter_functions = Hash.new
+  @@setter_functions = Hash.new
 
   # Настройка параметров
   link :expand_extended_more, :class => "expand_extended_more"
@@ -27,33 +30,13 @@ class AdDetailsPage
   div :ad_content, :xpath => "//div[@class='b-content']"
   
   # Все параметры
-
-  def multiselect_inline(element, values)
-    values.split(",").each do |value|
-      element.link_element(:xpath => "//a[./span[text()='#{value}']]").when_present.click
-    end
-  end
-
-  def multiselect(element, values)
-    element.div_element(:class => "controlSelect").when_present.click
-    values.split(", ").each do |value|
-      element.label_element(:text => value).when_present.checkbox_element.check
-    end
-    element.div_element(:class => "controlSelect").when_present.click
-  end
-  
   def singleselect(element, value)
     element.div_element(:class => "controlSelectS").when_present.click
     element.element.div(:text => value.strip).when_present.click
   end
-  
-  def linkcombo(element, list_name, value)
-    element.link_element(:class => "combo_drop_link").when_present.click
-    element.parent.div_element(:class => list_name).link_element(:text => value).when_present.click
-  end
-  
+
   def expand_all_parameters
-    if self.expand_extended_more_element.exists?
+    if self.expand_extended_more_element.visible?
       self.expand_extended_more
     end
   end
@@ -97,33 +80,4 @@ class AdDetailsPage
     end
   end
 
-  def get_generic_parameter(field)
-    case field
-    when "Заголовок"
-      result = self.title_element.when_present.text
-    else
-      # Custom field
-      xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
-      result = self.cell_element(:xpath => xpath).when_present.text
-    end
-    result
-  end
-  
-  def get_checkbox_parameter(field)
-    self.show_all_parameters
-    xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{field}']]/td/div[@class='bird']"
-    self.div_element(:xpath => xpath).exists?
-  end
-  
-  def get_value_parameter(field)
-    self.show_all_parameters
-    xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td/span[@class='value']"
-    self.span_element(:xpath => xpath).when_present.text
-  end
-  
-  def get_unique_parameter(field)
-    self.show_all_parameters
-    xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{field}']]/td"
-    self.cell_element(:xpath => xpath).when_present.text
-  end
 end
