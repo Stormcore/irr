@@ -42,7 +42,7 @@ class AdDetailsPage
   
   def singleselect(element, value)
     element.div_element(:class => "controlSelectS").when_present.click
-    element.parent.element.div(:text => value.strip).when_present.click
+    element.element.div(:text => value.strip).when_present.click
   end
   
   def linkcombo(element, list_name, value)
