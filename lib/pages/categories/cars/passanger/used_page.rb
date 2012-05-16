@@ -5,49 +5,18 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
 
   @@url_suffix = "/cars/passenger/used"
 
-  text_field :car_year_from, :name => "car-year[from]"
-  text_field :car_year_to, :name => "car-year[to]"
+  irr_range_select "Год выпуска", "car-year"
+  irr_multi_select "Марка", "make"
+  irr_multi_select "Модель", "model"
+  irr_multi_select "Тип кузова", "bodytype"
+  irr_multi_select "Тип двигателя", "turbo"
+  irr_multi_select "Тип привода", "gear"
+  irr_multi_select "Тип трансмиссии", "transmittion"
+  irr_range_select "Пробег", "mileage"
 
-  div :make, :xpath => "//div[@data-item-name='make']"
-  div :model, :xpath => "//div[@data-item-name='model']"
-
-  div :bodytype, :xpath => "//div[@data-item-name='bodytype']"
-  div :turbo, :xpath => "//div[@data-item-name='turbo']"
-  div :gear, :xpath => "//div[@data-item-name='gear']"
-  div :transmittion, :xpath => "//div[@data-item-name='transmittion']"
-  
-  text_field :mileage_from, :name => "mileage[from]"
-  text_field :mileage_to, :name => "mileage[to]"
-  
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Год выпуска"
-      self.car_year_from = hash['min']
-      self.car_year_to = hash['max']
-
-    when "Марка"
-      multiselect(self.make_element, hash['value'])
-
-    when "Модель"
-      multiselect(self.model_element, hash['value'])
-      
-    when "Тип кузова"
-      multiselect(self.bodytype_element, hash['value'])
-    
-    when "Тип двигателя"
-      multiselect(self.turbo_element, hash['value'])
-      
-    when "Тип привода"
-      multiselect(self.gear_element, hash['value'])
-      
-    when "Тип трансмиссии"
-      multiselect(self.transmittion_element, hash['value'])
-      
-    when "Пробег"
-      self.mileage_from = hash['min']
-      self.mileage_to = hash['max']
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
@@ -56,15 +25,18 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Год выпуска"
-      result = get_value_parameter(field)
+      # Вырезаем г.
+      result = self.send("#{@@getter_functions[field]}").gsub(/ г./, '')
     when "Пробег"
       # Пробег вводиться в тыс. км, отображается в км.
       # Делим отображаемый результат на 1000 
-      result = get_value_parameter(field).to_i / 1000
-    when "Марка", "Модель", "Тип кузова", "Тип двигателя", "Привод", "Тип трансмиссии"
-      result = get_unique_parameter(field)
+      result = self.send("#{@@getter_functions[field]}").to_i / 1000
     else
-      result = get_generic_parameter(field) 
+      if @@getter_functions.has_key?(field)
+        result = self.send("#{@@getter_functions[field]}")
+      else
+        result = get_generic_parameter(field)
+      end
     end
     result
   end
