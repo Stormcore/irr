@@ -83,18 +83,26 @@ class AdDetailsPage
   end
 
   def set_parameter (hash)
-    if self.class.class_variable_get(:@@setter_functions).has_key?(hash['parameter'])
-      self.send "#{self.class.class_variable_get(:@@setter_functions)[hash['parameter']]}", hash
+    if self.class.class_variables.include? :@@setter_functions
+      if self.class.class_variable_get(:@@setter_functions).has_key?(hash['parameter'])
+        self.send "#{self.class.class_variable_get(:@@setter_functions)[hash['parameter']]}", hash
+      else
+        set_generic_parameter(hash)
+      end
     else
       set_generic_parameter(hash)
     end
   end
   
   def get_parameter (field)
-    if self.class.class_variable_get(:@@getter_functions).has_key?(field)
-      self.send("#{self.class.class_variable_get(:@@getter_functions)[field]}")
+    if self.class.class_variables.include? :@@getter_functions
+      if self.class.class_variable_get(:@@getter_functions).has_key?(field)
+        return self.send("#{self.class.class_variable_get(:@@getter_functions)[field]}")
+      else
+        return get_generic_parameter(field)
+      end
     else
-      get_generic_parameter(field)
+      return get_generic_parameter(field)
     end
   end
 

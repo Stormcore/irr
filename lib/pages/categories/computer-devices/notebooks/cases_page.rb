@@ -5,5 +5,4 @@ class CategoryComputerDevicesNotebooksCasesPage < AdDetailsPage
 
   @@url_suffix = "/computers-devices/notebooks/cases_for_notebooks/"
 
-  alias get_parameter get_generic_parameter
 end

@@ -2,41 +2,16 @@
 module CityWithMetro
   include PageObject
   
-  div :ao, :xpath => "//div[@data-name='ab_ao']"
-  div :district, :xpath => "//div[@data-name='ab_district']"
-  div :microdistrict, :xpath => "//div[@data-name='ab_microdistrict']"
-  div :metro_lane, :xpath => "//div[@data-name='address_metro_lane']"
-  div :metro, :xpath => "//div[@data-name='metro']"
-  text_field :distance, :name => "distance"
+  irr_multi_select "Округ",         "ab_ao"
+  irr_multi_select "Район",         "ab_district"
+  irr_multi_select "Микрорайон",    "ab_microdistrict"
+  irr_multi_select "Линия метро",   "address_metro_lane"
+  irr_multi_select "Станция метро", "metro"
+  irr_text_field   "До метро",      "distance"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
 
-  def set_metro_parameter(hash)
-    case hash['parameter']
-    when "Округ"
-      multiselect(self.ao_element, hash['value'])
-
-    when "Район"
-      multiselect(self.district_element, hash['value'])
-
-    when "Микрорайон"
-      multiselect(self.district_element, hash['value'])
-
-    when "Линия метро"
-      multiselect(self.metro_lane_element, hash['value'])
-
-    when "Станция метро"
-      multiselect(self.metro_element, hash['value'])
-
-    when "До метро"
-      self.distance = hash['value']
-    end
-  end
-  
   def get_metro_parameter(field)
     case field
-    when "АО", "Район города", "Микрорайон"
-      result = get_unique_parameter(field)
-
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
       metro_and_region = hidden_comment[0][0].strip.split(', ')[0]

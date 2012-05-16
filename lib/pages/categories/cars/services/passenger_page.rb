@@ -2,10 +2,7 @@
 
 class CategoryCarsServicesPassengerPage < AdDetailsPage
   include PageObject
-  @@getter_functions = Hash.new
-  @@setter_functions = Hash.new
-  @@url_suffix = "/cars/services/passenger"
 
-  alias get_parameter get_generic_parameter
+  @@url_suffix = "/cars/services/passenger"
 
 end

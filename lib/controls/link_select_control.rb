@@ -2,7 +2,7 @@ module PageObject
 
   module Accessors
 
-    def irr_link_select(nice_name, identifier)
+    def irr_link_select(nice_name, identifier, popup)
       function_name = identifier.gsub(/-/,'_') # replace dashes with underscores
   
       # getter
@@ -15,9 +15,9 @@ module PageObject
       # setter
       define_method("#{function_name}=") do |hash|
         self.expand_all_parameters
-        element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+        element = self.div_element(:xpath => identifier)
         element.link_element(:class => "combo_drop_link").when_present.click
-        element.parent.div_element(:class => list_name).
+        element.parent.div_element(:class => popup).
                 link_element(:text => hash['value']).when_present.click
       end
 

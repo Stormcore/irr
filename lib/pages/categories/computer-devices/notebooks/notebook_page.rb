@@ -17,34 +17,20 @@ class CategoryComputerDevicesNotebooksNotebooksPage < AdDetailsPage
   irr_multi_select "Беспроводные интерфейсы", "wireless_interfaces_multi"
   irr_range_select "Вес", "weight"
 
-
-  def set_parameter (hash)
-    if @@setter_functions.has_key?(hash['parameter'])
-      self.send "#{@@setter_functions[hash['parameter']]}", hash
-    else
-      super(hash)
-    end
-  end
-  
   def get_parameter (field)
     case field
     when "Диагональ"
-      result = self.send("#{@@getter_functions[field]}").gsub(/ дюймов/, '')
+      return self.send("#{@@getter_functions[field]}").gsub(/ дюймов/, '')
     when "Объем памяти"
-      result = self.send("#{@@getter_functions[field]}").gsub(/ Мб/, '')
+      return self.send("#{@@getter_functions[field]}").gsub(/ Мб/, '')
     when "Размер жесткого диска"
-      result = self.send("#{@@getter_functions[field]}").gsub(/ Гб/, '')
+      return self.send("#{@@getter_functions[field]}").gsub(/ Гб/, '')
     when "Время работы от аккумулятора"
-      result = self.send("#{@@getter_functions[field]}").gsub(/ ч/, '')
+      return self.send("#{@@getter_functions[field]}").gsub(/ ч/, '')
     when "Вес"
-      result = self.send("#{@@getter_functions[field]}").gsub(/ кг/, '')
+      return self.send("#{@@getter_functions[field]}").gsub(/ кг/, '')
     else
-      if @@getter_functions.has_key?(field)
-        result = self.send("#{@@getter_functions[field]}")
-      else
-        result = get_generic_parameter(field)
-      end
+      super(field)
     end
-    result
   end
 end

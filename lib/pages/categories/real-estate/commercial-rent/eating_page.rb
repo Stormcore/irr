@@ -4,14 +4,11 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
   include PageObject
   include CityWithMetro
   include Rent
-  @@getter_functions = Hash.new
-  @@setter_functions = Hash.new
+
   @@url_suffix = "/real-estate/commercial/eating"
 
-  text_field :meters_total_from, :name => "meters-total[from]"
-  text_field :meters_total_to, :name => "meters-total[to]"
-  text_field :square_hall_from, :name => "square-hall[from]"
-  text_field :square_hall_to, :name => "square-hall[to]"
+  irr_text_field "Общая площадь", "meters-total"
+  irr_text_field "Площадь зала", "square-hall"
   checkbox :entrance, :name => "entrance"
   checkbox :first_line, :name => "first-line"
   checkbox :equipment, :name => "equipment"
@@ -22,11 +19,11 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
   def set_parameter (hash)
     case hash['parameter']
 
-    when "Общая площадь"
+    when ""
       self.meters_total_from = hash['min']
       self.meters_total_to = hash['max']
 
-    when "Площадь зала"
+    when ""
       self.square_hall_from = hash['min']
       self.square_hall_to = hash['max']
 

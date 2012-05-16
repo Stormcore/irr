@@ -2,8 +2,7 @@
 
 class CategoryCarsPartsDisksPage < AdDetailsPage
   include PageObject
-  @@getter_functions = Hash.new
-  @@setter_functions = Hash.new
+
   @@url_suffix = "/cars/parts/disks"
 
   irr_multi_select "Тип предложения", "offertype"
@@ -16,31 +15,18 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
   irr_multi_select "Расстояние между болтами (PCD)", "pcd"
   irr_multi_select "Вылет (ET)", "et"
 
-  def set_parameter (hash)
-    if @@setter_functions.has_key?(hash['parameter'])
-      self.send "#{@@setter_functions[hash['parameter']]}", hash
-    else
-      super(hash)
-    end
-  end
-  
   def get_parameter (field)
     case field
     when "Диаметр обода", "Ширина обода"
       # Вырезаем дюймы
-      result = self.send("#{@@getter_functions[field]}").gsub(/ "/, '')
+      return self.send("#{@@getter_functions[field]}").gsub(/ "/, '')
 
     when "Вылет (ET)", "Расстояние между болтами (PCD)"
       # Вырезаем миллиметры
-      result = self.send("#{@@getter_functions[field]}").gsub(/ мм/, '')
+      return self.send("#{@@getter_functions[field]}").gsub(/ мм/, '')
 
     else
-      if @@getter_functions.has_key?(field)
-        result = self.send("#{@@getter_functions[field]}")
-      else
-        result = get_generic_parameter(field)
-      end
-    end 
-    result
+      super(field)
+    end
   end
 end
