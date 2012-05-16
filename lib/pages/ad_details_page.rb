@@ -79,5 +79,10 @@ class AdDetailsPage
       raise "Unknown parameter"
     end
   end
+  
+  def get_generic_parameter(field)
+    xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
+    self.cell_element(:xpath => xpath).when_present.text
+  end
 
 end
