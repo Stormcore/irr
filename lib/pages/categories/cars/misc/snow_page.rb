@@ -6,6 +6,7 @@ class CategoryCarsMiscSnowPage < AdDetailsPage
   @@url_suffix = "/cars/misc/snow"
 
   irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Источник", "sourcefrom"
 
   def set_parameter (hash)
     if @@setter_functions.has_key?(hash['parameter'])
