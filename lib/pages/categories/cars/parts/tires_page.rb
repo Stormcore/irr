@@ -5,42 +5,18 @@ class CategoryCarsPartsTiresPage < AdDetailsPage
 
   @@url_suffix = "/cars/parts/tires"
 
-  div :offertype, :xpath => "//div[@data-item-name='offertype']"
-  div :condition_c, :xpath => "//div[@data-item-name='condition_c']"
-  div :cartype, :xpath => "//div[@data-item-name='cartype']"
-  div :seasonality, :xpath => "//div[@data-item-name='seasonality']"
-  div :producer, :xpath => "//div[@data-item-name='producer']"
-  div :diameter, :xpath => "//div[@data-item-name='diameter']"
-  div :profile_width, :xpath => "//div[@data-item-name='profile_width']"
-  div :profile_height, :xpath => "//div[@data-item-name='profile_height']"
+  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Состояние", "condition_c"
+  irr_multi_select "Тип автомобиля", "cartype"
+  irr_multi_select "Сезонность", "seasonality"
+  irr_multi_select "Производитель", "producer"
+  irr_multi_select "Диаметр", "diameter"
+  irr_multi_select "Ширина профиля", "profile_width"
+  irr_multi_select "Высота профиля", "profile_height"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Тип предложения"
-      multiselect(self.offertype_element, hash['value'])
-
-    when "Состояние"
-      multiselect(self.condition_c_element, hash['value'])
-      
-    when "Тип автомобиля"
-      multiselect(self.cartype_element, hash['value'])
-      
-    when "Сезонность"
-      multiselect(self.seasonality_element, hash['value'])
-      
-    when "Производитель"
-      multiselect(self.producer_element, hash['value'])
-      
-    when "Диаметр"
-      multiselect(self.diameter_element, hash['value'])
-      
-    when "Ширина профиля"
-      multiselect(self.profile_width_element, hash['value'])
-      
-    when "Высота профиля"
-      multiselect(self.profile_height_element, hash['value'])
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
@@ -48,24 +24,20 @@ class CategoryCarsPartsTiresPage < AdDetailsPage
   
   def get_parameter (field)
     case field
-    when "Тип предложения", "Состояние", "Тип автомобиля", "Сезонность", 
-         "Производитель"
-      result = get_unique_parameter(field)
-
     when "Диаметр обода", "Диаметр"
       # Вырезаем дюймы
-      result = get_unique_parameter(field).gsub(/ "/, '')
+      result = self.send("#{@@getter_functions[field]}").gsub(/ "/, '')
 
     when "Ширина профиля"
       # Вырезаем миллиметры
-      result = get_unique_parameter(field).gsub(/ мм/, '')
+      result = self.send("#{@@getter_functions[field]}").gsub(/ мм/, '')
 
     when "Высота профиля"
       # Вырезаем проценты
-      result = get_unique_parameter(field).gsub(/ %/, '')
+      result = self.send("#{@@getter_functions[field]}").gsub(/ %/, '')
 
     else
-      result = get_generic_parameter(field)
+      result = self.send("#{@@getter_functions[field]}")
     end 
     result
   end

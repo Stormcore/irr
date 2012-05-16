@@ -5,26 +5,17 @@ class CategoryCarsPartsPassengerPage < AdDetailsPage
 
   @@url_suffix = "/cars/parts/passenger"
 
-  div :make, :xpath => "//div[@data-item-name='make']"
+  irr_multi_select "Марка", "make"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Марка"
-      multiselect(self.make_element, hash['value'])
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
   end
   
   def get_parameter (field)
-    case field
-    when "Марка"
-      result = get_unique_parameter(field)
-    else
-      result = get_generic_parameter(field) 
-    end
-    result
+    self.send("#{@@getter_functions[field]}")
   end
 end

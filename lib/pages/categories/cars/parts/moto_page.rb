@@ -5,7 +5,4 @@ class CategoryCarsPartsMotoPage < AdDetailsPage
 
   @@url_suffix = "/cars/parts/moto"
 
-  def get_parameter (field)
-    get_generic_parameter(field) 
-  end
 end

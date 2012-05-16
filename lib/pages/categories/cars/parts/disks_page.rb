@@ -5,50 +5,19 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
 
   @@url_suffix = "/cars/parts/disks"
 
-  div :offertype, :xpath => "//div[@data-item-name='offertype']"
-  div :condition_c, :xpath => "//div[@data-item-name='condition_c']"
-  div :diskstype, :xpath => "//div[@data-item-name='diskstype']"
-  div :producerdisks, :xpath => "//div[@data-item-name='producer_disks']"
-  div :diameter_obod, :xpath => "//div[@data-item-name='diameter_obod']"
-  div :width_disks, :xpath => "//div[@data-item-name='width_disks']"
-  div :bolt, :xpath => "//div[@data-item-name='bolt']"
-  div :pcd, :xpath => "//div[@data-item-name='pcd']"
-  div :et, :xpath => "//div[@data-item-name='et']"
+  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Состояние", "condition_c"
+  irr_multi_select "Тип дисков", "diskstype"
+  irr_multi_select "Производитель", "producerdisks"
+  irr_multi_select "Диаметр обода", "diameter_obod"
+  irr_multi_select "Ширина обода", "width_disks"
+  irr_multi_select "Число болтов", "bolt"
+  irr_multi_select "Расстояние между болтами (PCD)", "pcd"
+  irr_multi_select "Вылет (ET)", "et"
 
   def set_parameter (hash)
-    case hash['parameter']
-
-    when "Тип предложения"
-      multiselect(self.offertype_element, hash['value'])
-
-    when "Состояние"
-      multiselect(self.condition_c_element, hash['value'])
-      
-    when "Тип дисков"
-      multiselect(self.diskstype_element, hash['value'])
-      
-    when "Производитель"
-      multiselect(self.producerdisks_element, hash['value'])
-      
-    when "Диаметр обода"
-      multiselect(self.diameter_obod_element, hash['value'])
-      
-    when "Ширина обода"
-      multiselect(self.width_disks_element, hash['value'])
-      
-    when "Число болтов"
-      multiselect(self.bolt_element, hash['value'])
-
-    when "PCD"
-      multiselect(self.pcd_element, hash['value'])
-      
-    when "ET"
-      multiselect(self.et_element, hash['value'])
-
-    when "Источник"
-      # TODO: Множественный селект вместо единичного
-      multiselect(self.source_from_element, hash['value'])
-
+    if @@setter_functions.has_key?(hash['parameter'])
+      self.send "#{@@setter_functions[hash['parameter']]}", hash
     else
       super(hash)
     end
@@ -56,18 +25,16 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
   
   def get_parameter (field)
     case field
-    when "Тип предложения", "Состояние", "Тип дисков", "Производитель", "Число болтов"
-      result = get_unique_parameter(field)
     when "Диаметр обода", "Ширина обода"
-      result = get_unique_parameter(field)
       # Вырезаем дюймы
-      result.gsub!(/ "/, '')
+      result = self.send("#{@@getter_functions[field]}").gsub(/ "/, '')
+
     when "Вылет (ET)", "Расстояние между болтами (PCD)"
-      result = get_unique_parameter(field)
       # Вырезаем миллиметры
-      result.gsub!(/ мм/, '')
+      result = self.send("#{@@getter_functions[field]}").gsub(/ мм/, '')
+
     else
-      result = get_generic_parameter(field)
+      result = self.send("#{@@getter_functions[field]}")
     end 
     result
   end
