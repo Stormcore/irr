@@ -2,6 +2,7 @@
 
 class CategoryRealEstateCommercialsaleMiscPage < AdDetailsPage
   include PageObject
+  include CityWithMetro
 
   @@url_suffix = "/real-estate/commercial-sale/misc"
 
@@ -17,27 +18,8 @@ class CategoryRealEstateCommercialsaleMiscPage < AdDetailsPage
   checkbox :first_line, :name => "first-line"
   checkbox :entrance, :name => "entrance"
   
-  # Параметры объявления
-  div :ad_content, :xpath => "//div[@class='b-content']"
-  div :metro_station, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']"
-  span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
-  
   def set_parameter (hash)
     case hash['parameter']
-    when "Округ"
-      multiselect(self.ao_element, hash['value'])
-
-    when "Район"
-      multiselect(self.district_element, hash['value'])
-
-    when "Линия метро"
-      multiselect(self.metro_lane_element, hash['value'])
-
-    when "Станция метро"
-      multiselect(self.metro_element, hash['value'])
-
-    when "До метро"
-      self.distance = hash['value']
 
     when "Общая площадь"
       self.meters_total_from = hash['min']
@@ -52,6 +34,8 @@ class CategoryRealEstateCommercialsaleMiscPage < AdDetailsPage
     when "Отдельный вход"
       self.entrance_element.check
 
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      set_metro_parameter(hash)
     else
       super(hash)
     end
@@ -59,26 +43,14 @@ class CategoryRealEstateCommercialsaleMiscPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Общая площадь", "Ремонт"
+    when "Общая площадь", "Ремонт"
       result = get_unique_parameter(field)
-
-    when "Линия метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].split("\n")[2].strip.split(', ')[0]
-      result = metro_and_region.split[0]
-
-    when "Станция метро"
-      result = self.metro_station.split(', ')[0]
-
-    when "До метро"
-      begin
-        result = self.peshkom_element.text.split[0].to_i
-      rescue Watir::Exception::UnknownObjectException
-        result = 0
-      end
 
     when "1-я линия", "Отдельный вход"
       result = get_checkbox_parameter(field)
+
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      set_metro_parameter(hash)
 
     else
       result = get_generic_parameter(field) 

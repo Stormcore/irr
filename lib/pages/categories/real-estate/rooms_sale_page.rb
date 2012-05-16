@@ -2,6 +2,7 @@
 
 class CategoryRealEstateRoomsSalePage < AdDetailsPage
   include PageObject
+  include CityWithMetro
 
   @@url_suffix = "/real-estate/rooms-sale"
 
@@ -28,28 +29,9 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
   text_field :etage_to, :name => "etage-all[to]"
   checkbox :house_lift, :name => "house-lift"
   checkbox :gas, :name => "gas"
-  
-  # Параметры объявления
-  div :ad_content, :xpath => "//div[@class='b-content']"
-  span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
-  
+
   def set_parameter (hash)
     case hash['parameter']
-    when "Округ"
-      multiselect(self.ao_element, hash['value'])
-
-    when "Район"
-      multiselect(self.district_element, hash['value'])
-
-    when "Линия метро"
-      multiselect(self.metro_lane_element, hash['value'])
-
-    when "Станция метро"
-      multiselect(self.metro_element, hash['value'])
-
-    when "До метро"
-      self.distance = hash['value']
-
     when "Комнат в квартире"
       multiselect_inline(self.rooms_element, hash['value'])
 
@@ -76,6 +58,8 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
       self.show_building_params_element.parent.click unless self.gas_element.visible?
       self.gas_element.check
 
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      set_metro_parameter(hash)
     else
       super(hash)
     end
@@ -83,28 +67,15 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Площадь продажи", "Комнат в квартире", 
+    when "Площадь продажи", "Комнат в квартире", 
          "Жилая площадь", "Площадь кухни", "Ремонт"
       result = get_unique_parameter(field)
-    when "Линия метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
-      result = metro_and_region.split[0]
-
-    when "Станция метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[1]
-      result = metro_and_region.split[0]
-
-    when "До метро"
-      begin
-        result = self.peshkom_element.text.split[0].to_i
-      rescue Watir::Exception::UnknownObjectException
-        result = 0
-      end
 
     when "Отказ получен", "Лифты в здании", "Газ в доме"
       result = get_checkbox_parameter(field)
+
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      set_metro_parameter(hash)
 
     else
       result = get_generic_parameter(field) 

@@ -24,6 +24,8 @@ class AdDetailsPage
   # Весь текст объявления
   div :advert_text, :class => "txtAdvert"
   table :all_params, :id => "allParams"
+  div :ad_content, :xpath => "//div[@class='b-content']"
+  
   # Все параметры
 
   def multiselect_inline(element, values)

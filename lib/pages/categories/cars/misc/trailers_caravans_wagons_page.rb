@@ -6,13 +6,12 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   @@url_suffix = "/cars/misc/trailers-caravans-wagons"
 
   div :offertype, :xpath => "//div[@data-item-name='offertype']"
-
   div :used_or_new, :xpath => "//div[@data-item-name='used-or-new']"
   text_field :car_year_from, :name => "car-year[from]"
   text_field :car_year_to, :name => "car-year[to]"
   text_field :trunk_value_from, :name => "trunk_value[from]"
   text_field :trunk_value_to, :name => "trunk_value[to]"
-  
+
   def set_parameter (hash)
     case hash['parameter']
 

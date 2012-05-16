@@ -2,14 +2,10 @@
 
 class CategoryRealEstateOutoftownHousesPage < AdDetailsPage
   include PageObject
-
+  include CityWithMetro
+  
   @@url_suffix = "/real-estate/out-of-town/houses"
 
-  div :ao, :xpath => "//div[@data-name='ab_ao']"
-  div :district, :xpath => "//div[@data-name='ab_district']"
-  div :metro_lane, :xpath => "//div[@data-name='address_metro_lane']"
-  div :metro, :xpath => "//div[@data-name='metro']"
-  text_field :distance, :name => "distance"
   text_field :meters_total_from, :name => "meters-total[from]"
   text_field :meters_total_to, :name => "meters-total[to]"
   text_field :house_year_from, :name => "house-year[from]"
@@ -24,28 +20,9 @@ class CategoryRealEstateOutoftownHousesPage < AdDetailsPage
   div :walltype, :xpath => "//div[@data-item-name='walltype']"
   div :object, :xpath => "//div[@data-item-name='object']"
   div :state, :xpath => "//div[@data-item-name='state']"
-  
-  # Параметры объявления
-  div :ad_content, :xpath => "//div[@class='b-content']"
-  span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
-  
+
   def set_parameter (hash)
     case hash['parameter']
-    when "Округ"
-      multiselect(self.ao_element, hash['value'])
-
-    when "Район"
-      multiselect(self.district_element, hash['value'])
-
-    when "Линия метро"
-      multiselect(self.metro_lane_element, hash['value'])
-
-    when "Станция метро"
-      multiselect(self.metro_element, hash['value'])
-
-    when "До метро"
-      self.distance = hash['value']
-
     when "Площадь строения"
       self.meters_total_from = hash['min']
       self.meters_total_to = hash['max']
@@ -80,6 +57,8 @@ class CategoryRealEstateOutoftownHousesPage < AdDetailsPage
     when "Ремонт"
       singleselect(self.state_element, hash['value'])
 
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      set_metro_parameter(hash)
     else
       super(hash)
     end
@@ -87,30 +66,16 @@ class CategoryRealEstateOutoftownHousesPage < AdDetailsPage
 
   def get_parameter(field)
     case field
-    when "АО", "Район города", "Площадь строения", "Год постройки/сдачи", 
+    when "Площадь строения", "Год постройки/сдачи", 
          "Площадь участка", "Количество этажей", "Количество комнат", 
          "Материал стен", "Строение", "Ремонт"
       result = get_unique_parameter(field)
-    when "Линия метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
-      result = metro_and_region.split[0]
-
-    when "Станция метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
-      metro_and_region = hidden_comment[0][0].strip.split(', ')[1]
-      result = metro_and_region.split[0]
-
-    when "До метро"
-      begin
-        result = self.peshkom_element.text.split[0].to_i
-      rescue Watir::Exception::UnknownObjectException
-        result = 0
-      end
 
     when "Лифты в здании", "Отапливаемый"
       result = get_checkbox_parameter(field)
 
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      set_metro_parameter(hash)
     else
       result = get_generic_parameter(field) 
     end
