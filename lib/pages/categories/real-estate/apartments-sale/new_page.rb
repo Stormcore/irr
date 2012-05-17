@@ -11,7 +11,7 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   
   span :show_kitchen_params, :text => 'Площадь Жилая/Кухня'
   irr_range_select  "Жилая площадь", "meters-living"
-  irr_range_select  "Площадь кухни", "meters-kitchen"
+  irr_range_select  "Площадь кухни", "kitchen"
   
   irr_multi_select  "Этаж", "floor_house"
   irr_checkbox      "Приватизированная квартира", "private"
@@ -26,12 +26,8 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
     super(hash)
   end
   
-  def get_parameter (field)
-    case field
-    when "Линия метро", "Станция метро", "До метро"
-      return get_metro_parameter(field)
-    else
-      super(field)
-    end
+  def get_parameter(field)
+    #super(field) unless field == 'Этаж'
+    
   end
 end

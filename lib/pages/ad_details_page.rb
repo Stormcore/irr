@@ -2,6 +2,7 @@
 
 class AdDetailsPage
   include PageObject
+  #Dir["#{File.dirname(__FILE__)}/../../../control/**/*_control.rb"].each {|r| load r }
   
   # Настройка параметров
   link :expand_extended_more, :class => "expand_extended_more"
@@ -44,7 +45,7 @@ class AdDetailsPage
 
   def show_all_parameters
     # Open all params if present
-    self.show_all_params_element.when_present.click
+    self.show_all_params if self.show_all_params_element.visible?
   end
 
   def set_generic_parameter(hash)
@@ -83,26 +84,34 @@ class AdDetailsPage
   end
 
   def set_parameter (hash)
-    if self.class.class_variables.include? :@@setter_functions
-      if self.class.class_variable_get(:@@setter_functions).has_key?(hash['parameter'])
-        self.send "#{self.class.class_variable_get(:@@setter_functions)[hash['parameter']]}", hash
-      else
-        set_generic_parameter(hash)
-      end
+    case hash['parameter']
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      self.send "#{CityWithMetro.instance_variable_get(:@setter_functions)[hash['parameter']]}", hash
     else
-      set_generic_parameter(hash)
+      begin
+        setter_functions = self.class.instance_variable_get(:@setter_functions)
+        self.send "#{setter_functions[hash['parameter']]}", hash
+      rescue Exception => e
+        puts e
+        set_generic_parameter(hash)
+      end    
     end
   end
   
   def get_parameter (field)
-    if self.class.class_variables.include? :@@getter_functions
-      if self.class.class_variable_get(:@@getter_functions).has_key?(field)
-        return self.send("#{self.class.class_variable_get(:@@getter_functions)[field]}")
-      else
-        return get_generic_parameter(field)
-      end
+    case field
+    when "АО", "Район города", "Микрорайон"
+      self.send "#{CityWithMetro.instance_variable_get(:@getter_functions)[field]}"
+    when "Линия метро", "Станция метро", "До метро"
+      get_metro_parameter(field)
     else
-      return get_generic_parameter(field)
+      begin
+        getter_functions = self.class.instance_variable_get(:@getter_functions)
+        self.send "#{getter_functions[field]}"
+      rescue Exception => e
+        puts e
+        get_generic_parameter(field)
+      end  
     end
   end
 

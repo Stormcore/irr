@@ -5,6 +5,7 @@ class CategoryRealEstateApartmentsSaleSecondaryPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/apartments-sale/secondary"
+  
   irr_inline_select "Комнат в квартире", "rooms"
   irr_range_select  "Общая площадь", "meters-total"
   
@@ -23,14 +24,5 @@ class CategoryRealEstateApartmentsSaleSecondaryPage < AdDetailsPage
   def set_parameter (hash)
     self.show_kitchen_params_element.parent.click
     super(hash)
-  end
-  
-  def get_parameter (field)
-    case field
-    when "Линия метро", "Станция метро", "До метро"
-      return get_metro_parameter(field)
-    else
-      super(field)
-    end
   end
 end

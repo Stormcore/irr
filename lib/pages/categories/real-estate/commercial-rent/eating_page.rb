@@ -15,13 +15,4 @@ class CategoryRealEstateCommercialRentEatingPage < AdDetailsPage
 
   irr_multi_select "Система отопления", "heating"
   irr_multi_select "Система водоснабжения", "water"
-
-  def get_parameter (field)
-    case field
-    when "Линия метро", "Станция метро", "До метро"
-      return get_metro_parameter(field)
-    else
-      super(field)
-    end
-  end
 end

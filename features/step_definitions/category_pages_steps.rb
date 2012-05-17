@@ -264,7 +264,7 @@ end
 То %{в деталях $option объявления присутствует "$parameter"} do |option, parameter|
   select_soft_assert_function(option)
   soft_assert_function("Значение '#{parameter}' не установлено:") do |ad_page, result|
-    ad_page.get_checkbox_parameter(parameter).should be_true, ""
+    ad_page.get_parameter(parameter).should be_true, ""
   end
 end
 
