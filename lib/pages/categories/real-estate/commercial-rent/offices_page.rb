@@ -7,7 +7,7 @@ class CategoryRealEstateCommercialRentOfficesPage < AdDetailsPage
 
   @@url_suffix = "/real-estate/commercial/offices"
 
-  irr_text_field   "Общая площадь", "square-min"
+  irr_range_select "Общая площадь", "square-min"
   irr_multi_select "Ремонт", "state"
   
   irr_checkbox     "1-я линия", "first-line"
