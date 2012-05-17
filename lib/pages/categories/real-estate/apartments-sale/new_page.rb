@@ -25,9 +25,4 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
     self.show_kitchen_params_element.parent.click
     super(hash)
   end
-  
-  def get_parameter(field)
-    #super(field) unless field == 'Этаж'
-    
-  end
 end
