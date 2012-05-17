@@ -1,12 +1,12 @@
 module PageObject
   module Accessors
-    def irr_range_select(nice_name, id)
+    def irr_range_select(getter_name, id, setter_name = nil)
       function_name = id.gsub(/-/,'_') # replace dashes with underscores
   
       # getter
       define_method("#{function_name}") do
         self.show_all_parameters
-        xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{nice_name}']]/td"
+        xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
         self.cell_element(:xpath => xpath).when_present.text
       end
       
@@ -17,7 +17,7 @@ module PageObject
         self.text_field_element(:name => "#{id}[to]").value = hash['max']
       end
 
-      add_getters_and_setters(function_name, nice_name)
+      add_getters_and_setters(function_name, getter_name, setter_name)
     end
   end
 end

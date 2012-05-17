@@ -12,8 +12,8 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
   irr_multi_select "Диаметр обода", "diameter_obod"
   irr_multi_select "Ширина обода", "width_disks"
   irr_multi_select "Число болтов", "bolt"
-  irr_multi_select "Расстояние между болтами (PCD)", "pcd"
-  irr_multi_select "Вылет (ET)", "et"
+  irr_multi_select "Расстояние между болтами (PCD)", "pcd", "PCD"
+  irr_multi_select "Вылет (ET)", "et" , "ET"
 
   def get_parameter (field)
     case field
