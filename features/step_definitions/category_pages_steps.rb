@@ -216,6 +216,7 @@ end
   end
   
   select_class_for_category(long_category)
+  puts "DEBUG: Страница категории #{@browser.url}"
 end
 
 Когда %{на главной странице я перехожу в категорию "$long_category"} do |long_category|

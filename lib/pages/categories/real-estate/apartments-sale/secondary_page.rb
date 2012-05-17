@@ -11,7 +11,7 @@ class CategoryRealEstateApartmentsSaleSecondaryPage < AdDetailsPage
   
   span :show_kitchen_params, :text => 'Площадь Жилая/Кухня'
   irr_range_select  "Жилая площадь", "meters-living"
-  irr_range_select  "Площадь кухни", "meters-kitchen"
+  irr_range_select  "Площадь кухни", "kitchen"
   
   irr_multi_select  "Этаж", "floor_house"
   irr_checkbox      "Приватизированная квартира", "private"
