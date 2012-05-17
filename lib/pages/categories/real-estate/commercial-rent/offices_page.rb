@@ -15,5 +15,4 @@ class CategoryRealEstateCommercialRentOfficesPage < AdDetailsPage
   irr_checkbox     "Лифты в здании", "house-lift"
   irr_checkbox     "Охрана здания", "security"
   irr_text_field   "Высота потолков", "house-ceiling-height"
-  text_field :house_ceiling_height, :name => ""
 end

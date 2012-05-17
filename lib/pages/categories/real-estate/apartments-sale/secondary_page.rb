@@ -15,7 +15,7 @@ class CategoryRealEstateApartmentsSaleSecondaryPage < AdDetailsPage
   
   irr_multi_select  "Этаж", "floor_house"
   irr_checkbox      "Приватизированная квартира", "private"
-  irr_single_select "Отделка", "state"
+  irr_single_select "Ремонт", "state", "Отделка"
   irr_checkbox      "Балкон/Лоджия", "balcony"
   irr_range_select  "Этаж в здании", "etage-all"
   irr_checkbox      "Лифты в здании", "house-lift"

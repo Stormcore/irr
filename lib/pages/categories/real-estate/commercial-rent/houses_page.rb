@@ -8,7 +8,7 @@ class CategoryRealEstateCommercialRentHousesPage < AdDetailsPage
   @@url_suffix = "/real-estate/commercial/houses"
 
   irr_text_field   "Общая площадь", "meters-total"
-  irr_multi_select "Ремонт", "heating"
+  irr_multi_select "Ремонт", "state"
   irr_checkbox     "1-я линия", "first-line"
-  irr_checkbox     "Парковка", "equipment"
+  irr_checkbox     "Парковка", "parking"
 end
