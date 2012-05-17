@@ -5,7 +5,7 @@ module PageObject
     def irr_checkbox(getter_name, id, setter_name = nil)
       function_name = id.gsub(/-/,'_') # replace dashes with underscores
   
-      # getter
+      # getter   
       define_method("#{function_name}") do
         self.show_all_parameters
         xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td/div[@class='bird']"
