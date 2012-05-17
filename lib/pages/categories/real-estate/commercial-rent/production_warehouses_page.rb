@@ -4,8 +4,7 @@ class CategoryRealEstateCommercialRentProductionWarehousesPage < AdDetailsPage
   include PageObject
   include CityWithMetro
   include Rent
-  @@getter_functions = Hash.new
-  @@setter_functions = Hash.new
+
   @@url_suffix = "/real-estate/commercial/production-warehouses"
 
   div :warehouse_type_object, :xpath => "//div[@data-item-name='warehouse_type_object']"

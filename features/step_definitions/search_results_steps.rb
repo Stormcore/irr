@@ -119,6 +119,8 @@ end
 end
  
 То %{в каждом объявлении отображается рисунок} do
+  # Не проверять картинки на regions
+  next if BASE_URL.include? 'regions.prontosoft.by'
   results_page_soft_assert("Не отображен рисунок:") do |result|
     thumbnail = result['thumbnail']
     thumbnail.should_not be_nil
@@ -138,6 +140,8 @@ end
 end
 
 То %{в каждом объявлении источник равен "$expected_source"} do |expected_source|
+  # Не проверять источник на regions
+  next if BASE_URL.include? 'regions.prontosoft.by'
   results_page_soft_assert("Неправильный источник:") do |result|
     case result['source_link'] 
     when /\/user\//
@@ -154,6 +158,8 @@ end
 end
 
 То %{в каждом объявлении отображается загруженная фотография} do
+  # Не проверять картинки на regions
+  next if BASE_URL.include? 'regions.prontosoft.by'
   results_page_soft_assert("Не отображена загруженная фотография:") do |result|
     thumbnail = result['thumbnail']
     thumbnail.should_not be_empty 
@@ -272,8 +278,6 @@ end
     raise "Ad was not found" unless ad_found
   end
 end
-
-
 
 То %{объявление с заголовком "$header" присутствует на первых $n страницах поиска} do |header, n|
   ad_found = false
