@@ -5,6 +5,6 @@ class CategoryCarsMiscWaterPage < AdDetailsPage
 
   @@url_suffix = "/cars/misc/water"
 
-  irr_multi_select "Тип предложения", "offertype"
+  irr_single_select "Тип предложения", "offertype"
 
 end

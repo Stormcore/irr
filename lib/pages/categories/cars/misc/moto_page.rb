@@ -9,4 +9,5 @@ class CategoryCarsMiscMotoPage < AdDetailsPage
   irr_range_select "Год выпуска", "car-year"
   irr_multi_select "Марка", "make"
   irr_multi_select "Модель", "model"
+  irr_multi_select "Источник", "sourcefrom"
 end
