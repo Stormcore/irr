@@ -134,9 +134,10 @@ end
 
 То %{каждое объявление подано не более $max_days дней назад} do |max_days|
   results_page_soft_assert("Неправильное время подачи:") do |result|
-    ad_date = result['date']
-    puts ad_date
-    (Time.now.to_date - ad_date).to_i.should be <= max_days.to_i
+    if result['date']
+      date_diff = (Time.now.to_date - result['date'])
+      date_diff.to_i.should be <= max_days.to_i
+    end
   end
 end
 
