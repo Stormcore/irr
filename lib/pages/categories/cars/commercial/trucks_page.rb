@@ -18,7 +18,8 @@ class CategoryCarsCommercialTruckPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Пробег"
-      return self.send("#{@@getter_functions[field]}").to_i / 1000
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ км/, '').to_i / 1000
     else 
       super(field)
     end
