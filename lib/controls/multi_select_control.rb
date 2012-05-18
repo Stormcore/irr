@@ -1,10 +1,11 @@
-def irr_multi_select(getter_name, identifier, setter_name = nil)
+def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allParams")
   function_name = identifier.gsub(/-/,'_') # replace dashes with underscores
 
   # getter
   define_method("#{function_name}") do
-    self.show_all_parameters
-    xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
+    puts "table is #{table}"
+    self.show_all_parameters if table == 'allParams'
+    xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     self.cell_element(:xpath => xpath).when_present.text
   end
   

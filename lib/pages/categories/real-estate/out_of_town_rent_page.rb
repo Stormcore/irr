@@ -13,7 +13,7 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
   irr_range_select "Количество комнат", "rooms"
   irr_range_select "Количество спален", "rooms_sleep"
   
-  irr_multi_select "Материал стен", "walltype"
+  irr_single_select "Материал стен", "walltype"
   irr_multi_select "Строение", "object"
   irr_checkbox     "Отапливаемый", "heating1"
   irr_checkbox     "Гараж", "garage"

@@ -87,8 +87,15 @@ class AdDetailsPage
     case hash['parameter']
     when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
       self.set_metro_parameter(hash)
-    when "Регион", "Направление", "Шоссе", "Удаленность"
-      self.set_region_parameter(hash)
+    when "Расположение", "Направление", "Шоссе", "Удаленность"
+      self.set_regions_parameter(hash)
+    when "Валюта", "Срок сдачи"
+      if self.respond_to? :set_rent_parameter
+        self.set_rent_parameter(hash)
+      else
+        setter_functions = self.class.instance_variable_get(:@setter_functions)
+        self.send "#{setter_functions[hash['parameter']]}", hash
+      end
     else
       begin
         setter_functions = self.class.instance_variable_get(:@setter_functions)
