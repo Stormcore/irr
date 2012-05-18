@@ -6,8 +6,8 @@ class CategoryRealEstateSprosOutOfTownPage < AdDetailsPage
  
   @@url_suffix = "/real-estate/spros/out-of-town"
   
-  irr_single_select "Тип объекта", "apartments-object"
+  irr_single_select "Тип объекта", "out-object"
   irr_checkbox      "В коттеджном поселке", "cottage"
-  irr_range_select  "Площадь", "meters-total"
+  irr_range_select  "Площадь", "square"
 
 end
