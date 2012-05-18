@@ -238,6 +238,7 @@ end
      defined?(@url_prefix) and
      defined?(@url_suffix) and
     full_url = @url_prefix+ad_class.class_variable_get("@@url_suffix")+@url_suffix
+    puts "DEBUG: URL #{full_url}"
     @browser.goto full_url
   else
     steps %Q{When на главной странице я перехожу в категорию "#{long_category}" через меню}
