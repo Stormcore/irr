@@ -35,7 +35,7 @@ module CityWithMetro
     when "До метро"
       begin
         result = self.peshkom_element.when_present.text.split[0].to_i
-      rescue Watir::Exception::UnknownObjectException
+      rescue Watir::Wait::TimeoutError
         result = 0
       end
     end
