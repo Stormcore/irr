@@ -97,7 +97,7 @@ class AdDetailsPage
       end
     else
       setter_functions = self.class.instance_variable_get(:@setter_functions)
-      if setter_functions.has_key? hash['parameter']
+      if setter_functions and setter_functions.has_key? hash['parameter']
         self.send "#{setter_functions[hash['parameter']]}", hash
       else
         set_generic_parameter(hash)
@@ -113,7 +113,7 @@ class AdDetailsPage
       self.get_regions_parameter(field)
     else
       getter_functions = self.class.instance_variable_get(:@getter_functions)
-      if getter_functions.has_key? field
+      if getter_functions and getter_functions.has_key? field
         self.send "#{getter_functions[field]}"
       else
         get_generic_parameter(field)
