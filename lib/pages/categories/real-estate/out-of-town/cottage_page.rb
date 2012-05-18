@@ -6,6 +6,6 @@ class CategoryRealEstateOutoftownCottagePage < AdDetailsPage
   
   @@url_suffix = "/real-estate/out-of-town/cottage"
 
-  irr_range_select  "Общая площадь", "meters-total"
+  irr_range_select  "Площадь строения", "meters-total", "Площадь дома"
   irr_range_select  "Площадь участка", "land"
 end
