@@ -30,13 +30,11 @@ if HEADLESS
   headless.start
 end
 
-puts "Starting webdriver.."
-client = Selenium::WebDriver::Remote::Http::Default.new
-client.timeout = 240
-
 case DRIVER
 when :firefox
-  puts "Setting up firefox profile..."
+  puts "Starting firefox..."
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 240
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.native_events = false
   profile['toolkit.telemetry.prompted'] = true
@@ -46,7 +44,9 @@ when :firefox
   browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
   
 when :chrome
-  puts "Setting up chrome profile"
+  puts "Starting chrome"
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 240
   profile = Selenium::WebDriver::Chrome::Profile.new
   switches  = %w[--bwsi]
   browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
@@ -57,10 +57,6 @@ when :chrome
     browser.span(:text => "Flash").parent.parent.parent.a(:class => "disable-group-link").click
     browser.goto "about:blank"
   end
-
-else
-  puts "Setting up htmlunit"
-  browser = Watir::Browser.start "about:blank"
 end
 
 #Function that returns a string that presents the details of the occurred JS errors
@@ -78,7 +74,7 @@ def get_js_error_feedback()
 end
 
 Before do |scenario|
-  browser.cookies.clear
+  browser.cookies.clear if browser
   @browser = browser
   
   # Сохраняем экземпляр сценария
@@ -115,7 +111,7 @@ if(ENV['FAILFAST'])
 end
 
 at_exit do
-  browser.close if not KEEP_OPEN
+  browser.close if browser and not KEEP_OPEN
   headless.destroy if HEADLESS
 end
 

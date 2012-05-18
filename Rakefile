@@ -2,7 +2,7 @@ require 'cucumber'
 require 'cucumber/rake/task'
 
 Cucumber::Rake::Task.new(:compile) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
+  task.cucumber_opts = ["WEB_DRIVER=none",
                         "-t @compile",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
