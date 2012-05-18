@@ -93,8 +93,7 @@ class AdDetailsPage
       if self.respond_to? :set_rent_parameter
         self.set_rent_parameter(hash)
       else
-        setter_functions = self.class.instance_variable_get(:@setter_functions)
-        self.send "#{setter_functions[hash['parameter']]}", hash
+        set_generic_parameter(hash)
       end
     else
       begin
