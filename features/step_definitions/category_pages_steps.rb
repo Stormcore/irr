@@ -178,6 +178,12 @@ def select_class_for_category(category)
   when "Недвижимость -> Спрос -> Гаражи и стоянки"
     @category_page = CategoryRealEstateSprosGaragePage
 
+  when "Недвижимость -> Спрос -> Коммерческая"
+    @category_page = CategoryRealEstateSprosCommercialPage
+
+  when "Недвижимость -> Спрос -> Загородная"
+    @category_page = CategoryRealEstateSprosOutOfTownPage
+
   when "Недвижимость -> Услуги"
     @category_page = CategoryRealEstateServicesPage
 
