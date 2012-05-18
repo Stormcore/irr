@@ -89,10 +89,10 @@ AfterConfiguration do |config|
   puts "Tests have been configured, starting up.."
 end
 
-AfterStep do |scenario|
-  js_errors = get_js_error_feedback()
-  raise js_errors unless js_errors.empty?
-end
+#AfterStep do |scenario|
+#  js_errors = get_js_error_feedback()
+#  raise js_errors unless js_errors.empty?
+#end
 
 After do |scenario|
   Dir::mkdir('screenshots') if not File.directory?('screenshots')
@@ -123,6 +123,6 @@ Around('@soft_assert') do |scenario, block|
   @validation_errors = Hash.new
   block.call
   if !@validation_errors.empty?
-    raise "Found JS errors: \n #{@validation_errors}"
+    raise "Found errors: \n #{@validation_errors}"
   end
 end
