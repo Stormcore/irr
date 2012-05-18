@@ -96,11 +96,10 @@ class AdDetailsPage
         set_generic_parameter(hash)
       end
     else
-      begin
-        setter_functions = self.class.instance_variable_get(:@setter_functions)
+      setter_functions = self.class.instance_variable_get(:@setter_functions)
+      if setter_functions.has_key? hash['parameter']
         self.send "#{setter_functions[hash['parameter']]}", hash
-      rescue Exception => e
-        puts e
+      else
         set_generic_parameter(hash)
       end    
     end
@@ -113,13 +112,12 @@ class AdDetailsPage
     when "Регион", "Направление", "Шоссе", "Удаленность"
       self.get_regions_parameter(field)
     else
-      begin
-        getter_functions = self.class.instance_variable_get(:@getter_functions)
+      getter_functions = self.class.instance_variable_get(:@getter_functions)
+      if getter_functions.has_key? field
         self.send "#{getter_functions[field]}"
-      rescue Exception => e
-        puts e
+      else
         get_generic_parameter(field)
-      end  
+      end
     end
   end
 
