@@ -11,8 +11,17 @@ module CityWithMetro
   irr_text_field   "До метро",      "distance"
   span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
 
+  def set_metro_parameter(hash)
+    setter_functions = CityWithMetro.instance_variable_get(:@setter_functions)
+    self.send "#{setter_functions[hash['parameter']]}", hash
+  end
+
   def get_metro_parameter(field)
-    case field   
+    case field
+    when "АО", "Район города", "Микрорайон"
+      getter_functions = CityWithMetro.instance_variable_get(:@getter_functions)
+      self.send "#{getter_functions[field]}"
+    
     when "Линия метро"
       hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
       metro_and_region = hidden_comment[0][0].strip.split(', ')[0]

@@ -86,8 +86,9 @@ class AdDetailsPage
   def set_parameter (hash)
     case hash['parameter']
     when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
-      self.send "#{CityWithMetro.instance_variable_get(:@setter_functions)[hash['parameter']]}", hash
-    when ""
+      self.set_metro_parameter(hash)
+    when "Регион", "Направление", "Шоссе", "Удаленность"
+      self.set_region_parameter(hash)
     else
       begin
         setter_functions = self.class.instance_variable_get(:@setter_functions)
@@ -100,15 +101,12 @@ class AdDetailsPage
   end
   
   def get_parameter (field)
+    debugger
     case field
-    when "АО", "Район города", "Микрорайон"
-      self.send "#{CityWithMetro.instance_variable_get(:@getter_functions)[field]}"
-    when "Шоссе"
-      self.send("#{Regions.instance_variable_get(:@getter_functions)[field]}").split(', ')[0]
-    when "Регион"
-      self.send("#{Regions.instance_variable_get(:@getter_functions)[field]}").split(', ')[1]
-    when "Удаленность"
-      self.send("#{Regions.instance_variable_get(:@getter_functions)[field]}").split(', ')[1].split[0].to_i
+    when "АО", "Район города", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      self.get_metro_parameter(field) 
+    when "Регион", "Направление", "Шоссе", "Удаленность"
+      self.get_regions_parameter(field)
     else
       begin
         getter_functions = self.class.instance_variable_get(:@getter_functions)
