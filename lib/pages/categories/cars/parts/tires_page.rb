@@ -18,15 +18,18 @@ class CategoryCarsPartsTiresPage < AdDetailsPage
     case field
     when "Диаметр обода", "Диаметр"
       # Вырезаем дюймы
-      return self.send("#{@@getter_functions[field]}").gsub(/ "/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ "/, '')
 
     when "Ширина профиля"
       # Вырезаем миллиметры
-      return self.send("#{@@getter_functions[field]}").gsub(/ мм/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ мм/, '')
 
     when "Высота профиля"
       # Вырезаем проценты
-      return self.send("#{@@getter_functions[field]}").gsub(/ %/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ %/, '')
 
     else
       super(field)

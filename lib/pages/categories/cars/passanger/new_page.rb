@@ -18,7 +18,8 @@ class CategoryCarsPassangerNewPage < AdDetailsPage
     case field
     when "Год выпуска"
       # Вырезаем г.
-      return self.send("#{@@getter_functions[field]}").gsub(/ г./, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ г./, '')
     else
       super(field)
     end

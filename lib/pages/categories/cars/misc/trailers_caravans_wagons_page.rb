@@ -13,7 +13,8 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Объем внешнего багажника"
-      return self.send("#{@@getter_functions[field]}").gsub(/ л/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ л/, '')
     else 
       super(field)
     end

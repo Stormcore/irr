@@ -20,15 +20,20 @@ class CategoryComputerDevicesNotebooksNetbooksUMPCPage < AdDetailsPage
   def get_parameter (field)
     case field
     when "Диагональ"
-      return self.send("#{@@getter_functions[field]}").gsub(/ дюймов/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ дюймов/, '')
     when "Объем памяти"
-      return  self.send("#{@@getter_functions[field]}").gsub(/ Мб/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ Мб/, '')
     when "Размер жесткого диска"
-      return  self.send("#{@@getter_functions[field]}").gsub(/ Гб/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ Гб/, '')
     when "Время работы от аккумулятора"
-      return  self.send("#{@@getter_functions[field]}").gsub(/ ч/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ ч/, '')
     when "Вес"
-      return  self.send("#{@@getter_functions[field]}").gsub(/ кг/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ кг/, '')
     else
       super(field)
     end

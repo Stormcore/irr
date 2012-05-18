@@ -19,11 +19,13 @@ class CategoryCarsPartsDisksPage < AdDetailsPage
     case field
     when "Диаметр обода", "Ширина обода"
       # Вырезаем дюймы
-      return self.send("#{@@getter_functions[field]}").gsub(/ "/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ "/, '')
 
     when "Вылет (ET)", "Расстояние между болтами (PCD)"
       # Вырезаем миллиметры
-      return self.send("#{@@getter_functions[field]}").gsub(/ мм/, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ мм/, '')
 
     else
       super(field)

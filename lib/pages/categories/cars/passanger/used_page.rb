@@ -19,11 +19,13 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
     case field
     when "Год выпуска"
       # Вырезаем г.
-      return self.send("#{@@getter_functions[field]}").gsub(/ г./, '')
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ км/, '')
     when "Пробег"
       # Пробег вводиться в тыс. км, отображается в км.
       # Делим отображаемый результат на 1000 
-      return self.send("#{@@getter_functions[field]}").to_i / 1000
+      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
+      return result.gsub(/ км/, '').to_i / 1000
     else
       super(field)
     end
