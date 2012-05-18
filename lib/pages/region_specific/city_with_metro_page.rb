@@ -20,7 +20,7 @@ module CityWithMetro
     case field
     when "АО", "Район города", "Микрорайон"
       getter_functions = CityWithMetro.instance_variable_get(:@getter_functions)
-      self.send "#{getter_functions[field]}"
+      result = self.send "#{getter_functions[field]}"
     
     when "Линия метро"
       hidden_comment = self.ad_content_element.when_present.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
