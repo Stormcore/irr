@@ -19,7 +19,7 @@ class CategoryRealEstateRentPage < AdDetailsPage
   irr_checkbox     "Телефон", "telephone"
   irr_checkbox     "Мебель", "furniture"
   irr_checkbox     "Бытовая техника", "household"
-  irr_range_select "Этаж в здании", "etage"
+  irr_range_select "Этаж в здании", "etage-all"
   irr_checkbox     "Лифты в здании", "house-lift"
   irr_checkbox     "Газ в доме", "gas"
   

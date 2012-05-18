@@ -22,7 +22,6 @@ class CategoryRealEstateRoomsRentPage < AdDetailsPage
   irr_checkbox "Газ в доме", "gas"
 
   def set_parameter (hash)
-    self.show_kitchen_params_element.parent.click
     self.show_building_params_element.parent.click
     super(hash)
   end
