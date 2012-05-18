@@ -101,7 +101,6 @@ class AdDetailsPage
   end
   
   def get_parameter (field)
-    debugger
     case field
     when "АО", "Район города", "Микрорайон", "Линия метро", "Станция метро", "До метро"
       self.get_metro_parameter(field) 
