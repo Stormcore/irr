@@ -25,7 +25,7 @@ class AdDetailsPage
   # Весь текст объявления
   div :advert_text, :class => "txtAdvert"
   table :all_params, :id => "allParams"
-  div :ad_content, :xpath => "//div[@class='b-content']"
+  div :ad_content, :class => "b-content"
   
   # Все параметры
   def singleselect(element, value)

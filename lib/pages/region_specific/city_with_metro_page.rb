@@ -23,18 +23,18 @@ module CityWithMetro
       self.send "#{getter_functions[field]}"
     
     when "Линия метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
+      hidden_comment = self.ad_content_element.when_present.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
       metro_and_region = hidden_comment[0][0].strip.split(', ')[0]
       result = metro_and_region.split[0]
 
     when "Станция метро"
-      hidden_comment = self.ad_content_element.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
+      hidden_comment = self.ad_content_element.when_present.element.html.scan(/HIDDEN ADDRESSES(.*)-->/m)
       metro_and_region = hidden_comment[0][0].strip.split(', ')[1]
       result = metro_and_region.split[0]
 
     when "До метро"
       begin
-        result = self.peshkom_element.text.split[0].to_i
+        result = self.peshkom_element.when_present.text.split[0].to_i
       rescue Watir::Exception::UnknownObjectException
         result = 0
       end
