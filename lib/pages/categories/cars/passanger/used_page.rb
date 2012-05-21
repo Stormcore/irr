@@ -4,6 +4,7 @@ class CategoryCarsPassangerUsedPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/passenger/used"
+  @category = "Авто и мото -> Легковые автомобили -> Новые автомобили"
 
   irr_range_select "Год выпуска", "car-year"
   irr_multi_select "Марка", "make"
