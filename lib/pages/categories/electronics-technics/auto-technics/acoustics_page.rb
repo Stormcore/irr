@@ -13,5 +13,5 @@ class CategoryElectronicsTechnicsAutoTechnicsAcousticsPage < AdDetailsPage
   irr_single_select "Типоразмер", "tiporazmer"
   irr_range_select "Количество полос", "kolichestvo_polos"
   irr_range_select "Номинальная мощность", "nominalnaya_moshnost"
-  irr_range_select "Импеданс", "impedans"
+  irr_range_select "Импеданс, Ом", "impedans", "Импеданс"
 end
