@@ -4,6 +4,7 @@ class CategoryCarsCommercialTruckPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/commercial/trucks"
+  @category = "Авто и мото -> Коммерческий транспорт -> Средние и тяжелые грузовики"
 
   irr_multi_select "Новый или подержанный", "used-or-new"
   irr_range_select "Год выпуска", "car-year"

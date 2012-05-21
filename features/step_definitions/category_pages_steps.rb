@@ -10,21 +10,6 @@ def select_class_for_category(category)
   @category_page = category_pages[0]
 
   case category
-   
-  when "Авто и мото -> Коммерческий транспорт -> Малый коммерческий транспорт"
-    @category_page = CategoryCarsCommercialSmallPage
-    
-  when "Авто и мото -> Коммерческий транспорт -> Средние и тяжелые грузовики"
-    @category_page = CategoryCarsCommercialTruckPage
-    
-  when "Авто и мото -> Коммерческий транспорт -> Грузовые прицепы"
-    @category_page = CategoryCarsCommercialTrailersPage
-    
-  when "Авто и мото -> Коммерческий транспорт -> Автобусы"
-    @category_page = CategoryCarsCommercialBusesPage
-    
-  when "Авто и мото -> Коммерческий транспорт -> Спецтехника"
-    @category_page = CategoryCarsCommercialSpecialPage
     
   when "Авто и мото -> Автозапчасти и принадлежности -> Для легковых автомобилей"
     @category_page = CategoryCarsPartsPassengerPage
