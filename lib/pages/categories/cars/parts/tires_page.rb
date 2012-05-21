@@ -4,6 +4,7 @@ class CategoryCarsPartsTiresPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/parts/tires"
+  @category = "Авто и мото -> Автозапчасти и принадлежности -> Шины"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "condition_c"

@@ -6,40 +6,10 @@ def select_class_for_category(category)
       subclass.instance_variable_get(:@category) == category
     end
   end
-  raise "Class not found" if category_pages.length == 0
+  raise "Class not found for category #{category}" if category_pages.length == 0
   @category_page = category_pages[0]
 
   case category
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Для легковых автомобилей"
-    @category_page = CategoryCarsPartsPassengerPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Диски"
-    @category_page = CategoryCarsPartsDisksPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Шины"
-    @category_page = CategoryCarsPartsTiresPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Колеса"
-    @category_page = CategoryCarsPartsWheelsPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Для коммерческих автомобилей"
-    @category_page = CategoryCarsPartsCommercialPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Средства для ухода"
-    @category_page = CategoryCarsPartsCareProductsPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Для мотоциклов и мопедов"
-    @category_page = CategoryCarsPartsMotoPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Аудио- и видеотехника"
-    @category_page = CategoryCarsPartsAudioPage
-    
-  when "Авто и мото -> Автозапчасти и принадлежности -> Стекла и оптика"
-    @category_page = CategoryCarsPartsOpticsPage
-
-  when "Авто и мото -> Автозапчасти и принадлежности -> Аксессуары"
-    @category_page = CategoryCarsPartsAccessoriesPage
     
   when "Недвижимость -> Квартиры. Продажа -> Новостройки"
     @category_page = CategoryRealEstateApartmentsSaleNewPage
