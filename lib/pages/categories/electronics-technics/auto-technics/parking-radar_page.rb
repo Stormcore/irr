@@ -3,7 +3,7 @@
 class CategoryElectronicsTechnicsAutoTechnicsParkingRadarPage < AdDetailsPage
   include PageObject
  
-  @@url_suffix = "/electronics-technics/auto-technics/parking-radar"
+  @@url_suffix = "/electronics-technics/auto-technics/parking-radars"
   @category = "Электроника и техника -> Техника для авто -> Парковочные радары"
   
   irr_multi_select "Тип предложения", "offertype"

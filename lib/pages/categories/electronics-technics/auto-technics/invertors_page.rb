@@ -3,7 +3,7 @@
 class CategoryElectronicsTechnicsAutoTechnicsInvertorsPage < AdDetailsPage
   include PageObject
  
-  @@url_suffix = "/electronics-technics/auto-technics/invertors"
+  @@url_suffix = "/electronics-technics/auto-technics/inventors"
   @category = "Электроника и техника -> Техника для авто -> Инверторы"
   
   irr_multi_select "Тип предложения", "offertype"
