@@ -5,6 +5,7 @@ class CategoryRealEstateCommercialsaleRetailPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/commercial-sale/retail"
+  @category = "Недвижимость -> Коммерческая. Продажа -> Торговля и сервис"
 
   irr_single_select "Назначение помещения", "trading_purpose"
   irr_single_select "Ремонт", "state"

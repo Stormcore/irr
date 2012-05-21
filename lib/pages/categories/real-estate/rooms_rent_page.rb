@@ -6,6 +6,7 @@ class CategoryRealEstateRoomsRentPage < AdDetailsPage
   include Rent
 
   @@url_suffix = "/real-estate/rooms-rent"
+  @category = "Недвижимость -> Комнаты. Аренда"
 
   irr_inline_select "Комнат сдается", "roomsForRent"
   

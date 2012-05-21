@@ -5,6 +5,7 @@ class CategoryRealEstateSprosLivePage < AdDetailsPage
   include CityWithMetro
  
   @@url_suffix = "/real-estate/spros/live"
+  @category = "Недвижимость -> Спрос -> Жилая"
   
   irr_single_select "Тип объекта", "apartments-object"
   irr_range_select  "Комнат в квартире", "rooms"

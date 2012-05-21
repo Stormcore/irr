@@ -10,70 +10,6 @@ def select_class_for_category(category)
   @category_page = category_pages[0]
 
   case category
-    
-  when "Недвижимость -> Квартиры. Продажа -> Новостройки"
-    @category_page = CategoryRealEstateApartmentsSaleNewPage
-
-  when "Недвижимость -> Квартиры. Продажа -> Вторичный рынок"
-    @category_page = CategoryRealEstateApartmentsSaleSecondaryPage
-
-  when "Недвижимость -> Квартиры. Аренда"
-    @category_page = CategoryRealEstateRentPage
-
-  when "Недвижимость -> Комнаты и доли. Продажа"
-    @category_page = CategoryRealEstateRoomsSalePage
-
-  when "Недвижимость -> Комнаты. Аренда"
-    @category_page = CategoryRealEstateRoomsRentPage
-
-  when "Недвижимость -> Дома, дачи и участки. Продажа -> Дома, дачи"
-    @category_page = CategoryRealEstateOutoftownHousesPage
-
-  when "Недвижимость -> Дома, дачи и участки. Продажа -> Участки"
-    @category_page = CategoryRealEstateOutoftownLandsPage
-
-  when "Недвижимость -> Дома, дачи и участки. Продажа -> Коттеджные поселки"
-    @category_page = CategoryRealEstateOutoftownCottagePage
-    
-  when "Недвижимость -> Дома, дачи. Аренда"
-    @category_page = CategoryRealEstateOutoftownRentPage
-
-  when "Недвижимость -> Коммерческая. Продажа -> Офисы"
-    @category_page = CategoryRealEstateCommercialsaleOfficesPage
-
-  when "Недвижимость -> Коммерческая. Продажа -> Торговля и сервис"
-    @category_page = CategoryRealEstateCommercialsaleRetailPage
-
-  when "Недвижимость -> Коммерческая. Продажа -> Производство и склады"
-    @category_page = CategoryRealEstateCommercialsaleProductionWarehousesPage
-
-  when "Недвижимость -> Коммерческая. Продажа -> Кафе. Бары. Рестораны"
-    @category_page = CategoryRealEstateCommercialsaleEatingPage
-
-  when "Недвижимость -> Коммерческая. Продажа -> Здания и особняки"
-    @category_page = CategoryRealEstateCommercialsaleHousesPage
-
-  when "Недвижимость -> Коммерческая. Продажа -> Другие и свободного назначения"
-    @category_page = CategoryRealEstateCommercialsaleMiscPage
-
-  when "Недвижимость -> Коммерческая. Аренда -> Офисы"
-    @category_page = CategoryRealEstateCommercialRentOfficesPage
-
-  when "Недвижимость -> Коммерческая. Аренда -> Торговля и сервис"
-    @category_page = CategoryRealEstateCommercialRentRetailPage
-
-  when "Недвижимость -> Коммерческая. Аренда -> Производство и склады"
-    @category_page = CategoryRealEstateCommercialRentProductionWarehousesPage
-
-  when "Недвижимость -> Коммерческая. Аренда -> Кафе. Бары. Рестораны"
-    @category_page = CategoryRealEstateCommercialRentEatingPage
-
-  when "Недвижимость -> Коммерческая. Аренда -> Здания и особняки"
-    @category_page = CategoryRealEstateCommercialRentHousesPage
-
-  when "Недвижимость -> Коммерческая. Аренда -> Другие и свободного назначения"
-    @category_page = CategoryRealEstateCommercialRentMiscPage
-
   when "Недвижимость -> Гаражи и стоянки. Продажа -> Машиноместо"
     @category_page = CategoryRealEstateGarageParkingPage
 
@@ -85,27 +21,6 @@ def select_class_for_category(category)
 
   when "Недвижимость -> Гаражи и стоянки. Аренда -> Гаражи и боксы"
     @category_page = CategoryRealEstateGarageRentStallPage
-
-  when "Недвижимость -> Спрос -> Жилая"
-    @category_page = CategoryRealEstateSprosLivePage
-
-  when "Недвижимость -> Спрос -> Гаражи и стоянки"
-    @category_page = CategoryRealEstateSprosGaragePage
-
-  when "Недвижимость -> Спрос -> Коммерческая"
-    @category_page = CategoryRealEstateSprosCommercialPage
-
-  when "Недвижимость -> Спрос -> Загородная"
-    @category_page = CategoryRealEstateSprosOutOfTownPage
-
-  when "Недвижимость -> Услуги"
-    @category_page = CategoryRealEstateServicesPage
-
-  when "Недвижимость -> Обмен"
-    @category_page = CategoryRealEstateExchangePage
-
-  when "Недвижимость -> Другое"
-    @category_page = CategoryRealEstateOtherPage
 
   when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
     @category_page = CategoryComputerDevicesNotebooksNotebooksPage

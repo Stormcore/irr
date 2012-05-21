@@ -5,4 +5,5 @@ class CategoryRealEstateOtherPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/other"
+  @category = "Недвижимость -> Другое"
 end

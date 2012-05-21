@@ -6,6 +6,7 @@ class CategoryRealEstateCommercialRentMiscPage < AdDetailsPage
   include Rent
 
   @@url_suffix = "/real-estate/commercial/misc"
+  @category = "Недвижимость -> Коммерческая. Аренда -> Другие и свободного назначения"
 
   irr_range_select  "Общая площадь", "square-min"
   irr_single_select "Ремонт", "state"

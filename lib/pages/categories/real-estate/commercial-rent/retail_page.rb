@@ -6,6 +6,7 @@ class CategoryRealEstateCommercialRentRetailPage < AdDetailsPage
   include Rent
 
   @@url_suffix = "/real-estate/commercial/retail"
+  @category = "Недвижимость -> Коммерческая. Аренда -> Торговля и сервис"
 
   irr_single_select "Назначение помещения", "trading_purpose"
   irr_single_select "Ремонт", "state"

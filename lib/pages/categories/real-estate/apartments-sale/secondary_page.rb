@@ -5,6 +5,7 @@ class CategoryRealEstateApartmentsSaleSecondaryPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/apartments-sale/secondary"
+  @category = "Недвижимость -> Квартиры. Продажа -> Вторичный рынок"
   
   irr_inline_select "Комнат в квартире", "rooms"
   irr_range_select  "Общая площадь", "meters-total"

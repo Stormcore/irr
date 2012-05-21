@@ -5,4 +5,5 @@ class CategoryRealEstateExchangePage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/exchange"
+  @category = "Недвижимость -> Обмен"
 end

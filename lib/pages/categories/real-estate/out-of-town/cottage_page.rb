@@ -5,6 +5,7 @@ class CategoryRealEstateOutoftownCottagePage < AdDetailsPage
   include CityWithMetro
   
   @@url_suffix = "/real-estate/out-of-town/cottage"
+  @category = "Недвижимость -> Дома, дачи и участки. Продажа -> Коттеджные поселки"
 
   irr_range_select  "Площадь строения", "meters-total", "Площадь дома"
   irr_range_select  "Площадь участка", "land"

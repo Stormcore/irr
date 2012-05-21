@@ -5,6 +5,7 @@ class CategoryRealEstateCommercialsaleMiscPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/commercial-sale/misc"
+  @category = "Недвижимость -> Коммерческая. Продажа -> Другие и свободного назначения"
 
   irr_range_select  "Общая площадь", "square-min"
   irr_single_select "Ремонт", "state"

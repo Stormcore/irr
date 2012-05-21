@@ -5,6 +5,7 @@ class CategoryRealEstateRoomsSalePage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/rooms-sale"
+  @category = "Недвижимость -> Комнаты и доли. Продажа"
 
   irr_inline_select "Количество комнат на продажу", "rooms-for-sale", "Комнат в квартире"
   irr_range_select "Площадь продажи", "meters-total", "Общая площадь"

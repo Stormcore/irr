@@ -5,6 +5,7 @@ class CategoryRealEstateCommercialsaleOfficesPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/commercial-sale/offices"
+  @category = "Недвижимость -> Коммерческая. Продажа -> Офисы"
 
   irr_range_select "Общая площадь", "square-min"
   irr_single_select "Ремонт", "state"

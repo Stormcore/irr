@@ -5,6 +5,7 @@ class CategoryRealEstateOutoftownHousesPage < AdDetailsPage
   include CityWithMetro
   
   @@url_suffix = "/real-estate/out-of-town/houses"
+  @category = "Недвижимость -> Дома, дачи и участки. Продажа -> Дома, дачи"
 
   irr_range_select  "Площадь строения", "meters-total"
   irr_range_select  "Год постройки/сдачи", "house-year"

@@ -6,6 +6,7 @@ class CategoryRealEstateCommercialRentProductionWarehousesPage < AdDetailsPage
   include Rent
 
   @@url_suffix = "/real-estate/commercial/production-warehouses"
+  @category = "Недвижимость -> Коммерческая. Аренда -> Производство и склады"
 
   irr_single_select "Назначение помещения", "warehouse_type_object"
   irr_range_select  "Общая площадь", "square-min"

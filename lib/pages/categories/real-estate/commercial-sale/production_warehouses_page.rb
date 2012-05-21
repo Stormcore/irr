@@ -5,6 +5,7 @@ class CategoryRealEstateCommercialsaleProductionWarehousesPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/commercial-sale/production-warehouses"
+  @category = "Недвижимость -> Коммерческая. Продажа -> Производство и склады"
 
   irr_single_select "Назначение помещения", "warehouse_type_object"
   irr_range_select  "Общая площадь", "square-min"
