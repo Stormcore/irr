@@ -290,10 +290,10 @@ end
       $stdout.flush
       actual_value = ad_page.get_parameter(field)
       case operator
-      when "равно"
-        actual_value.should == expected 
       when "равно одному из"
         expected.split(', ').should include actual_value
+      when "равно"
+        actual_value.should == expected 
       when "в границах"
         expected_array = expected.split(" - ")
         actual_value.to_i.should be >= expected_array[0].to_i
