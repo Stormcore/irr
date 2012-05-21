@@ -6,7 +6,7 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   @@url_suffix = "/cars/misc/trailers-caravans-wagons"
 
   irr_single_select "Тип предложения", "offertype"
-  irr_multi_select "Новый или подержанный", "used-or-new"
+  irr_single_select "Новый или подержанный", "used-or-new"
   irr_range_select "Год выпуска", "car-year"
   irr_range_select "Объем внешнего багажника", "trunk_value"
   
