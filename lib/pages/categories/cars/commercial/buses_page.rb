@@ -4,6 +4,7 @@ class CategoryCarsCommercialBusesPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/commercial/buses"
+  @category = "Авто и мото -> Коммерческий транспорт -> Автобусы"
 
   irr_multi_select "Новый или подержанный", "used-or-new"
   irr_multi_select "Тип автобуса", "bus-type"
