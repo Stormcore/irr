@@ -10,25 +10,6 @@ def select_class_for_category(category)
   @category_page = category_pages[0]
 
   case category
-  when "Авто и мото"
-    @category_page = CategoryCarsPage
-  when "Авто и мото -> Выкуп автомобилей. Спрос"
-    @category_page = CategoryCarsRepaymentSearchPage
-
-  when "Авто и мото -> Мототехника и Автодома -> Мотоциклы и мопеды"
-    @category_page = CategoryCarsMiscMotoPage
-    
-  when "Авто и мото -> Мототехника и Автодома -> Автодома и легковые прицепы"
-    @category_page = CategoryCarsMiscTrailersCaravansWagonsPage
-    
-  when "Авто и мото -> Мототехника и Автодома -> Снегоходы и квадроциклы"
-    @category_page = CategoryCarsMiscSnowPage
-    
-  when "Авто и мото -> Мототехника и Автодома -> Водный транспорт"
-    @category_page = CategoryCarsMiscWaterPage
-    
-  when "Авто и мото -> Мототехника и Автодома -> Другое"
-    @category_page = CategoryCarsMiscOtherPage
     
   when "Авто и мото -> Легковые автомобили -> Автомобили с пробегом"
     @category_page = CategoryCarsPassangerUsedPage

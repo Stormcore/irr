@@ -4,6 +4,7 @@ class CategoryCarsPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/"
+  @category = "Авто и мото"
 
   # Дилеры
   div :dealers_section, :class => "b-dillers"
