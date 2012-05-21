@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsKitchenDishwashersPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/kitchen/dishwashers"
+  @category = "Электроника и техника -> Кухонная техника -> Посудомоечные машины"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsKitchenMixersPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/kitchen/mixers"
+  @category = "Электроника и техника -> Кухонная техника -> Миксеры, блендеры"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

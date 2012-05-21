@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsAutoTechnicsFMTransmittersPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/fm-transmitters"
+  @category = "Электроника и техника -> Техника для авто -> FM-трансмиттеры"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

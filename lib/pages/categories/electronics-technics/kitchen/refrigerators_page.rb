@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsKitchenRefrigeratorsPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/kitchen/refrigerators"
+  @category = "Электроника и техника -> Кухонная техника -> Холодильники"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

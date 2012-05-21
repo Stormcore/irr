@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsAutoTechnicsTVPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/tv"
+  @category = "Электроника и техника -> Техника для авто -> Телевизоры и мониторы"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

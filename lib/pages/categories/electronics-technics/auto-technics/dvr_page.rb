@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsAutoTechnicsDVRPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/dvr"
+  @category = "Электроника и техника -> Техника для авто -> Автомобильные видеорегистраторы"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

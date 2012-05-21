@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsAutoTechnicsCarWashesPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/car-washes"
+  @category = "Электроника и техника -> Техника для авто -> Автомойки"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

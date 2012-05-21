@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsAutoTechnicsSpeakerphonesPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/speakerphones"
+  @category = "Электроника и техника -> Техника для авто -> Устройства громкой связи"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

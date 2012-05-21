@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsKitchenMeatGrindersPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/kitchen/meat-grinders"
+  @category = "Электроника и техника -> Кухонная техника -> Мясорубки"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsAutoTechnicsFMTransmittersPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/radar-detector"
+  @category = "Электроника и техника -> Техника для авто -> Радар-детектор"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

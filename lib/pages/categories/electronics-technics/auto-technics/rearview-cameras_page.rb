@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsAutoTechnicsRearviewCamerasPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/rearview-cameras"
+  @category = "Электроника и техника -> Техника для авто -> Камеры заднего вида"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
