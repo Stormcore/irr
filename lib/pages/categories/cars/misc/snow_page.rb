@@ -6,6 +6,5 @@ class CategoryCarsMiscSnowPage < AdDetailsPage
   @@url_suffix = "/cars/misc/snow"
 
   irr_single_select "Тип предложения", "offertype"
-  irr_multi_select "Источник", "sourcefrom"
 
 end
