@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryElectronicsTechnicsAutoTechnicsTVPage < AdDetailsPage
+class CategoryElectronicsTechnicsAutoTechnicsAntennasPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/auto-technics/antennas"
