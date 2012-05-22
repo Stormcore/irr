@@ -9,5 +9,5 @@ class CategoryElectronicsTechnicsWashingMachinesDryingPage < AdDetailsPage
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Марка", "make"
-  irr_single_select "Объем загрузки", "drying_vol"
+  irr_single_select "Объем загрузки", "dryer_vol"
 end

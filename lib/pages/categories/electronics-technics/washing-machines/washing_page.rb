@@ -10,7 +10,7 @@ class CategoryElectronicsTechnicsWashingMachinesWashingPage < AdDetailsPage
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Марка", "make"
   irr_single_select "Тип загрузки", "washmach_load"
-  irr_single_select "Объем загрузки", "washmach_vol"
+  irr_single_select "Объем загрузки, кг", "washmach_vol"
   irr_checkbox      "Сушка", "washmach_dry"
   irr_checkbox      "Встраиваемая техника", "fridge_builtin"
 end
