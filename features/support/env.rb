@@ -4,6 +4,7 @@ KEEP_OPEN = ENV['KEEP_OPEN'] || false
 HEADLESS = ENV['HEADLESS'] || false
 DRIVER = (ENV['WEB_DRIVER'] || :firefox).to_sym
 ENABLE_FLASH = ENV['FLASH'] || false
+FAIL_FAST = ENV['FAILFAST'] || false
 
 
 require 'watir-webdriver'
@@ -104,7 +105,7 @@ After do |scenario|
   end
 end
 
-if(ENV['FAILFAST'])
+if(FAIL_FAST)
   After do |s| 
     Cucumber.wants_to_quit = true if s.failed?
   end
