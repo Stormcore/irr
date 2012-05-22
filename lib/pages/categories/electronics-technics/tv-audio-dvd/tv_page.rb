@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsTVAudioDVDTvPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/tv-audio-dvd/tv"
+  @category = "Электроника и техника -> Аудио, Видео -> Телевизоры и плазменные панели"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
