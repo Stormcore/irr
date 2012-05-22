@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsTVAudioDVDAudioVideoAccessoriesPage < AdDetails
   include PageObject
  
   @@url_suffix = "/electronics-technics/tv-audio-dvd/audio-video-accessories"
+  @category = "Электроника и техника -> Аудио, Видео -> Аксессуары для аудио-видео"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
