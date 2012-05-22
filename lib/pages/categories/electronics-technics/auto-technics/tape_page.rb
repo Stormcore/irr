@@ -11,7 +11,7 @@ class CategoryElectronicsTechnicsAutoTechnicsTapePage < AdDetailsPage
   irr_multi_select "Марка", "make"
   irr_single_select "Тип магнитолы", "caraudio_type"
   irr_single_select "Типоразмер", "tiporazmer"
-  irr_range_select "Выходная мощность", "output_volume"
+  irr_range_select "Выходная мощность макс, Вт", "output_volume", "Выходная мощность"
   irr_range_select "Число линейных аудиовыходов", "chislo_linejnyh_audiooutput"
   irr_checkbox     "Выход для сабвуфера", "subvufer_output"
   irr_checkbox     "Пульт ДУ", "pult_distancionnogo_upravlenija"
