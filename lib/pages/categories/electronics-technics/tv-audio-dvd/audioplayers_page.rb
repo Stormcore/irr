@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsTVAudioDVDAudioPlayersPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/tv-audio-dvd/audioplayers"
+  @category = "Электроника и техника -> Аудио, Видео -> Аудиоплееры"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
