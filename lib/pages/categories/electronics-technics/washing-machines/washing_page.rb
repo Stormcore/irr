@@ -4,6 +4,7 @@ class CategoryElectronicsTechnicsWashingMachinesWashingPage < AdDetailsPage
   include PageObject
  
   @@url_suffix = "/electronics-technics/washing-machines/washing"
+  @category = "Электроника и техника -> Стиральные машины -> Стиральные машины"
   
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
