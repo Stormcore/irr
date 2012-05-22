@@ -9,7 +9,7 @@ class CategoryElectronicsTechnicsAutoTechnicsRadarDetectorPage < AdDetailsPage
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Диапазоны", "make"
-  irr_single_select "Марка", "diapazoni"
+  irr_multi_select "Марка", "diapazoni"
   irr_single_select "Режимы", "rejimi"
   irr_checkbox      "Детектор лазера", "detector_lazera"
   irr_checkbox      "Пеленг лазера 360 гр.", "peleng_lazera"
