@@ -3,7 +3,7 @@
 class CategoryComputerDevicesMultimediaTVTunersPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/computers-devices/multimedia/tv_tuners"
+  @@url_suffix = "/computers-devices/multimedia/tv-tuners"
   @category = "Компьютерная техника -> Мультимедиа -> TV-тюнеры"
 
   irr_multi_select "Тип предложения", "offertype"
