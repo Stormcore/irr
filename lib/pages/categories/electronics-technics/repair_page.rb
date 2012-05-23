@@ -7,5 +7,4 @@ class CategoryElectronicsTechnicsRepairPage < AdDetailsPage
   @category = "Электроника и техника -> Ремонт и сервис"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Состояние", "used-or-new"
 end
