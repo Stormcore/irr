@@ -13,7 +13,7 @@ class CategoryComputerDevicesMonitorsCRTPage < AdDetailsPage
 
   def get_parameter(field)
     if field == "Диагональ экрана"
-      super(field).gsub(/ дюймов/)
+      super(field).gsub(/ дюймов/, '')
     else
       super(field)
     end
