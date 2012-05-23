@@ -4,6 +4,7 @@ class CategoryComputerDevicesNotebooksNetbooksUMPCPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/computers-devices/notebooks/netbooks_umpc/"
+  @category = "Компьютерная техника -> Ноутбуки -> Нетбуки и UMPC"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Новый или подержанный", "used-or-new"
@@ -16,24 +17,19 @@ class CategoryComputerDevicesNotebooksNetbooksUMPCPage < AdDetailsPage
   irr_range_select "Время работы от батареи", "battery"
   irr_multi_select "Беспроводные интерфейсы", "wireless_interfaces_multi"
   irr_range_select "Вес", "weight"
-  
+
   def get_parameter (field)
     case field
     when "Диагональ"
-      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
-      return result.gsub(/ дюймов/, '')
+      return super(field).gsub(/ дюймов/, '')
     when "Объем памяти"
-      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
-      return result.gsub(/ Мб/, '')
+      return super(field).gsub(/ Мб/, '')
     when "Размер жесткого диска"
-      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
-      return result.gsub(/ Гб/, '')
+      return super(field).gsub(/ Гб/, '')
     when "Время работы от аккумулятора"
-      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
-      return result.gsub(/ ч/, '')
+      return super(field).gsub(/ ч/, '')
     when "Вес"
-      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
-      return result.gsub(/ кг/, '')
+      return super(field).gsub(/ кг/, '')
     else
       super(field)
     end
