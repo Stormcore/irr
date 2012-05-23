@@ -7,7 +7,7 @@ class CategoryComputerDevicesTabletPage < AdDetailsPage
   @category = "Компьютерная техника -> Планшеты"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Новый или подержанный", "used-or-new"
+  irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Марка", "make"
   irr_multi_select "Модель", "model"
   irr_range_select "Диагональ экрана, дюймы", "pad_display_diagonal"

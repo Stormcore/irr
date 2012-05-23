@@ -7,5 +7,5 @@ class CategoryComputerDevicesMultimediaWebcamsPage < AdDetailsPage
   @category = "Компьютерная техника -> Мультимедиа -> Веб-камеры"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Новый или подержанный", "used-or-new"
+  irr_multi_select "Состояние", "used-or-new"
 end

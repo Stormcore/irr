@@ -7,7 +7,7 @@ class CategoryComputerDevicesNotebooksNetbooksUMPCPage < AdDetailsPage
   @category = "Компьютерная техника -> Ноутбуки -> Нетбуки и UMPC"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Новый или подержанный", "used-or-new"
+  irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Модель", "make"
   irr_range_select "Диагональ", "diagonal"
   irr_multi_select "Тип процессора", "cpu"

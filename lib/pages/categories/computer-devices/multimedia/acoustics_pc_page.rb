@@ -7,6 +7,6 @@ class CategoryComputerDevicesMultimediaAcousticsPCPage < AdDetailsPage
   @category = "Компьютерная техника -> Мультимедиа -> Акустика для ПК"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Новый или подержанный", "used-or-new"
+  irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Марка", "make"
 end
