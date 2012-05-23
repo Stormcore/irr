@@ -3,7 +3,7 @@
 class CategoryComputerDevicesPDAsPDAPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/computers-devices/pdas_communicators/"
+  @@url_suffix = "/computers-devices/pdas_communicators/pda"
   @category = "Компьютерная техника -> КПК -> КПК"
 
   irr_multi_select "Тип предложения", "offertype"
