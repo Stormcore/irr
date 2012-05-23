@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryComputerDevicesPDAsPDAPage < AdDetailsPage
+class CategoryComputerDevicesPDAsAccessoriesPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/computers-devices/pdas_communicators/accessories"
