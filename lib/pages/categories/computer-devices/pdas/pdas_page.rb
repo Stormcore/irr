@@ -8,8 +8,8 @@ class CategoryComputerDevicesPDAsPDAPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
-  irr_multi_select "Модель", "make"
-  irr_multi_select "Тип ОС", "os"
+  irr_multi_select "Марка", "make"
+  irr_single_select "Тип ОС", "os"
   irr_checkbox "Wi-Fi", "wifi"
   irr_checkbox "GPS", "gps"
 
