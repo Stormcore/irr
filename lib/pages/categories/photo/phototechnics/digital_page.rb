@@ -14,9 +14,10 @@ class CategoryPhotoPhototechnicsDigitalPage < AdDetailsPage
   irr_range_select "Кол-во мегапикселей матрицы", "photodigit_mpix"
 
   def get_parameter(field)
-  if field == "Кол-во мегапикселей матрицы"
-    super(field).gsub(/ Мп/,'')
-  else
-    super(field)
+    if field == "Кол-во мегапикселей матрицы"
+      super(field).gsub(/ Мп/,'')
+    else
+      super(field)
+    end
   end
 end
