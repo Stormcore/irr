@@ -13,5 +13,5 @@ class CategoryCommunicationMobileMobilePage < AdDetailsPage
   irr_single_select "Тип корпуса", "corpus_type"
   irr_checkbox     "Смартфон", "mobile_smartphone"
   irr_checkbox     "Поддержка 2 sim-карт", "mobile_two_sim_card"
-  irr_checkbox     "Гарантия", "guarantee"
+  irr_checkbox_with_value "Гарантия", "guarantee"
 end
