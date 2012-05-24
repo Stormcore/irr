@@ -7,4 +7,5 @@ class CategoryComputerDevicesOtherPage < AdDetailsPage
   @category = "Компьютерная техника -> Другое"
 
   irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Состояние", "used-or-new"
 end
