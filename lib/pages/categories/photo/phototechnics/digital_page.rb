@@ -4,7 +4,7 @@ class CategoryPhotoPhototechnicsDigitalPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/photo/phototechnics/digital/"
-  @category = "Телефоны и связь -> Фото, оптика -> Фототехника -> Фотоаппараты цифровые"
+  @category = "Фото, оптика -> Фототехника -> Фотоаппараты цифровые"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

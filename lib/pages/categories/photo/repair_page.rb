@@ -1,10 +1,10 @@
 # encoding: utf-8
 
-class CategoryPhotoOpticsOtherPage < AdDetailsPage
+class CategoryPhotoRepairPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/photo/optics/other/"
-  @category = "Фото, оптика -> Оптика -> Другое"
+  @@url_suffix = "/photo/repair"
+  @category = "Фото, оптика -> Другое"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

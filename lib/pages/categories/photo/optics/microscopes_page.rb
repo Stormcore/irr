@@ -4,7 +4,7 @@ class CategoryPhotoOpticsMicroscopesPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/photo/optics/microscopes/"
-  @category = "Телефоны и связь -> Фото, оптика -> Оптика -> Микроскопы"
+  @category = "Фото, оптика -> Оптика -> Микроскопы"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

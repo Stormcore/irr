@@ -4,7 +4,7 @@ class CategoryPhotoPhototechnicsTripodsPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/photo/phototechnics/tripods/"
-  @category = "Телефоны и связь -> Фото, оптика -> Фототехника -> Штативы"
+  @category = "Фото, оптика -> Фототехника -> Штативы"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
