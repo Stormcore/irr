@@ -4,7 +4,7 @@ class CategoryCommunicationMobileContractsPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/communication/mobile/contracts/"
-  @category = "елефоны и связь -> Мобильная связь -> Контракты"
+  @category = "Телефоны и связь -> Мобильная связь -> Контракты"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
