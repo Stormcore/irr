@@ -10,4 +10,12 @@ class CategoryComputerHardwareMemoryModulesPage < AdDetailsPage
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Объем памяти", "ram_size"
   irr_checkbox     "Для ноутбука", "ram_notebook"
+
+  def get_parameter(field)
+    if field == "Объем памяти"
+      super(field).gsub(/ Мб/,'')
+    else
+      super(field)
+    end
+  end
 end

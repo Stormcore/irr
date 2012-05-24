@@ -9,5 +9,13 @@ class CategoryComputerHardwareProcessorsPage < AdDetailsPage
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Производитель", "make"
-  irr_range_select "Частота, МГц", "frequency"
+  irr_range_select "Частота", "frequency"
+
+  def get_parameter(field)
+    if field == "Объем памяти"
+      super(field).gsub(/ МГц/,'')
+    else
+      super(field)
+    end
+  end
 end
