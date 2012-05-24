@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryCommunicationOtherPage < AdDetailsPage
+class CategoryCommunicationRepairPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/communication/repair/"
