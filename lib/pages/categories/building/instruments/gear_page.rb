@@ -4,7 +4,7 @@ class CategoryBuildingInstrumentsGearPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/building/instruments/gear"
-  @category = "Строительство и ремонт -> Инструменты -> Измерительный инструмент"
+  @category = "Строительство и ремонт -> Инструменты -> Оснастка к инструментам"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"

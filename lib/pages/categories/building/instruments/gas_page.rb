@@ -11,6 +11,6 @@ class CategoryBuildingInstrumentsGasPage < AdDetailsPage
   irr_multi_select "Марка", "make"
   irr_multi_select "Тип инструмента", "advert_type_id"
   irr_range_select "Мощность, Вт", "potrebljaemaja_moshchnost"
-  irr_range_select "Объем двигателя, куб. см.", "volume"
+  irr_range_select "Объем двигателя, куб.см", "volume"
   irr_range_select "Вес, кг", "ves"
 end
