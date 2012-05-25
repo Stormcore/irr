@@ -10,7 +10,16 @@ class CategoryBuildingPlumbingDouchecabinsPage < AdDetailsPage
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Тип", "type"
   irr_multi_select "Марка", "make"
-  irr_range_select "Длина, мм", "length"
-  irr_range_select "Ширина, мм", "width"
-  irr_range_select "Высота, мм", "height"
+  irr_range_select "Длина", "length"
+  irr_range_select "Ширина", "width"
+  irr_range_select "Высота", "height"
+
+  def get_parameter(field)
+    case field
+    when "Длина", "Ширина", "Высота"
+      super(field).gsub(/ мм/,'')
+    else
+      super(field)
+    end
+  end
 end
