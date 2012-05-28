@@ -8,38 +8,7 @@ def select_class_for_category(category)
   end
   raise "Class not found for category #{category}" if category_pages.length == 0
   @category_page = category_pages[0]
-
-  case category
-  when "Недвижимость -> Гаражи и стоянки. Продажа -> Машиноместо"
-    @category_page = CategoryRealEstateGarageParkingPage
-
-  when "Недвижимость -> Гаражи и стоянки. Продажа -> Гаражи и боксы"
-    @category_page = CategoryRealEstateGarageStallPage
-
-  when "Недвижимость -> Гаражи и стоянки. Аренда -> Машиноместо"
-    @category_page = CategoryRealEstateGarageRentParkinglPage
-
-  when "Недвижимость -> Гаражи и стоянки. Аренда -> Гаражи и боксы"
-    @category_page = CategoryRealEstateGarageRentStallPage
-
-  when "Компьютерная техника -> Ноутбуки -> Ноутбуки"
-    @category_page = CategoryComputerDevicesNotebooksNotebooksPage
-
-  when "Компьютерная техника -> Ноутбуки -> Нетбуки и UMPC"
-    @category_page = CategoryComputerDevicesNotebooksNetbooksUMPCPage
-    
-  when "Компьютерная техника -> Ноутбуки -> Сумки и кейсы для ноутбуков"
-    @category_page = CategoryComputerDevicesNotebooksCasesPage
-
-  when "Компьютерная техника -> Ноутбуки -> Аксессуары"
-    @category_page = CategoryComputerDevicesNotebooksAccessoriesPage
-
-  when "Компьютерная техника -> Настольные компьютеры"
-    @category_page = CategoryComputerDevicesDesktopsPage
-
-  when "Компьютерная техника -> КПК -> КПК"
-    @category_page = CategoryComputerDevicesPDAsPDAPage
-  end
+  
 end
 
 Когда %{на главной странице я перехожу в категорию "$long_category" через меню} do |long_category|
@@ -127,6 +96,8 @@ end
         expected_array = expected.split(" - ")
         actual_value.to_i.should be >= expected_array[0].to_i
         actual_value.to_i.should be <= expected_array[1].to_i
+      when "содержит"
+        actual_value.should include(expected)
       else
         eval("actual_value.to_i.should be #{operator} expected.to_i")
       end
