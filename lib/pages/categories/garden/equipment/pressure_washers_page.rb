@@ -12,7 +12,7 @@ class CategoryGardenEquipmentPressureWashersPage < AdDetailsPage
   irr_multi_select "Модель", "model"
   irr_single_select "Класс", "klass"
   irr_range_select "Производительность, л/час", "proizvoditelnost"
-  irr_range_select "Давление, бар", "davlenie"
+  irr_range_select "Максимальное давление, бар", "davlenie", "Давление, бар"
   irr_single_select "Материал корпуса насоса", "material_korpusa_nasosa"
   irr_single_select "Насадки", "nasadki" 
   irr_checkbox     "Использование моющего средства", "ispolzovanie_mojushchego_sredstva"
