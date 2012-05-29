@@ -138,11 +138,8 @@ def results_details_soft_assert(description)
   end
 
   if !validation_errors.empty?
-    puts "URL: #{@browser.url}"
-    puts description
-    puts validation_errors
-    $stdout.flush
-    raise "Error occurred on page #{@browser.url}"
+    output_html_formatted_messages(validation_errors)
+    raise "#{description}"
   end
 end
 
@@ -168,10 +165,13 @@ def first_result_details_soft_assert(description)
   end
 
   if !validation_errors.empty?
-    puts "URL: #{@browser.url}"
-    puts description
-    puts validation_errors
-    $stdout.flush
-    raise "Error occurred on page #{@browser.url}"
+    output_html_formatted_messages(validation_errors)
+    raise "#{description}"
   end
+end
+
+def output_html_formatted_messages(messages)
+    messages.each_pair do |url, message|
+      puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
+    end
 end
