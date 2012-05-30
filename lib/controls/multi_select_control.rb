@@ -16,16 +16,21 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
   
   # setter
   define_method("#{function_name}=") do |hash|
-    self.expand_all_parameters
-    element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
-    unless element.div_element(:class => "controlSelect").visible?
-      element = self.div_element(:xpath => "//div[@data-name='#{identifier}']")
+    begin
+      self.expand_all_parameters
+      element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      unless element.div_element(:class => "controlSelect").visible?
+        element = self.div_element(:xpath => "//div[@data-name='#{identifier}']")
+      end
+      element.div_element(:class => "controlSelect").when_present.click
+      hash['value'].split(", ").each do |value|
+        element.label_element(:text => value).when_present.checkbox_element.check
+      end
+      element.div_element(:class => "controlSelect").when_present.click
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "ERROR: #{e.message}"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
     end
-    element.div_element(:class => "controlSelect").when_present.click
-    hash['value'].split(", ").each do |value|
-      element.label_element(:text => value).when_present.checkbox_element.check
-    end
-    element.div_element(:class => "controlSelect").when_present.click 
   end
 
   add_getters_and_setters(function_name, getter_name, setter_name)

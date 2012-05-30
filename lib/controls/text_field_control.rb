@@ -16,8 +16,13 @@ def irr_text_field(getter_name, identifier, setter_name = nil)
   
   # setter
   define_method("#{function_name}=") do |hash|
-    self.expand_all_parameters
-    self.text_field_element(:name => identifier).value = hash['value']
+    begin
+      self.expand_all_parameters
+      self.text_field_element(:name => identifier).value = hash['value']
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "ERROR: #{e.message}"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+    end
   end
 
   add_getters_and_setters(function_name, getter_name, setter_name)

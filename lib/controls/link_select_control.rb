@@ -16,11 +16,16 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
   
   # setter
   define_method("#{function_name}=") do |hash|
-    self.expand_all_parameters
-    element = self.div_element(:xpath => identifier)
-    element.link_element(:class => "combo_drop_link").when_present.click
-    element.parent.div_element(:class => popup).
+    begin
+      self.expand_all_parameters
+      element = self.div_element(:xpath => identifier)
+      element.link_element(:class => "combo_drop_link").when_present.click
+      element.parent.div_element(:class => popup).
             link_element(:text => hash['value']).when_present.click
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "ERROR: #{e.message}"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+    end
   end
 
   add_getters_and_setters(function_name, getter_name, setter_name)

@@ -16,9 +16,14 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
   
   # setter
   define_method("#{function_name}=") do |hash|
-    self.expand_all_parameters
-    element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
-    element.radio_button_element(:xpath => "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").when_present.click 
+    begin
+      self.expand_all_parameters
+      element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      element.radio_button_element(:xpath => "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").when_present.click
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "ERROR: #{e.message}"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+    end
   end
 
   add_getters_and_setters(function_name, getter_name, setter_name)

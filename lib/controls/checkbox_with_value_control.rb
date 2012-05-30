@@ -16,8 +16,13 @@ def irr_checkbox_with_value(getter_name, identifier, setter_name = nil)
 
   #setter
   define_method("#{function_name}=") do |hash|
-    self.show_all_parameters
-    self.checkbox_element(:name => identifier).click
+    begin
+      self.show_all_parameters
+      self.checkbox_element(:name => identifier).click
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "ERROR: #{e.message}"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+    end
   end
 
   add_getters_and_setters(function_name, getter_name, setter_name)

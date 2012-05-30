@@ -16,11 +16,16 @@ def irr_inline_select(getter_name, identifier, setter_name = nil)
   
   # setter
   define_method("#{function_name}=") do |hash|
-    self.expand_all_parameters
-    element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
-    hash['value'].split(",").each do |value|
-      element.link_element(:xpath => "//a[./span[text()='#{value}']]").
+    begin
+      self.expand_all_parameters
+      element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      hash['value'].split(",").each do |value|
+        element.link_element(:xpath => "//a[./span[text()='#{value}']]").
               when_present.click
+      end
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "ERROR: #{e.message}"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
     end
   end
 

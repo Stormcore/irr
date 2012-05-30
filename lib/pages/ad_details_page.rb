@@ -29,8 +29,13 @@ class AdDetailsPage
   
   # Все параметры
   def singleselect(element, value)
-    element.div_element(:class => "controlSelectS").when_present.click
-    element.element.div(:text => value.strip).when_present.click
+    begin
+      element.div_element(:class => "controlSelectS").when_present.click
+      element.element.div(:text => value.strip).when_present.click
+    rescue Watir::Exception::UnknownObjectException => e
+      puts "ERROR: #{e.message}"
+      raise "Отсутствует значение '#{value.strip}'"
+    end
   end
 
   def expand_all_parameters
@@ -51,20 +56,40 @@ class AdDetailsPage
   def set_generic_parameter(hash)
     case hash['parameter']
     when "Цена"
-      self.price_from = hash['min']
-      self.price_to = hash['max']
+      begin
+        self.price_from = hash['min']
+        self.price_to = hash['max']
+      rescue Watir::Exception::UnknownObjectException => e
+        puts "ERROR: #{e.message}"
+        raise "Отсутствует поле Цена"
+      end
 
     when "Ключевые слова"
-      self.keywords = hash['value']
+      begin
+        self.keywords = hash['value']
+      rescue Watir::Exception::UnknownObjectException => e
+        puts "ERROR: #{e.message}"
+        raise "Отсутствует поле Ключевые слова"
+      end
 
     when "Валюта"
       singleselect(self.currency_element, hash['value'])
 
     when "С фото"
-      self.hasimages_element.click
+      begin
+        self.hasimages_element.click
+      rescue Watir::Exception::UnknownObjectException => e
+        puts "ERROR: #{e.message}"
+        raise "Отсутствует поле 'С фото'"
+      end
       
     when "С видео"
-      self.hasvideo_element.click
+      begin
+        self.hasvideo_element.click
+      rescue Watir::Exception::UnknownObjectException => e
+        puts "ERROR: #{e.message}"
+        raise "Отсутствует поле 'С видео'"
+      end
       
     when "Источник"
       singleselect(self.source_from_element, hash['value'])
@@ -73,14 +98,17 @@ class AdDetailsPage
       singleselect(self.date_create_element, hash['value'])
  
     else
-      puts "Неизвестный параметр: #{hash['parameter']}"
-      raise "Unknown parameter"
+      raise "Неизвестный параметр: #{hash['parameter']}"
     end
   end
 
   def get_generic_parameter(field)
     xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
-    self.cell_element(:xpath => xpath).when_present.text
+    begin
+      self.cell_element(:xpath => xpath).when_present.text
+    rescue Watir::Wait::TimeoutError => exception
+      raise "Параметр '#{getter_name}' не найден"
+    end
   end
 
   def set_parameter (hash)
