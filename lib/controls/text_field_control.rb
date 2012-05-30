@@ -9,7 +9,8 @@ def irr_text_field(getter_name, identifier, setter_name = nil)
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present.text
-    rescue Watir::Wait::TimeoutError => exception
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Параметр '#{getter_name}' не найден"
     end
   end
@@ -19,8 +20,8 @@ def irr_text_field(getter_name, identifier, setter_name = nil)
     begin
       self.expand_all_parameters
       self.text_field_element(:name => identifier).value = hash['value']
-    rescue Watir::Exception::UnknownObjectException => e
-      puts "ERROR: #{e.message}"
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
     end
   end

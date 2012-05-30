@@ -9,7 +9,8 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present.text
-    rescue Watir::Wait::TimeoutError => exception
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Параметр '#{getter_name}' не найден"
     end
   end
@@ -22,8 +23,8 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
       element.link_element(:class => "combo_drop_link").when_present.click
       element.parent.div_element(:class => popup).
             link_element(:text => hash['value']).when_present.click
-    rescue Watir::Exception::UnknownObjectException => e
-      puts "ERROR: #{e.message}"
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
     end
   end

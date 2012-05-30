@@ -9,7 +9,8 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td/div[@class='bird']"
     begin
       self.div_element(:xpath => xpath).exists?
-    rescue Watir::Wait::TimeoutError => exception
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Параметр '#{getter_name}' не найден"
     end
   end
@@ -19,8 +20,8 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
     begin
       self.show_all_parameters
       self.checkbox_element(:name => identifier).click
-    rescue Watir::Exception::UnknownObjectException => e
-      puts "ERROR: #{e.message}"
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
     end
   end

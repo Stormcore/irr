@@ -9,7 +9,8 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
     xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present.text
-    rescue Watir::Wait::TimeoutError => exception
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Параметр '#{getter_name}' не найден"
     end
   end
@@ -27,8 +28,8 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
         element.label_element(:text => value).when_present.checkbox_element.check
       end
       element.div_element(:class => "controlSelect").when_present.click
-    rescue Watir::Exception::UnknownObjectException => e
-      puts "ERROR: #{e.message}"
+    rescue Exception => e
+      puts "ERROR: #{e}"
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
     end
   end

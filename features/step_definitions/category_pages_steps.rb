@@ -49,7 +49,12 @@ end
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
-    page.run_search_element.when_present.click
+    begin
+      page.run_search_element.when_present.click
+    rescue Watir::Wait::TimeoutError => e
+      puts "ERROR: #{e.message}"
+      raise "Отсутствует кнопка 'Показать'"
+    end
   end
 end
 
