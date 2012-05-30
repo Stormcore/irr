@@ -322,9 +322,8 @@ def first_result_page_soft_assert(description)
   end
 
   if !validation_errors.empty?
-    puts description
-    puts validation_errors
-    raise "Error on #{@browser.url}:"
+    output_html_formatted_messages(validation_errors)
+    raise "#{description}"
   end
 end
 
@@ -343,8 +342,7 @@ def results_page_soft_assert(description)
   end
 
   if !validation_errors.empty?
-    puts description
-    puts validation_errors
-    raise "Error on #{@browser.url}:"
+    output_html_formatted_messages(validation_errors)
+    raise "#{description}"
   end
 end
