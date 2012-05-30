@@ -14,7 +14,7 @@ class SearchResultsPage
     begin
       doc = Nokogiri::HTML.parse(results_table_element.when_present.element.html)
     rescue
-      raise "Result list was not displayed" if attempts == 0
+      raise "Список объявлений не был загружен" if attempts == 0
       self.refresh
       attempts -= 1
       retry
@@ -97,8 +97,10 @@ class SearchResultsPage
   end
 
   def highlight_result_by_url(url)
-    ad_link = results_table_element.link_element(:href => url)
-    @browser.execute_script("arguments[0].style='background-color: red'", ad_link)
+    @browser.execute_script <<-JS
+        var a = $('a[href="#{url}"]:parent')[0]
+        a.parentElement.parentElement.setAttribute("style", "background-color:red")
+    JS
   end
 
   def table_right_position
