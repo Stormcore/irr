@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 def irr_link_select(getter_name, identifier, popup, setter_name = nil)
   function_name = identifier.gsub(/-/,'_') # replace dashes with underscores
 

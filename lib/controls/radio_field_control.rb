@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allParams")
   function_name = identifier.gsub(/-/,'_') # replace dashes with underscores
 
