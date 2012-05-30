@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-def irr_range_select(getter_name, id, setter_name = nil)
+def irr_range_select(getter_name, identifier, setter_name = nil)
   function_name = id.gsub(/-/,'_') # replace dashes with underscores
 
   # getter
@@ -19,8 +19,8 @@ def irr_range_select(getter_name, id, setter_name = nil)
   define_method("#{function_name}=") do |hash|
     begin
       self.expand_all_parameters
-      self.text_field_element(:name => "#{id}[from]").value = hash['min']
-      self.text_field_element(:name => "#{id}[to]").value = hash['max']
+      self.text_field_element(:name => "#{identifier}[from]").value = hash['min']
+      self.text_field_element(:name => "#{identifier}[to]").value = hash['max']
     rescue Exception => e
       puts "ERROR: #{e}"
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
