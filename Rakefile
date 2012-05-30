@@ -47,6 +47,14 @@ Cucumber::Rake::Task.new(:bug) do |task|
                         "--format pretty"]
 end
 
+Cucumber::Rake::Task.new(:fast_category_check) do |task|
+    task.cucumber_opts = ["HEADLESS=true",
+                        "-r features",
+                        "-t @all_results -t@customfield",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format pretty"]
+
 Cucumber::Rake::Task.new(:feature) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "-r features",
