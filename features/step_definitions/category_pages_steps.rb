@@ -6,7 +6,7 @@ def select_class_for_category(category)
       subclass.instance_variable_get(:@category) == category
     end
   end
-  raise "Class not found for category #{category}" if category_pages.length == 0
+  raise "Не найден класс для категории #{category}" if category_pages.length == 0
   @category_page = category_pages[0]
   
 end

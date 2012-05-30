@@ -69,7 +69,7 @@ end
     @results.each do |result|
       current_is_premium = result['premium']
       if premium_section_ended and current_is_premium
-        raise "Page #{@current_page_number} Message #{result['url']}: premium message after regular message"
+        raise "Страница #{@current_page_number}, объявление #{result['url']}: премиум после обычного сообщения"
       end
       premium_section_ended = true unless current_is_premium
     end
@@ -197,8 +197,7 @@ end
       end
     end
     unless keyword_found
-      puts "Ключевое слово не найдено в заголовке '#{result['title']}'"
-      raise RSpec::Expectations::ExpectationNotMetError, "Error occured"
+      raise RSpec::Expectations::ExpectationNotMetError, "Ключевое слово не найдено в заголовке '#{result['title']}'"
     end
   end
 end
@@ -258,7 +257,7 @@ end
       @browser.back
     end
 
-    raise RSpec::Expectations::ExpectationNotMetError, "Keyword not found" unless keyword_found
+    raise RSpec::Expectations::ExpectationNotMetError, "Не найдено ключевое слово" unless keyword_found
   end
 end
 
@@ -312,7 +311,7 @@ end
         steps %Q{Then я перехожу на страницу #{@current_page_number+1}}
       end
     end 
-    raise "Ad was not found" unless ad_found
+    raise "Объявление не найдено" unless ad_found
   end
 end
 
