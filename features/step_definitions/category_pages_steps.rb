@@ -67,6 +67,11 @@ def select_soft_assert_function(option)
 end
 
 То %{в деталях $option объявления отображается видео} do |option|
+  # Не проверять источник на *.prontosoft.by
+  if BASE_URL.include? 'prontosoft.by'
+    puts "Проверка пропущена - тестовый сайт"
+    next
+  end
   select_soft_assert_function(option)
   soft_assert_function("Видео отсутсвует:") do |ad_page, result|
     ad_page.should have_video, "Видео не показано"
