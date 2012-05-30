@@ -54,6 +54,7 @@ Cucumber::Rake::Task.new(:fast_category_check) do |task|
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty"]
+end
 
 Cucumber::Rake::Task.new(:feature) do |task|
     task.cucumber_opts = ["HEADLESS=true",
