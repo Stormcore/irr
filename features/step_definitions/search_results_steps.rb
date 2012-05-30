@@ -215,6 +215,7 @@ end
     keywords.split(", ").each do |keyword|
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
+      next if result['title'].nil?
       if UnicodeUtils.downcase(result['title']).include? downcased_keyword
         puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в заголовке"
         keyword_found = true
