@@ -1,6 +1,5 @@
 # encoding: utf-8
 BASE_URL = ENV['BASE_URL'] || "http://irr.ru"
-KEEP_OPEN = ENV['KEEP_OPEN'] || false
 HEADLESS = ENV['HEADLESS'] || false
 DRIVER = (ENV['WEB_DRIVER'] || :firefox).to_sym
 ENABLE_FLASH = ENV['FLASH'] || false
@@ -39,7 +38,7 @@ when :firefox
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.native_events = false
   profile['toolkit.telemetry.prompted'] = true
-  profile['plugin.click_to_play'] = true
+  profile['plugin.click_to_play'] = true unless ENABLE_FLASH
   profile.add_extension "features/support/JSErrorCollector.xpi"
   profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
   browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
@@ -51,16 +50,9 @@ when :chrome
   profile = Selenium::WebDriver::Chrome::Profile.new
   switches  = %w[--bwsi]
   browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
-
-  unless ENABLE_FLASH
-    # WORKAROUND: Disable flash
-    browser.goto "chrome://plugins"
-    browser.span(:text => "Flash").parent.parent.parent.a(:class => "disable-group-link").click
-    browser.goto "about:blank"
-  end
 end
 
-#Function that returns a string that presents the details of the occurred JS errors
+# Проверяем на ошибки JS
 def get_js_error_feedback()
   jserror_descriptions = ""
   begin
@@ -69,7 +61,7 @@ def get_js_error_feedback()
       jserror_descriptions << "JS error detected: #{jserror["errorMessage"]} (#{jserror["sourceName"]}:#{jserror["lineNumber"]})"
     end
   rescue Exception => e
-    #puts "Checking for JS errors failed with: #{e}"
+    puts "Checking for JS errors failed with: #{e}"
   end
   jserror_descriptions
 end
@@ -86,6 +78,7 @@ AfterConfiguration do |config|
   puts "Tests have been configured, starting up.."
 end
 
+# Проверяем наличие ошибок JS после каждого шага
 #AfterStep do |scenario|
 #  js_errors = get_js_error_feedback()
 #  raise js_errors unless js_errors.empty?
@@ -98,11 +91,6 @@ After do |scenario|
     @browser.driver.save_screenshot(screenshot)
     embed screenshot, 'image/png'
   end
-
-  #Keep browser open for pending steps
-  if defined?(scenario.status)
-    KEEP_OPEN = true if scenario.status == :pending or scenario.status == :undefined
-  end
 end
 
 if(FAIL_FAST)
@@ -112,18 +100,9 @@ if(FAIL_FAST)
 end
 
 at_exit do
-  browser.close if browser and not KEEP_OPEN
+  browser.close if browser
   headless.destroy if HEADLESS
 end
-
-Around('@soft_assert') do |scenario, block|
-  @validation_errors = Hash.new
-  block.call
-  if !@validation_errors.empty?
-    raise "Found errors: \n #{@validation_errors}"
-  end
-end
-
 
 # Store all subclasses
 class Class

@@ -2,16 +2,14 @@
 
 Когда %{на странице поиска загружен список результатов} do 
   on SearchResultsPage do |page| 
-    puts "Обрабатываю результаты страницы #{@browser.url}"
-    $stdout.flush
+    puts "Обрабатываю результаты страницы <a href='#{@browser.url}'>#{@browser.url}</a>"
     @results = page.search_results
   end
 end
 
 Когда %{на странице поиска загружен список результатов для недвижимости} do
   on SearchResultsForRealEstatePage do |page| 
-    puts "Обрабатываю результаты страницы #{@browser.url}"
-    $stdout.flush
+    puts "Обрабатываю результаты страницы <a href='#{@browser.url}'>#{@browser.url}</a>"
     @results = page.search_results
   end
 end
@@ -61,7 +59,6 @@ end
       eval "@results.length.should #{operator} #{number}"
     else
       puts "У сценария указан тег @empty_results, пропускаем проверку"
-      $stdout.flush
     end
   end
 end
@@ -99,7 +96,7 @@ end
 
 То %{в каждом объявлении цена $operator $price} do |operator, price|
   results_page_soft_assert("Некорректная цена:") do |result|
-    # Skip premium ads
+    # Пропускаем премиумы
     unless result['premium']
       eval("result['price'].to_i.should be #{operator} #{price}")
     end
@@ -119,11 +116,15 @@ end
 end
  
 То %{в каждом объявлении отображается рисунок} do
-  # Не проверять картинки на regions
-  next if BASE_URL.include? 'regions.prontosoft.by'
+  # Не проверять картинки на *.prontosoft.by
+  if BASE_URL.include? 'prontosoft.by'
+    puts "Проверка пропущена - тестовый сайт"
+    next
+  end
   results_page_soft_assert("Не отображен рисунок:") do |result|
     thumbnail = result['thumbnail']
     thumbnail.should_not be_nil
+    
     # Verify that  thumbnail url doesn't throw any error
     url = URI.parse(thumbnail)
     the_request = Net::HTTP::Get.new(url.path)
@@ -142,8 +143,11 @@ end
 end
 
 То %{в каждом объявлении источник равен "$expected_source"} do |expected_source|
-  # Не проверять источник на regions
-  next if BASE_URL.include? 'regions.prontosoft.by'
+  # Не проверять источник на *.prontosoft.by
+  if BASE_URL.include? 'prontosoft.by'
+    puts "Проверка пропущена - тестовый сайт"
+    next
+  end
   results_page_soft_assert("Неправильный источник:") do |result|
     case result['source_link'] 
     when /\/user\//
@@ -160,8 +164,11 @@ end
 end
 
 То %{в каждом объявлении отображается загруженная фотография} do
-  # Не проверять картинки на regions
-  next if BASE_URL.include? 'regions.prontosoft.by'
+  # Не проверять картинки на *.prontosoft.by
+  if BASE_URL.include? 'prontosoft.by'
+    puts "Проверка пропущена - тестовый сайт"
+    next
+  end
   results_page_soft_assert("Не отображена загруженная фотография:") do |result|
     thumbnail = result['thumbnail']
     thumbnail.should_not be_empty 
@@ -185,7 +192,6 @@ end
     keywords.split(", ").each do |keyword|
       if UnicodeUtils.downcase(result['title']).include? UnicodeUtils.downcase(keyword)
         puts "URL #{result['url']}: найдено ключевое слово #{keyword}"
-        $stdout.flush
         keyword_found = true
         break
       end

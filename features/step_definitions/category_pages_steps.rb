@@ -85,7 +85,6 @@ end
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
   soft_assert_function(error_text) do |ad_page, result|
       puts "DEBUG: Страница #{@browser.url}"
-      $stdout.flush
       actual_value = ad_page.get_parameter(field)
       case operator
       when "равно одному из"
@@ -108,7 +107,6 @@ end
   on GenericCategoryPage do |page|
     (1..3).each do |attempt|
       puts "DEBUG: Attempt #{attempt}"
-      $stdout.flush
       break if page.left_banner_element.element.visible?
       @browser.refresh
     end
