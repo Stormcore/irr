@@ -5,7 +5,11 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
   define_method("#{function_name}") do
     self.show_all_parameters
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td/div[@class='bird']"
-    self.div_element(:xpath => xpath).exists?
+    begin
+      self.div_element(:xpath => xpath).exists?
+    rescue Watir::Wait::TimeoutError => exception
+      raise "Параметр '#{getter_name}' не найден"
+    end
   end
   
   #setter

@@ -5,7 +5,11 @@ def irr_checkbox_with_value(getter_name, identifier, setter_name = nil)
   define_method("#{function_name}") do
     self.show_all_parameters
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
-    self.cell_element(:xpath => xpath).when_present.text
+    begin
+      self.cell_element(:xpath => xpath).when_present.text
+    rescue Watir::Wait::TimeoutError => exception
+      raise "Параметр '#{getter_name}' не найден"
+    end
   end
 
   #setter
