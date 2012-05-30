@@ -210,12 +210,13 @@ end
 То %{в $option объявлении содержится одно из "$keyword"} do |option, keywords|
   select_soft_assert_function(option)
   soft_assert_function("Нет ключевого слова в объявлении") do |result|
+    next if result.nil?
+  
     keyword_found = false
     # Проверяем результаты поиск
     keywords.split(", ").each do |keyword|
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
-      next if result['title'].nil?
       if UnicodeUtils.downcase(result['title']).include? downcased_keyword
         puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в заголовке"
         keyword_found = true
