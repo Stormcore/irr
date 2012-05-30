@@ -50,7 +50,7 @@ end
 Cucumber::Rake::Task.new(:fast_category_check) do |task|
     task.cucumber_opts = ["HEADLESS=true",
                         "-r features",
-                        "-t @all_results, @customfield",
+                        "-t @all_results,@customfield",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
                         "--format pretty"]
