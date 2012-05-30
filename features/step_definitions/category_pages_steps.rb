@@ -26,7 +26,7 @@ end
   end
   
   select_class_for_category(long_category)
-  puts "DEBUG: Страница категории #{@browser.url}"
+  puts "DEBUG: Страница категории <a href='#{@browser.url}'>#{@browser.url}</a>"
 end
 
 Когда %{на главной странице я перехожу в категорию "$long_category"} do |long_category|
@@ -36,7 +36,7 @@ end
      defined?(@url_prefix) and
      defined?(@url_suffix) and
     full_url = @url_prefix+ad_class.class_variable_get("@@url_suffix")+@url_suffix
-    puts "DEBUG: URL #{full_url}"
+    puts "DEBUG: URL <a href='#{full_url}'>#{full_url}</a>"
     @browser.goto full_url
   else
     steps %Q{When на главной странице я перехожу в категорию "#{long_category}" через меню}
@@ -84,7 +84,7 @@ end
   select_soft_assert_function(option)
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
   soft_assert_function(error_text) do |ad_page, result|
-      puts "DEBUG: Страница #{@browser.url}"
+      puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>"
       actual_value = ad_page.get_parameter(field)
       case operator
       when "равно одному из"
