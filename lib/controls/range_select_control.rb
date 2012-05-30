@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 def irr_range_select(getter_name, identifier, setter_name = nil)
-  function_name = id.gsub(/-/,'_') # replace dashes with underscores
+  function_name = identifier.gsub(/-/,'_') # replace dashes with underscores
 
   # getter
   define_method("#{function_name}") do
