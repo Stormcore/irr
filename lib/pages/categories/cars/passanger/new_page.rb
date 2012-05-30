@@ -4,7 +4,7 @@ class CategoryCarsPassangerNewPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/passenger/new"
-  @category = "Авто и мото -> Легковые автомобили -> Автомобили с пробегом"
+  @category = "Авто и мото -> Легковые автомобили -> Новые автомобили"
 
   irr_range_select "Год выпуска", "car-year"
   irr_multi_select "Марка", "make"
@@ -19,8 +19,7 @@ class CategoryCarsPassangerNewPage < AdDetailsPage
     case field
     when "Год выпуска"
       # Вырезаем г.
-      result = self.send(self.class.instance_variable_get(:@getter_functions)[field])
-      return result.gsub(/ г./, '')
+      super(field).gsub(/ г./, '')
     else
       super(field)
     end
