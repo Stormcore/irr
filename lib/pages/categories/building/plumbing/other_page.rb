@@ -8,4 +8,5 @@ class CategoryBuildingPlumbingOtherPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
+  irr_multi_select "Тип сантехники", "type"
 end
