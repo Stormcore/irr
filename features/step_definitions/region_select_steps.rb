@@ -33,6 +33,14 @@ end
     @url_prefix = BASE_URL
     @url_suffix = ''
     @browser.goto(@url_prefix)
+  when "Астана"
+    @url_prefix = BASE_URL.gsub("http://", "http://astana.")
+    @url_suffix = ''
+    @browser.goto(@url_prefix)
+  when "Казахстан"
+    @url_prefix = BASE_URL
+    @url_suffix = ''
+    @browser.goto(@url_prefix)
   else
     @url_prefix = BASE_URL
     steps %Q{
