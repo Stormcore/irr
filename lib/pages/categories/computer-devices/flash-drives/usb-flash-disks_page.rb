@@ -8,5 +8,13 @@ class CategoryComputerFlashDrivesUSBFlashDisksPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
-  irr_range_select "Объем памяти, Мб", "flash_size"
+  irr_range_select "Объем памяти", "flash_size"
+
+  def get_parameter(field)
+    if field == "Объем памяти"
+      super(field).gsub(/ Мб/,'')
+    else
+      super(field)
+    end
+  end
 end

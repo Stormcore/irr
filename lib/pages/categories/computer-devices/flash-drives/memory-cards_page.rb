@@ -10,5 +10,13 @@ class CategoryComputerFlashDrivesMemoryCardsPage < AdDetailsPage
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Марка", "make"
   irr_multi_select "Тип карты", "type"
-  irr_range_select "Объем памяти, Мб", "flash_size"
+  irr_range_select "Объем памяти", "flash_size"
+
+  def get_parameter(field)
+    if field == "Объем памяти"
+      super(field).gsub(/ Мб/,'')
+    else
+      super(field)
+    end
+  end
 end
