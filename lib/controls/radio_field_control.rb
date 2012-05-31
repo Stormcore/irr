@@ -20,6 +20,7 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
     begin
       self.expand_all_parameters
       element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      element.when_present.visible?
       element.radio_button_element(:xpath => "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").when_present.click
     rescue Exception => e
       puts "ERROR: #{e}"

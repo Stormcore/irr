@@ -20,6 +20,7 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
     begin
       self.expand_all_parameters
       element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      element.when_present.visible?
       element.div_element(:class => "controlSelectS").when_present.click
       element.element.div(:text => hash['value'].strip).when_present.click
     rescue Exception => e

@@ -20,6 +20,7 @@ def irr_inline_select(getter_name, identifier, setter_name = nil)
     begin
       self.expand_all_parameters
       element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      element.visible?
       hash['value'].split(",").each do |value|
         element.link_element(:xpath => "//a[./span[text()='#{value}']]").
               when_present.click
