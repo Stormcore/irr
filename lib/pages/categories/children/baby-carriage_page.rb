@@ -8,7 +8,7 @@ class CategoryChildrenBabyCarriagePage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
-  irr_multi_select "Тип", "type"
+  irr_single_select "Тип", "type"
   irr_multi_select "Марка", "make"
   irr_multi_select "Модель", "model"
   irr_single_select "Механизм складывания", "folding_mechanism"

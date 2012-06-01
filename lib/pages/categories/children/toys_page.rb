@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryChildrenBabyCarseatPage < AdDetailsPage
+class CategoryChildrenToysPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/children/toys"
