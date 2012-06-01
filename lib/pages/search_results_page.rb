@@ -112,7 +112,11 @@ class SearchResultsPage
   end
   
   def open_ad(url)
-    @browser.goto("#{BASE_URL}#{url}")
+    begin
+      @browser.goto("#{BASE_URL}#{url}")
+    rescue Timeout::Error => e
+      raise "Страница не была загружена за ожидаемое время"
+    end
   end
 
   def go_to_page(number)

@@ -88,8 +88,11 @@ After do |scenario|
   Dir::mkdir('screenshots') if not File.directory?('screenshots')
   screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
   if scenario.failed?
-    @browser.driver.save_screenshot(screenshot)
-    embed screenshot, 'image/png'
+    begin
+      @browser.driver.save_screenshot(screenshot)
+      embed screenshot, 'image/png'
+    rescue Timeout::Error
+    end
   end
 end
 
