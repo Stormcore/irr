@@ -23,11 +23,11 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
         element = self.div_element(:xpath => "//div[@data-name='#{identifier}']")
       end
       element.when_present.visible?
-      element.div_element(:class => "controlSelect").when_present.click
+      element.div_element(:class => "controlSelect").when_present(30).click
       hash['value'].split(", ").each do |value|
-        element.label_element(:text => value).when_present.checkbox_element.check
+        element.label_element(:text => value).when_present(30).checkbox_element.check
       end
-      element.div_element(:class => "controlSelect").when_present.click
+      element.div_element(:class => "controlSelect").when_present(30).click
     rescue Exception => e
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end

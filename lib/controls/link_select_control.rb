@@ -19,7 +19,7 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
     begin
       self.expand_all_parameters
       element = self.div_element(:xpath => identifier)
-      element.link_element(:class => "combo_drop_link").when_present.click
+      element.link_element(:class => "combo_drop_link").when_present(30).click
       element.parent.div_element(:class => popup).
             link_element(:text => hash['value']).when_present.click
     rescue Exception => e
