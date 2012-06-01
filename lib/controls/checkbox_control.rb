@@ -10,8 +10,7 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
     begin
       self.div_element(:xpath => xpath).when_present(30).exists?
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Параметр '#{getter_name}' не найден"
+      raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
   

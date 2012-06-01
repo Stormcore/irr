@@ -10,8 +10,7 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
     begin
       self.cell_element(:xpath => xpath).when_present(30).text
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Параметр '#{getter_name}' не найден"
+      raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
   

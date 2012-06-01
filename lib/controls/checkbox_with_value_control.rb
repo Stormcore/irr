@@ -10,8 +10,7 @@ def irr_checkbox_with_value(getter_name, identifier, setter_name = nil)
     begin
       self.cell_element(:xpath => xpath).when_present(30).text
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Параметр '#{getter_name}' не найден"
+      raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
 
