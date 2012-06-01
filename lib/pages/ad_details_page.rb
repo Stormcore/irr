@@ -49,7 +49,7 @@ class AdDetailsPage
 
   def show_all_parameters
     # Open all params if present
-    self.show_all_params if self.show_all_params_element.visible?
+    self.show_all_params if self.show_all_params_element.when_present(30).visible?
   end
 
   def set_generic_parameter(hash)

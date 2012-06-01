@@ -52,7 +52,9 @@ def start_browser
     switches  = %w[--bwsi]
     browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
   end
+  return browser
 end
+browser = start_browser
 
 # Проверяем на ошибки JS
 def get_js_error_feedback
@@ -69,7 +71,7 @@ def get_js_error_feedback
 end
 
 Before do |scenario|
-  browser.cookies.clear if browser
+  @browser.cookies.clear if @browser
   @browser = browser
   
   # Сохраняем экземпляр сценария
@@ -94,8 +96,8 @@ After do |scenario|
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
     rescue Timeout::Error
-      browser.close if browser
-      start_browser
+      @browser.quit
+      @browser = start_browser
     end
   end
 end
@@ -107,7 +109,7 @@ if(FAIL_FAST)
 end
 
 at_exit do
-  browser.close if browser
+  browser.quit if browser
   headless.destroy if HEADLESS
 end
 
