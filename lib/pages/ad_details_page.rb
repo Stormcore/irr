@@ -32,9 +32,8 @@ class AdDetailsPage
     begin
       element.div_element(:class => "controlSelectS").when_present.click
       element.element.div(:text => value.strip).when_present.click
-    rescue Watir::Exception::UnknownObjectException => e
-      puts "ERROR: #{e.message}"
-      raise "Отсутствует значение '#{value.strip}'"
+    rescue Exception => e
+      raise "Отсутствует значение '#{value.strip}'\n#{e}"
     end
   end
 
@@ -59,17 +58,15 @@ class AdDetailsPage
       begin
         self.price_from = hash['min']
         self.price_to = hash['max']
-      rescue Watir::Exception::UnknownObjectException => e
-        puts "ERROR: #{e.message}"
-        raise "Отсутствует поле Цена"
+      rescue Exception => e
+        raise "Отсутствует поле Цена\n#{e}"
       end
 
     when "Ключевые слова"
       begin
         self.keywords = hash['value']
-      rescue Watir::Exception::UnknownObjectException => e
-        puts "ERROR: #{e.message}"
-        raise "Отсутствует поле Ключевые слова"
+      rescue Exception => e
+        raise "Отсутствует поле Ключевые слов\n#{e}"
       end
 
     when "Валюта"
@@ -78,17 +75,15 @@ class AdDetailsPage
     when "С фото"
       begin
         self.hasimages_element.click
-      rescue Watir::Exception::UnknownObjectException => e
-        puts "ERROR: #{e.message}"
-        raise "Отсутствует поле 'С фото'"
+      rescue Exception => e
+        raise "Отсутствует поле 'С фото'\n#{e}"
       end
       
     when "С видео"
       begin
         self.hasvideo_element.click
-      rescue Watir::Exception::UnknownObjectException => e
-        puts "ERROR: #{e.message}"
-        raise "Отсутствует поле 'С видео'"
+      rescue Exception => e
+        raise "Отсутствует поле 'С видео'\n#{e}"
       end
       
     when "Источник"
@@ -106,8 +101,8 @@ class AdDetailsPage
     xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present.text
-    rescue Watir::Wait::TimeoutError => exception
-      raise "Параметр '#{getter_name}' не найден"
+    rescue Exception => e
+      raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
 
