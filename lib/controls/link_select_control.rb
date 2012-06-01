@@ -8,7 +8,7 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
     self.show_all_parameters
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
-      self.cell_element(:xpath => xpath).when_present(30).text
+      self.cell_element(:xpath => xpath).when_present(10).text
     rescue Exception => e
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
@@ -19,7 +19,7 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
     begin
       self.expand_all_parameters
       element = self.div_element(:xpath => identifier)
-      element.link_element(:class => "combo_drop_link").when_present(30).click
+      element.link_element(:class => "combo_drop_link").when_present(10).click
       element.parent.div_element(:class => popup).
             link_element(:text => hash['value']).when_present.click
     rescue Exception => e

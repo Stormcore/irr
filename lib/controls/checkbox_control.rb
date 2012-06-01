@@ -8,7 +8,7 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
     self.show_all_parameters
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td/div[@class='bird']"
     begin
-      self.div_element(:xpath => xpath).when_present(30).exists?
+      self.div_element(:xpath => xpath).when_present(10).exists?
     rescue Exception => e
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end

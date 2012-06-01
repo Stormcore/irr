@@ -8,7 +8,7 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
     self.show_all_parameters
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
-      self.cell_element(:xpath => xpath).when_present(30).text
+      self.cell_element(:xpath => xpath).when_present(10).text
     rescue Exception => e
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
@@ -20,8 +20,8 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
       self.expand_all_parameters
       element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
       element.when_present.visible?
-      element.div_element(:class => "controlSelectS").when_present(30).click
-      element.element.div(:text => hash['value'].strip).when_present(30).click
+      element.div_element(:class => "controlSelectS").when_present(10).click
+      element.element.div(:text => hash['value'].strip).when_present(10).click
     rescue Exception => e
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end

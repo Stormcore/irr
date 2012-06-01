@@ -8,7 +8,7 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
     self.show_all_parameters if table == 'allParams'
     xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
-      self.cell_element(:xpath => xpath).when_present(30).text
+      self.cell_element(:xpath => xpath).when_present(10).text
     rescue Exception => e
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
