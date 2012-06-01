@@ -30,30 +30,32 @@ if HEADLESS
   headless.start
 end
 
-case DRIVER
-when :firefox
-  puts "Starting firefox..."
-  client = Selenium::WebDriver::Remote::Http::Default.new
-  client.timeout = 240
-  profile = Selenium::WebDriver::Firefox::Profile.new
-  profile.native_events = false
-  profile['toolkit.telemetry.prompted'] = true
-  profile['plugin.click_to_play'] = true unless ENABLE_FLASH
-  profile.add_extension "features/support/JSErrorCollector.xpi"
-  profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
-  browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
-  
-when :chrome
-  puts "Starting chrome"
-  client = Selenium::WebDriver::Remote::Http::Default.new
-  client.timeout = 240
-  profile = Selenium::WebDriver::Chrome::Profile.new
-  switches  = %w[--bwsi]
-  browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
+def start_browser
+  case DRIVER
+  when :firefox
+    puts "Starting firefox..."
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = 240
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.native_events = false
+    profile['toolkit.telemetry.prompted'] = true
+    profile['plugin.click_to_play'] = true unless ENABLE_FLASH
+    profile.add_extension "features/support/JSErrorCollector.xpi"
+    profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
+    browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
+    
+  when :chrome
+    puts "Starting chrome"
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = 240
+    profile = Selenium::WebDriver::Chrome::Profile.new
+    switches  = %w[--bwsi]
+    browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
+  end
 end
 
 # Проверяем на ошибки JS
-def get_js_error_feedback()
+def get_js_error_feedback
   jserror_descriptions = ""
   begin
     jserrors = @browser.execute_script("return window.JSErrorCollector_errors.pump()")
@@ -92,6 +94,8 @@ After do |scenario|
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
     rescue Timeout::Error
+      browser.close if browser
+      start_browser
     end
   end
 end
