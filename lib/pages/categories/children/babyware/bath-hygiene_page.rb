@@ -3,7 +3,7 @@
 class CategoryChildrenBabywareBathHygienePage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/children/babyware/baby-hygiene/"
+  @@url_suffix = "/children/babyware/bath-hygiene/"
   @category = "Товары для детей -> Товары для малышей -> Купание, гигиена"
 
   irr_multi_select "Тип предложения", "offertype"
