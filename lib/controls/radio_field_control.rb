@@ -22,8 +22,7 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
       element.when_present.visible?
       element.radio_button_element(:xpath => "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").when_present.click
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
   end
 

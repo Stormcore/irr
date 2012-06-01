@@ -20,8 +20,7 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
       self.show_all_parameters
       self.checkbox_element(:name => identifier).click
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
   end
   

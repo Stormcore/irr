@@ -25,8 +25,7 @@ def irr_inline_select(getter_name, identifier, setter_name = nil)
               when_present.click
       end
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
   end
 

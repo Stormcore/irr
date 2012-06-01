@@ -23,8 +23,7 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
       element.div_element(:class => "controlSelectS").when_present.click
       element.element.div(:text => hash['value'].strip).when_present.click
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
   end
 

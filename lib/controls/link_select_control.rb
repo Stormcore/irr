@@ -23,8 +23,7 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
       element.parent.div_element(:class => popup).
             link_element(:text => hash['value']).when_present.click
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
   end
 

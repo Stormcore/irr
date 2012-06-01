@@ -21,8 +21,7 @@ def irr_range_select(getter_name, identifier, setter_name = nil)
       self.text_field_element(:name => "#{identifier}[from]").value = hash['min']
       self.text_field_element(:name => "#{identifier}[to]").value = hash['max']
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
   end
 

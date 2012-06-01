@@ -20,8 +20,7 @@ def irr_text_field(getter_name, identifier, setter_name = nil)
       self.expand_all_parameters
       self.text_field_element(:name => identifier).value = hash['value']
     rescue Exception => e
-      puts "ERROR: #{e}"
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')"
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
   end
 
