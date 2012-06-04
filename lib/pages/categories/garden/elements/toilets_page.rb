@@ -8,5 +8,5 @@ class CategoryGardenElementsToiletsPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
-  irr_single_select "Вид", "type"
+  irr_multi_select "Вид", "type"
 end
