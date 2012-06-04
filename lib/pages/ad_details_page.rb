@@ -117,26 +117,26 @@ class AdDetailsPage
       if self.respond_to?(:set_metro_parameter)
         self.set_metro_parameter(hash)
       else
-        set_custom_parameter(field)
+        set_custom_parameter(hash)
       end
     when "Расположение", "Направление", "Шоссе", "Удаленность"
       if self.respond_to?(:set_regions_parameter)
         self.set_regions_parameter(hash)
       else
-        set_custom_parameter(field)
+        set_custom_parameter(hash)
       end
     when "Валюта", "Срок сдачи"
       if self.respond_to? :set_rent_parameter
         self.set_rent_parameter(hash)
       else
-        set_custom_parameter(field)
+        set_custom_parameter(hash)
       end
     else
-      set_custom_parameter(field) 
+      set_custom_parameter(hash) 
     end
   end
 
-  def set_custom_parameter(field)
+  def set_custom_parameter(hash)
     setter_functions = self.class.instance_variable_get(:@setter_functions)
     if setter_functions and setter_functions.has_key? hash['parameter']
       self.send "#{setter_functions[hash['parameter']]}", hash
