@@ -49,11 +49,7 @@ class AdDetailsPage
 
   def show_all_parameters
     # Open all params if present
-    begin
-      self.show_all_params if self.show_all_params_element.when_present(30).exists?
-    rescue Exception => e
-      # нет такого линка, пропускаем
-    end
+    self.show_all_params if self.show_all_params_element.when_present(30).exists?
   end
 
   def set_generic_parameter(hash)
