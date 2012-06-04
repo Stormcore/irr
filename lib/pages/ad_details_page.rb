@@ -30,8 +30,9 @@ class AdDetailsPage
   # Все параметры
   def singleselect(element, value)
     begin
-      element.div_element(:class => "controlSelectS").when_present(10).click
-      element.element.div(:text => value.strip).when_present(30).click
+      element.div_element(:class => "controlSelectS").when_present.click
+      Watir::Wait.until { element.div_element(:class => "selectItemsPopup").style('display') == "block" }
+      element.element.div(:text => value.strip).when_present.click
     rescue Exception => e
       raise "Отсутствует значение '#{value.strip}'\n#{e}"
     end
