@@ -8,7 +8,7 @@ class CategoryBusinessCollaborationLoansPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Кредиты для физ.лиц", "loan_type"
-  irr_multi_select "Кредиты для юр.лиц", "loan_type2"
+  irr_multi_select "Кредиты для юр.лиц", "loan_type_2"
   irr_range_select "Срок кредита, лет", "credit_period"
   irr_range_select "Процент, %", "procent"
   irr_single_select "Обеспечение", "bond"
