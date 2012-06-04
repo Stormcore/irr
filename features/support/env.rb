@@ -54,7 +54,6 @@ def start_browser
   end
   return browser
 end
-browser = start_browser
 
 # Проверяем на ошибки JS
 def get_js_error_feedback
@@ -72,7 +71,7 @@ end
 
 Before do |scenario|
   @browser.cookies.clear if @browser
-  @browser = browser
+  @browser = start_browser
   
   # Сохраняем экземпляр сценария
   @sc = scenario
@@ -95,11 +94,11 @@ After do |scenario|
     begin
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
-    rescue Timeout::Error
-      @browser.quit
-      @browser = start_browser
     end
   end
+
+  # Рестарт браузера после каждого сценария
+  @browser.quit if @browser
 end
 
 if(FAIL_FAST)
@@ -109,7 +108,6 @@ if(FAIL_FAST)
 end
 
 at_exit do
-  browser.quit if browser
   headless.destroy if HEADLESS
 end
 
