@@ -5,7 +5,7 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
 
   # getter
   define_method("#{function_name}") do
-    if self.show_all_params_element.present?
+    if self.show_all_params_element.element.present?
       self.show_all_params
       Watir::Wait.until {self.all_params_element.style('display') == "table"}
     end
