@@ -5,7 +5,11 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
 
   # getter
   define_method("#{function_name}") do
-    self.show_all_parameters
+    if self.show_all_parameters_element.present?
+      self.show_all_parameters
+      Watir::Wait.until {self.all_params_element.style('display') == "table"}
+    end
+    
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present(10).text
@@ -17,7 +21,7 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
   # setter
   define_method("#{function_name}=") do |hash|
     begin
-      self.expand_all_parameters
+      self.open_all_parameters
       element = self.div_element(:xpath => identifier)
       element.link_element(:class => "combo_drop_link").when_present(10).click
       element.parent.div_element(:class => popup).

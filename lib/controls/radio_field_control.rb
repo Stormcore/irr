@@ -5,7 +5,12 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
 
   # getter
   define_method("#{function_name}") do
-    self.show_all_parameters if table == 'allParams'
+    if table == 'allParams'
+      if self.show_all_parameters_element.present?
+        self.show_all_parameters
+        Watir::Wait.until {self.all_params_element.style('display') == "table"}
+      end
+    end
     xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present(10).text

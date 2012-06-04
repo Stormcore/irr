@@ -7,6 +7,7 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
   define_method("#{function_name}") do
     if table == 'allParams'
       self.show_all_parameters
+      Watir::Wait.until {self.all_params_element.style('display') == "table"}
     end
     
     xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"

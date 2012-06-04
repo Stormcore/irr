@@ -5,7 +5,10 @@ def irr_text_field(getter_name, identifier, setter_name = nil)
 
   # getter
   define_method("#{function_name}") do
-    self.show_all_parameters
+    if self.show_all_parameters_element.present?
+      self.show_all_parameters
+      Watir::Wait.until {self.all_params_element.style('display') == "table"}
+    end
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present(10).text
