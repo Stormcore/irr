@@ -31,7 +31,7 @@ class AdDetailsPage
   def singleselect(element, value)
     begin
       element.div_element(:class => "controlSelectS").when_present(10).click
-      element.element.div(:text => value.strip).when_present(10).click
+      element.element.div(:text => value.strip).when_present(30).click
     rescue Exception => e
       raise "Отсутствует значение '#{value.strip}'\n#{e}"
     end

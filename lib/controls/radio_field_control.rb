@@ -6,8 +6,8 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
   # getter
   define_method("#{function_name}") do
     if table == 'allParams'
-      if self.show_all_parameters_element.present?
-        self.show_all_parameters
+    if self.show_all_params_element.present?
+      self.show_all_params
         Watir::Wait.until {self.all_params_element.style('display') == "table"}
       end
     end

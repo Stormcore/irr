@@ -6,7 +6,7 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
   # getter
   define_method("#{function_name}") do
     if table == 'allParams'
-      self.show_all_parameters
+      self.show_all_params
       Watir::Wait.until {self.all_params_element.style('display') == "table"}
     end
     
