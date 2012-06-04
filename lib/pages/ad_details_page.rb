@@ -113,22 +113,35 @@ class AdDetailsPage
   def set_parameter (hash)
     case hash['parameter']
     when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
-      self.set_metro_parameter(hash)
+      # На случай совпадения имён, проверяем существует ли такая функция
+      if self.respond_to?(:set_metro_parameter)
+        self.set_metro_parameter(hash)
+      else
+        set_custom_parameter(field)
+      end
     when "Расположение", "Направление", "Шоссе", "Удаленность"
-      self.set_regions_parameter(hash)
+      if self.respond_to?(:set_regions_parameter)
+        self.set_regions_parameter(hash)
+      else
+        set_custom_parameter(field)
+      end
     when "Валюта", "Срок сдачи"
       if self.respond_to? :set_rent_parameter
         self.set_rent_parameter(hash)
       else
-        set_generic_parameter(hash)
+        set_custom_parameter(field)
       end
     else
-      setter_functions = self.class.instance_variable_get(:@setter_functions)
-      if setter_functions and setter_functions.has_key? hash['parameter']
-        self.send "#{setter_functions[hash['parameter']]}", hash
-      else
-        set_generic_parameter(hash)
-      end    
+      set_custom_parameter(field) 
+    end
+  end
+
+  def set_custom_parameter(field)
+    setter_functions = self.class.instance_variable_get(:@setter_functions)
+    if setter_functions and setter_functions.has_key? hash['parameter']
+      self.send "#{setter_functions[hash['parameter']]}", hash
+    else
+      set_generic_parameter(hash)
     end
   end
   
