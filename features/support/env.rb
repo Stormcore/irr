@@ -94,6 +94,7 @@ After do |scenario|
     begin
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
+    rescue
     end
   end
 
