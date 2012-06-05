@@ -7,5 +7,5 @@ class CategoryPhotoRepairPage < AdDetailsPage
   @category = "Фото, оптика -> Ремонт и сервис"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Состояние", "used-or-new"
+  irr_multi_select "Тип товара", "used-or-new"
 end
