@@ -4,7 +4,7 @@ require 'cucumber/rake/task'
 # Automatic rerun stuff
 def run_rake_task(name)
   begin
-    Rake::Task[name].invoke
+    Rake::Task[name].execute
   rescue Exception => e
     return false
   end
@@ -37,11 +37,12 @@ Cucumber::Rake::Task.new(:wip_no_rerun) do |task|
                       "-t @wip",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format rerun --out rerun.txt",
                       "--format pretty",
                       "features"]
 end
 
-Cucumber::Rake::Task.new(:wip) do |task|
+task :wip do
   selenium_successful = run_rake_task("wip_no_rerun")
   rerun_successful = true
   unless selenium_successful
@@ -58,10 +59,11 @@ Cucumber::Rake::Task.new(:tag_no_rerun) do |task|
                       "-t @#{ENV['TAG'] || "all"}",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format rerun --out rerun.txt",
                       "--format pretty"]
 end
 
-Cucumber::Rake::Task.new(:tag) do |task|
+task :tag do
   selenium_successful = run_rake_task("tag_no_rerun")
   rerun_successful = true
   unless selenium_successful
@@ -79,10 +81,11 @@ Cucumber::Rake::Task.new(:bug_no_rerun) do |task|
                       "-t @bug#{ENV['BUG']}",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format rerun --out rerun.txt",
                       "--format pretty"]
 end
 
-Cucumber::Rake::Task.new(:bug) do |task|
+task :bug do
   selenium_successful = run_rake_task("bug_no_rerun")
   rerun_successful = true
   unless selenium_successful
@@ -99,10 +102,11 @@ Cucumber::Rake::Task.new(:fast_category_check_no_rerun) do |task|
                       "-t @all_results,@customfield",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format rerun --out rerun.txt",
                       "--format pretty"]
 end
 
-Cucumber::Rake::Task.new(:fast_category_check) do |task|
+task :fast_category_check do
   selenium_successful = run_rake_task("fast_category_check_no_rerun")
   rerun_successful = true
   unless selenium_successful
@@ -123,7 +127,7 @@ Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
                       "--format pretty"]
 end
 
-Cucumber::Rake::Task.new(:feature) do |task|
+task :feature do
   selenium_successful = run_rake_task("feature_no_rerun")
   rerun_successful = true
   unless selenium_successful
