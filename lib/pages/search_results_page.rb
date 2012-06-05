@@ -97,10 +97,13 @@ class SearchResultsPage
   end
 
   def highlight_result_by_url(url)
-    @browser.execute_script <<-JS
+    begin
+      @browser.execute_script <<-JS
         var a = $('a[href="#{url}"]:parent')[0]
         a.parentElement.parentElement.setAttribute("style", "background-color:red")
-    JS
+      JS
+    rescue
+    end
   end
 
   def table_right_position
