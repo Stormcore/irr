@@ -36,13 +36,13 @@ def start_browser
     puts "Starting firefox..."
     client = Selenium::WebDriver::Remote::Http::Default.new
     client.timeout = 240
-    profile = Selenium::WebDriver::Firefox::Profile.new
-    profile.native_events = false
-    profile['toolkit.telemetry.prompted'] = true
-    profile['plugin.click_to_play'] = true unless ENABLE_FLASH
-    profile.add_extension "features/support/JSErrorCollector.xpi"
-    profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
-    browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
+    #profile = Selenium::WebDriver::Firefox::Profile.new
+    #profile.native_events = false
+    #profile['toolkit.telemetry.prompted'] = true
+    #profile['plugin.click_to_play'] = true unless ENABLE_FLASH
+    #profile.add_extension "features/support/JSErrorCollector.xpi"
+    #profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
+    browser = Watir::Browser.new(DRIVER, :profile => "default", :http_client => client)
     
   when :chrome
     puts "Starting chrome"
@@ -69,9 +69,11 @@ def get_js_error_feedback
   jserror_descriptions
 end
 
+browser = start_browser
+
 Before do |scenario|
-  @browser.cookies.clear if @browser
-  @browser = start_browser
+  browser.cookies.clear if browser
+  @browser = browser
   
   # Сохраняем экземпляр сценария
   @sc = scenario
@@ -97,9 +99,6 @@ After do |scenario|
     rescue
     end
   end
-
-  # Рестарт браузера после каждого сценария
-  @browser.quit if @browser
 end
 
 if(FAIL_FAST)
@@ -109,6 +108,7 @@ if(FAIL_FAST)
 end
 
 at_exit do
+  browser.quit if browser
   headless.destroy if HEADLESS
 end
 
