@@ -30,29 +30,26 @@ if HEADLESS
   headless.start
 end
 
-def start_browser
-  case DRIVER
-  when :firefox
-    puts "Starting firefox..."
-    client = Selenium::WebDriver::Remote::Http::Default.new
-    client.timeout = 240
-    #profile = Selenium::WebDriver::Firefox::Profile.new
-    #profile.native_events = false
-    #profile['toolkit.telemetry.prompted'] = true
-    #profile['plugin.click_to_play'] = true unless ENABLE_FLASH
-    #profile.add_extension "features/support/JSErrorCollector.xpi"
-    #profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
-    browser = Watir::Browser.new(DRIVER, :profile => "default", :http_client => client)
-    
-  when :chrome
-    puts "Starting chrome"
-    client = Selenium::WebDriver::Remote::Http::Default.new
-    client.timeout = 240
-    profile = Selenium::WebDriver::Chrome::Profile.new
-    switches  = %w[--bwsi]
-    browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
-  end
-  return browser
+case DRIVER
+when :firefox
+  puts "Starting firefox..."
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 240
+  profile = Selenium::WebDriver::Firefox::Profile.new
+  profile.native_events = false
+  profile['toolkit.telemetry.prompted'] = true
+  profile['plugin.click_to_play'] = true unless ENABLE_FLASH
+  profile.add_extension "features/support/JSErrorCollector.xpi"
+  profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
+  browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
+  
+when :chrome
+  puts "Starting chrome"
+  client = Selenium::WebDriver::Remote::Http::Default.new
+  client.timeout = 240
+  profile = Selenium::WebDriver::Chrome::Profile.new
+  switches  = %w[--bwsi]
+  browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
 end
 
 # Проверяем на ошибки JS
