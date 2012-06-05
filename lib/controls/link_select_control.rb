@@ -21,7 +21,7 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
   # setter
   define_method("#{function_name}=") do |hash|
     begin
-      self.open_all_parameters
+      self.expand_all_parameters
       element = self.div_element(:xpath => identifier)
       element.link_element(:class => "combo_drop_link").when_present(10).click
       element.parent.div_element(:class => popup).
