@@ -16,7 +16,7 @@ Cucumber::Rake::Task.new(:compile) do |task|
                         "-t @compile",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
-                        "--format pretty",
+                        "--format pretty --color",
                         "features"]
 end
 
@@ -26,7 +26,7 @@ Cucumber::Rake::Task.new(:wip_no_rerun) do |task|
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
-                      "--format pretty",
+                      "--format pretty --color",
                       "features"]
 end
 
@@ -49,7 +49,7 @@ Cucumber::Rake::Task.new(:tag_no_rerun) do |task|
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
-                      "--format pretty"]
+                      "--format pretty --color"]
 end
 
 task :tag do
@@ -72,7 +72,7 @@ Cucumber::Rake::Task.new(:bug_no_rerun) do |task|
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
-                      "--format pretty"]
+                      "--format pretty --color"]
 end
 
 task :bug do
@@ -95,7 +95,7 @@ Cucumber::Rake::Task.new(:fast_category_check_no_rerun) do |task|
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
-                      "--format pretty"]
+                      "--format pretty --color"]
 end
 
 task :fast_category_check do
@@ -118,7 +118,7 @@ Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
-                      "--format pretty",
+                      "--format pretty --color",
                       ENV['FEATURE']]
 end
 
@@ -139,7 +139,7 @@ Cucumber::Rake::Task.new(:all) do |task|
                       "-t @compile,~@wip",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
-                      "--format pretty",
+                      "--format pretty --color",
                       "features"]
 end
 
@@ -153,7 +153,7 @@ Cucumber::Rake::Task.new(:rerun) do |task|
                         "-r features",
                         "--format junit --out junit",
                         "--format html  --out cucumber_rerun.html",
-                        "--format pretty"]
+                        "--format pretty --color"]
 end
 
 task :default => :all
