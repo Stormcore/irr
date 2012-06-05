@@ -6,8 +6,14 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
   # getter
   define_method("#{function_name}") do
     if table == 'allParams'
-      self.show_all_params
-      Watir::Wait.until {self.all_params_element.style('display') == "table"}
+      begin
+        if self.show_all_params_element.element.present?
+          self.show_all_params
+          Watir::Wait.until {self.all_params_element.style('display') == "table"}
+        end
+      rescue Watir::Wait::TimeoutError
+        raise "Вкладка 'Все' не открыта за 30 секунд"
+      end
     end
     
     xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"

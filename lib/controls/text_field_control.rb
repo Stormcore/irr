@@ -5,10 +5,15 @@ def irr_text_field(getter_name, identifier, setter_name = nil)
 
   # getter
   define_method("#{function_name}") do
-    if self.show_all_params_element.element.present?
-      self.show_all_params
-      Watir::Wait.until {self.all_params_element.style('display') == "table"}
+    begin
+      if self.show_all_params_element.element.present?
+        self.show_all_params
+        Watir::Wait.until {self.all_params_element.style('display') == "table"}
+      end
+    rescue Watir::Wait::TimeoutError
+      raise "Вкладка 'Все' не открыта за 30 секунд"
     end
+    
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
       self.cell_element(:xpath => xpath).when_present(10).text
