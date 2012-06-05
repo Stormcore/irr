@@ -12,6 +12,6 @@ class CategoryElectronicsTechnicsAutoTechnicsAntennasPage < AdDetailsPage
   irr_single_select "Тип", "tip"
   irr_single_select "Тип размещения", "tip_razmeshenija"
   irr_single_select  "Диапазон принимаемых частот", "diapazon_prinimaemiyh_chastot"
-  irr_range_select  "Длина кабеля", "dlina_kabelya"
-  irr_range_select  "Дальность приема", "dalnost_priema"
+  irr_range_select  "Длина кабеля, см", "dlina_kabelya"
+  irr_range_select  "Дальность приема, км", "dalnost_priema"
 end
