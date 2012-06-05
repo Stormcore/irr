@@ -3,7 +3,7 @@
 class CategoryEquipmentProductionsPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/equipment/productions"
+  @@url_suffix = "/equipment/production"
   @category = "Оборудование -> Производственно-техническое"
 
   irr_multi_select "Тип предложения", "offertype"
