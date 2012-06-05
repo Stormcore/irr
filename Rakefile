@@ -113,7 +113,7 @@ Cucumber::Rake::Task.new(:fast_category_check) do |task|
   end
 end
 
-Cucumber::Rake::Task.new(:feature_no_run) do |task|
+Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                       "-r features",
                       "-t ~@wip -t ~@bugs",
