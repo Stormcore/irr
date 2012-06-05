@@ -33,3 +33,5 @@ cucumber.html
 /cucumber.json
 /cucumber.txt
 /screenshots
+/cucumber_rerun.html
+/rerun.txt
