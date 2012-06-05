@@ -46,6 +46,7 @@ task :wip do
   selenium_successful = run_rake_task("wip_no_rerun")
   rerun_successful = true
   unless selenium_successful
+    puts "\n\n Rerunning failed tests"
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
@@ -67,6 +68,7 @@ task :tag do
   selenium_successful = run_rake_task("tag_no_rerun")
   rerun_successful = true
   unless selenium_successful
+    puts "\n\n Rerunning failed tests"
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
@@ -89,6 +91,7 @@ task :bug do
   selenium_successful = run_rake_task("bug_no_rerun")
   rerun_successful = true
   unless selenium_successful
+    puts "\n\n Rerunning failed tests"
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
@@ -110,6 +113,7 @@ task :fast_category_check do
   selenium_successful = run_rake_task("fast_category_check_no_rerun")
   rerun_successful = true
   unless selenium_successful
+    puts "\n\n Rerunning failed tests"
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
@@ -131,6 +135,7 @@ task :feature do
   selenium_successful = run_rake_task("feature_no_rerun")
   rerun_successful = true
   unless selenium_successful
+    puts "\n\n Rerunning failed tests"
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
