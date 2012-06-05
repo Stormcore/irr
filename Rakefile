@@ -103,6 +103,7 @@ Cucumber::Rake::Task.new(:fast_category_check_no_rerun) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                       "-r features",
                       "-t @all_results,@customfield",
+                      "-t ~@wip -t ~@bugs",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
