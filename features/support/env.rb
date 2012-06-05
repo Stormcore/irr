@@ -66,8 +66,6 @@ def get_js_error_feedback
   jserror_descriptions
 end
 
-browser = start_browser
-
 Before do |scenario|
   browser.cookies.clear if browser
   @browser = browser
