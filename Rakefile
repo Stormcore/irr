@@ -130,7 +130,8 @@ Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
-                      "--format pretty"]
+                      "--format pretty",
+                      ENV['FEATURE']]
 end
 
 task :feature do
