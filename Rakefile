@@ -15,6 +15,7 @@ Cucumber::Rake::Task.new(:rerun) do |task|
   unless File.exist?('rerun.txt')
     File.open('rerun.txt', 'w+').close
   end
+  ENV['FEATURE'] = ''
   task.cucumber_opts = ["HEADLESS=true",
                         "@rerun.txt",
                         "-r features",
