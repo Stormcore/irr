@@ -50,7 +50,7 @@ task :wip do
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
-    raise Cucumber::CucumberFailure.new 'Cucumber tests failed'
+    fail 'Cucumber tests failed'
   end
 end
 
@@ -72,7 +72,7 @@ task :tag do
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
-    raise Cucumber::CucumberFailure.new 'Cucumber tests failed'
+    fail 'Cucumber tests failed'
   end
 end
 
@@ -95,7 +95,7 @@ task :bug do
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
-    raise Cucumber::CucumberFailure.new 'Cucumber tests failed'
+    fail 'Cucumber tests failed'
   end
 end
 
@@ -118,7 +118,7 @@ task :fast_category_check do
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
-    raise Cucumber::CucumberFailure.new 'Cucumber tests failed'
+    fail 'Cucumber tests failed'
   end
 end
 
@@ -140,7 +140,7 @@ task :feature do
     rerun_successful = run_rake_task("rerun")
   end
   unless selenium_successful || rerun_successful
-    raise Cucumber::CucumberFailure.new 'Cucumber tests failed'
+    fail 'Cucumber tests failed'
   end
 end
 
