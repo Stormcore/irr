@@ -11,19 +11,6 @@ def run_rake_task(name)
   true
 end
 
-Cucumber::Rake::Task.new(:rerun) do |task|
-  unless File.exist?('rerun.txt')
-    File.open('rerun.txt', 'w+').close
-  end
-  ENV['FEATURE'] = ''
-  task.cucumber_opts = ["HEADLESS=true",
-                        "@rerun.txt",
-                        "-r features",
-                        "--format junit --out junit",
-                        "--format html  --out cucumber_rerun.html",
-                        "--format pretty"]
-end
-
 Cucumber::Rake::Task.new(:compile) do |task|
   task.cucumber_opts = ["WEB_DRIVER=none",
                         "-t @compile",
@@ -154,6 +141,19 @@ Cucumber::Rake::Task.new(:all) do |task|
                       "--format html  --out cucumber.html",
                       "--format pretty",
                       "features"]
+end
+
+Cucumber::Rake::Task.new(:rerun) do |task|
+  unless File.exist?('rerun.txt')
+    File.open('rerun.txt', 'w+').close
+  end
+  ENV['FEATURE'] = ''
+  task.cucumber_opts = ["HEADLESS=true",
+                        "@rerun.txt",
+                        "-r features",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber_rerun.html",
+                        "--format pretty"]
 end
 
 task :default => :all
