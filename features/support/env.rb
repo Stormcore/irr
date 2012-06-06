@@ -97,9 +97,8 @@ After do |scenario|
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
     rescue
-      puts "Restarting browser"
-      @browser.quit
-      @browser = start_browser
+      puts "Stopping the suite"
+      Cucumber.wants_to_quit = true
     end
   end
 end
