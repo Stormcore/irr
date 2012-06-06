@@ -98,6 +98,7 @@ After do |scenario|
       embed screenshot, 'image/png'
     rescue
       puts "Restarting browser"
+      @browser.quit
       @browser = start_browser
     end
   end
