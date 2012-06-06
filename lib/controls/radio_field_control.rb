@@ -9,10 +9,10 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
       begin
         if self.show_all_params_element.element.present?
           self.show_all_params
-          Watir::Wait.until {self.all_params_element.style('display') == "table"}
+          Watir::Wait.until(10) {self.all_params_element.style('display') == "table"}
         end
       rescue Watir::Wait::TimeoutError
-        raise "Вкладка 'Все' не открыта за 30 секунд"
+        raise "Вкладка 'Все' не открыта за 10 секунд"
       end
     end
     xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"

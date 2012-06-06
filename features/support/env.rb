@@ -34,7 +34,7 @@ case DRIVER
 when :firefox
   puts "Starting firefox..."
   client = Selenium::WebDriver::Remote::Http::Default.new
-  client.timeout = 240
+  client.timeout = 60
   profile = Selenium::WebDriver::Firefox::Profile.new
   profile.native_events = false
   profile['toolkit.telemetry.prompted'] = true
@@ -46,7 +46,7 @@ when :firefox
 when :chrome
   puts "Starting chrome"
   client = Selenium::WebDriver::Remote::Http::Default.new
-  client.timeout = 240
+  client.timeout = 60
   profile = Selenium::WebDriver::Chrome::Profile.new
   switches  = %w[--bwsi]
   browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)

@@ -50,7 +50,7 @@ class AdDetailsPage
 
   def show_all_parameters
     # Open all params if present
-    self.show_all_params if self.show_all_params_element.when_present(30).exists?
+    self.show_all_params if self.show_all_params_element.when_present(10).exists?
   end
 
   def set_generic_parameter(hash)
@@ -103,7 +103,7 @@ class AdDetailsPage
     begin
       self.cell_element(:xpath => xpath).when_present.text
     rescue Exception => e
-      raise "Параметр '#{getter_name}' не найден\n#{e}"
+      raise "Параметр '#{field}' не найден\n#{e}"
     end
   end
 

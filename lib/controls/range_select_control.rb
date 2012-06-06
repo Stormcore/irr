@@ -8,10 +8,10 @@ def irr_range_select(getter_name, identifier, setter_name = nil)
     begin
       if self.show_all_params_element.element.present?
         self.show_all_params
-        Watir::Wait.until {self.all_params_element.style('display') == "table"}
+        Watir::Wait.until(10) {self.all_params_element.style('display') == "table"}
       end
     rescue Watir::Wait::TimeoutError
-      raise "Вкладка 'Все' не открыта за 30 секунд"
+      raise "Вкладка 'Все' не открыта за 10 секунд"
     end
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin

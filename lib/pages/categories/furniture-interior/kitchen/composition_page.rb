@@ -10,5 +10,5 @@ class CategoryFurnitureInteriorKitchenCompositionPage < AdDetailsPage
   irr_multi_select "Состояние", "used-or-new"
   irr_multi_select "Материал", "material"
   irr_multi_select "Цвет", "color"
-  irr_single_select "Угловая", "corner"
+  irr_single_select "Угловая", "corner", "Угловой"
 end

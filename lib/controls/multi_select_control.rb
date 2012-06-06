@@ -9,10 +9,10 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
       begin
         if self.show_all_params_element.element.present?
           self.show_all_params
-          Watir::Wait.until {self.all_params_element.style('display') == "table"}
+          Watir::Wait.until(10) {self.all_params_element.style('display') == "table"}
         end
       rescue Watir::Wait::TimeoutError
-        raise "Вкладка 'Все' не открыта за 30 секунд"
+        raise "Вкладка 'Все' не открыта за 10 секунд"
       end
     end
     
@@ -32,7 +32,7 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
       unless element.div_element(:class => "controlSelect").visible?
         element = self.div_element(:xpath => "//div[@data-name='#{identifier}']")
       end
-      element.when_present(30).visible?.should == true
+      element.when_present(10).visible?.should == true
       element.div_element(:class => "controlSelect").when_present(10).click
       hash['value'].split(", ").each do |value|
         element.label_element(:text => value).when_present(10).checkbox_element.check
