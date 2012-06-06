@@ -14,7 +14,7 @@ class CategoryFurnitureInteriorHomeStuffMatressPage < AdDetailsPage
   irr_multi_select "Жесткость", "hardness"
   irr_multi_select "Основа", "base"
   irr_multi_select "Наполнитель", "material"
-  irr_range_select "Ширина, cм", "width"
-  irr_range_select "Высота, cм", "height"
-  irr_range_select "Длина, cм", "length"
+  irr_range_select "Ширина, см", "width"
+  irr_range_select "Высота, см", "height"
+  irr_range_select "Длина, см", "length"
 end

@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryFurnitureInteriorHomeStuffTextilesPage < AdDetailsPage
+class CategoryFurnitureInteriorHomeStuffDishesPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/furniture-interior/home-stuff/dishes"

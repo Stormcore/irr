@@ -9,6 +9,6 @@ class CategoryFurnitureInteriorHomeStuffTextilesPage < AdDetailsPage
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
   irr_single_select "Вид", "type"
-  irr_range_select "Ширина, cм", "width"
-  irr_range_select "Длина, cм", "length"
+  irr_range_select "Ширина, см", "width"
+  irr_range_select "Длина, см", "length"
 end
