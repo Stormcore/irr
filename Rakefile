@@ -111,7 +111,6 @@ task :fast_category_check do
 end
 
 Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
-  puts "Feature is '#{ENV['FEATURE']}'"
   task.cucumber_opts = ["HEADLESS=true",
                       "-r features",
                       "-t ~@wip -t ~@bugs",
