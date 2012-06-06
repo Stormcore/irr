@@ -13,5 +13,5 @@ class CategoryFurnitureInteriorHallwayStandsPage < AdDetailsPage
   irr_multi_select "Цвет", "color"
   irr_range_select "Ширина, см", "width"
   irr_range_select "Глубина, см", "depth"
-  irr_range_select "Высота, см", "heigth"
+  irr_range_select "Высота, см", "height"
 end
