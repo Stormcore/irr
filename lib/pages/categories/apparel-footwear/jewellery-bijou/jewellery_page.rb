@@ -4,7 +4,7 @@ class CategoryApparelFootwearJewellerybijouJewelleryPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/apparel-footwear/jewellery-bijou/jewellery"
-  @category = "Одежда, обувь, аксессуары -> Украшения, юверлирные изделия, бижутерия -> Ювелирные изделия"
+  @category = "Одежда, обувь, аксессуары -> Украшения, ювелирные изделия, бижутерия -> Ювелирные изделия"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
