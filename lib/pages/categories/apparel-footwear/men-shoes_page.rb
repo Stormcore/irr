@@ -9,7 +9,7 @@ class CategoryApparelFootwearMenShoesPage < AdDetailsPage
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
   irr_single_select "Вид обуви", "shoes_type"
-  irr_multi_select "Размер", "size", "Размеры"
+  irr_multi_select "Размеры", "size", "Размер"
   irr_single_select "Материал", "material"
   irr_single_select "Сезонность", "seasonality"
 end

@@ -9,6 +9,6 @@ class CategoryApparelFootwearWomenClothesPage < AdDetailsPage
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
   irr_single_select "Вид одежды", "clothes_type"
-  irr_multi_select "Размер", "size", "Размеры"
+  irr_multi_select "Размеры", "size", "Размер"
 end
 
