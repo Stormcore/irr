@@ -130,6 +130,7 @@ def results_details_soft_assert(description)
     @results.each do |result|
       begin
         if result and result.has_key?('url')
+          puts "DEBUG: Открываем объявление #{result['url']}"
           page.open_ad(result['url'])
           on @category_page do |ad_page|
             yield ad_page, result
@@ -159,6 +160,7 @@ def first_result_details_soft_assert(description)
     begin
       begin
         if result and result.has_key?('url')
+          puts "DEBUG: Открываем объявление #{result['url']}"
           page.open_ad(result['url'])
           on @category_page do |ad_page|
             yield ad_page, result
