@@ -55,7 +55,7 @@ class AdDetailsPage
 
   def set_generic_parameter(hash)
     case hash['parameter']
-    when "Цена"
+    when "Цена", "Зарплата"
       begin
         self.price_from = hash['min']
         self.price_to = hash['max']
