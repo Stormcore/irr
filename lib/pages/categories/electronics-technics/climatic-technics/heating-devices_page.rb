@@ -3,7 +3,7 @@
 class CategoryElectronicsTechnicsClimaticHeaterDevicesPage < AdDetailsPage
   include PageObject
  
-  @@url_suffix = "/electronics-technics/climatic-technics/heater-devices"
+  @@url_suffix = "/electronics-technics/climatic-technics/heating-devices"
   @category = "Электроника и техника -> Климатическая техника -> Обогревательные приборы"
   
   irr_multi_select "Тип предложения", "offertype"
