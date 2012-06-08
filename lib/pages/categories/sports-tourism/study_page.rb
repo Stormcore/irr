@@ -6,6 +6,6 @@ class CategorySportsTourismStudyPage < AdDetailsPage
   @@url_suffix = "/sports-tourism/study"
   @category = "Спорт, туризм, отдых -> Обучения и занятия"
 
-  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Тип предложения", "offer"
 
 end
