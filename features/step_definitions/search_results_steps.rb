@@ -94,7 +94,7 @@ end
   end
 end
 
-То %{в каждом объявлении (цена|зарплата) $operator $price} do |operator, price|
+То /^в каждом объявлении (цена|зарплата) (.+) (\d+)$/ do |other, operator, price|
   results_page_soft_assert("Некорректная цена:") do |result|
     # Пропускаем премиумы
     unless result['premium']
