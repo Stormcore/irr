@@ -94,7 +94,6 @@ end
   select_soft_assert_function(option)
   error_text = "Ошибка проверки деталей объявления: #{field} #{operator} #{expected}"
   soft_assert_function(error_text) do |ad_page, result|
-      puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>"
       actual_value = ad_page.get_parameter(field)
       case operator
       when "равно одному из"
