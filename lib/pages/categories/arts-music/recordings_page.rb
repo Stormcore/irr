@@ -3,7 +3,7 @@
 class CategoryArtsMusicRecordingsPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/arts-music/instruments/"
+  @@url_suffix = "/arts-music/recordings/"
   @category = "Музыка, искусство -> Аудио-, видеозаписи"
 
   irr_multi_select "Тип предложения", "offertype"

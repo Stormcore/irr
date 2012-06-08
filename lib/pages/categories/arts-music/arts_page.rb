@@ -7,6 +7,5 @@ class CategoryArtsMusicArtsPage < AdDetailsPage
   @category = "Музыка, искусство -> Произведения искусства и антиквариат"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Состояние", "used-or-new"
 end
 
