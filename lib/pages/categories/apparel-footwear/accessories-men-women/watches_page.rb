@@ -8,7 +8,7 @@ class CategoryApparelFootwearAccessoriesWatchesPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
-  irr_single_select "Изделие", "mechanism"
+  irr_single_select "Механизм", "mechanism"
   irr_single_select "Для кого", "whatch_for"
   irr_single_select "Материал", "watches_material"
 end
