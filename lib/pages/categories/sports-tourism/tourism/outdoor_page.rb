@@ -8,6 +8,6 @@ class CategorySportsTourismTourismOutdoorPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "type"
-  irr_single_select "Тип снаряжения", "fishing_equip"
+  irr_single_select "Тип снаряжения", "tourism_equip"
 end
 
