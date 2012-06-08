@@ -6,6 +6,6 @@ class CategoryServicesBusinessAnimalsVeterinaryPage < AdDetailsPage
   @@url_suffix = "/services-business/animals/veterinary"
   @category = "Услуги и деятельность -> Услуги для животных -> Ветеринария"
 
-  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Тип предложения", "offer"
 end
 

@@ -6,6 +6,6 @@ class CategoryServicesBusinessAnimalsGroomingPage < AdDetailsPage
   @@url_suffix = "/services-business/animals/grooming"
   @category = "Услуги и деятельность -> Услуги для животных -> Стрижка"
 
-  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Тип предложения", "offer"
 end
 

@@ -6,6 +6,6 @@ class CategoryServicesBusinessAdvocatesPage < AdDetailsPage
   @@url_suffix = "/services-business/advocates"
   @category = "Услуги и деятельность -> Адвокаты, нотариусы, специалисты"
 
-  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Тип предложения", "offer"
 end
 

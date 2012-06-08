@@ -6,6 +6,6 @@ class CategoryServicesBusinessAstrologyPage < AdDetailsPage
   @@url_suffix = "/services-business/astrology"
   @category = "Услуги и деятельность -> Астрология, магия, гадания"
 
-  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Тип предложения", "offer"
 end
 

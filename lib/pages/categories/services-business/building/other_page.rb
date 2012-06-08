@@ -6,6 +6,6 @@ class CategoryServicesBusinessBuildingOtherPage < AdDetailsPage
   @@url_suffix = "/services-business/building/other"
   @category = "Услуги и деятельность -> Строительные и ремонтные услуги -> Другое"
 
-  irr_multi_select "Тип предложения", "offertype"
+  irr_multi_select "Тип предложения", "offer"
 end
 
