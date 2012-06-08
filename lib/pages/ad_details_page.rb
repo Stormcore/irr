@@ -57,8 +57,8 @@ class AdDetailsPage
     case hash['parameter']
     when "Цена", "Зарплата"
       begin
-        self.price_from = hash['min']
-        self.price_to = hash['max']
+        self.price_from = hash['min'] if hash.has_key?('min')
+        self.price_to = hash['max'] if hash.has_key?('max')
       rescue Exception => e
         raise "Отсутствует поле Цена\n#{e}"
       end
