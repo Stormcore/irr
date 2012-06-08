@@ -7,5 +7,4 @@ class CategoryGardenGardeningGroundsPage < AdDetailsPage
   @category = "Все для дачи -> Товары для садоводства -> Грунт, удобрения"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Состояние", "used-or-new"
 end
