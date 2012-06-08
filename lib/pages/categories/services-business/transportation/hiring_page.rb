@@ -6,7 +6,7 @@ class CategoryServicesBusinessTransportationHiringPage < AdDetailsPage
   @@url_suffix = "/services-business/transportation/hiring"
   @category = "Услуги и деятельность -> Транспортные услуги и аренда -> Такси, аренда и прокат, пассажирские перевозки"
 
-  irr_multi_select "Тип предложения", "offer"
+  irr_multi_select "Тип предложения", "offertype"
   irr_single_select "Вид транспорта", "auto_type"
   irr_single_select "Назначение", "use_type"
   irr_single_select "С водителем", "driver_type"
