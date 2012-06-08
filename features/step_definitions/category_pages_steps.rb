@@ -129,8 +129,8 @@ def results_details_soft_assert(description)
   on SearchResultsPage do |page|
     @results.each do |result|
       begin
-        if result and result.has_key?('url')
-          puts "DEBUG: Открываем объявление #{result['url']}"
+        if result and result.has_key?('url') and result.has_key?('title')
+          puts "DEBUG: Открываем объявление <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>"
           page.open_ad(result['url'])
           on @category_page do |ad_page|
             yield ad_page, result
@@ -138,7 +138,7 @@ def results_details_soft_assert(description)
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
-        full_url = "#{BASE_URL}#{result['url']}"
+        full_url = BASE_URL+result['url']
         validation_errors[full_url] = verification_error.message
       ensure
         @browser.back
@@ -159,15 +159,15 @@ def first_result_details_soft_assert(description)
     result = @results[0]
     begin
       begin
-        if result and result.has_key?('url')
-          puts "DEBUG: Открываем объявление #{result['url']}"
+        if result and result.has_key?('url') and result.has_key?('title')
+          puts "DEBUG: Открываем объявление <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>"
           page.open_ad(result['url'])
           on @category_page do |ad_page|
             yield ad_page, result
           end
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
-        full_url = "#{BASE_URL}#{result['url']}"
+        full_url = BASE_URL+result['url']
         validation_errors[full_url] = verification_error.message
       end
     end
