@@ -2,8 +2,9 @@
 
 Когда %{на странице отображен блок "Автосалоны и дилеры"} do
   on CategoryCarsPage do |page|
-    lambda {page.dealers_section_element.when_present}.should_not
-     raise Watir::Wait::TimeoutError, "Autodealers block is not displayed"
+    lambda {
+      page.dealers_section_element.when_present(10).element.visible
+    }.should_not raise_error Watir::Wait::TimeoutError
   end
 end
 
@@ -56,7 +57,7 @@ end
 
 def check_size(response, description)
   actual_size = response.content_length
-  expected.size = 100
+  expected_size = 100
   (actual_size > expected_size).should be_true,
     description + ", " +
     "ожидается размер #{expected_size}, " +
