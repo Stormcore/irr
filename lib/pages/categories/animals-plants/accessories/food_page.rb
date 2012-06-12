@@ -7,6 +7,6 @@ class CategoryAnimalsPlantsAccessoriesFoodPage < AdDetailsPage
   @category = "Животные и растения -> Аксессуары -> Корма и добавки"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_single_select "Вид животного", "type"
+  irr_single_select "Тип животного", "type", "Вид животного"
 
 end

@@ -3,7 +3,7 @@
 class CategoryAnimalsPlantsAccessoriesRepellentsPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/animals-plants/accessories/repellents"
+  @@url_suffix = "/animals-plants/accessories/repellers"
   @category = "Животные и растения -> Аксессуары -> Средства отпугивания и самообороны"
 
   irr_multi_select "Тип предложения", "offertype"

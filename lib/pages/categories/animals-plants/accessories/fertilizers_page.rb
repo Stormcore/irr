@@ -7,6 +7,4 @@ class CategoryAnimalsPlantsAccessoriesFertilizersPage < AdDetailsPage
   @category = "Животные и растения -> Аксессуары -> Удобрения"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_single_select "Состояние", "used-or-new"
-
 end
