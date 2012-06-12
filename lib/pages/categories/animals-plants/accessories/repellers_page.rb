@@ -7,6 +7,6 @@ class CategoryAnimalsPlantsAccessoriesRepellentsPage < AdDetailsPage
   @category = "Животные и растения -> Аксессуары -> Средства отпугивания и самообороны"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_single_select "Состояние", "used-or-new"
+  irr_multi_select "Состояние", "used-or-new"
 
 end
