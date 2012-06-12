@@ -12,7 +12,7 @@ class CategoryJobsEducationresumesMarketingPRPage < AdDetailsPage
   irr_single_select "Пол", "job_sex"
   irr_range_select "Возраст", "age"
   irr_single_select "Образование", "job_education"
-  irr_single_select "Иностранные языки", "language_type"
+  irr_language_select "Иностранный язык", "language_type"
   irr_multi_select "Водительские права", "driving_license"
   irr_checkbox     "Личный автомобиль", "car"
 end
