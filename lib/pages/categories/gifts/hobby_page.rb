@@ -7,5 +7,5 @@ class CategoryGiftsHobbyPage < AdDetailsPage
   @category = "Праздники и подарки -> Хобби и развлечения"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Тип", "cfd_souvenir_type"
+  irr_single_select "Тип", "cfd_hobby_type"
 end
