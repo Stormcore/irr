@@ -6,6 +6,6 @@ class CategoryServicesBusinessTransportationMovingPage < AdDetailsPage
   @@url_suffix = "/services-business/transportation/moving"
   @category = "Услуги и деятельность -> Транспортные услуги и аренда -> Грузоперевозки, перевозки, грузчики"
 
-  irr_multi_select "Тип предложения", "offer"
+  irr_multi_select "Тип предложения", "offertype"
 end
 
