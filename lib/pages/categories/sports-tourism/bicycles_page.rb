@@ -6,7 +6,7 @@ class CategorySportsTourismBicyclesPage < AdDetailsPage
   @@url_suffix = "/sports-tourism/bicycles"
   @category = "Спорт, туризм, отдых -> Велосипеды"
 
-  irr_multi_select "Тип предложения", "offer"
+  irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Тип товара", "type"
   irr_single_select "Производитель", "make"
   irr_single_select "Тип велосипеда", "biketype"
