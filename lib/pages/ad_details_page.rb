@@ -141,20 +141,32 @@ class AdDetailsPage
       set_generic_parameter(hash)
     end
   end
+
+  def get_custom_parameter(field)
+    getter_functions = self.class.instance_variable_get(:@getter_functions)
+    if getter_functions and getter_functions.has_key? field
+      self.send "#{getter_functions[field]}"
+    else
+      get_generic_parameter(field)
+    end
+  end
   
   def get_parameter (field)
     case field
     when "АО", "Район города", "Микрорайон", "Линия метро", "Станция метро", "До метро"
-      self.get_metro_parameter(field) 
-    when "Регион", "Направление", "Шоссе", "Удаленность"
-      self.get_regions_parameter(field)
-    else
-      getter_functions = self.class.instance_variable_get(:@getter_functions)
-      if getter_functions and getter_functions.has_key? field
-        self.send "#{getter_functions[field]}"
+      if self.respond_to? :get_metro_parameter
+        self.get_metro_parameter(field)
       else
-        get_generic_parameter(field)
+        get_custom_parameter(field)
       end
+    when "Регион", "Направление", "Шоссе", "Удаленность"
+      if self.respond_to? :get_regions_parameter
+        self.get_regions_parameter(field)
+      else
+        get_custom_parameter(field)
+      end
+    else
+      get_custom_parameter(field)
     end
   end
 
