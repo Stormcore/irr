@@ -3,7 +3,7 @@
 class CategoryJobsEducationresumesEntertainmentPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/jobs-education/resumes/provision"
+  @@url_suffix = "/jobs-education/resumes/entertainment"
   @category = "Работа и образование -> Резюме: поиск работы -> Индустрия отдыха и развлечений"
 
   irr_multi_select "Специализация", "job_specialization"

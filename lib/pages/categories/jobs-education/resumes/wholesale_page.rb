@@ -6,7 +6,7 @@ class CategoryJobsEducationresumesWholesalePage < AdDetailsPage
   @@url_suffix = "/jobs-education/resumes/wholesale"
   @category = "Работа и образование -> Резюме: поиск работы -> Оптовая торговля"
 
-  irr_multi_select "Сфера деятельности", "job_rubric"
+  irr_multi_select "Сфера работы", "job_rubric", "Сфера деятельности"
   irr_multi_select "Специализация", "job_specialization"
   irr_single_select "Режим работы", "work_period"
   irr_single_select "Тип занятости", "schedule"
