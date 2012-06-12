@@ -12,7 +12,7 @@ class CategoryElectronicsTechnicsAutoTechnicsDVRPage < AdDetailsPage
   irr_single_select "Конструкция", "konstrukcija"
   irr_single_select "Макс. разрешение видеозаписи", "maks_razreshenije_videozapisi"
   irr_range_select  "Угол обзора (диагональ), град.", "ugol_obzora"
-  irr_checkbox      "Датчик движения", "datchik_dvijenija_g_sensor"
+  irr_checkbox      "Датчик движения (G-сенсор)", "datchik_dvijenija_g_sensor"
   irr_checkbox      "Экран", "ekran"
   irr_single_select "Поддержка карт памяти", "podderjka_kart_pamyati"
   irr_single_select "Режим записи", "rejim_zapisi"
