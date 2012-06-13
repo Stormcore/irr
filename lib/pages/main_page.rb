@@ -6,7 +6,7 @@ class MainPage
   link :login, :id => "a_login"
   span :logged_in, :id => "passport_userInfo"
   
-  span :personal_cabinet, :xpath => "//li[@class='wrap_lk']/a/span[@class='dotted']"
+  link :personal_cabinet, :link_text => /Личный кабинет/
   link :favourites, :link_text => /Избранное/
   
   link :adverts_my, :link_text => /Мои объявления/
