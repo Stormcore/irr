@@ -6,6 +6,7 @@ class CategoryJobsEducationresumesRealEstatePage < AdDetailsPage
   @@url_suffix = "/jobs-education/resumes/real-estate"
   @category = "Работа и образование -> Резюме: поиск работы -> Недвижимость, риэлторство"
 
+  irr_multi_select "Сфера работы", "job_rubric", "Сфера деятельности"
   irr_multi_select "Специализация", "job_specialization"
   irr_single_select "Режим работы", "work_period"
   irr_single_select "Тип занятости", "schedule"
