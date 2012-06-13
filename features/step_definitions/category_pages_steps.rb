@@ -8,7 +8,6 @@ def select_class_for_category(category)
   end
   raise "Не найден класс для категории #{category}" if category_pages.length == 0
   @category_page = category_pages[0]
-  
 end
 
 Когда %{на главной странице я перехожу в категорию "$long_category" через меню} do |long_category|

@@ -15,5 +15,7 @@ end
 end
 
 Когда %{я перехожу в список моих объявлений} do
-  on MainPage do |page| page.open_my_adverts end
+  on MainPage do |page|
+    page.open_my_adverts
+  end
 end

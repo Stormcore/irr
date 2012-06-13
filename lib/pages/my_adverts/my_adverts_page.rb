@@ -2,7 +2,34 @@
 class MyAdvertsPage
   include PageObject
 
-  unordered_list :tabs, :class => "b-bookmarks"
-  unordered_list :statuses, :xpath => "//div[@class='b-blockInf'][contains(.,'Статус')]//ul"
-  unordered_list :categories, :xpath => "//div[@class='b-blockInf'][contains(.,'Категории')]//ul"
+  table :ads, :id => "psellers"
+
+  def get_ad_with_title(title)
+    # Возращаем индекс строки
+    found_row = -1
+    self.ads_element.element.rows.to_a.each_with_index do |row, index|
+      if row.div(:class => "txt-tb", :text => title).exists?
+        found_row = index
+        break
+      end
+    end
+    found_row
+  end
+
+  def get_region(id)
+    self.ads_element[id][4].text.split(" » ")[0].strip
+  end
+
+  def get_city(id)
+    self.ads_element[id][4].text.split(" » ")[-1].strip
+  end
+
+  def get_price(id, currency)
+    self.ads_element[id][1].element.span(:class=>currency).html[/> .* </].gsub(/[>< ]/,'').gsub(/\&nbsp\;/,'')
+  end
+
+  def open_ad(id)
+    self.ads_element[id][4].click
+  end
+  
 end
