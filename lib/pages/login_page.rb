@@ -7,6 +7,7 @@ class LoginPage
   link :login, :xpath => "//div[@id='popup-wrap']//a[@class='loginFormSubmit']"
 
   def login_as(username, password, remember_me)
+    self.username_element.when_present
     self.username = username
     self.password = password
     self.remember_me_element.check if remember_me

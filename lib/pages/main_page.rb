@@ -4,9 +4,10 @@ class MainPage
 
   link :selected_region, :xpath => "//ul[@class='choose-region']/li/a"
   link :login, :id => "a_login"
-  span :current_user_name, :id => "passport_userInfo"
+  span :logged_in, :id => "passport_userInfo"
   
   span :personal_cabinet, :xpath => "//li[@class='wrap_lk']/a/span[@class='dotted']"
+  link :favourites, :link_text => /Избранное/
   
   link :adverts_my, :link_text => /Мои объявления/
   link :adverts_favourites, :link_text => "Избранные"
