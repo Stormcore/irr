@@ -9,6 +9,7 @@ class AddAdvertStep2 < AdDetailsPage
   text_field :f_title, :id => "f_title"
   text_field :f_text, :id => "f_text"
 
+  link :save, :id => "submit-edit-form"
   link :next_step, :id => "next_link"
 
   def set_region(region)
@@ -32,16 +33,16 @@ class AddAdvertStep2 < AdDetailsPage
       # Другие параметры - скрыты внутри лейбла
       control.text_field.value = hash["value"]
     else
-      # Текстбокс и комбобокс
-      control.text_field.value = hash["value"]
-      control.parent.select_list.select hash['value 1']
+      # Текстбокс и комбобокс - разделены ~
+      control.text_field.value = hash["value"].split(" ~ ")[0]
+      control.parent.select_list.select hash['value'].split(" ~ ")[1]
     end
   end
 
   def set_custom_parameter(hash)
     # Ищем ближайший контрол по hash['parameter']
     begin
-      label = self.div_element(:text => hash['parameter'], :class => "lbl")
+      label = self.div_element(:text => /#{hash['parameter']}/, :class => "lbl")
       control = label.element.elements(:xpath => "following-sibling::*")[0]
       set_value_for_custom(control, hash)
     rescue Watir::Exception::UnknownObjectException => e
@@ -63,6 +64,10 @@ class AddAdvertStep2 < AdDetailsPage
     else
       self.set_custom_parameter(hash)
     end
+  end
+
+  def save
+    self.save_element.when_present.click
   end
 
 end

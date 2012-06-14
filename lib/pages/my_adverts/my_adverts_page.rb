@@ -4,6 +4,10 @@ class MyAdvertsPage
 
   table :ads, :id => "psellers"
 
+  def wait_for_ads_loaded
+    self.ads_element.when_present
+  end
+
   def get_ad_with_title(title)
     # Возращаем индекс строки
     found_row = -1
@@ -28,8 +32,16 @@ class MyAdvertsPage
     self.ads_element[id][1].element.span(:class=>currency).html[/> .* </].gsub(/[>< ]/,'').gsub(/\&nbsp\;/,'')
   end
 
+  def get_url_for_ad(id)
+    self.ads_element[id][3].link_element.element.href
+  end
+
   def open_ad(id)
     self.ads_element[id][4].click
+  end
+
+  def edit_ad(id)
+    self.ads_element[id+1][0].link_element(:text => "Редактировать").when_present.click
   end
   
 end

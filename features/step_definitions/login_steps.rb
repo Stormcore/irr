@@ -1,22 +1,47 @@
 # encoding: utf-8
 
-Когда %{я вхожу под пользователем с ролью "$role"} do |role|
+def get_login_and_password_for_role(role)
+  credentials = Hash.new
   case role
   when "Обычный пользователь"
-    steps %Q{When я вхожу под пользователем "auto_test" с паролем "testtest"}
+    credentials['login'] = "auto_test"
+    credentials['password'] = "testtest"
   when "Интернет-партнер"
-    steps %Q{When я вхожу под пользователем "kruglova" с паролем "111111"}
+    credentials['login'] = "kruglova"
+    credentials['password'] = "dfcbkbcf"
   else
-    fail "Нет такой роли - '#{role}'"
+    raise "Нет такой роли - '#{role}'"
+  end
+  credentials
+end
+
+Когда %{я ввожу логин и пароль роли "$role"} do |role|
+  credentials = get_login_and_password_for_role(role)
+  steps %Q{* я ввожу логин "#{credentials['login']}" и пароль "#{credentials['password']}"}
+end
+
+Когда %{я вхожу под пользователем с ролью "$role"} do |role|
+  expected_credentials = get_login_and_password_for_role(role)
+  unless expected_credentials['login'] == @current_user_name
+    steps %Q{* я перехожу к окну логина}
+    steps %Q{* я ввожу логин и пароль роли "#{role}"}
   end
 end
 
-Когда %{я вхожу под пользователем "$login" с паролем "$password"} do |login, password|
-  on MainPage do |page| 
+Когда %{я выхожу из текущего пользователя} do
+  on MainPage do |page|
     page.logout if page.logged_in?
+  end
+end
+
+Когда %{я перехожу к окну логина} do
+  steps %Q{* я выхожу из текущего пользователя}
+  on MainPage do |page| 
     page.login
   end
+end
 
+Когда %{я ввожу логин "$login" и пароль "$password"} do |login, password|
   on LoginPage do |page|
     page.login_as(login, password, true)
     @current_user_name = login

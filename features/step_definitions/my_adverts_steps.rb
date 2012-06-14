@@ -1,4 +1,10 @@
 # encoding: utf-8
+Когда %{открыт список объявлений пользователя} do
+  on MyAdvertsPage do |page|
+    page.wait_for_ads_loaded
+  end
+end
+
 Когда %{объявление с названием "$title" присутствует в списке} do |title|
   on MyAdvertsPage do |page|
     @ad_index = page.get_ad_with_title(title)
@@ -33,6 +39,8 @@ end
 
 Когда %{я открываю детали этого объявления} do
   on MyAdvertsPage do |page|
+    url = page.get_url_for_ad(@ad_index)
+    puts "Открываю объявление <a href=#{url}>#{url}</a>"
     page.open_ad(@ad_index)
   end
 end
@@ -44,7 +52,11 @@ end
     when "равно одному из"
       expected.split(', ').should include actual_value
     when "равно"
-      actual_value.should == expected 
+      begin
+        actual_value.to_i.should == expected.to_i
+      rescue
+        actual_value.should == expected
+      end
     when "в границах"
       expected_array = expected.split(" - ")
       actual_value.to_i.should be >= expected_array[0].to_i
@@ -54,5 +66,11 @@ end
     else
       eval("actual_value.to_i.should be #{operator} expected.to_i")
     end
+  end
+end
+
+Когда %{я редактирую данное объявление} do
+  on MyAdvertsPage do |page|
+    page.edit_ad(@ad_index)
   end
 end
