@@ -240,4 +240,13 @@ class AdDetailsPage
       when_present.link_element(:text => link).click
   end
 
+  def get_active_tab
+    self.div_element(:class => "wrBookmarks").
+         when_present.list_item_element(:class => "act").text
+  end
+
+  def map_displayed
+    self.div_element(:class => "YMaps-layer-container").when_present.exists?
+  end
+
 end
