@@ -21,6 +21,16 @@ def irr_inline_select(getter_name, identifier, setter_name = nil)
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
+
+  #selected
+  define_method("#{function_name}_selected") do |hash|
+    begin
+      self.expand_all_parameters
+      self.link_element(:xpath => "//div[@data-item-name='#{identifier}']//a[./span[text()='#{hash['value']}']]").attribute("class") == "act"
+    rescue Exception => e
+      raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
+    end
+  end
   
   # setter
   define_method("#{function_name}=") do |hash|

@@ -21,6 +21,16 @@ def irr_checkbox_with_value(getter_name, identifier, setter_name = nil)
     end
   end
 
+  #selected
+  define_method("#{function_name}_selected") do |hash|
+    begin
+      self.expand_all_parameters
+      self.checkbox_element(:name => identifier).checked?
+    rescue Exception => e
+      raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
+    end
+  end
+
   #setter
   define_method("#{function_name}=") do |hash|
     begin

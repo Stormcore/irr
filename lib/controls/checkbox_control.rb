@@ -20,6 +20,16 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
+
+  #selected
+  define_method("#{function_name}_selected") do |hash|
+    begin
+      self.expand_all_parameters
+      self.checkbox_element(:name => identifier).checked?
+    rescue Exception => e
+      raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
+    end
+  end
   
   #setter
   define_method("#{function_name}=") do |hash|
@@ -27,7 +37,7 @@ def irr_checkbox(getter_name, identifier, setter_name = nil)
       self.expand_all_parameters
       self.checkbox_element(:name => identifier).click
     rescue Exception => e
-      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
+      raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
     end
   end
   
@@ -42,4 +52,7 @@ def add_getters_and_setters(function_name, getter_name, setter_name = nil)
   
   @setter_functions ||= Hash.new
   @setter_functions[setter_name] = "#{function_name}="
+
+  @selectors_functions ||= Hash.new
+  @selectors_functions[setter_name] = "#{function_name}_selected"
 end

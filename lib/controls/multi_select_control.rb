@@ -23,6 +23,24 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
+
+  # selected
+  define_method("#{function_name}_selected") do |hash|
+    begin
+      self.expand_all_parameters
+      element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      unless element.div_element(:class => "controlSelect").visible?
+        element = self.div_element(:xpath => "//div[@data-name='#{identifier}']")
+      end
+      element.when_present(10).visible?.should == true
+      element.div_element(:class => "controlSelect").when_present(10).click
+      result = element.label_element(:text => hash['value']).when_present(10).checkbox_element.checked?
+      element.div_element(:class => "controlSelect").when_present(10).click
+      return result
+    rescue Exception => e
+      raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
+    end
+  end
   
   # setter
   define_method("#{function_name}=") do |hash|
