@@ -7,6 +7,7 @@ FAIL_FAST = ENV['FAILFAST'] || false
 
 
 require 'watir-webdriver'
+require "watir-webdriver/extensions/alerts"
 require 'page-object'
 require 'page-object/page_factory'
 require 'nokogiri'
