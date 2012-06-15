@@ -21,6 +21,19 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
   end
+
+  #selected
+  define_method("#{function_name}_selected") do |hash|
+    begin
+      self.expand_all_parameters
+      element.div_element(:class => "controlSelectS").when_present(10).click
+      debugger
+      element.element.div(:text => hash['value'].strip).attribute("class") == "act"
+    rescue Exception => e
+      raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
+    end
+  end
+
   
   # setter
   define_method("#{function_name}=") do |hash|

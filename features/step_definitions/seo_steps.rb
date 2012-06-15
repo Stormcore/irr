@@ -13,7 +13,7 @@ end
 То %{в поле "$field" выбраны следующие значения:} do |field, table|
   on @category_page do |page|
     table.hashes.each do |hash|
-      page.get_selected_parameter(field, hash).strip.should == true
+      page.get_selected_parameter(field, hash).should == true
     end
     
     # TODO: Проверям, что другие значения не выбраны   

@@ -9,6 +9,11 @@ module Rent
     setter_functions = Rent.instance_variable_get(:@setter_functions)
     self.send "#{setter_functions[hash['parameter']]}", hash
   end
+
+  def get_selected_rent_parameter(field, hash)
+    selectors_functions = Rent.instance_variable_get(:@selectors_functions)
+    self.send "#{selectors_functions[field]}", hash
+  end
   
   def get_rent_parameter(field)
     self.send("#{Rent.instance_variable_get(:@getter_functions)[field]}")

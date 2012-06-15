@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+#TODO: REFACTOR MEEEE!
+
+
 class AdDetailsPage
   include PageObject
   #Dir["#{File.dirname(__FILE__)}/../../../control/**/*_control.rb"].each {|r| load r }
@@ -98,6 +101,33 @@ class AdDetailsPage
     end
   end
 
+  def get_selected_generic_parameter(field, hash = nil)
+    case field
+    when "Цена", "Зарплата"
+      begin
+        result = {"min" => self.price_from, "max" => self.price_to}
+      rescue Exception => e
+        raise "Отсутствует поле Цена\n#{e}"
+      end
+
+    when "Ключевые слова"
+      begin
+        result = self.keywords
+      rescue Exception => e
+        raise "Отсутствует поле Ключевые слов\n#{e}"
+      end
+
+    when "Валюта"
+      self.currency_element.div_element(:class => "controlSelectS").when_present.click
+      Watir::Wait.until { element.div_element(:class => "selectItemsPopup").style('display') == "block" }
+      result = self.currency_element.element.div(:text => hash['value'].strip).attribute("class") == "act"
+ 
+    else
+      raise "Неизвестный параметр: #{field}"
+    end
+    result
+  end
+
   def get_generic_parameter(field)
     xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
     begin
@@ -130,6 +160,41 @@ class AdDetailsPage
       end
     else
       set_custom_parameter(hash) 
+    end
+  end
+
+  def get_selected_parameter (field, hash = nil)
+    case field
+    when "Округ", "Район", "Микрорайон", "Линия метро", "Станция метро", "До метро"
+      # На случай совпадения имён, проверяем существует ли такая функция
+      if self.respond_to?(:get_selected_metro_parameter)
+        self.get_selected_metro_parameter(field, hash)
+      else
+        get_selected_custom_parameter(field, hash)
+      end
+    when "Расположение", "Направление", "Шоссе", "Удаленность"
+      if self.respond_to?(:get_selected_regions_parameter)
+        self.get_selected_regions_parameter(field, hash)
+      else
+        get_selected_custom_parameter(field, hash)
+      end
+    when "Валюта", "Срок сдачи"
+      if self.respond_to? :get_selected_rent_parameter
+        self.get_selected_rent_parameter(field, hash)
+      else
+        get_selected_custom_parameter(field, hash)
+      end
+    else
+      get_selected_custom_parameter(field, hash) 
+    end
+  end
+
+  def get_selected_custom_parameter(field, hash = nil)
+    selectors_functions = self.class.instance_variable_get(:@selectors_functions)
+    if selectors_functions and selectors_functions.has_key? field
+      self.send "#{selectors_functions[field]}", hash
+    else
+      get_selected_generic_parameter(field, hash)
     end
   end
 
@@ -168,6 +233,11 @@ class AdDetailsPage
     else
       get_custom_parameter(field)
     end
+  end
+
+  def select_link_with_text_from_quick_search_section(link)
+    self.div_element(:class => "quicklySearch").
+      when_present.link_element(:text => link).click
   end
 
 end

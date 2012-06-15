@@ -14,6 +14,11 @@ module Regions
     setter_functions = Regions.instance_variable_get(:@setter_functions)
     self.send "#{setter_functions[hash['parameter']]}", hash
   end
+
+  def get_selected_regions_parameter(field)
+    selectors_functions = Regions.instance_variable_get(:@selectors_functions)
+    self.send "#{selectors_functions[field]}"
+  end
   
   def get_regions_parameter(field)
     case field

@@ -16,6 +16,11 @@ module CityWithMetro
     self.send "#{setter_functions[hash['parameter']]}", hash
   end
 
+  def get_selected_metro_parameter(field)
+    selectors_functions = CityWithMetro.instance_variable_get(:@selectors_functions)
+    self.send "#{selectors_functions[field]}"
+  end
+
   def get_metro_parameter(field)
     case field
     when "АО", "Район города", "Микрорайон"
