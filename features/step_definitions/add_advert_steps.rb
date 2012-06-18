@@ -34,7 +34,6 @@ end
 Когда %{я ввожу следующие данные на шаге 2:} do |page_params|
   on AddAdvertStep2 do |page|
     page_params.hashes.each do |hash|
-      puts "Устанавливаем '#{hash['parameter']}' = '#{hash['value']}'"
       page.set_parameter(hash)
     end
   end
