@@ -110,6 +110,52 @@ task :fast_category_check do
   end
 end
 
+Cucumber::Rake::Task.new(:new_advert_no_rerun) do |task|
+  task.cucumber_opts = ["HEADLESS=true",
+                      "-r features",
+                      "-t ~@wip -t ~@bugs -t @new_advert",
+                      "--format junit --out junit",
+                      "--format html  --out cucumber.html",
+                      "--format rerun --out rerun.txt",
+                      "--format pretty --color",
+                      ENV['FEATURE']]
+end
+
+task :new_advert do
+  selenium_successful = run_rake_task("new_advert_no_rerun")
+  rerun_successful = true
+  unless selenium_successful
+    puts "\n\n Rerunning failed tests"
+    rerun_successful = run_rake_task("rerun")
+  end
+  unless selenium_successful || rerun_successful
+    fail 'Cucumber tests failed'
+  end
+end
+
+Cucumber::Rake::Task.new(:after_index_no_rerun) do |task|
+  task.cucumber_opts = ["HEADLESS=true",
+                      "-r features",
+                      "-t ~@wip -t ~@bugs -t @after_index",
+                      "--format junit --out junit",
+                      "--format html  --out cucumber.html",
+                      "--format rerun --out rerun.txt",
+                      "--format pretty --color",
+                      ENV['FEATURE']]
+end
+
+task :after_index do
+  selenium_successful = run_rake_task("after_index_no_rerun")
+  rerun_successful = true
+  unless selenium_successful
+    puts "\n\n Rerunning failed tests"
+    rerun_successful = run_rake_task("rerun")
+  end
+  unless selenium_successful || rerun_successful
+    fail 'Cucumber tests failed'
+  end
+end
+
 Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                       "-r features",

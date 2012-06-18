@@ -95,6 +95,16 @@ end
   end
 end
 
+Допустим %{я делаю данное объявление премиумом} do
+  on MyAdvertsPage do |page|
+    page.do_action(@ad_index, "Премиум")
+  end
+
+  on AdvertActionConfirmPage do |page|
+    page.do_activate
+  end
+end
+
 Допустим %{в ЛК ИП данное объявление выделено} do
   on MyAdvertsPage do |page|
     page.is_ad_highlighted(@ad_index).should == true

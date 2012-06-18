@@ -308,6 +308,13 @@ end
   end
 end
 
+То %{в списке премиумов присутствует объявление "$title"} do |title|
+  on SearchResultsPage do |page|
+    result = @results.select{|result| result['title'] == title}
+    result['premium'].should == true
+  end
+end
+
 То %{объявление с заголовком "$header" присутствует на первых $n страницах поиска} do |header, n|
   ad_found = false
 
