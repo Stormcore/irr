@@ -45,6 +45,7 @@ class MyAdvertsPage
   end
 
   def is_ad_highlighted(id)
-    self.ads_element[id].element.attribute("class").should include?("mark")
+    debugger
+    self.ads_element[id].element.wd.attribute("class").should include?("mark")
   end
 end
