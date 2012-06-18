@@ -40,8 +40,11 @@ class MyAdvertsPage
     self.ads_element[id][4].click
   end
 
-  def edit_ad(id)
-    self.ads_element[id+1][0].link_element(:text => "Редактировать").when_present.click
+  def do_action(id, action_name)
+    self.ads_element[id+1][0].link_element(:text => action_name).when_present.click
   end
-  
+
+  def is_ad_highlighted(id)
+    self.ads_element[id].element.attribute("class").should include?("mark")
+  end
 end

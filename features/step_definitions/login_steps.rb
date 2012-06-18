@@ -8,7 +8,7 @@ def get_login_and_password_for_role(role)
     credentials['password'] = "testtest"
   when "Интернет-партнер"
     credentials['login'] = "kruglova"
-    credentials['password'] = "dfcbkbcf"
+    credentials['password'] = "111111"
   else
     raise "Нет такой роли - '#{role}'"
   end

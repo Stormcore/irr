@@ -33,6 +33,10 @@ end
     @url_prefix = BASE_URL
     @url_suffix = ''
     @browser.goto(@url_prefix)
+  when "Усть-Алтан"
+    @url_prefix = BASE_URL.gsub("http://", "http://ust-orda.")
+    @url_suffix = '/irkutskaya-obl-ust-ordyinskiy-buryatskiy-kray/osinskiy-r_n/ust-altan-selo/'
+    @browser.goto(@url_prefix)
   when "Астана"
     @url_prefix = BASE_URL.gsub("http://", "http://astana.")
     @url_suffix = ''

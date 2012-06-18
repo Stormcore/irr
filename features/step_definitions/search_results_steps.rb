@@ -288,6 +288,26 @@ end
   end
 end
 
+Допустим %{первым в списке обычных объявлений первым идёт объявление "$expected_title"} do |expected_title|
+  # Ищем первое обычное объявление
+  on SearchResultsPage do |page|
+    @results.each do |result|
+      current_is_premium = result['premium']
+      if premium_section_ended
+        result['title'].should == expected_title
+      end
+      premium_section_ended = true unless current_is_premium
+    end
+  end
+end
+
+То %{в списке обычных объявлений объявление "$title" выделено} do |title|
+  on SearchResultsPage do |page|
+    result = @results.select{|result| result['title'] == title}[0]
+    result['mark'].should == true
+  end
+end
+
 То %{объявление с заголовком "$header" присутствует на первых $n страницах поиска} do |header, n|
   ad_found = false
 

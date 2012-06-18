@@ -2,13 +2,7 @@
 
 Когда %{я перехожу на страницу stargate} do
   visit StargateLoginPage
-  #TODO: Логаут если уже залогинен
 end
-
-То /^ "(.*?)"$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
 
 То %{показано сообщение "$message"} do |message|
   on StargateLoginPage do |page|
@@ -21,7 +15,11 @@ end
 end
 
 Когда %{на stargate я вхожу под логином "$login" и паролем "$password"} do |login, password|
-  on StargateLoginPage do |page|
+  visit StargateLoginPage do |page|
+    page.logout if page.has_logout
+  end
+
+  visit StargateLoginPage do |page|
     page.login = login
     page.password = password
     page.enter

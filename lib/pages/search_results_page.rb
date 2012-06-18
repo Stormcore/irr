@@ -48,6 +48,11 @@ class SearchResultsPage
       end
 
       begin
+        h['mark'] = row['class'].include? 'mark'
+      rescue
+      end
+
+      begin
         h['thumbnail'] = row.css('td.tdImg > a.wrapImg > img')[0]['src']
       rescue
       end

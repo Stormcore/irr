@@ -71,6 +71,55 @@ end
 
 Когда %{я редактирую данное объявление} do
   on MyAdvertsPage do |page|
-    page.edit_ad(@ad_index)
+    page.do_action(@ad_index, "Редактировать")
+  end
+end
+
+Допустим %{я поднимаю данное объявление} do
+  on MyAdvertsPage do |page|
+    page.do_action(@ad_index, "Поднять")
+  end
+
+  on AdvertActionConfirmPage do |page|
+    page.do_activate
+  end
+end
+
+Допустим %{я выделяю данное объявление} do
+  on MyAdvertsPage do |page|
+    page.do_action(@ad_index, "Выделить")
+  end
+
+  on AdvertActionConfirmPage do |page|
+    page.do_activate
+  end
+end
+
+Допустим %{в ЛК ИП данное объявление выделено} do
+  on MyAdvertsPage do |page|
+    page.is_ad_highlighted(@ad_index).should == true
+  end
+end
+
+Допустим %{в ЛК ИП я выбираю регион "$region"} do |region|
+  pending # express the regexp above with the code you wish you had
+end
+
+Допустим %{в ЛК ИП я выбираю пакет "$package"} do |package|
+  on PackageInfoPage do |page|
+    page.select_package(package)
+  end
+end
+
+Допустим %{в ЛК ИП я запоминаю значение поля "$field"} do |field|
+  on PackageInfoPage do |page|
+    @stored_var = page.get_field_value(field).to_i
+  end
+end
+
+То %{в ЛК ИП значение поля "$field" уменьшилось на единицу} do |field|
+  on PackageInfoPage do |page|
+    new_value = page.get_field_value(field).to_i
+    (@stored_var - new_value).should == 1
   end
 end
