@@ -133,3 +133,20 @@ end
     (@stored_var - new_value).should == 1
   end
 end
+
+Допустим %{в ЛК ИП я перехожу на вкладку "$tab"} do |tab|
+  on MyAdvertsPage do |page|
+    page.open_tab(tab)
+  end
+end
+
+То %{в ЛК ИП на вкладке "Настройки" отображены следующие секции:} do |table|
+  # table is a Cucumber::Ast::Table
+  on MyAdvertsSettingsTabPage do |page|
+    table.hashes.each do |hash|
+      puts "Проверяем наличие секции #{hash['имя секции']}"
+      page.has_section_displayed(hash['имя секции']).should == true
+    end
+  end
+end
+

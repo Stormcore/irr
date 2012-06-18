@@ -290,15 +290,18 @@ end
 
 Допустим %{первым в списке обычных объявлений первым идёт объявление "$expected_title"} do |expected_title|
   # Ищем первое обычное объявление
+  ad_found = false
   on SearchResultsPage do |page|
     @results.each do |result|
       current_is_premium = result['premium']
       if premium_section_ended
         result['title'].should == expected_title
+        ad_found = true
       end
       premium_section_ended = true unless current_is_premium
     end
   end
+  ad_found.should == true
 end
 
 То %{в списке обычных объявлений объявление "$title" выделено} do |title|

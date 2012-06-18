@@ -3,6 +3,7 @@ class MyAdvertsPage
   include PageObject
 
   table :ads, :id => "psellers"
+  unordered_list :bookmarks, :class => "b-bookmarksAdv"
 
   def wait_for_ads_loaded
     self.ads_element.when_present
@@ -46,5 +47,9 @@ class MyAdvertsPage
 
   def is_ad_highlighted(id)
     self.ads_element[id].element.wd.attribute("class").include?("mark").should == true
+  end
+
+  def open_tab(name)
+    self.bookmarks_element.link_element(:link_text => name).click
   end
 end

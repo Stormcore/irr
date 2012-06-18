@@ -3,9 +3,12 @@
 class MyAdvertsSettingsTabPage
   include PageObject
 
-  span :general_header, :text => "Общие настройки учетной записи"
-  span :adverts_header, :text => "Настройки объявлений"
-  span :import_header,  :text => "Настройки импорта"
-  span :notification_header,  :text => "Настройки уведомлений"
-  span :packages_header,  :text => "Вы приобрели пакет Интернет-партнера со следующими параметрами"
+  def has_section_displayed(name)
+    case name
+    when "Пакеты партнёра"
+      self.span_element(:text => "Вы приобрели пакет Интернет-партнера со следующими параметрами").when_present.exists?
+    else
+      self.span_element(:text => name).when_present.exists?
+    end
+  end
 end
