@@ -140,9 +140,24 @@ end
   end
 end
 
-То %{в ЛК ИП на вкладке "Настройки" отображены следующие секции:} do |table|
-  # table is a Cucumber::Ast::Table
-  on MyAdvertsSettingsTabPage do |page|
+#TODO: Refactor
+
+То %{в ЛК ИП на вкладке "$tab" отображены следующие секции:} do |tab, table|
+  case tab
+  when "Настройки"
+    tab_page = MyAdvertsSettingsTabPage
+  when "Статистика"
+    tab_page = MyAdvertsViewsTabPage
+  when "История"
+    tab_page = MyAdvertsHistoryTabPage
+  when "Новости"
+    tab_page = MyAdvertsNewsTabPage
+  when "IP адреса"
+    tab_page = MyAdvertsIPAdressesTabPage
+  when "Логи импорта"
+    tab_page = MyAdvertsLogImportTabPage
+  end
+  on tab_page do |page|
     table.hashes.each do |hash|
       puts "Проверяем наличие секции #{hash['имя секции']}"
       page.has_section_displayed(hash['имя секции']).should == true
@@ -150,3 +165,8 @@ end
   end
 end
 
+То %{в ЛК ИП на вкладке "Платежи" отображен список платежей} do
+  on MyAdvertsPaymentsTabPage do |page|
+    page.get_payments_number.should > 0
+  end
+end
