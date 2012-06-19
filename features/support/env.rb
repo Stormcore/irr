@@ -17,6 +17,7 @@ require 'uri'
 require 'date'
 require 'unicode_utils/downcase'
 require 'cucumber/formatter/unicode'
+require 'selenium/webdriver/remote/http/persistent'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'
@@ -35,7 +36,7 @@ def start_browser
   case DRIVER
   when :firefox
     puts "Starting firefox..."
-    client = Selenium::WebDriver::Remote::Http::Default.new
+    client = Selenium::WebDriver::Remote::Http::Persistent.new
     client.timeout = 60
     profile = Selenium::WebDriver::Firefox::Profile.new
     profile.native_events = false
@@ -47,7 +48,7 @@ def start_browser
     
   when :chrome
     puts "Starting chrome"
-    client = Selenium::WebDriver::Remote::Http::Default.new
+    client = Selenium::WebDriver::Remote::Http::Persistent.new
     client.timeout = 60
     profile = Selenium::WebDriver::Chrome::Profile.new
     switches  = %w[--bwsi]
