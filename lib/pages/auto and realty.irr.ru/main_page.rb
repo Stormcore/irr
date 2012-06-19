@@ -16,3 +16,11 @@ class RealtyIrrRuMainPage
     end
   end
 end
+
+class AutoIrrRuMainPage < RealtyIrrRuMainPage
+  include PageObject
+
+  direct_url BASE_URL.gsub("http://", "http://auto.")
+
+end
+

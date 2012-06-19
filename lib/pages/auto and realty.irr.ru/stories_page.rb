@@ -26,3 +26,12 @@ class RealtyIrrRuStoriesPage
     element.when_present.p.exists?
   end
 end
+
+class AutoIrrRuStoriesPage < RealtyIrrRuStoriesPage
+  div :section, :xpath => "//div[./div[@class='s-title']" +
+                          "[.//strong[text()='Статьи']]]"
+
+  def get_stories_items
+    self.section_element.element.divs(:class => /float/)
+  end
+end
