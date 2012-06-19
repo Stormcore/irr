@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class CategoryGiftsOtherPage < AdDetailsPage
+class CategoryOtdamDromPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/otdam-darom"
