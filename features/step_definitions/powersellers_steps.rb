@@ -13,7 +13,7 @@ def powersellers_soft_assert(description)
         ad = Powerseller.new(element)
         yield ad
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
-        validation_errors[browser.url] = verification_error.message
+        validation_errors[@browser.url] = verification_error.message
       end
     end
   end
