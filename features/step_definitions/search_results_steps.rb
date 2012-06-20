@@ -217,7 +217,8 @@ end
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
       if UnicodeUtils.downcase(result['title']).include? downcased_keyword
-        puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в заголовке"
+        puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>':" +
+             " найдено ключевое слово '#{keyword}' в заголовке"
         keyword_found = true
         break
       end
@@ -225,7 +226,8 @@ end
       # Текст объявления на странице
       next if result['description'].nil?
       if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-        puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в тексте на странице поиска"
+        puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>':" +
+             " найдено ключевое слово '#{keyword}' в тексте на странице поиска"
         keyword_found = true
         break
       end
@@ -249,7 +251,8 @@ end
 
           # Текст параметров
           if UnicodeUtils.downcase(page.all_params_element.element.html).include? downcased_keyword
-            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в параметрах объявления"
+            puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>':" +
+                 " найдено ключевое слово '#{keyword}' в параметрах объявления"
             keyword_found = true
             break
           end
