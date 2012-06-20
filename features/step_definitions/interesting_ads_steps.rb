@@ -8,9 +8,7 @@ def interesting_ads_soft_assert(description)
         ad = InterestingAd.new(element)
         yield ad
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
-        page.highlight_result_by_url(result['url'])
-        full_url = "#{BASE_URL}#{result['url']}"
-        validation_errors[full_url] = verification_error.message
+        validation_errors[@browser.url] = verification_error.message
       end
     end
   end
@@ -27,15 +25,16 @@ end
   end
 end
 
-То %{в блоке "Интересные объявления" показано $number объявлений} do |number|
+То %{в блоке "Интересные объявления" показано $operator $number объявлений} do |operator, number|
   on InterestingAdsPage do |page|
-    page.get_ads_number.should == number.to_i
+    eval("page.get_ads_number.should #{operator} #{number}")
   end
 end
 
 То %{для каждого объявления в блоке "Интересные объявления" показана фотография} do
   interesting_ads_soft_assert("Не показаны фотографии") do |ad|
     thumbnail = ad.get_photo
+    next if thumbnail.include? "prontosoft.by"
     thumbnail.should_not be_empty
     thumbnail.should_not include "zaglushka"
     
