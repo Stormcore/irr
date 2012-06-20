@@ -3,12 +3,12 @@ def select_class(name, class_name)
   case name
   when "realty", /недвижимост/
     eval("Realty#{class_name}")
-  when "auto", "авто"
+  when "auto", /авто/
     eval("Auto#{class_name}")
   end
 end
 
-Допустим /^открыта страница (realty|auto) для региона "(.*)"$/ do |page, region|
+Допустим /^открыта страница (портала недвижимости|автомобильного портала) для региона "(.*)"$/ do |page, region|
   classs = select_class(page, "IrrRuMainPage")
   visit classs
   on classs do |page|
