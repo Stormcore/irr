@@ -241,7 +241,8 @@ end
           downcased_keyword = UnicodeUtils.downcase(keyword)
           # Полный текст объявления
           if UnicodeUtils.downcase(page.advert_text_element.text).include? downcased_keyword
-            puts "URL #{BASE_URL+result['url']}: найдено ключевое слово '#{keyword}' в полном тексте объявления"
+            puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>}':" +
+                 " найдено ключевое слово '#{keyword}' в полном тексте объявления"
             keyword_found = true
             break
           end
@@ -351,7 +352,7 @@ def first_result_page_soft_assert(description)
     result = @results[0]
     begin
       yield result
-    rescue RSpec::Expectations::ExpectationNotMetError => verification_error
+    rescue Exception => verification_error
       page.highlight_result_by_url(result['url'])
       full_url = "#{BASE_URL}#{result['url']}"
       validation_errors[full_url] = verification_error.message
@@ -370,7 +371,7 @@ def results_page_soft_assert(description)
     @results.each do |result|
       begin
         yield result
-      rescue RSpec::Expectations::ExpectationNotMetError => verification_error
+      rescue Exception => verification_error
         page.highlight_result_by_url(result['url'])
         full_url = "#{BASE_URL}#{result['url']}"
         validation_errors[full_url] = verification_error.message
