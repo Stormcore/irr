@@ -1,28 +1,21 @@
 # encoding: utf-8
 
 def get_login_and_password_for_role(role)
-  credentials = Hash.new
-  case role
-  when "Обычный пользователь"
-    credentials['login'] = "auto_test"
-    credentials['password'] = "testtest"
-  when "Интернет-партнер"
-    credentials['login'] = "kruglova"
-    credentials['password'] = "111111"
-  else
-    raise "Нет такой роли - '#{role}'"
-  end
-  credentials
+  credentials = YAML::load(File.open(File.dirname(__FILE__)+'/../credentials.yml'))
+  record_name = BASE_URL.gsub("http://",'')
+  @passport_address = credentials[record_name]['passport_address']
+  credentials[record_name][role]
 end
 
 Когда %{я ввожу логин и пароль роли "$role"} do |role|
   credentials = get_login_and_password_for_role(role)
   steps %Q{* я ввожу логин "#{credentials['login']}" и пароль "#{credentials['password']}"}
+  @current_user_name = credentials['username']
 end
 
 Когда %{я вхожу под пользователем с ролью "$role"} do |role|
   expected_credentials = get_login_and_password_for_role(role)
-  unless expected_credentials['login'] == @current_user_name
+  unless expected_credentials['username'] == @current_user_name
     steps %Q{* я перехожу к окну логина}
     steps %Q{* я ввожу логин и пароль роли "#{role}"}
   end
@@ -44,13 +37,12 @@ end
 Когда %{я ввожу логин "$login" и пароль "$password"} do |login, password|
   on LoginPage do |page|
     page.login_as(login, password, true)
-    @current_user_name = login
   end
 end
 
 То %{на главной странице отображено имя пользователя} do 
   on MainPage do |page|
-    page.logged_in_element.when_present.text.should == @current_user_name 
+    page.logged_in_element.when_present(10).text.should == @current_user_name 
   end
 end
 
@@ -85,13 +77,13 @@ end
 end
 
 Когда %{я перехожу на страницу паспорта} do
-  visit PassportPage
+  @browser.goto @passport_address
 end
 
 То %{на странице паспорта отображено имя пользователя} do 
   on PassportPage do |page|
     element = page.div_element(:text => /#{@current_user_name}/)
-    element.when_present.visible?.should == true
+    element.when_present(10).visible?.should == true
   end
 end
 

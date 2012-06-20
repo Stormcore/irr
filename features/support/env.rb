@@ -18,6 +18,7 @@ require 'date'
 require 'unicode_utils/downcase'
 require 'cucumber/formatter/unicode'
 require 'selenium/webdriver/remote/http/persistent'
+require 'yaml'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'
