@@ -14,10 +14,10 @@ class RealtyIrrRuIpotekaPage
   end
 
   def get_bank_name(element)
-    element.element.cell_element(:index => 0).link_element.text
+    element.element.td(:index => 0).a.text
   end
 
   def get_percents(element)
-    element.element.cell_element(:index => 1).text
+    element.element.td(:index => 1).text
   end
 end
