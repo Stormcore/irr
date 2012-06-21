@@ -159,8 +159,8 @@ end
   end
   on tab_page do |page|
     table.hashes.each do |hash|
-      puts "Проверяем наличие секции #{hash['имя секции']}"
-      page.has_section_displayed(hash['имя секции']).should == true
+      page.has_section_displayed(hash['имя секции']).should eq(true), 
+        "Отсутствует секция #{hash['имя секции']}"
     end
   end
 end

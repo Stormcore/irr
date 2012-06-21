@@ -35,6 +35,10 @@ end
 end
 
 Допустим %{у каждого интернет-партнера отображается логотип} do
+  if BASE_URL.include "prontosoft.by"
+    puts "Пропускаем проверку картинки - тестовый сервер"
+    next
+  end
   powersellers_soft_assert("Не показан логотип") do |powerseller|
     puts "Интернет-парнет '#{powerseller.get_name}'"
     next unless powerseller.has_photo

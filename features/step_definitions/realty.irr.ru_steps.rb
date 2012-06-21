@@ -9,7 +9,7 @@ def select_class(name, class_name)
 end
 
 Допустим /^открыта страница (портала недвижимости|автомобильного портала) для региона "(.*)"$/ do |page, region|
-  pending if BASE_URL.include? "prontosoft.by"
+
   classs = select_class(page, "IrrRuMainPage")
   visit classs
   on classs do |page|
