@@ -59,7 +59,7 @@ end
 end
 
 То %{на странице интернет-партнера отображается логотип} do
-  if BASE_URL.include "prontosoft.by"
+  if BASE_URL.include? "prontosoft.by"
     puts "Пропускаем проверку картинки - тестовый сервер"
     next
   end
