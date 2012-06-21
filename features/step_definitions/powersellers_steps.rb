@@ -116,8 +116,9 @@ end
 
 Допустим %{я открываю первое объявление с картой} do
   on PowersellerPage do |page|
-    href = page.get_ads.select{|ad| ad.has_map_badge}[0].get_map_href
-    @browser.goto href
+    map_object = page.get_ads.select{|ad| ad.has_map_badge}
+    raise "Объявлений с картой не найдено" unless map_object
+    @browser.goto map_object[0].get_map_href
   end
 end
 
