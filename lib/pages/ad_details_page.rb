@@ -235,8 +235,12 @@ class AdDetailsPage
   end
 
   def select_link_with_text_from_quick_search_section(link)
-    self.div_element(:class => "quicklySearch").
-      when_present.link_element(:text => link).click
+    begin
+      self.div_element(:class => "quicklySearch").
+        when_present.link_element(:text => link).click
+    rescue Watir::Exception::UnknownObjectException => e
+      raise "Отсутствует seo-линк #{link}"
+    end
   end
 
   def get_active_tab
