@@ -6,7 +6,7 @@
 class AdDetailsPage
   include PageObject
   #Dir["#{File.dirname(__FILE__)}/../../../control/**/*_control.rb"].each {|r| load r }
-  
+
   # Настройка параметров
   link :expand_extended_more, :class => "expand_extended_more"
   text_field :keywords, :xpath => "//form[@id='filter']//input[@name='keywords']"
@@ -18,8 +18,8 @@ class AdDetailsPage
   div :date_create, :xpath => "//div[@data-item-name='date_create']"
   div :source_from, :xpath => "//div[@data-item-name='sourcefrom']"
   link :run_search, :id => "show-result-search"
-  
-  # Показ параметров 
+
+  # Показ параметров
   link :show_all_params, :id => "showAllParamsLink"
   div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
   div :video, :class => "b-video"
@@ -29,7 +29,7 @@ class AdDetailsPage
   div :advert_text, :class => "txtAdvert"
   table :all_params, :id => "allParams"
   div :ad_content, :class => "b-content"
-  
+
   # Все параметры
   def singleselect(element, value)
     begin
@@ -82,20 +82,20 @@ class AdDetailsPage
       rescue Exception => e
         raise "Отсутствует поле 'С фото'\n#{e}"
       end
-      
+
     when "С видео"
       begin
         self.hasvideo_element.click
       rescue Exception => e
         raise "Отсутствует поле 'С видео'\n#{e}"
       end
-      
+
     when "Источник"
       singleselect(self.source_from_element, hash['value'])
-      
+
     when "Поданные"
       singleselect(self.date_create_element, hash['value'])
- 
+
     else
       raise "Неизвестный параметр: #{hash['parameter']}"
     end
@@ -121,7 +121,6 @@ class AdDetailsPage
       self.currency_element.div_element(:class => "controlSelectS").when_present.click
       Watir::Wait.until { element.div_element(:class => "selectItemsPopup").style('display') == "block" }
       result = self.currency_element.element.div(:text => hash['value'].strip).attribute("class") == "act"
- 
     else
       raise "Неизвестный параметр: #{field}"
     end
@@ -159,7 +158,7 @@ class AdDetailsPage
         set_custom_parameter(hash)
       end
     else
-      set_custom_parameter(hash) 
+      set_custom_parameter(hash)
     end
   end
 
@@ -185,7 +184,7 @@ class AdDetailsPage
         get_selected_custom_parameter(field, hash)
       end
     else
-      get_selected_custom_parameter(field, hash) 
+      get_selected_custom_parameter(field, hash)
     end
   end
 
@@ -215,7 +214,7 @@ class AdDetailsPage
       get_generic_parameter(field)
     end
   end
-  
+
   def get_parameter (field)
     case field
     when "АО", "Район города", "Микрорайон", "Линия метро", "Станция метро", "До метро"
@@ -242,7 +241,7 @@ class AdDetailsPage
 
   def get_active_tab
     self.div_element(:class => "wrBookmarks").
-         when_present.list_item_element(:class => "act").text
+      when_present.list_item_element(:class => "act").text
   end
 
   def map_displayed

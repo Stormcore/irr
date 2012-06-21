@@ -295,6 +295,7 @@ end
 Допустим %{первым в списке обычных объявлений первым идёт объявление "$expected_title"} do |expected_title|
   # Ищем первое обычное объявление
   ad_found = false
+  premium_section_ended = false
   on SearchResultsPage do |page|
     @results.each do |result|
       current_is_premium = result['premium']
@@ -305,7 +306,7 @@ end
       premium_section_ended = true unless current_is_premium
     end
   end
-  ad_found.should == true
+  ad_found.should eq(true), "Поднятое объявление не показано вверху списка"
 end
 
 То %{в списке обычных объявлений объявление "$title" выделено} do |title|
