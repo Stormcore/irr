@@ -44,3 +44,9 @@ end
     page.save
   end
 end
+
+Когда %{я загружаю фото на шаге 2} do
+  on AddAdvertStep2 do |page|
+    page.load_photo
+  end
+end

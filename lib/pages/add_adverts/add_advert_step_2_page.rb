@@ -8,6 +8,8 @@ class AddAdvertStep2 < AdDetailsPage
 
   text_field :f_title, :id => "f_title"
   text_field :f_text, :id => "f_text"
+  file_field :upload, :id => "input-file-upload"
+  unordered_list :uploaded_photos, :id => "photos"
 
   link :save, :id => "submit-edit-form"
   link :next_step, :id => "next_link"
@@ -64,6 +66,22 @@ class AddAdvertStep2 < AdDetailsPage
     else
       self.set_custom_parameter(hash)
     end
+  end
+
+  def load_photo()
+    # Загружаем файл из URL
+    Net::HTTP.start("userlogos.org") do |http|
+      resp = http.get("/files/logos/x-b/irr.png")
+      open("/tmp/logo_irr.png", "wb") do |file|
+        file.write(resp.body)
+      end
+    end
+    # Указываем этот файл
+    self.upload_element.element.set "/tmp/logo_irr.png"
+    # Ждём пока появится загруженная фотография
+    self.uploaded_photos_element.
+         list_item_element(:id => "downloaded-photo-1").when_present(30).
+         image_element.exists?
   end
 
   def save

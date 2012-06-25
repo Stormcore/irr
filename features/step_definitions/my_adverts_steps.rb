@@ -37,6 +37,24 @@ end
   end
 end
 
+Допустим %{у объявления отображается загруженная фотография} do
+  if BASE_URL.include? 'prontosoft.by'
+    puts "Проверка пропущена - тестовый сайт"
+    next
+  end
+  on MyAdvertsPage do |page|
+    thumbnail = page.get_photo(@ad_index)
+    thumbnail.should_not be_nil
+    
+    # Verify that  thumbnail url doesn't throw any error
+    url = URI.parse(thumbnail)
+    the_request = Net::HTTP::Get.new(url.path)
+    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
+    the_response.code.should == 200.to_s
+  end
+end
+
+
 Когда %{я открываю детали этого объявления} do
   on MyAdvertsPage do |page|
     url = page.get_url_for_ad(@ad_index)
@@ -66,6 +84,23 @@ end
     else
       eval("actual_value.to_i.should be #{operator} expected.to_i")
     end
+  end
+end
+
+То %{в деталях объявления отображается загруженная фотография} do
+  if BASE_URL.include? 'prontosoft.by'
+    puts "Проверка пропущена - тестовый сайт"
+    next
+  end
+  on @category_page do |page|
+    thumbnail = page.get_photo
+    thumbnail.should_not be_nil
+    
+    # Verify that  thumbnail url doesn't throw any error
+    url = URI.parse(thumbnail)
+    the_request = Net::HTTP::Get.new(url.path)
+    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
+    the_response.code.should == 200.to_s
   end
 end
 

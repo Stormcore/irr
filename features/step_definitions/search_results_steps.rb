@@ -316,10 +316,32 @@ end
   end
 end
 
+То %{в списке обычных объявлений присутствует объявление "$title"} do |title|
+  on SearchResultsPage do |page|
+    result = @results.select{|result| result['title'] == title}[0]
+    result['premium'].should == false
+  end
+end
+
+То %{у объявления "$title" отображается загруженная фотография} do |title|
+  on SearchResultsPage do |page|
+    result = @results.select{|result| result['title'] == title}[0]
+    result['thumbnail']
+  end
+end
+
 То %{в списке премиумов присутствует объявление "$title"} do |title|
   on SearchResultsPage do |page|
     result = @results.select{|result| result['title'] == title}
-    result['premium'].should == true
+    thumbnail = result['thumbnail']
+    thumbnail.should_not be_empty 
+    thumbnail.should_not include "zaglushka"
+    
+    # Verify that  thumbnail url doesn't throw any error
+    url = URI.parse(thumbnail)
+    the_request = Net::HTTP::Get.new(url.path)
+    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
+    the_response.code.should == 200.to_s
   end
 end
 

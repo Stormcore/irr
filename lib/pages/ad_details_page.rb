@@ -22,6 +22,7 @@ class AdDetailsPage
   # Показ параметров
   link :show_all_params, :id => "showAllParamsLink"
   div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
+  div :photo, :class => "b-photo"
   div :video, :class => "b-video"
   link :show_all_text, :class => "showAll"
 
@@ -45,6 +46,10 @@ class AdDetailsPage
     if self.expand_extended_more_element.visible?
       self.expand_extended_more
     end
+  end
+
+  def get_photo
+    self.photo_element.when_present.image_element.element.attribute("src")
   end
 
   def has_video?
