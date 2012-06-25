@@ -311,15 +311,21 @@ end
 
 То %{в списке обычных объявлений объявление "$title" выделено} do |title|
   on SearchResultsPage do |page|
-    result = @results.select{|result| result['title'] == title}[0]
-    result['mark'].should == true
+    all_results = @results.select{|result| result['title'] == title}
+    (all_results.size > 0).should eq(true), "Объявление '#{title}' отсутствует в листинге"
+
+    result[0]['mark'].should eq(true), 
+      "Объявление '<a href='#{result['url']}'>#{title}</a>' не выделено"
   end
 end
 
 То %{в списке обычных объявлений присутствует объявление "$title"} do |title|
   on SearchResultsPage do |page|
-    result = @results.select{|result| result['title'] == title}[0]
-    result['premium'].should == false
+    all_results = @results.select{|result| result['title'] == title}
+    (all_results.size > 0).should eq(true), "Объявление '#{title}' отсутствует в листинге"
+
+    result[0]['premium'].should eq(false), 
+      "Объявление '<a href='#{result['url']}'>#{title}</a>' является премиумом"
   end
 end
 
@@ -345,8 +351,10 @@ end
 
 То %{в списке премиумов присутствует объявление "$title"} do |title|
   on SearchResultsPage do |page|
-    result = @results.select{|result| result['title'] == title}
-    result['premium'].should eq(true)
+    all_results = @results.select{|result| result['title'] == title}
+    (all_results.size > 0).should eq(true), "Объявление '#{title}' отсутствует в листинге"
+    result[0]['premium'].should eq(true), 
+      "Объявление '<a href='#{result['url']}'>#{title}</a>' не является премиумом"
   end
 end
 
