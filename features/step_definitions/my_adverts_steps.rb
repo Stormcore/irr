@@ -104,6 +104,12 @@ end
   end
 end
 
+То %{в деталях объявления отображается загруженное видео} do
+  on @category_page do |page|
+    page.should have_video, "Видео отсутствует"
+  end
+end
+
 Когда %{я редактирую данное объявление} do
   on MyAdvertsPage do |page|
     page.do_action(@ad_index, "Редактировать")

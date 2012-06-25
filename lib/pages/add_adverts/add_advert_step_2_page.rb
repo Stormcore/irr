@@ -10,6 +10,12 @@ class AddAdvertStep2 < AdDetailsPage
   text_field :f_text, :id => "f_text"
   file_field :upload, :id => "input-file-upload"
   unordered_list :uploaded_photos, :id => "photos"
+  link :add_video, :id => "showPopupVideoAdd"
+
+  div :videoPopup, :id => "popupVideoAdd"
+  text_field :videoContents, :id => "video_content"
+  link :uploadVideoButton, :id => "uploadVideoButton"
+  div :video_preview, :id => "videoContentBlock"
 
   link :save, :id => "submit-edit-form"
   link :next_step, :id => "next_link"
@@ -82,6 +88,23 @@ class AddAdvertStep2 < AdDetailsPage
     self.uploaded_photos_element.
          list_item_element(:id => "downloaded-photo-1").when_present(30).
          image_element.exists?
+  end
+
+  def load_video
+    self.add_video_element.when_present.click
+    Watir::Wait.until { self.videoPopup_element.exists? }
+
+    self.videoContents_element.when_present.value = <<RUTUBE_VIDEO
+      <OBJECT width="470" height="353">
+        <PARAM name="movie" value="http://video.rutube.ru/ba83acd900676ba99ef743541430f070"></PARAM>
+        <PARAM name="wmode" value="window"></PARAM>
+        <PARAM name="allowFullScreen" value="true"></PARAM>
+        <EMBED src="http://video.rutube.ru/ba83acd900676ba99ef743541430f070" type="application/x-shockwave-flash" wmode="window" width="470" height="353" allowFullScreen="true" ></EMBED>
+      </OBJECT>
+RUTUBE_VIDEO
+
+    self.uploadVideoButton
+    Watir::Wait.until {self.video_preview?}
   end
 
   def save

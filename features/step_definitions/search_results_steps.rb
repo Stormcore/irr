@@ -324,15 +324,13 @@ end
 end
 
 То %{у объявления "$title" отображается загруженная фотография} do |title|
+  # Не проверять картинки на *.prontosoft.by
+  if BASE_URL.include? 'prontosoft.by'
+    puts "Проверка пропущена - тестовый сайт"
+    next
+  end
   on SearchResultsPage do |page|
     result = @results.select{|result| result['title'] == title}[0]
-    result['thumbnail']
-  end
-end
-
-То %{в списке премиумов присутствует объявление "$title"} do |title|
-  on SearchResultsPage do |page|
-    result = @results.select{|result| result['title'] == title}
     thumbnail = result['thumbnail']
     thumbnail.should_not be_empty 
     thumbnail.should_not include "zaglushka"
@@ -342,6 +340,13 @@ end
     the_request = Net::HTTP::Get.new(url.path)
     the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
     the_response.code.should == 200.to_s
+  end
+end
+
+То %{в списке премиумов присутствует объявление "$title"} do |title|
+  on SearchResultsPage do |page|
+    result = @results.select{|result| result['title'] == title}
+    result['premium'].should eq(true)
   end
 end
 

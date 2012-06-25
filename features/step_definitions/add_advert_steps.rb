@@ -50,3 +50,9 @@ end
     page.load_photo
   end
 end
+
+Когда %{я загружаю видео на шаге 2} do
+  on AddAdvertStep2 do |page|
+    page.load_video
+  end
+end
