@@ -69,6 +69,7 @@ end
 end
 
 Допустим /^при создании премиума я выбираю "(.*?)"$/ do |premium_length|
+  debugger
   pending # express the regexp above with the code you wish you had
 end
 

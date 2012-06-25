@@ -34,12 +34,13 @@ class StargateNewPremiumDataPage
     row.cell_element(:index => 2).when_present.click
     # Появляется editor
     editor = self.panel_element.element.
-                  divs(:class => "x-editor").last.when_present
+                  divs(:class => "x-editor").select{|div| div.visible?}[0].
+                  when_present
     if name == "Регион"
       self.set_region_value(editor, value)
     else
       # Если в поле есть картинка - то это селект
-      if editor.when_present.img.exists?
+      if editor.img.exists?
         self.set_select_value(editor, value)
       else
         self.set_text_value(editor, value)
