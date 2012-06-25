@@ -91,3 +91,20 @@ end
     page.close_dialog_window
   end
 end
+
+Когда /^на БО я добавляю интернет\-партнеру пакет "(.*?)" для региона "(.*?)" со следующими параметрами:$/ do |arg1, arg2, table|
+  # table is a Cucumber::Ast::Table
+  pending # express the regexp above with the code you wish you had
+end
+
+Когда /^на БО я добавляю (\d+) поднятий на пакет "(.*?)"$/ do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+
+Когда /^на БО я добавляю (\d+) выделений на пакет "(.*?)"$/ do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+
+Когда /^на БО я удаляю пакет "(.*?)" у интернет\-партнера$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
+end

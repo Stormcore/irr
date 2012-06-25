@@ -213,3 +213,24 @@ end
     page.get_payments_number.should > 0
   end
 end
+
+То /^в ЛК ИП отсутствует пакет "(.*?)"$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Допустим /^в ЛК ИП значение поля "(.*?)" равно "(.*?)"$/ do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+
+То /^в ЛК ИП присутствует пакет "(.*?)"$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+То /^в ЛК ИП значение поля "(.*?)" равно (\d+)$/ do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+
+Допустим /^в ЛК ИП значение поля "(.*?)" равно (\d+)$/ do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+

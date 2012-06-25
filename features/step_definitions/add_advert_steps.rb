@@ -56,3 +56,7 @@ end
     page.load_video
   end
 end
+
+То /^на шаге (\d+) выводится сообщение об отсутствии пакета$/ do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
