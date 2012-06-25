@@ -112,7 +112,9 @@ end
 end
 
 Допустим %{в ЛК ИП я выбираю регион "$region"} do |region|
-  pending # express the regexp above with the code you wish you had
+  on MyAdvertsPage do |page|
+    page.select_region(region)
+  end
 end
 
 Допустим %{в ЛК ИП я выбираю пакет "$package"} do |package|

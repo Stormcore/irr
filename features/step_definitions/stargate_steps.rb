@@ -69,18 +69,25 @@ end
 end
 
 Допустим /^при создании премиума я выбираю "(.*?)"$/ do |premium_length|
-  debugger
-  pending # express the regexp above with the code you wish you had
+  on StargateNewPremiumDataPage do |page|
+    page.set_premium_period(premium_length)
+  end
 end
 
 Допустим /^я сохраняю введенный примиум$/ do
-  pending # express the regexp above with the code you wish you had
+  on StargateNewPremiumDataPage do |page|
+    page.save_premium
+  end
 end
 
 То /^на БО показано диалоговое окно "(.*?)"$/ do |dialog_title|
-  pending # express the regexp above with the code you wish you had
+  on StargateNewPremiumDataPage do |page|
+    page.has_dialog_window.should eq(true)
+  end
 end
 
 Когда /^я закрываю диалоговое окно$/ do
-  pending # express the regexp above with the code you wish you had
+  on StargateNewPremiumDataPage do |page|
+    page.close_dialog_window
+  end
 end

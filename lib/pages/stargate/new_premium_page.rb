@@ -24,6 +24,9 @@ class StargateNewPremiumDataPage
   include PageObject
 
   div :panel, :id => "propspanel"
+  div :premium, :xpath => "//div[@class='x-panel x-panel-noborder x-form-label-left']" + 
+                          "[.//legend/span[text()='Премиум объявления']]"
+  button :save, :text => "Сохранить"
 
   def set_value(name, value, type)
     # Нажимаем по полю и обрабатываем
@@ -82,5 +85,29 @@ class StargateNewPremiumDataPage
     combolist.div_element(:class => "x-combo-list-item").click
     # Нажимаем "Сохранить"
     edit_window.button_element(:text => "Сохранить").when_present.click
+  end
+
+  def set_premium_period(premium_length)
+    self.premium_element.div_element(
+      :xpath => "//div[@class='x-form-item '][./label[text()='#{premium_length}:']]").
+      div_element(:class => "x-form-radio-wrap-inner").
+      click
+  end
+
+  def save_premium
+    self.save_element.when_present.click
+  end
+
+  def has_dialog_window
+    Watir::Wait.until do
+      self.div_element(:xpath => 
+        "//div[@class='x-window x-window-plain x-window-dlg']" + 
+        "[.//span[text()='Запись добавлена']]").
+      exists?
+    end
+  end
+
+  def close_dialog_window
+    self.button_element(:text => "OK").when_present.click
   end
 end

@@ -4,6 +4,7 @@ class MyAdvertsPage
 
   table :ads, :id => "psellers"
   unordered_list :bookmarks, :class => "b-bookmarksAdv"
+  select_list :regions, :id => "regions"
 
   def wait_for_ads_loaded
     self.ads_element.when_present
@@ -51,5 +52,9 @@ class MyAdvertsPage
 
   def open_tab(name)
     self.bookmarks_element.link_element(:link_text => name).click
+  end
+
+  def select_region(name)
+    self.regions_element.when_present.select name
   end
 end
