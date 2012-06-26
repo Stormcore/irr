@@ -239,7 +239,23 @@ class AdDetailsPage
     end
   end
 
+  def has_seo_link_section?
+    begin
+      self.div_element(:class => "quicklySearch").
+        when_present
+    rescue Watir::Wait::TimeoutError => e
+      return false
+    end
+  end
+
   def select_link_with_text_from_quick_search_section(link)
+    begin
+      self.div_element(:class => "quicklySearch").
+        when_present
+    rescue Watir::Wait::TimeoutError => e
+      raise "Отсутствует секция 'Быстрый поиск'"
+    end
+
     begin
       self.div_element(:class => "quicklySearch").
         when_present.link_element(:text => link).click

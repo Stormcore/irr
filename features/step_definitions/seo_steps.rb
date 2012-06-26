@@ -1,5 +1,12 @@
 # encoding: utf-8
 
+Допустим /^на странице категории присутствует секция "Быстрый поиск"$/ do
+  on @category_page do |page|
+    page.has_seo_link_section?.should eq(true), 
+      "Отсутствует секция 'Быстрый поиск'"
+  end
+end
+
 Когда %{я выбираю ссылку "$seo_link" в секции "Быстрый поиск"} do |link_text|
   on @category_page do |page|
     page.select_link_with_text_from_quick_search_section(link_text)
