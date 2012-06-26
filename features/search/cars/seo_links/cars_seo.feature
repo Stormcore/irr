@@ -1,6 +1,5 @@
 # language:ru
 # encoding: utf-8
-@smoketest
 Функционал: Авто и мото - seo-линки
 
   Контекст:
