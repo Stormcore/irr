@@ -26,19 +26,19 @@ end
   end
 end
 
-То /^значение в поле "(\w+)" равно от (\d+)$/ do |field, min|
+Допустим /^значение в поле "(\w+)" равно от (\d+)$/ do |field, min|
   on @category_page do |page|
     page.get_selected_parameter(field)['min'].should == min
   end
 end
 
-То /^значение в поле "(\w+)" равно до (\d+)$/ do |field, max|
+Допустим /^значение в поле "(\w+)" равно до (\d+)$/ do |field, max|
   on @category_page do |page|
     page.get_selected_parameter(field)['max'].should == max
   end
 end
 
-То /^значение в поле "(.*?)" равно от (\d+) до (\d+)$/ do |field, min, max|
+Допустим /^значение в поле "(.*?)" равно от (\d+) до (\d+)$/ do |field, min, max|
   on @category_page do |page|
     page.get_selected_parameter(field)['min'].should == min
     page.get_selected_parameter(field)['max'].should == max
