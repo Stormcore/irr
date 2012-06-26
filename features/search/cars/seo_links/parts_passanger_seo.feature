@@ -14,7 +14,7 @@
   | модель     | часть ссылки |
   | Audi       | audi         |
   | BMW        | bmw          |
-  | Chrovlet   | chevrolet    |
+  | Cherovlet  | chevrolet    |
   | Citroen    | citroen      |
   | Daewoo     | daewoo       |
   | Fiat       | fiat         |
