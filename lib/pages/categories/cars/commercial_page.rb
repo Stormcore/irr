@@ -9,6 +9,7 @@ class CategoryCarsCommercialPage < AdDetailsPage
   irr_multi_select "Новый или подержанный", "used-or-new"
   irr_multi_select "Тип автобуса", "bus-type"
   irr_multi_select "Тип трансмиссии", "transmittion"
+  irr_multi_select "Тип техники", "special-type"
   irr_multi_select "Марка", "make"
   irr_multi_select "Модель", "model"
   irr_multi_select "Источник", "sourcefrom"

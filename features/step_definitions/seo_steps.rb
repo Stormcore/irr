@@ -26,13 +26,13 @@ end
   end
 end
 
-То /^значение в поле (\w+) равно от (\w+)$/ do |field, min|
+То /^значение в поле "(\w+)" равно от (\d+)$/ do |field, min|
   on @category_page do |page|
     page.get_selected_parameter(field)['min'].should == min
   end
 end
 
-То /^значение в поле (\w+) равно до (\w+)$/ do |field, max|
+То /^значение в поле "(\w+)" равно до (\d+)$/ do |field, max|
   on @category_page do |page|
     page.get_selected_parameter(field)['max'].should == max
   end
