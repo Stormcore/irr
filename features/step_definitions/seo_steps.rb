@@ -25,3 +25,22 @@ end
     page.get_selected_parameter(field).strip.should == expected
   end
 end
+
+То /^значение в поле (\w+) равно от (\w+)$/ do |field, min|
+  on @category_page do |page|
+    page.get_selected_parameter(field)['min'].should == min
+  end
+end
+
+То /^значение в поле (\w+) равно до (\w+)$/ do |field, max|
+  on @category_page do |page|
+    page.get_selected_parameter(field)['max'].should == max
+  end
+end
+
+То /^значение в поле "(.*?)" равно от (\d+) до (\d+)$/ do |field, min, max|
+  on @category_page do |page|
+    page.get_selected_parameter(field)['min'].should == min
+    page.get_selected_parameter(field)['max'].should == max
+  end
+end
