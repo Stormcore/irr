@@ -20,6 +20,9 @@ class AddAdvertStep2 < AdDetailsPage
   link :save, :id => "submit-edit-form"
   link :next_step, :id => "next_link"
 
+  div :no_package_message, id: "message-free-add"
+  div :has_package, class: "ico-messagesok"
+
   def set_region(region)
     self.region_spoiler_element.when_present.click
     self.region_element.when_present.visible?.should == true
@@ -74,7 +77,7 @@ class AddAdvertStep2 < AdDetailsPage
     end
   end
 
-  def load_photo()
+  def load_photo
     # Загружаем файл из URL
     Net::HTTP.start("userlogos.org") do |http|
       resp = http.get("/files/logos/x-b/irr.png")
@@ -109,6 +112,14 @@ RUTUBE_VIDEO
 
   def save
     self.save_element.when_present.click
+  end
+
+  def has_package_message
+    self.has_package_element.exists?
+  end
+
+  def get_package_message
+    self.no_package_message_element.when_present.text
   end
 
 end

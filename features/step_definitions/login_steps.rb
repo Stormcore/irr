@@ -30,7 +30,7 @@ end
 Когда %{я перехожу к окну логина} do
   steps %Q{* я выхожу из текущего пользователя}
   on MainPage do |page| 
-    page.login
+    page.login_element.when_present.click
   end
 end
 

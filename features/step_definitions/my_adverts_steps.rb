@@ -214,7 +214,7 @@ end
   end
 end
 
-То /^в ЛК ИП отсутствует пакет "(.*?)"$/ do |arg1|
+То /^в ЛК ИП отсутствует пакет "(.*?)"$/ do |package|
   steps %q{* я перехожу в список моих объявлений}
   on MyAdvertsPage do |page|
     page.packages_element.include?(package).should eq(false), 

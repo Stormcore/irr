@@ -114,7 +114,6 @@ end
 
 Допустим %{на БО я открываю форму редактирования пакета "$package"} do |package|
   on StargatePowersellerDetailsPage do |page|
-    page.open_tab("Пакеты")
     page.edit_package(package)
   end
 end
@@ -140,7 +139,6 @@ end
 
 Когда /^на БО я добавляю (\d+) поднятий на пакет "(.*?)"$/ do |num, package|
   steps %Q{
-    * на БО я открываю детали интернет-партнера
     * на БО я открываю форму редактирования пакета "#{package}"
   }
 
@@ -152,7 +150,6 @@ end
 
 Когда /^на БО я добавляю (\d+) выделений на пакет "(.*?)"$/ do |num, package|
   steps %Q{
-    * на БО я открываю детали интернет\-партнера
     * на БО я открываю форму редактирования пакета "#{package}"
   }
   on StargatePowersellerDetailsPackagesTabPage do |page|
@@ -161,14 +158,20 @@ end
   end
 end
 
-Когда /^на БО я удаляю пакет "(.*?)" у интернет\-партнера$/ do |package|
+Когда /^на БО я добавляю (\d+) просмотров на пакет "(.*?)"$/ do |num, package|
   steps %Q{
-    * на БО я открываю детали интернет\-партнера
+    * на БО я открываю форму редактирования пакета "#{package}"
   }
+  on StargatePowersellerDetailsPackagesTabPage do |page|
+    page.set_parameter(/Просмотров/, num)
+    page.save
+  end
+end
 
+Когда /^на БО я удаляю пакет "(.*?)" у интернет\-партнера$/ do |package|
   on StargatePowersellerDetailsPage do |page|
-    page.open_tab("Пакеты")
     page.delete_package(package)
+    page.save
   end
 end
 

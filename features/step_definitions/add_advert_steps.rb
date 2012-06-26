@@ -58,5 +58,15 @@ end
 end
 
 То /^на шаге (\d+) выводится сообщение об отсутствии пакета$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+  on AddAdvertStep2 do |page|
+    page.has_package_message.should eq(false), 
+        "Сообщение об отсутствии пакета не показано"
+
+    expected_message =<<PACKAGE_MESSAGE
+У Вас нет пакета для выполнения данного действия. Приобретите соответствующий пакет или зарегистрируйтесь как обычный пользователь, после чего Вам будет доступно данное действие.
+PACKAGE_MESSAGE
+
+    page.get_package_message.strip.should eq(expected_message.strip), 
+      "Неправильное сообщение об отсутствии пакета"
+  end
 end
