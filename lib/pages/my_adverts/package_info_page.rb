@@ -10,6 +10,6 @@ class PackageInfoPage
   end
 
   def select_package(name)
-    self.package_element.when_present.select(name)
+    self.package_element.when_present(10).select(name)
   end
 end

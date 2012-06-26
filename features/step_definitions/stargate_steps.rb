@@ -28,7 +28,7 @@ end
 
 То %{отображена основная страница БО} do
   on StargatePage do |page|
-    page.westpanel_element.when_present
+    page.westpanel_element.when_present(30)
   end
 end
 
@@ -92,19 +92,97 @@ end
   end
 end
 
-Когда /^на БО я добавляю интернет\-партнеру пакет "(.*?)" для региона "(.*?)" со следующими параметрами:$/ do |arg1, arg2, table|
-  # table is a Cucumber::Ast::Table
-  pending # express the regexp above with the code you wish you had
+Допустим %{на БО я ищу интернет-партнера} do
+  powerseller_login = get_login_and_password_for_role("Интернет-партнер")['login']
+  on StargatePowersellersPage do |page|
+    page.search_for_powerseller(powerseller_login)
+  end
 end
 
-Когда /^на БО я добавляю (\d+) поднятий на пакет "(.*?)"$/ do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Допустим %{на БО я открываю детали интернет-партнера} do
+  on StargatePowersellersPage do |page|
+    page.open_details_for_first_found_result
+  end
 end
 
-Когда /^на БО я добавляю (\d+) выделений на пакет "(.*?)"$/ do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Допустим %{на БО я открываю форму добавления пакета} do
+  on StargatePowersellerDetailsPage do |page|
+    page.open_tab("Пакеты")
+    page.add_package
+  end
 end
 
-Когда /^на БО я удаляю пакет "(.*?)" у интернет\-партнера$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+Допустим %{на БО я открываю форму редактирования пакета "$package"} do |package|
+  on StargatePowersellerDetailsPage do |page|
+    page.open_tab("Пакеты")
+    page.edit_package(package)
+  end
+end
+
+Когда /^на БО я добавляю интернет\-партнеру пакет "(.*?)" для региона "(.*?)" со следующими параметрами:$/ do |package, region, params|
+  steps %q{
+    * на БО я открываю детали интернет-партнера
+    * на БО я открываю форму добавления пакета
+  }
+  # Указываем детали пакета
+  on StargatePowersellerDetailsPackagesTabPage do |page|
+    page.set_combobox_value("Вид пакета", region)
+    page.set_combobox_value("Пакет", package)
+
+    # Заполняем параметры
+    params.hashes.each do |hash|
+      page.set_parameter(hash['поле'], hash['значение'])
+    end
+
+    page.save
+  end
+end
+
+Когда /^на БО я добавляю (\d+) поднятий на пакет "(.*?)"$/ do |num, package|
+  steps %Q{
+    * на БО я открываю детали интернет-партнера
+    * на БО я открываю форму редактирования пакета "#{package}"
+  }
+
+  on StargatePowersellerDetailsPackagesTabPage do |page|
+    page.set_parameter(/Поднятий/, num)
+    page.save
+  end
+end
+
+Когда /^на БО я добавляю (\d+) выделений на пакет "(.*?)"$/ do |num, package|
+  steps %Q{
+    * на БО я открываю детали интернет\-партнера
+    * на БО я открываю форму редактирования пакета "#{package}"
+  }
+  on StargatePowersellerDetailsPackagesTabPage do |page|
+    page.set_parameter(/Выделений/, num)
+    page.save
+  end
+end
+
+Когда /^на БО я удаляю пакет "(.*?)" у интернет\-партнера$/ do |package|
+  steps %Q{
+    * на БО я открываю детали интернет\-партнера
+  }
+
+  on StargatePowersellerDetailsPage do |page|
+    page.open_tab("Пакеты")
+    page.delete_package(package)
+  end
+end
+
+Когда /^на БО я удаляю все пакеты "(.*?)" у интернет\-партнера$/ do |package|
+  steps %Q{
+    * на БО я ищу интернет-партнера
+    * на БО я открываю детали интернет\-партнера
+  }
+  on StargatePowersellerDetailsPage do |page|
+    page.open_tab("Пакеты")
+    while page.has_package(package) do
+      page.delete_package(package)
+    end
+    page.save
+  end
+
 end

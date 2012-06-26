@@ -215,13 +215,23 @@ end
 end
 
 То /^в ЛК ИП отсутствует пакет "(.*?)"$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+  steps %q{* я перехожу в список моих объявлений}
+  on MyAdvertsPage do |page|
+    page.packages_element.include?(package).should eq(false), 
+      "Пакет '#{package}' не был удален"
+  end
 end
 
-Допустим /^в ЛК ИП значение поля "(.*?)" равно "(.*?)"$/ do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Допустим /^в ЛК ИП значение поля "(.*?)" равно "(.*?)"$/ do |field, expected|
+  on PackageInfoPage do |page|
+    page.get_field_value(field).should eq(expected)
+  end
 end
 
-То /^в ЛК ИП присутствует пакет "(.*?)"$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+То /^в ЛК ИП присутствует пакет "(.*?)"$/ do |package|
+  steps %q{* я перехожу в список моих объявлений}
+  on MyAdvertsPage do |page|
+    page.packages_element.include?(package).should eq(true), 
+      "Пакет '#{package}' не был добавлен"
+  end
 end

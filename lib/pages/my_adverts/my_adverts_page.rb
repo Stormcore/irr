@@ -5,6 +5,7 @@ class MyAdvertsPage
   table :ads, :id => "psellers"
   unordered_list :bookmarks, :class => "b-bookmarksAdv"
   select_list :regions, :id => "regions"
+  select_list :packages, :name => "package"
 
   def wait_for_ads_loaded
     self.ads_element.when_present
