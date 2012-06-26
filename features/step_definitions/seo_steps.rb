@@ -46,8 +46,6 @@ end
 end
 
 Допустим /^значение в поле "(.*?)" равно от (\d+) до (\d+)$/ do |field, min, max|
-  on @category_page do |page|
-    page.get_selected_parameter(field)['min'].should == min
-    page.get_selected_parameter(field)['max'].should == max
-  end
+  steps %q{* значение в поле "#{field}" равно от #{min}}
+  steps %q{* значение в поле "#{field}" равно до #{max}}
 end
