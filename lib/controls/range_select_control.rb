@@ -26,7 +26,7 @@ def irr_range_select(getter_name, identifier, setter_name = nil)
     begin
       self.expand_all_parameters
       min_result = self.text_field_element(:name => "#{identifier}[from]").value
-      max_result = self.text_field_element(:name => "#{identifier}[from]").value
+      max_result = self.text_field_element(:name => "#{identifier}[to]").value
       return {"min" => min_result, "max" => max_result}
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
