@@ -93,7 +93,7 @@
 
 # Отсутсвуют картинки в http://irr.ru/advert/160176782/
 # и http://irr.ru/advert/176161042/
-@bugs @bugmissing_photo
+@bugs @bug_missing_photo
   Сценарий: Фильтр по наличию фото
     Когда я делаю поиск по следующим параметрам:
       | parameter | value |

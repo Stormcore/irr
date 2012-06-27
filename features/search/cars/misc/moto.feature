@@ -70,7 +70,7 @@
        И в деталях первого объявления "Модель" равно "CBR 1000 RR Fireblade"
 
 # http://irr.ru/advert/186155100/ - 404
-@bugs @bugsmissing_photo
+@bugs @bug_missing_photo
   Сценарий: Фильтр по наличию фото
    Когда я делаю поиск по следующим параметрам:
       | parameter | value |
