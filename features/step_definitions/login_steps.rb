@@ -17,7 +17,7 @@ end
 
 Когда %{я вхожу под пользователем с ролью "$role"} do |role|
   on MainPage do |page|
-    @current_user_name = page.logged_in_element.when_present(10).text
+    @current_user_name = page.logged_in_element.text if page.logged_in?
   end
   expected_credentials = get_login_and_password_for_role(role)
   unless expected_credentials['username'] == @current_user_name

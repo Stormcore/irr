@@ -21,12 +21,6 @@
   end
 end
 
-Когда /^я перехожу на БО$/ do
-  steps %Q{
-    * я захожу на stargate
-  }
-end
-
 Допустим /^я делаю поиск по созданному объявлению$/ do
   on StargateAdSearchPage do |page|
     page.search_for_ad_by_id(@ad_id)

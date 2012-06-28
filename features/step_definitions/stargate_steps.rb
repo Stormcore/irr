@@ -1,9 +1,4 @@
 # encoding: utf-8
-
-Когда %{я перехожу на страницу stargate} do
-  visit StargateLoginPage
-end
-
 То %{показано сообщение "$message"} do |message|
   on StargateLoginPage do |page|
     begin
@@ -14,10 +9,9 @@ end
   end
 end
 
-Когда %{я захожу на stargate} do
+Когда %{я перехожу на БО} do
   credentials = get_login_and_password_for_role("Пользователь БО")
   steps %Q{
-    * я перехожу на страницу stargate
     * на stargate я вхожу под логином "#{credentials['login']}" и паролем "#{credentials['password']}"
     * отображена основная страница БО
   }
@@ -29,8 +23,8 @@ end
   end
 
   visit StargateLoginPage do |page|
-    page.login = login
-    page.password = password
+    page.login_element.when_present.value = login
+    page.password_element.when_present.value = password
     page.enter
   end
 end

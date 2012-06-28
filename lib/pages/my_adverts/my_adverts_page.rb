@@ -32,6 +32,7 @@ end
 class MyAdvertsRecordPage
   def initialize(element)
     @element = element
+    @actions_for_row = element.tr(xpath: "following-sibling::*")
   end
 
   def get_region
@@ -64,7 +65,6 @@ class MyAdvertsRecordPage
   end
 
   def do_action(action_name)
-    debugger
     @actions_for_row[0].a(text: action_name).when_present.click
   end
 

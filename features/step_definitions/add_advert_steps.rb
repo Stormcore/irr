@@ -43,6 +43,14 @@ end
   end
 end
 
+Когда %{я ввожу следующие данные на шаге 2:} do |page_params|
+    on AddAdvertStep2 do |page|
+    page_params.hashes.each do |hash|
+      page.set_parameter(hash)
+    end
+  end
+end
+
 Когда %{я сохраняю редактируемое объявление} do
   on AddAdvertStep2 do |page|
     page.save
