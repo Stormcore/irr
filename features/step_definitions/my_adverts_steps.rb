@@ -7,33 +7,27 @@ end
 
 Когда %{объявление с названием "$title" присутствует в списке} do |title|
   on MyAdvertsPage do |page|
-    @ad_index = page.get_ad_with_title(title)
-    @ad_index.should > 0
+    @ad_element = page.get_ad_with_title(title)
+    @ad_id = @ad_element.get_ad_id
   end
 end
 
 То %{у объявления указан регион "$region"} do |region|
-  on MyAdvertsPage do |page|
-    page.get_region(@ad_index).should == region
-  end
+  @ad_element.get_region.should == region
 end
 
 То %{у объявления указан город "$city"} do |city|
-  on MyAdvertsPage do |page|
-    page.get_city(@ad_index).should == city
-  end
+  @ad_element.get_city.should == city
 end
 
 То %{у объявления указана цена "$price" в $currency} do |price, currency|
-  on MyAdvertsPage do |page|
-    case currency
-    when "рублях"
-      page.get_price(@ad_index, "RUR").gsub(/руб./, '').should == price
-    when "долларах"
-      page.get_price(@ad_index, "USD").gsub(/\$/, '').should == price
-    when "евро"
-      page.get_price(@ad_index, "EUR").gsub(/€/, '').should == price
-    end
+  case currency
+  when "рублях"
+    @ad_element.get_price("RUR").gsub(/руб./, '').should == price
+  when "долларах"
+    @ad_element.get_price("USD").gsub(/\$/, '').should == price
+  when "евро"
+    @ad_element.get_price("EUR").gsub(/€/, '').should == price
   end
 end
 
@@ -42,25 +36,28 @@ end
     puts "Проверка пропущена - тестовый сайт"
     next
   end
-  on MyAdvertsPage do |page|
-    thumbnail = page.get_photo(@ad_index)
-    thumbnail.should_not be_nil
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
-  end
+  thumbnail = @ad_element.get_photo
+  thumbnail.should_not be_nil
+  
+  # Verify that  thumbnail url doesn't throw any error
+  url = URI.parse(thumbnail)
+  the_request = Net::HTTP::Get.new(url.path)
+  the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
+  the_response.code.should == 200.to_s
 end
 
+Допустим /^статус созданного объявления равен "(.*?)"$/ do |expected|
+  @ad_element.moderation_status.should == expected
+end
+
+Допустим /^дополнительный статус созданного объявления равен "(.*?)"$/ do |expected|
+  @ad_element.moderation_additional_status.should == expected
+end
 
 Когда %{я открываю детали этого объявления} do
-  on MyAdvertsPage do |page|
-    url = page.get_url_for_ad(@ad_index)
-    puts "Открываю объявление <a href=#{url}>#{url}</a>"
-    page.open_ad(@ad_index)
-  end
+  url = @ad_element.get_url_for_ad
+  puts "Открываю объявление <a href=#{url}>#{url}</a>"
+  @ad_element.open_ad
 end
 
 То %{на вкладке "Все" "$field" $operator "$expected"} do |field, operator, expected|
@@ -111,15 +108,11 @@ end
 end
 
 Когда %{я редактирую данное объявление} do
-  on MyAdvertsPage do |page|
-    page.do_action(@ad_index, "Редактировать")
-  end
+  @ad_element.do_action("Редактировать")
 end
 
 Допустим %{я поднимаю данное объявление} do
-  on MyAdvertsPage do |page|
-    page.do_action(@ad_index, "Поднять")
-  end
+  @ad_element.do_action("Поднять")
 
   on AdvertActionConfirmPage do |page|
     page.do_activate
@@ -127,9 +120,7 @@ end
 end
 
 Допустим %{я выделяю данное объявление} do
-  on MyAdvertsPage do |page|
-    page.do_action(@ad_index, "Выделить")
-  end
+  @ad_element.do_action("Выделить")
 
   on AdvertActionConfirmPage do |page|
     page.do_activate
@@ -137,9 +128,7 @@ end
 end
 
 Допустим %{я делаю данное объявление премиумом} do
-  on MyAdvertsPage do |page|
-    page.do_action(@ad_index, "Премиум")
-  end
+  @ad_element.do_action("Премиум")
 
   on AdvertActionConfirmPage do |page|
     page.do_activate
@@ -147,9 +136,7 @@ end
 end
 
 Допустим %{в ЛК ИП данное объявление выделено} do
-  on MyAdvertsPage do |page|
-    page.is_ad_highlighted(@ad_index).should == true
-  end
+  @ad_element.is_ad_highlighted.should == true
 end
 
 Допустим %{в ЛК ИП я выбираю регион "$region"} do |region|

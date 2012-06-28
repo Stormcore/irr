@@ -13,7 +13,7 @@ end
   select_class_for_category(long_category)
 end
 
-Когда %{я подаю объявление в категорию "$category"} do |long_category|
+Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
   steps %Q{* загружены параметры объявления для категории "#{long_category}"}
   on AddAdvertStep1 do |page|
     # сохраняем категории для дальнейшей проверки
@@ -31,7 +31,11 @@ end
   end
 end
 
-Когда %{я ввожу следующие данные на шаге 2:} do |page_params|
+Когда %{я подаю объявление в категорию "$category" с параметрами:} do |category, page_params|
+  steps %Q{
+    * я перехожу к подаче объявления
+    * я подаю объявление в категорию "#{category}"
+  }
   on AddAdvertStep2 do |page|
     page_params.hashes.each do |hash|
       page.set_parameter(hash)

@@ -9,11 +9,16 @@ end
 
 Когда %{я ввожу логин и пароль роли "$role"} do |role|
   credentials = get_login_and_password_for_role(role)
-  steps %Q{* я ввожу логин "#{credentials['login']}" и пароль "#{credentials['password']}"}
+  steps %Q{
+    * я ввожу логин "#{credentials['login']}" и пароль "#{credentials['password']}"
+  }
   @current_user_name = credentials['username']
 end
 
 Когда %{я вхожу под пользователем с ролью "$role"} do |role|
+  on MainPage do |page|
+    @current_user_name = page.logged_in_element.when_present(10).text
+  end
   expected_credentials = get_login_and_password_for_role(role)
   unless expected_credentials['username'] == @current_user_name
     steps %Q{* я перехожу к окну логина}

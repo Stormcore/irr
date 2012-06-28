@@ -16,7 +16,11 @@ end
 
 Когда %{я захожу на stargate} do
   credentials = get_login_and_password_for_role("Пользователь БО")
-  steps %Q{* на stargate я вхожу под логином "#{credentials['login']}" и паролем "#{credentials['password']}"}
+  steps %Q{
+    * я перехожу на страницу stargate
+    * на stargate я вхожу под логином "#{credentials['login']}" и паролем "#{credentials['password']}"
+    * отображена основная страница БО
+  }
 end
 
 Когда %{на stargate я вхожу под логином "$login" и паролем "$password"} do |login, password|
