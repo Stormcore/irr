@@ -197,7 +197,7 @@ end
 
 То %{в ЛК ИП на вкладке "Платежи" отображен список платежей} do
   on MyAdvertsPaymentsTabPage do |page|
-    page.get_payments_number.should > 0
+    page.get_payments_number.should >= 0
   end
 end
 
