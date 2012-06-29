@@ -65,11 +65,15 @@ class MyAdvertsRecordPage
   end
 
   def do_action(action_name)
-    @actions_for_row[0].a(text: action_name).when_present.click
+    begin
+      @actions_for_row[0].a(text: action_name).when_present.click
+    rescue Watir::Wait::TimeoutError => e
+      raise "Действие '#{action_name}' для пакета недоступно"
+    end
   end
 
   def is_ad_highlighted
-    @row.wd.attribute("class").include?("mark").should == true
+    @element.wd.attribute("class").include?("mark").should == true
   end
 
   def get_ad_id

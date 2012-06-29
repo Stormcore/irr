@@ -10,6 +10,10 @@ class PackageInfoPage
   end
 
   def select_package(name)
-    self.package_element.when_present(10).select(name)
+    begin
+      self.package_element.when_present(10).select(name)
+    rescue Watir::Wait::TimeoutError => e
+      puts "Переключатель пакетов отсутствует"
+    end
   end
 end
