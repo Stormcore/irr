@@ -28,7 +28,7 @@ class StargateNewPremiumDataPage
                           "[.//legend/span[text()='Премиум объявления']]"
   button :save, :text => "Сохранить"
 
-  def set_value(name, value, type)
+  def set_value(name, value)
     # Нажимаем по полю и обрабатываем
     row = self.panel_element.div_element(:class => "x-grid3-col-title", 
                                          :text => name).when_present.parent.parent

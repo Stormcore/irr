@@ -66,10 +66,18 @@ end
   on StargateNewPremiumDataPage do |page|
     table.hashes.each do |hash|
       puts "Устанавливаем значение #{hash['parameter']} = #{hash['value']}"
-      page.set_value(hash['parameter'], hash['value'], hash['type'])
+      page.set_value(hash['parameter'], hash['value'])
     end
   end
 end
+
+Допустим /^при создании премиума я указываю владельца пользователя с ролью "(.*?)"$/ do |role|
+  credentials = get_login_and_password_for_role(role)
+  on StargateNewPremiumDataPage do |page|
+    page.set_value("Владелец объявления", credentials['email'])
+  end
+end
+
 
 Допустим /^при создании премиума я выбираю "(.*?)"$/ do |premium_length|
   on StargateNewPremiumDataPage do |page|
