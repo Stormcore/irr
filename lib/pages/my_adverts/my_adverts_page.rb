@@ -7,6 +7,8 @@ class MyAdvertsPage
   select_list :regions, :id => "regions"
   select_list :packages, :name => "package"
 
+  link :delete_all, text: "Удалить все"
+
   def wait_for_ads_loaded
     self.ads_element.when_present
   end
@@ -29,8 +31,8 @@ class MyAdvertsPage
   end
 
   def delete_all_ads
-    debugger
-    delete_all_ads
+    self.delete_all
+    @browser.alert.ok
   end
 end
 
