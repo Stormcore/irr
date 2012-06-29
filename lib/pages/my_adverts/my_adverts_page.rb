@@ -31,8 +31,10 @@ class MyAdvertsPage
   end
 
   def delete_all_ads
-    self.delete_all
-    @browser.alert.ok
+    if self.delete_all?
+      self.delete_all
+      @browser.alert.ok
+    end
   end
 end
 
