@@ -204,8 +204,12 @@ end
 То /^в ЛК ИП отсутствует пакет "(.*?)"$/ do |package|
   steps %q{* я перехожу в список моих объявлений}
   on MyAdvertsPage do |page|
-    page.packages_element.include?(package).should eq(false), 
-      "Пакет '#{package}' не был удален"
+    if page.packages?
+      page.packages_element.include?(package).should eq(false), 
+        "Пакет '#{package}' не был удален"
+    else
+      puts "Переключателя пакетов не найдено"
+    end
   end
 end
 
