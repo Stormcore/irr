@@ -1,24 +1,12 @@
 # encoding: utf-8
 
 Когда /^у интернет\-партнера нет объявлений$/ do
-  # Ищем все объявления партнера
   steps %Q{
-    * я перехожу на БО
-    * на БО я перехожу в категорию "Объявления -> Найти объявления"
+    * открыта страница для региона "Россия"
+    * я вхожу под пользователем с ролью "Интернет-партнер"
+    * открыт список объявлений пользователя
+    * я удаляю все объявления ИП
   }
-  credentials = get_login_and_password_for_role("Интернет-партнер")
-  on StargateAdSearchPage do |page|
-    page.search_for_user_ads(credentials['email'])
-  end
-  # Удаляем все объявления
-  on StargateAdSearchResultsPage do |page|
-    page.get_results do |result|
-      unless page.is_deleted?(result)
-        page.open_menu(result)
-        page.menu_remove
-      end
-    end
-  end
 end
 
 Допустим /^я делаю поиск по созданному объявлению$/ do
