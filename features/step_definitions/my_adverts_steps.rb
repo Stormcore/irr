@@ -9,6 +9,13 @@ end
   on MyAdvertsPage do |page|
     @ad_element = page.get_ad_with_title(title)
     @ad_id = @ad_element.get_ad_id
+    puts "Найдено объявление <a href='#{@ad_element.get_url_for_ad}'>#{title}<a>, ID: #{@ad_id}"
+  end
+end
+
+Допустим %{я удаляю все объявления ИП} do
+  on MyAdvertsPage do |page|
+    page.delete_all_ads
   end
 end
 

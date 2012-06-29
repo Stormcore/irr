@@ -27,6 +27,11 @@ class MyAdvertsPage
   def select_region(name)
     self.regions_element.when_present.select name
   end
+
+  def delete_all_ads
+    debugger
+    delete_all_ads
+  end
 end
 
 class MyAdvertsRecordPage
