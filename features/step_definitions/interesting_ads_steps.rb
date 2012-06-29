@@ -21,7 +21,8 @@ end
 
 Когда %{в блоке "Интересные объявления" показаны объявления} do
   on InterestingAdsPage do |page|
-    page.interesting_ads_element.when_present.visible?.should == true
+    page.interesting_ads_element.when_present.visible?.should eq(true), 
+        "Отсутствует секция 'Интересные объявления'"
   end
 end
 
