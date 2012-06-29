@@ -44,12 +44,22 @@ end
 end
 
 Когда %{я ввожу следующие данные на шаге 2:} do |page_params|
-    on AddAdvertStep2 do |page|
+  on AddAdvertStep2 do |page|
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
   end
 end
+
+Допустим /^я ввожу следующие данные на шаге 2 в секции "(.*?)":$/ do |section, page_params|
+  on AddAdvertStep2 do |page|
+    page.ensure_section_is_visible(section)
+    page_params.hashes.each do |hash|
+      page.set_parameter(hash)
+    end
+  end
+end
+
 
 Когда %{я сохраняю редактируемое объявление} do
   on AddAdvertStep2 do |page|

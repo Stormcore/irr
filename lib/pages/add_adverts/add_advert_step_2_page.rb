@@ -53,8 +53,12 @@ class AddAdvertStep2 < AdDetailsPage
   def set_custom_parameter(hash)
     # Ищем ближайший контрол по hash['parameter']
     begin
-      label = self.div_element(:text => /#{hash['parameter']}/, :class => "lbl")
-      control = label.element.elements(:xpath => "following-sibling::*")[0]
+      label = self.div_element(text: /#{hash['parameter']}/, class: "lbl")
+      control = label.element.elements(xpath: "following-sibling::*")[0]
+      if (control.tag_name == 'div') and
+         (control.attribute_value("class") == "hid-o")
+         control = control.label
+      end
       set_value_for_custom(control, hash)
     rescue Watir::Exception::UnknownObjectException => e
       # Нет такого элемента - checkbox
@@ -63,6 +67,7 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def set_parameter(hash)
+    puts "Устанавливаем параметр #{hash['parameter']} = #{hash['value']}"
     case hash['parameter']
     when "Регион"
       self.set_region hash['value']
@@ -120,6 +125,12 @@ RUTUBE_VIDEO
 
   def get_package_message
     self.no_package_message_element.when_present.text
+  end
+
+  def ensure_section_is_visible(name)
+    if self.table_element.element.th(text: name).a.exists?
+      self.table_element.element.th(text: name).a.click
+    end
   end
 
 end

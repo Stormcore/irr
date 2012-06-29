@@ -91,6 +91,14 @@ end
   end
 end
 
+Допустим /^на вкладке "Все" присутствует "(.*?)"$/ do |field|
+  on @category_page do |page|
+    ad_page.get_parameter(parameter).should be_true, 
+      "Параметр '#{field}' не установлен"
+  end
+end
+
+
 То %{в деталях объявления отображается загруженная фотография} do
   if BASE_URL.include? 'prontosoft.by'
     puts "Проверка пропущена - тестовый сайт"
