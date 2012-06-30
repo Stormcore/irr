@@ -58,7 +58,7 @@ class AdDetailsPage
 
   def show_all_parameters
     # Open all params if present
-    self.show_all_params if self.show_all_params_element.when_present(10).exists?
+    self.show_all_params if self.show_all_params_element.visible?
   end
 
   def set_generic_parameter(hash)
@@ -135,9 +135,18 @@ class AdDetailsPage
   def get_generic_parameter(field)
     xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
     begin
-      self.cell_element(:xpath => xpath).when_present.text
+      result = self.cell_element(xpath: xpath).text
+      # Если результат пустой, то смотрим на вкладку allParams
+      raise Exception if result == ""
+      result
     rescue Exception => e
-      raise "Параметр '#{field}' не найден\n#{e}"
+      begin
+        self.show_all_parameters
+        xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{field}']]/td"
+        self.cell_element(xpath: xpath).text
+      rescue Exception => e
+        raise "Параметр '#{field}' не найден\n#{e}"
+      end
     end
   end
 

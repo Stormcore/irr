@@ -52,7 +52,10 @@ class AddAdvertStep2 < AdDetailsPage
 
   def set_custom_parameter(hash)
     # Ищем ближайший контрол по hash['parameter']
+    # Сначала checkbox
     begin
+      self.checkbox_element(xpath: "//label[contains(.,'#{hash['parameter']}')]/input").check
+    rescue Watir::Exception::UnknownObjectException => e
       label = self.div_element(text: /#{hash['parameter']}/, class: "lbl")
       control = label.element.elements(xpath: "following-sibling::*")[0]
       if (control.tag_name == 'div') and
@@ -60,9 +63,6 @@ class AddAdvertStep2 < AdDetailsPage
          control = control.label
       end
       set_value_for_custom(control, hash)
-    rescue Watir::Exception::UnknownObjectException => e
-      # Нет такого элемента - checkbox
-      self.checkbox_element(:xpath => "//label[contains(.,'#{hash['parameter']}')]/input").check
     end
   end
 

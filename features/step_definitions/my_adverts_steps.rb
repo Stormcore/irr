@@ -93,7 +93,7 @@ end
 
 Допустим /^на вкладке "Все" присутствует "(.*?)"$/ do |field|
   on @category_page do |page|
-    ad_page.get_parameter(parameter).should be_true, 
+    page.get_parameter(field).should be_true, 
       "Параметр '#{field}' не установлен"
   end
 end
