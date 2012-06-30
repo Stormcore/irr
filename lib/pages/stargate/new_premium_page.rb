@@ -11,8 +11,9 @@ class StargateNewPremiumPage
     begin
       self.root_element.
            div_element(:text => name, :class => "x-tree-node-el").
-          image_element(:class => "x-tree-elbow-plus").click
+          image_element(:class => "x-tree-ec-icon").click
     rescue Exception => e
+      puts "expand_category exception, #{e}"
     end
   end
 
