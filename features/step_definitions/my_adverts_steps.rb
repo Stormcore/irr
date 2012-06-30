@@ -68,7 +68,7 @@ end
 end
 
 То %{на вкладке "Все" "$field" $operator "$expected"} do |field, operator, expected|
-  on @category_page do |page|
+  on AdDetailsPage do |page|
     actual_value = page.get_parameter(field)
     case operator
     when "равно одному из"
@@ -92,9 +92,16 @@ end
 end
 
 Допустим /^на вкладке "Все" присутствует "(.*?)"$/ do |field|
-  on @category_page do |page|
+  on AdDetailsPage do |page|
     page.get_parameter(field).should be_true, 
       "Параметр '#{field}' не установлен"
+  end
+end
+
+Допустим /^адрес в объявлении равен "(.*?)"$/ do |expected|
+  on AdDetailsPage do |page|
+    page.get_address.should eq(expected), 
+      "Неправильный адрес в деталях объявления"
   end
 end
 
@@ -104,7 +111,7 @@ end
     puts "Проверка пропущена - тестовый сайт"
     next
   end
-  on @category_page do |page|
+  on AdDetailsPage do |page|
     thumbnail = page.get_photo
     thumbnail.should_not be_nil
     
@@ -117,7 +124,7 @@ end
 end
 
 То %{в деталях объявления отображается загруженное видео} do
-  on @category_page do |page|
+  on AdDetailsPage do |page|
     page.should have_video, "Видео отсутствует"
   end
 end

@@ -22,6 +22,7 @@ class AdDetailsPage
   # Показ параметров
   link :show_all_params, :id => "showAllParamsLink"
   div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
+  div :address, class: "b-adressAdv"
   div :photo, :class => "b-photo"
   div :video, :class => "b-video"
   link :show_all_text, :class => "showAll"
@@ -31,7 +32,11 @@ class AdDetailsPage
   table :all_params, :id => "allParams"
   div :ad_content, :class => "b-content"
 
-  # Все параметры
+  def get_address
+    self.address_element.when_present.text
+  end
+
+
   def singleselect(element, value)
     begin
       element.div_element(:class => "controlSelectS").when_present.click

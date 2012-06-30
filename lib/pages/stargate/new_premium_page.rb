@@ -8,9 +8,12 @@ class StargateNewPremiumPage
   list_item :root, :xpath => "//li[.//span[text()='Категории каталога']]"
 
   def expand_category(name)
-    self.root_element.
-         div_element(:text => name, :class => "x-tree-node-el").
-         image_element(:class => "x-tree-elbow-plus").click
+    begin
+      self.root_element.
+           div_element(:text => name, :class => "x-tree-node-el").
+          image_element(:class => "x-tree-elbow-plus").click
+    rescue Exception => e
+    end
   end
 
   def double_click(name)
@@ -46,7 +49,11 @@ class StargateNewPremiumDataPage
       if editor.img.exists?
         self.set_select_value(editor, value)
       else
-        self.set_text_value(editor, value)
+        if editor.select.exists?
+          self.set_checkbox_value(editor, value)
+        else
+          self.set_text_value(editor, value)
+        end
       end
     end
   end
@@ -67,6 +74,10 @@ class StargateNewPremiumDataPage
     rescue Watir::Exception::UnknownObjectException => e
       editor.textarea.value = value
     end
+  end
+
+  def set_checkbox_value(editor, value)
+    editor.select.select value
   end
 
   def set_region_value(editor, value)
