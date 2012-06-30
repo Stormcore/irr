@@ -24,27 +24,27 @@ end
   when "Москва"
     @url_prefix = BASE_URL
     @url_suffix = '/moskva-gorod/'
-    @browser.goto(@url_prefix)
+    @browser.goto(@url_prefix+@url_suffix)
   when "Россия"
     @url_prefix = BASE_URL.gsub("http://", "http://russia.")
     @url_suffix = ''
-    @browser.goto(@url_prefix)
+    @browser.goto(@url_prefix+@url_suffix)
   when "Москва и область"
     @url_prefix = BASE_URL
     @url_suffix = ''
-    @browser.goto(@url_prefix)
+    @browser.goto(@url_prefix+@url_suffix)
   when "Усть-Алтан"
     @url_prefix = BASE_URL.gsub("http://", "http://ust-orda.")
     @url_suffix = '/irkutskaya-obl-ust-ordyinskiy-buryatskiy-kray/osinskiy-r_n/ust-altan-selo/'
-    @browser.goto(@url_prefix)
+    @browser.goto(@url_prefix+@url_suffix)
   when "Астана"
     @url_prefix = BASE_URL.gsub("http://", "http://astana.")
     @url_suffix = ''
-    @browser.goto(@url_prefix)
+    @browser.goto(@url_prefix+@url_suffix)
   when "Казахстан"
     @url_prefix = BASE_URL
     @url_suffix = ''
-    @browser.goto(@url_prefix)
+    @browser.goto(@url_prefix+@url_suffix)
   else
     @url_prefix = BASE_URL
     steps %Q{

@@ -5,6 +5,9 @@ class AddAdvertStep2 < AdDetailsPage
   link :region_spoiler, :name => "region_link"
   select_list :region, :id => "fr-region"
   text_field  :address_city, :name => "address_city"
+  text_field  :address_street, :name => "mapStreetVisible"
+  text_field  :address_house, :name => "mapHouseNr"
+  text_field  :address_metro, :name => "metro"
 
   text_field :f_title, :id => "f_title"
   text_field :f_text, :id => "f_text"
@@ -29,9 +32,28 @@ class AddAdvertStep2 < AdDetailsPage
     self.region = region
   end
 
+  def set_street(street)
+    self.address_street = street
+    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                                 "[contains(@style,'display: block')]//a").when_present.click
+  end
+
+  def set_house(house)
+    self.address_house = house
+    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                                 "[contains(@style,'display: block')]//a").when_present.click
+  end
+
+  def set_metro(metro)
+    self.address_metro = metro
+    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                                 "[contains(@style,'display: block')]//a").when_present.click
+  end
+
   def set_city(city)
     self.address_city = city
-    self.link_element(:class => "ui-corner-all").when_present.click
+    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                                 "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_value_for_custom(control, hash)
@@ -73,6 +95,12 @@ class AddAdvertStep2 < AdDetailsPage
       self.set_region hash['value']
     when "Населённый пункт"
       self.set_city hash['value']
+    when "Улица"
+      self.set_street hash['value']
+    when "Дом"
+      self.set_house hash['value']
+    when "Ближайшее метро"
+      self.set_metro hash['value']
     when "Заголовок"
       self.f_title = hash['value']
     when "Текст"
