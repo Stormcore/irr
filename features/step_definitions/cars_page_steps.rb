@@ -96,8 +96,8 @@ end
 
 
 def marks_and_models_soft_assert
+  validation_errors = Hash.new
   begin
-    validation_errors = []
     on CategoryCarsPage do |page|
       page.get_all_marks_or_models.each do |mark_text|
         page.open_mark_or_model(mark_text)
