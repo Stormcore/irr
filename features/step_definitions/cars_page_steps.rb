@@ -50,6 +50,7 @@ end
   marks_and_models_soft_assert do |mark_name, model_name|
     @mark_name = mark_name
     @model_name = model_name
+    puts "Running steps"
     steps stepss
   end
 end
@@ -93,11 +94,39 @@ def check_http_code(response, description)
     "получен #{actual_result_code}"
 end
 
+Допустим /^я перехожу по ссылке для (марки|модели) "(.*?)"$/ do |other, name|
+  on CategoryCarsPage do |page|
+    page.open_mark_or_model(name)
+  end
+end
+
+Когда /^заполнена таблица марок и моделей$/ do
+  examples = []
+  #examples << "  | Audi  | A6     |"
+  #examples << "  | BMW  | Z4     |"
+  on CategoryCarsPage do |page|
+    page.get_all_marks_or_models.each do |mark_text|
+      page.open_mark_or_model(mark_text)
+      on CategoryCarsPage do |page1|
+        page1.get_all_marks_or_models.each do |model_text|
+          examples << "  | #{mark_text} | #{model_text} |"
+        end
+      end
+      @browser.back
+    end
+  end
+
+  # заменяем examples в текущем сценарии
+  scenario_path = File.dirname(__FILE__)+'/../search/cars/popular_marks.feature'
+  File.open(scenario_path, "a") do |file|
+    file.puts examples.join("\n")
+  end
+end
 
 
 def marks_and_models_soft_assert
-  validation_errors = Hash.new
   begin
+    validation_errors = []
     on CategoryCarsPage do |page|
       page.get_all_marks_or_models.each do |mark_text|
         page.open_mark_or_model(mark_text)
@@ -113,7 +142,7 @@ def marks_and_models_soft_assert
     end
   rescue Exception => error
     mark_description = "<a href='#{@browser.url}'>#{@mark_name} #{@model_name}</a>"
-    validation_errors[mark_description] = error.message
+    @validation_errors[mark_description] = error.message
   end
   if !validation_errors.empty?
     output_html_formatted_messages(validation_errors)
