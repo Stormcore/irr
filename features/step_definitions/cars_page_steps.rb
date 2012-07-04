@@ -112,7 +112,7 @@ def marks_and_models_soft_assert
         @browser.back
       end
     end
-  rescue RSpec::Expectations::ExpectationNotMetError => error
+  rescue Exception => error
     mark_description = "<a href='#{@browser.url}'>#{@mark_name} #{@model_name}</a>"
     @validation_errors[mark_description] = error.message
   end
