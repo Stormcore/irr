@@ -11,11 +11,23 @@ class CategoryCarsPage < AdDetailsPage
   unordered_list :dealers, :xpath => "//div[@class='b-blockInf b-dillers']/div[@class='b-body']/ul"
   link :all_dealers, :xpath => "//div[@class='b-blockInf b-dillers']/div[@class='b-body']/div[@class='b-bottom']/a"
 
+  # Популярные марки
+  div :popular_marks, class: "b-popularMark"
+
   # Параметры поиска
   irr_range_select "Год выпуска", "car-year"
   irr_multi_select "Марка", "make"
   irr_multi_select "Модель", "model"
   irr_multi_select "Тип кузова", "bodytype"
+
+  def get_all_marks_or_models
+    self.popular_marks_element.when_present.div_element(id: "short_items_list").
+         element.as.collect{|link| link.text}
+  end
+
+  def open_mark_or_model(name)
+    self.link_element(text: name).click
+  end
 
 end
 

@@ -46,6 +46,27 @@ end
   end
 end
 
+То %{для каждой марки и модели я повторяю следующие шаги:} do |stepss|
+  marks_and_models_soft_assert do |mark_name, model_name|
+    @mark_name = mark_name
+    @model_name = model_name
+    puts "Running steps"
+    steps stepss
+  end
+end
+
+То %{в поле "Марка" выбрана корректная марка} do
+  steps %Q{* в поле "Марка" выбраны следующие значения:
+             | value        |
+             | #{@mark_name} |}
+end
+
+То %{в поле "Модель" выбрана корректная модель} do
+  steps %Q{* в поле "Модель" выбраны следующие значения:
+             | value         |
+             | #{@model_name} |}
+end
+
 def fetch(url)
   uri = URI.parse(url)
   req = Net::HTTP::Get.new(uri.path)
@@ -71,6 +92,34 @@ def check_http_code(response, description)
     description + ", " +
     "ожидаются HTTP коды #{expected_result_codes}, " +
     "получен #{actual_result_code}"
+end
+
+
+
+def marks_and_models_soft_assert
+  begin
+    validation_errors = []
+    on CategoryCarsPage do |page|
+      page.get_all_marks_or_models.each do |mark_text|
+        page.open_mark_or_model(mark_text)
+        on CategoryCarsPage do |page1|
+          page1.get_all_marks_or_models.each do |model_text|
+            page.open_mark_or_model(model_text)
+            yield mark_text, model_text
+            @browser.back
+          end
+        end
+        @browser.back
+      end
+    end
+  rescue RSpec::Expectations::ExpectationNotMetError => error
+    mark_description = "<a href='#{@browser.url}'>#{@mark_name} #{@model_name}</a>"
+    @validation_errors[mark_description] = error.message
+  end
+  if !validation_errors.empty?
+    output_html_formatted_messages(validation_errors)
+    raise "#{description}"
+  end
 end
 
 def dealer_info_soft_assert
