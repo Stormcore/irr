@@ -50,7 +50,6 @@ end
   marks_and_models_soft_assert do |mark_name, model_name|
     @mark_name = mark_name
     @model_name = model_name
-    puts "Running steps"
     steps stepss
   end
 end
@@ -114,7 +113,7 @@ def marks_and_models_soft_assert
     end
   rescue Exception => error
     mark_description = "<a href='#{@browser.url}'>#{@mark_name} #{@model_name}</a>"
-    @validation_errors[mark_description] = error.message
+    validation_errors[mark_description] = error.message
   end
   if !validation_errors.empty?
     output_html_formatted_messages(validation_errors)
