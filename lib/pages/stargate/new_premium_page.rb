@@ -94,7 +94,7 @@ class StargateNewPremiumDataPage
     row.text_field_element.value = value
     # Подверждаем выбор
     combolist = self.div_element(:class => "x-combo-list").when_present
-    combolist.div_element(:class => "x-combo-list-item").click
+    combolist.div_element(:class => "x-combo-list-item").when_present.click
     # Нажимаем "Сохранить"
     edit_window.button_element(:text => "Сохранить").when_present.click
   end
