@@ -34,6 +34,7 @@ end
 
 Когда %{я перехожу к окну логина} do
   steps %Q{* я выхожу из текущего пользователя}
+  @browser.goto(@url_prefix+@url_suffix)
   on MainPage do |page| 
     page.login_element.when_present.click
   end
