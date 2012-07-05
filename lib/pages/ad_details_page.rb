@@ -273,7 +273,7 @@ class AdDetailsPage
 
   def switch_to_tab(name)
     self.div_element(class: "wrBookmarks").
-      when_present.list_item_element(class: name).click
+      when_present.link_element(text: name).click
   end
 
   def get_active_tab
