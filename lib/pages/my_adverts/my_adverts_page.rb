@@ -10,7 +10,11 @@ class MyAdvertsPage
   link :delete_all, text: "Удалить все"
 
   def wait_for_ads_loaded
-    self.ads_element.when_present
+    begin
+      self.ads_element.when_present(30)
+    rescue Watir::Wait::TimeoutError => e
+      raise "ЛК ИП не была загружена за ожидаемое время"
+    end
   end
 
   def get_ad_with_title(title)
