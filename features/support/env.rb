@@ -97,10 +97,10 @@ After do |scenario|
   screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
   if scenario.failed?
     begin
+      puts "Страница <a href='#{@browser.url}'>#{@browser.url}</a>"
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
     rescue
-      puts "Stopping the suite"
       Cucumber.wants_to_quit = true
     end
   end
