@@ -132,6 +132,12 @@ end
   end
 end
 
+Допустим %{на странице объявления я открываю вкладку "$section"} do |section|
+  on AdDetailsPage do |page|
+    page.switch_to_tab section
+  end
+end
+
 Допустим %{на странице объявления открыта карта} do
   on AdDetailsPage do |page|
     page.map_displayed.should == true

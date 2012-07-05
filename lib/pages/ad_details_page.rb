@@ -271,6 +271,11 @@ class AdDetailsPage
     end
   end
 
+  def switch_to_tab(name)
+    self.div_element(class: "wrBookmarks").
+      when_present.list_item_element(class: name).click
+  end
+
   def get_active_tab
     self.div_element(:class => "wrBookmarks").
       when_present.list_item_element(:class => "act").text
