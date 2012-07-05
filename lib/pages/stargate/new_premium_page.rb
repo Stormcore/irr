@@ -74,6 +74,8 @@ class StargateNewPremiumDataPage
       editor.text_field.value = value
     rescue Watir::Exception::UnknownObjectException => e
       editor.textarea.value = value
+      # Закрываем textarea, потому что она мешает следующим полям
+      editor.textarea.send_keys :tab
     end
   end
 
