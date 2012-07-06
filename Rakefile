@@ -113,7 +113,7 @@ end
 Cucumber::Rake::Task.new(:advert_submit_no_rerun) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                       "-r features",
-                      "-t ~@wip -t ~@bugs -t @advert_submit @advert_check",
+                      "-t ~@wip -t ~@bugs -t @advert_submit, @advert_check",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
