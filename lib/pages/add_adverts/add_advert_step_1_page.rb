@@ -9,6 +9,11 @@ class AddAdvertStep1
   end
 
   def select_item_from_category(category_i, item_text)
-    self.link_element(:xpath => "//li[@id='section_#{category_i}']//a[.='#{item_text}']").when_present.click
+    li = self.list_item_element(id: "section_#{category_i}")
+    a = li.link_elements(href: "#").select do |a| 
+      UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(item_text)
+    end
+    raise "Категория '#{item_text}' не найдена" unless a.size > 0
+    a[0].click
   end
 end

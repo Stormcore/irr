@@ -8,6 +8,8 @@ class AddAdvertStep2 < AdDetailsPage
   text_field  :address_street, :name => "mapStreetVisible"
   text_field  :address_house, :name => "mapHouseNr"
   text_field  :address_metro, :name => "metro"
+  text_field  :address_sosshe, :name => "sosshe"
+  select_list :rent_period, :name => "rent_period"
 
   text_field :f_title, :id => "f_title"
   text_field :f_text, :id => "f_text"
@@ -34,6 +36,12 @@ class AddAdvertStep2 < AdDetailsPage
 
   def set_street(street)
     self.address_street = street
+    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                                 "[contains(@style,'display: block')]//a").when_present.click
+  end
+
+  def set_shosse(shosse)
+    self.address_shosse = shosse
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
@@ -103,6 +111,8 @@ class AddAdvertStep2 < AdDetailsPage
       self.set_metro hash['value']
     when "Заголовок"
       self.f_title = hash['value']
+    when "Срок сдачи"
+      self.rent_period = hash['value']
     when "Текст"
       self.f_text = hash['value']
     else

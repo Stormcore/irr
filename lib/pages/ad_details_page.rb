@@ -272,8 +272,10 @@ class AdDetailsPage
   end
 
   def switch_to_tab(name)
-    self.div_element(class: "wrBookmarks").
-      when_present.link_element(text: name).click
+    map_tab = self.div_element(class: "wrBookmarks").
+                   when_present.link_element(text: name)
+    raise "Отсутствует вкладку 'На карту'" unless map_tab.exists?
+    map_tab.click
   end
 
   def get_active_tab
