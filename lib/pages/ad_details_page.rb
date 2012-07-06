@@ -248,6 +248,10 @@ class AdDetailsPage
       else
         get_custom_parameter(field)
       end
+    when "Возраст"
+      get_custom_parameter("Возраст").split[0].to_i
+    when "Лет/мес."
+      get_custom_parameter("Возраст").split[1]
     else
       get_custom_parameter(field)
     end
