@@ -92,13 +92,21 @@ end
 #  raise js_errors unless js_errors.empty?
 #end
 
+# Записываем изменения URL
+AfterStep do |scenario|
+  unless @last_step == @browser.url
+    puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>"
+  end
+  @last_step = @browser.url
+end
+
 After do |scenario|
   Dir::mkdir('screenshots') if not File.directory?('screenshots')
   screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
   if scenario.failed?
     begin
       @browser.driver.save_screenshot(screenshot)
-      embed screenshot, 'image/png', @browser.url
+      embed screenshot, 'image/png'
     rescue
       Cucumber.wants_to_quit = true
     end

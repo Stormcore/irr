@@ -35,9 +35,10 @@ class MainPage
   end
   
   def open_my_adverts
-    @browser.goto BASE_URL+"/psellerAdverts/"
-    #self.personal_cabinet_element.when_present.click
-    #self.adverts_my_element.when_present.click
+    #self.personal_cabinet_element.when_visible.click
+    #self.adverts_profile.when_visible.click
+    self.personal_cabinet_element.when_present.click
+    self.adverts_my_element.when_present.click
   end
   
   def open_favourite_adverts
