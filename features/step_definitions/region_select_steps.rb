@@ -37,6 +37,10 @@ end
     @url_prefix = BASE_URL.gsub("http://", "http://ust-orda.")
     @url_suffix = '/irkutskaya-obl-ust-ordyinskiy-buryatskiy-kray/osinskiy-r_n/ust-altan-selo/'
     @browser.goto(@url_prefix+@url_suffix)
+  when "Пушкино"
+    @url_prefix = BASE_URL
+    @url_suffix = '/moskovskaya-obl/pushkinskiy-r_n/pushkino-gorod/'
+    @browser.goto(@url_prefix+@url_suffix)
   when "Астана"
     @url_prefix = BASE_URL.gsub("http://", "http://astana.")
     @url_suffix = ''
@@ -51,9 +55,6 @@ end
       Given открыта главная страница
         And я выбираю страну "Популярные города"
         And я выбираю регион "#{region}"
-        And в окне выбора региона в статусбаре показан "#{region}"
-        And в окне выбора региона нажать OK
-        And на главной странице показан регион "#{region}"
     }
   end
 end
@@ -63,6 +64,5 @@ end
     Given открыта главная страница
       And я выбираю страну "Популярные города"
       And я выбираю регион "#{region}"
-      And в окне выбора региона нажать OK
   }
 end

@@ -12,11 +12,16 @@ class RegionSelectPage
 
   link :ok, xpath: "//div[@class='button-style btn-a']/a"
 
+  text_field :search, class: "ui-autocomplete-input"
+  div :suggests, class: "b-searchRegion"
+
   def select_country(country)
     self.countries_element.link_element(link_text: country).click
   end
 
   def select_region(region)
-    self.regions_element.link_element(link_text: region).click
+    #self.regions_element.link_element(link_text: region).click
+    self.search = region
+    self.suggests_element.when_present.link_element.click
   end
 end
