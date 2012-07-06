@@ -3,15 +3,15 @@
 class RealtyIrrRuStoriesPage
   include PageObject
 
-  div :section, :xpath => "//div[./div[@class='s-title']" +
+  div :section, xpath: "//div[./div[@class='s-title']" +
                           "[.//a[text()='Статьи']]]"
   
   link :all_stories do |page|
-    page.section_element.link_element(:text => "Все статьи")
+    page.section_element.link_element(text: "Все статьи")
   end
 
   def get_stories_items
-    self.section_element.element.divs(:class => "wr-b-News")
+    self.section_element.element.divs(class: "wr-b-News")
   end
 
   def story_item_has_link(element)
@@ -28,10 +28,10 @@ class RealtyIrrRuStoriesPage
 end
 
 class AutoIrrRuStoriesPage < RealtyIrrRuStoriesPage
-  div :section, :xpath => "//div[./div[@class='s-title']" +
+  div :section, xpath: "//div[./div[@class='s-title']" +
                           "[.//strong[text()='Статьи']]]"
 
   def get_stories_items
-    self.section_element.element.divs(:class => /float/)
+    self.section_element.element.divs(class: /float/)
   end
 end

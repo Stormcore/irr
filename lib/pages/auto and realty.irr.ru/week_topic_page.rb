@@ -4,7 +4,7 @@ class RealtyIrrRuWeekTopicPage
   include PageObject
 
   div :section do |page|
-    page.link_element(:link_text => "Тема недели").parent.parent.parent
+    page.link_element(link_text: "Тема недели").parent.parent.parent
   end
   image :topic_picture do |page|
     page.section_element.when_present.image_element

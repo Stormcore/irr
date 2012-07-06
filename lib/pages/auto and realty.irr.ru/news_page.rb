@@ -3,11 +3,11 @@
 class RealtyIrrRuNewsPage
   include PageObject
 
-  div :section, :xpath => "//div[./div[@class='s-title']" +
+  div :section, xpath: "//div[./div[@class='s-title']" +
                           "[.//a[text()='Новости']]]"
   
   link :all_news do |page|
-    page.section_element.link_element(:text => "Все новости")
+    page.section_element.link_element(text: "Все новости")
   end
 
   def get_news_items
@@ -21,11 +21,11 @@ end
 
 class AutoIrrRuNewsPage < RealtyIrrRuNewsPage
   
-  div :section, :xpath => "//div[./div[@class='h1']" +
+  div :section, xpath: "//div[./div[@class='h1']" +
                           "[.//a[text()='Новости']]]"
 
   link :all_news do |page|
-    page.section_element.link_element(:text => "Новости")
+    page.section_element.link_element(text: "Новости")
   end
 
   def get_news_items
