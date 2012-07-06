@@ -9,7 +9,7 @@ module CityWithMetro
   irr_multi_select "Линия метро",   "address_metro_lane"
   irr_multi_select "Станция метро", "metro"
   irr_text_field   "До метро",      "distance"
-  span :peshkom, :xpath => "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
+  span :peshkom, xpath: "//div[@class='b-adressAdv']/div[@class='txt']/span[@class='gray']"
 
   def set_metro_parameter(hash)
     setter_functions = CityWithMetro.instance_variable_get(:@setter_functions)

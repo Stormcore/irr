@@ -2,10 +2,10 @@
 class MyAdvertsPage
   include PageObject
 
-  table :ads, :id => "psellers"
-  unordered_list :bookmarks, :class => "b-bookmarksAdv"
-  select_list :regions, :id => "regions"
-  select_list :packages, :name => "package"
+  table :ads, id: "psellers"
+  unordered_list :bookmarks, class: "b-bookmarksAdv"
+  select_list :regions, id: "regions"
+  select_list :packages, name: "package"
 
   link :delete_all, text: "Удалить все"
 
@@ -27,7 +27,7 @@ class MyAdvertsPage
   end
 
   def open_tab(name)
-    self.bookmarks_element.link_element(:link_text => name).click
+    self.bookmarks_element.link_element(link_text: name).click
   end
 
   def select_region(name)

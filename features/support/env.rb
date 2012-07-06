@@ -45,15 +45,15 @@ def start_browser
     profile['plugin.click_to_play'] = true unless ENABLE_FLASH
     profile.add_extension "features/support/JSErrorCollector.xpi"
     profile.add_extension "features/support/flashblock.xpi" unless ENABLE_FLASH
-    browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client)
-    
+    browser = Watir::Browser.new(DRIVER, profile: profile, http_client: client)
+
   when :chrome
     puts "Starting chrome"
     client = Selenium::WebDriver::Remote::Http::Persistent.new
     client.timeout = 60
     profile = Selenium::WebDriver::Chrome::Profile.new
     switches  = %w[--bwsi --disable-translate]
-    browser = Watir::Browser.new(DRIVER, :profile => profile, :http_client => client, :switches => switches)
+    browser = Watir::Browser.new(DRIVER, profile: profile, http_client: client, switches: switches)
   end
   return browser
 end
@@ -77,7 +77,7 @@ end
 Before do |scenario|
   browser.cookies.clear if browser
   @browser = browser
-  
+
   # Сохраняем экземпляр сценария
   @sc = scenario
 end
@@ -107,7 +107,7 @@ After do |scenario|
 end
 
 if(FAIL_FAST)
-  After do |s| 
+  After do |s|
     Cucumber.wants_to_quit = true if s.failed?
   end
 end

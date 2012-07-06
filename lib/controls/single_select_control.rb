@@ -16,7 +16,7 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
     
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
-      self.cell_element(:xpath => xpath).when_present(10).text
+      self.cell_element(xpath: xpath).when_present(10).text
     rescue Exception => e
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
@@ -26,9 +26,9 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
   define_method("#{function_name}_selected") do |hash|
     begin
       self.expand_all_parameters
-      element.div_element(:class => "controlSelectS").when_present(10).click
+      element.div_element(class: "controlSelectS").when_present(10).click
       debugger
-      element.element.div(:text => hash['value'].strip).attribute("class") == "act"
+      element.element.div(text: hash['value'].strip).attribute("class") == "act"
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
     end
@@ -39,10 +39,10 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
   define_method("#{function_name}=") do |hash|
     begin
       self.expand_all_parameters
-      element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      element = self.div_element(xpath: "//div[@data-item-name='#{identifier}']")
       element.when_present.visible?
-      element.div_element(:class => "controlSelectS").when_present(10).click
-      element.element.div(:text => hash['value'].strip).when_present(10).click
+      element.div_element(class: "controlSelectS").when_present(10).click
+      element.element.div(text: hash['value'].strip).when_present(10).click
     rescue Exception => e
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end

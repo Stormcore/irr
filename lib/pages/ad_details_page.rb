@@ -8,29 +8,29 @@ class AdDetailsPage
   #Dir["#{File.dirname(__FILE__)}/../../../control/**/*_control.rb"].each {|r| load r }
 
   # Настройка параметров
-  link :expand_extended_more, :class => "expand_extended_more"
-  text_field :keywords, :xpath => "//form[@id='filter']//input[@name='keywords']"
-  text_field :price_from, :name => "price[from]"
-  text_field :price_to, :name => "price[to]"
-  div :currency, :xpath => "//div[@data-item-name='price']"
-  checkbox :hasimages, :name => "hasimages"
-  checkbox :hasvideo, :name => "isvideo"
-  div :date_create, :xpath => "//div[@data-item-name='date_create']"
-  div :source_from, :xpath => "//div[@data-item-name='sourcefrom']"
-  link :run_search, :id => "show-result-search"
+  link :expand_extended_more, class: "expand_extended_more"
+  text_field :keywords, xpath: "//form[@id='filter']//input[@name='keywords']"
+  text_field :price_from, name: "price[from]"
+  text_field :price_to, name: "price[to]"
+  div :currency, xpath: "//div[@data-item-name='price']"
+  checkbox :hasimages, name: "hasimages"
+  checkbox :hasvideo, name: "isvideo"
+  div :date_create, xpath: "//div[@data-item-name='date_create']"
+  div :source_from, xpath: "//div[@data-item-name='sourcefrom']"
+  link :run_search, id: "show-result-search"
 
   # Показ параметров
-  link :show_all_params, :id => "showAllParamsLink"
-  div :title, :xpath => "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
+  link :show_all_params, id: "showAllParamsLink"
+  div :title, xpath: "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
   div :address, class: "b-adressAdv"
-  div :photo, :class => "b-photo"
-  div :video, :class => "b-video"
-  link :show_all_text, :class => "showAll"
+  div :photo, class: "b-photo"
+  div :video, class: "b-video"
+  link :show_all_text, class: "showAll"
 
   # Весь текст объявления
-  div :advert_text, :class => "txtAdvert"
-  table :all_params, :id => "allParams"
-  div :ad_content, :class => "b-content"
+  div :advert_text, class: "txtAdvert"
+  table :all_params, id: "allParams"
+  div :ad_content, class: "b-content"
 
   def get_address
     self.address_element.when_present.text
@@ -39,9 +39,9 @@ class AdDetailsPage
 
   def singleselect(element, value)
     begin
-      element.div_element(:class => "controlSelectS").when_present.click
-      Watir::Wait.until { element.div_element(:class => "selectItemsPopup").style('display') == "block" }
-      element.element.div(:text => value.strip).when_present.click
+      element.div_element(class: "controlSelectS").when_present.click
+      Watir::Wait.until { element.div_element(class: "selectItemsPopup").style('display') == "block" }
+      element.element.div(text: value.strip).when_present.click
     rescue Exception => e
       raise "Отсутствует значение '#{value.strip}'\n#{e}"
     end
@@ -128,9 +128,9 @@ class AdDetailsPage
       end
 
     when "Валюта"
-      self.currency_element.div_element(:class => "controlSelectS").when_present.click
-      Watir::Wait.until { element.div_element(:class => "selectItemsPopup").style('display') == "block" }
-      result = self.currency_element.element.div(:text => hash['value'].strip).attribute("class") == "act"
+      self.currency_element.div_element(class: "controlSelectS").when_present.click
+      Watir::Wait.until { element.div_element(class: "selectItemsPopup").style('display') == "block" }
+      result = self.currency_element.element.div(text: hash['value'].strip).attribute("class") == "act"
     else
       raise "Неизвестный параметр: #{field}"
     end
@@ -255,7 +255,7 @@ class AdDetailsPage
 
   def has_seo_link_section?
     begin
-      self.div_element(:class => "quicklySearch").
+      self.div_element(class: "quicklySearch").
         when_present.exists?
     rescue Watir::Wait::TimeoutError => e
       return false
@@ -264,8 +264,8 @@ class AdDetailsPage
 
   def select_link_with_text_from_quick_search_section(link)
     begin
-      self.div_element(:class => "quicklySearch").
-        when_present.link_element(:text => link).click
+      self.div_element(class: "quicklySearch").
+        when_present.link_element(text: link).click
     rescue Watir::Exception::UnknownObjectException => e
       raise "Отсутствует seo-линк #{link}"
     end
@@ -279,12 +279,12 @@ class AdDetailsPage
   end
 
   def get_active_tab
-    self.div_element(:class => "wrBookmarks").
-      when_present.list_item_element(:class => "act").text
+    self.div_element(class: "wrBookmarks").
+      when_present.list_item_element(class: "act").text
   end
 
   def map_displayed
-    self.div_element(:class => "YMaps-layer-container").when_present.exists?
+    self.div_element(class: "YMaps-layer-container").when_present.exists?
   end
 
 end

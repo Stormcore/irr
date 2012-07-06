@@ -15,7 +15,7 @@ def irr_checkbox_with_value(getter_name, identifier, setter_name = nil)
     end
     xpath = "//table[@id='allParams']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
-      self.cell_element(:xpath => xpath).when_present(10).text
+      self.cell_element(xpath: xpath).when_present(10).text
     rescue Exception => e
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
@@ -25,7 +25,7 @@ def irr_checkbox_with_value(getter_name, identifier, setter_name = nil)
   define_method("#{function_name}_selected") do |hash|
     begin
       self.expand_all_parameters
-      self.checkbox_element(:name => identifier).checked?
+      self.checkbox_element(name: identifier).checked?
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
     end
@@ -35,7 +35,7 @@ def irr_checkbox_with_value(getter_name, identifier, setter_name = nil)
   define_method("#{function_name}=") do |hash|
     begin
       self.expand_all_parameters
-      self.checkbox_element(:name => identifier).click
+      self.checkbox_element(name: identifier).click
     rescue Exception => e
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end

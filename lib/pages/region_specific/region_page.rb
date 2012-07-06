@@ -8,7 +8,7 @@ module Regions
   irr_multi_select "Шоссе",         "shosse"
   irr_range_select "Удаленность",   "distance_mkad"
   
-  div :adress, :class => "b-adressAdv"
+  div :adress, class: "b-adressAdv"
   
   def set_regions_parameter(hash)
     setter_functions = Regions.instance_variable_get(:@setter_functions)
@@ -28,9 +28,9 @@ module Regions
       getter_functions = Regions.instance_variable_get(:@getter_functions)
       self.send "#{getter_functions[field]}"
     when "Шоссе"
-      self.adress_element.div_element(:class => "h2").text.split(', ')[0]
+      self.adress_element.div_element(class: "h2").text.split(', ')[0]
     when "Удаленность"
-      self.adress_element.div_element(:class => "h2").text.split(', ')[1]
+      self.adress_element.div_element(class: "h2").text.split(', ')[1]
     end
   end
 end

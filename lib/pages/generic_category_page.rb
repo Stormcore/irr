@@ -5,7 +5,7 @@ class GenericCategoryPage
 
   element :left_banner, :embed
   
-  link :subcategory_select, :link_text => "Выбор подрубрики"
+  link :subcategory_select, link_text: "Выбор подрубрики"
   
   def select_sub_category(category)
     # Read parent ID for subcategory_select
@@ -16,7 +16,7 @@ class GenericCategoryPage
     self.subcategory_select_element.when_present.element.hover
     
     # Wait for list to appear
-    subcategories_list = self.unordered_list_element(:xpath => "//div[@id='#{expected_popupList_id}']/ul")
-    subcategories_list.when_present.link_element(:link_text => /#{category}/).when_present.click
+    subcategories_list = self.unordered_list_element(xpath: "//div[@id='#{expected_popupList_id}']/ul")
+    subcategories_list.when_present.link_element(link_text: /#{category}/).when_present.click
   end
 end

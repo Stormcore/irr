@@ -3,7 +3,7 @@
 class StargatePowersellerDetailsPage
   include PageObject
 
-  div :main, :xpath => "//div[@class=' x-tab-panel'][.//span[text()='Свойства']]"
+  div :main, xpath: "//div[@class=' x-tab-panel'][.//span[text()='Свойства']]"
 
   button :add_package, text: "Добавить пакет"
 
@@ -50,7 +50,7 @@ class StargatePowersellerDetailsPackagesTabPage
     row_element = self.main_element.
         div_element(class: "x-grid3-cell-inner", text: name)
     row_element.when_present.
-        parent.parent.cell_element(:index => 2).when_present.double_click
+        parent.parent.cell_element(index: 2).when_present.double_click
     editor = self.main_element.element.
                   divs(class: "x-editor").
                   select{|div| div.visible?}[0].when_present
@@ -68,7 +68,7 @@ class StargatePowersellerDetailsPackagesTabPage
     row_element = self.main_element.
         div_element(class: "x-grid3-cell-inner", text: name)
     row_element.when_present.
-        parent.parent.cell_element(:index => 2).when_present.double_click
+        parent.parent.cell_element(index: 2).when_present.double_click
     editor = self.main_element.element.
                   divs(class: "x-editor").
                   select{|div| div.visible?}[0].when_present

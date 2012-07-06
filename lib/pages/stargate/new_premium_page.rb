@@ -3,15 +3,15 @@
 class StargateNewPremiumPage
   include PageObject
 
-  div :main, :xpath => "//div[contains(@class,'x-panel-bwrap')]" + 
+  div :main, xpath: "//div[contains(@class,'x-panel-bwrap')]" + 
                        "[.//span[text()='Создание премиум объявлений']]"
-  list_item :root, :xpath => "//li[.//span[text()='Категории каталога']]"
+  list_item :root, xpath: "//li[.//span[text()='Категории каталога']]"
 
   def expand_category(name)
     begin
       self.root_element.
-           div_element(:text => name, :class => "x-tree-node-el").
-          image_element(:class => "x-tree-ec-icon").click
+           div_element(text: name, class: "x-tree-node-el").
+          image_element(class: "x-tree-ec-icon").click
     rescue Exception => e
       puts "expand_category exception, #{e}"
     end
@@ -19,29 +19,29 @@ class StargateNewPremiumPage
 
   def double_click(name)
     self.root_element.
-         div_element(:text => name, 
-                     :class => "x-tree-node-leaf").double_click
+         div_element(text: name, 
+                     class: "x-tree-node-leaf").double_click
   end
 end
 
 class StargateNewPremiumDataPage
   include PageObject
 
-  div :panel, :id => "propspanel"
-  div :premium, :xpath => "//div[@class='x-panel x-panel-noborder x-form-label-left']" + 
+  div :panel, id: "propspanel"
+  div :premium, xpath: "//div[@class='x-panel x-panel-noborder x-form-label-left']" + 
                           "[.//legend/span[text()='Премиум объявления']]"
-  button :save, :text => "Сохранить"
+  button :save, text: "Сохранить"
 
   def set_value(name, value)
     # Нажимаем по полю и обрабатываем
-    row = self.panel_element.div_element(:class => "x-grid3-col-title", 
-                                         :text => name).when_present.parent.parent
+    row = self.panel_element.div_element(class: "x-grid3-col-title", 
+                                         text: name).when_present.parent.parent
     # Скроллим до элемента
     row.element.wd.location_once_scrolled_into_view
-    row.cell_element(:index => 2).when_present.click
+    row.cell_element(index: 2).when_present.click
     # Появляется editor
     editor = self.panel_element.element.
-                  divs(:class => "x-editor").select{|div| div.visible?}[0].
+                  divs(class: "x-editor").select{|div| div.visible?}[0].
                   when_present
     if name == "Регион"
       self.set_region_value(editor, value)
@@ -60,7 +60,7 @@ class StargateNewPremiumDataPage
   end
 
   def set_select_value(editor, value)
-    item = self.div_element(:class => "x-combo-list-item", :text => value)
+    item = self.div_element(class: "x-combo-list-item", text: value)
     unless item.exists? and item.visible?
       editor.img.click
       item.when_present.element.wd.location_once_scrolled_into_view
@@ -88,23 +88,23 @@ class StargateNewPremiumDataPage
     editor.img.click
     # Ждём открытия окна "Редактирование"
     edit_window = self.div_element(
-      :xpath => "//div[@class='x-window x-resizable-pinned'][.//span[text()='Редактирование']]")
+      xpath: "//div[@class='x-window x-resizable-pinned'][.//span[text()='Редактирование']]")
     row = edit_window.when_present.div_element(
-      :xpath => "//div[@class='x-form-item '][./label[text()='Регион:']]")
+      xpath: "//div[@class='x-form-item '][./label[text()='Регион:']]")
     row.click
     # Вводим значение региона
     row.text_field_element.value = value
     # Подверждаем выбор
-    combolist = self.div_element(:class => "x-combo-list").when_present
-    combolist.div_element(:class => "x-combo-list-item").when_present.click
+    combolist = self.div_element(class: "x-combo-list").when_present
+    combolist.div_element(class: "x-combo-list-item").when_present.click
     # Нажимаем "Сохранить"
-    edit_window.button_element(:text => "Сохранить").when_present.click
+    edit_window.button_element(text: "Сохранить").when_present.click
   end
 
   def set_premium_period(premium_length)
     self.premium_element.div_element(
-      :xpath => "//div[@class='x-form-item '][./label[text()='#{premium_length}:']]").
-      div_element(:class => "x-form-radio-wrap-inner").
+      xpath: "//div[@class='x-form-item '][./label[text()='#{premium_length}:']]").
+      div_element(class: "x-form-radio-wrap-inner").
       click
   end
 
@@ -114,14 +114,13 @@ class StargateNewPremiumDataPage
 
   def has_dialog_window
     Watir::Wait.until do
-      self.div_element(:xpath => 
-        "//div[@class='x-window x-window-plain x-window-dlg']" + 
+      self.div_element(xpath:          "//div[@class='x-window x-window-plain x-window-dlg']" + 
         "[.//span[text()='Запись добавлена']]").
       exists?
     end
   end
 
   def close_dialog_window
-    self.button_element(:text => "OK").when_present.click
+    self.button_element(text: "OK").when_present.click
   end
 end

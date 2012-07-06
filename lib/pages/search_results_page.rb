@@ -4,9 +4,9 @@ require 'json'
 class SearchResultsPage
   include PageObject
 
-  div :results_table, :class => "b-adList"
-  unordered_list :pages, :class => "filter-pages"
-  div :side_column, :class => "side-col"
+  div :results_table, class: "b-adList"
+  unordered_list :pages, class: "filter-pages"
+  div :side_column, class: "side-col"
 
   def search_results
     results = []
@@ -128,7 +128,7 @@ class SearchResultsPage
   end
 
   def go_to_page(number)
-    next_page = self.pages_element.link_element(:link_text => number.to_s)
+    next_page = self.pages_element.link_element(link_text: number.to_s)
     next_page.when_present
     puts "Moving to page #{number}"
     next_page.click

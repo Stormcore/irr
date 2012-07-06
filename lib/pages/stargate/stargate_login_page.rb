@@ -5,11 +5,11 @@ class StargateLoginPage
 
   direct_url BASE_URL+"/stargate"
 
-  text_field :login, :name => "login"
-  text_field :password, :name => "password"
-  button     :enter, :text => "Войти"
+  text_field :login, name: "login"
+  text_field :password, name: "password"
+  button     :enter, text: "Войти"
 
-  link :logout, :link_text => "Выйти"
+  link :logout, link_text: "Выйти"
 
   def has_logout
     begin

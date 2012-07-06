@@ -1,33 +1,33 @@
 class PowersellerPage
   include PageObject
 
-  image :pseller_icon, :class => "img-cover"
-  table :adListTable, :id => "adListTable"
-  div :left_col, :class => "category"
+  image :pseller_icon, class: "img-cover"
+  table :adListTable, id: "adListTable"
+  div :left_col, class: "category"
 
   def get_icon
     self.pseller_icon_element.when_present.attribute('src')
   end
 
   def get_categories_size
-    self.span_elements(:class => "blue-category-ads-count").size
+    self.span_elements(class: "blue-category-ads-count").size
   end
 
   def get_categories
-    self.left_col_elements.list_item_elements(:xpath => "//li").each do |el|
+    self.left_col_elements.list_item_elements(xpath: "//li").each do |el|
       yield PowerSellerCategory.new(el.when_present)
     end
   end
 
   def get_category_by_name(name)
-    el = self.left_col_element.list_item_element(:xpath => "//li[./a[text()='#{name}']]")
+    el = self.left_col_element.list_item_element(xpath: "//li[./a[text()='#{name}']]")
     PowerSellerCategory.new(el.when_present)
   end
 
   def get_total_categories_count
     el = self.left_col_element.
-              span_element(:class => "fBold").when_present.parent.
-              span_element(:class => "blue-category-ads-count")
+              span_element(class: "fBold").when_present.parent.
+              span_element(class: "blue-category-ads-count")
     el.text.gsub(/[\(\)]/, '')
   end
 
@@ -81,7 +81,7 @@ class PowerSellerCategory
   attr_reader :name, :ads_count, :level, :parent, :children
 
   def initialize(element)
-    @ads_count = element.span_element(:class => "blue-category-ads-count").text.gsub(/[\[\]]/, '')
+    @ads_count = element.span_element(class: "blue-category-ads-count").text.gsub(/[\[\]]/, '')
     @name = element.link_element.text
   end
 end

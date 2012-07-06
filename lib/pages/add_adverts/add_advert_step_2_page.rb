@@ -2,28 +2,28 @@
 class AddAdvertStep2 < AdDetailsPage
   include PageObject
 
-  link :region_spoiler, :name => "region_link"
-  select_list :region, :id => "fr-region"
-  text_field  :address_city, :name => "address_city"
-  text_field  :address_street, :name => "mapStreetVisible"
-  text_field  :address_house, :name => "mapHouseNr"
-  text_field  :address_metro, :name => "metro"
-  text_field  :address_sosshe, :name => "sosshe"
-  select_list :rent_period, :name => "rent_period"
+  link :region_spoiler, name: "region_link"
+  select_list :region, id: "fr-region"
+  text_field  :address_city, name: "address_city"
+  text_field  :address_street, name: "mapStreetVisible"
+  text_field  :address_house, name: "mapHouseNr"
+  text_field  :address_metro, name: "metro"
+  text_field  :address_sosshe, name: "sosshe"
+  select_list :rent_period, name: "rent_period"
 
-  text_field :f_title, :id => "f_title"
-  text_field :f_text, :id => "f_text"
-  file_field :upload, :id => "input-file-upload"
-  unordered_list :uploaded_photos, :id => "photos"
-  link :add_video, :id => "showPopupVideoAdd"
+  text_field :f_title, id: "f_title"
+  text_field :f_text, id: "f_text"
+  file_field :upload, id: "input-file-upload"
+  unordered_list :uploaded_photos, id: "photos"
+  link :add_video, id: "showPopupVideoAdd"
 
-  div :videoPopup, :id => "popupVideoAdd"
-  text_field :videoContents, :id => "video_content"
-  link :uploadVideoButton, :id => "uploadVideoButton"
-  div :video_preview, :id => "videoContentBlock"
+  div :videoPopup, id: "popupVideoAdd"
+  text_field :videoContents, id: "video_content"
+  link :uploadVideoButton, id: "uploadVideoButton"
+  div :video_preview, id: "videoContentBlock"
 
-  link :save, :id => "submit-edit-form"
-  link :next_step, :id => "next_link"
+  link :save, id: "submit-edit-form"
+  link :next_step, id: "next_link"
 
   div :no_package_message, id: "message-free-add"
   div :has_package, class: "ico-messagesok"
@@ -69,7 +69,7 @@ class AddAdvertStep2 < AdDetailsPage
     case control.tag_name
     when "select"
       # Комбобокс
-      self.select_list_element(:id => control.id).select hash["value"]
+      self.select_list_element(id: control.id).select hash["value"]
     when "label"
       # Другие параметры - скрыты внутри лейбла
       control.text_field.value = hash["value"]
@@ -132,7 +132,7 @@ class AddAdvertStep2 < AdDetailsPage
     self.upload_element.element.set "/tmp/logo_irr.png"
     # Ждём пока появится загруженная фотография
     self.uploaded_photos_element.
-         list_item_element(:id => "downloaded-photo-1").when_present(30).
+         list_item_element(id: "downloaded-photo-1").when_present(30).
          image_element.exists?
   end
 

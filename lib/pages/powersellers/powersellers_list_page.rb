@@ -5,7 +5,7 @@ class PowersellersListPage
 
   direct_url BASE_URL+"/powerSellers/list/"
 
-  table :powersellers, :xpath => "//div[@class='b-adListTable b-adTblIP']/table"
+  table :powersellers, xpath: "//div[@class='b-adListTable b-adTblIP']/table"
 
   def get_powerseller_number
     self.powersellers_element.when_present.rows
@@ -18,7 +18,7 @@ class Powerseller
   end
 
   def get_name
-    @element.element.cell(:index => 1).text
+    @element.element.cell(index: 1).text
   end
 
   def has_photo

@@ -3,7 +3,7 @@
 class StargateTabListPage
   include PageObject
 
-  div :main, :class => "x-tab-panel-header"
+  div :main, class: "x-tab-panel-header"
 
   def get_tab_list
     debugger
@@ -11,7 +11,7 @@ class StargateTabListPage
   end
 
   def switch_to_tab(name)
-    self.main_element.element.li(:text => name).click
+    self.main_element.element.li(text: name).click
   end
 
 end

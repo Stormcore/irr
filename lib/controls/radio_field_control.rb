@@ -17,7 +17,7 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
     end
     xpath = "//table[@id='#{table}']/tbody/tr[./th/span[text()='#{getter_name}']]/td"
     begin
-      self.cell_element(:xpath => xpath).when_present(10).text
+      self.cell_element(xpath: xpath).when_present(10).text
     rescue Exception => e
       raise "Параметр '#{getter_name}' не найден\n#{e}"
     end
@@ -27,10 +27,10 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
   define_method("#{function_name}_selected") do |hash|
     begin
       self.expand_all_parameters
-      element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      element = self.div_element(xpath: "//div[@data-item-name='#{identifier}']")
       element.when_present.visible?
       debugger
-      element.radio_button_element(:xpath => "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").selected?
+      element.radio_button_element(xpath: "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").selected?
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
     end
@@ -40,9 +40,9 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
   define_method("#{function_name}=") do |hash|
     begin
       self.expand_all_parameters
-      element = self.div_element(:xpath => "//div[@data-item-name='#{identifier}']")
+      element = self.div_element(xpath: "//div[@data-item-name='#{identifier}']")
       element.when_present.visible?
-      element.radio_button_element(:xpath => "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").when_present.click
+      element.radio_button_element(xpath: "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").when_present.click
     rescue Exception => e
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end

@@ -3,10 +3,10 @@
 class PackageInfoPage
   include PageObject
 
-  select_list :package, :name => "package"
+  select_list :package, name: "package"
 
   def get_field_value(field)
-    self.element("strong", :xpath => "//div[contains(.,'#{field}')]/strong").when_present.text.strip
+    self.element("strong", xpath: "//div[contains(.,'#{field}')]/strong").when_present.text.strip
   end
 
   def select_package(name)

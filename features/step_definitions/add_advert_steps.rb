@@ -1,10 +1,10 @@
 # encoding: utf-8
 Когда %{я перехожу к подаче объявления} do
-  on MainPage do |page| 
+  on MainPage do |page|
     page.add_advert_element.when_present.click
   end
-  
-  on AddAdvertMenuPage do |page| 
+
+  on AddAdvertMenuPage do |page|
     page.addOnlineAdvert_element.when_present.click
   end
 end
@@ -81,14 +81,14 @@ end
 
 То /^на шаге (\d+) выводится сообщение об отсутствии пакета$/ do |arg1|
   on AddAdvertStep2 do |page|
-    page.has_package_message.should eq(false), 
-        "Сообщение об отсутствии пакета не показано"
+    page.has_package_message.should eq(false),
+      "Сообщение об отсутствии пакета не показано"
 
     expected_message =<<PACKAGE_MESSAGE
-У Вас нет пакета для выполнения данного действия. Приобретите соответствующий пакет или зарегистрируйтесь как обычный пользователь, после чего Вам будет доступно данное действие.
-PACKAGE_MESSAGE
+    У Вас нет пакета для выполнения данного действия. Приобретите соответствующий пакет или зарегистрируйтесь как обычный пользователь, после чего Вам будет доступно данное действие.
+      PACKAGE_MESSAGE
 
-    page.get_package_message.strip.should eq(expected_message.strip), 
+    page.get_package_message.strip.should eq(expected_message.strip),
       "Неправильное сообщение об отсутствии пакета"
   end
 end
