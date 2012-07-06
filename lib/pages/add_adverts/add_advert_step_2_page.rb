@@ -97,7 +97,6 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def set_parameter(hash)
-    puts "Устанавливаем параметр #{hash['parameter']} = #{hash['value']}"
     case hash['parameter']
     when "Регион"
       self.set_region hash['value']
