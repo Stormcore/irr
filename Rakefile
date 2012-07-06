@@ -110,10 +110,10 @@ task :fast_category_check do
   end
 end
 
-Cucumber::Rake::Task.new(:new_advert_no_rerun) do |task|
+Cucumber::Rake::Task.new(:advert_submit_no_rerun) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                       "-r features",
-                      "-t ~@wip -t ~@bugs -t @new_advert",
+                      "-t ~@wip -t ~@bugs -t @advert_submit -t @advert_check",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
                       "--format rerun --out rerun.txt",
@@ -121,8 +121,8 @@ Cucumber::Rake::Task.new(:new_advert_no_rerun) do |task|
                       ENV['FEATURE']]
 end
 
-task :new_advert do
-  selenium_successful = run_rake_task("new_advert_no_rerun")
+task :advert_submit do
+  selenium_successful = run_rake_task("advert_submit_no_rerun")
   rerun_successful = true
   unless selenium_successful
     puts "\n\n Rerunning failed tests"
