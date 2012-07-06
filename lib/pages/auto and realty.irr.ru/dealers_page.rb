@@ -3,11 +3,11 @@
 class AutoIrrRuDealersPage
   include PageObject
 
-  div :section, :xpath => "//div[./div[@class='h1']" +
+  div :section, xpath: "//div[./div[@class='h1']" +
                           "[.//a[text()='Автосалоны, дилеры']]]"
   
   def get_dealer_items
-    self.section_element.element.divs(:class => "wr-salonDiller")
+    self.section_element.element.divs(class: "wr-salonDiller")
   end
 
   def dealer_item_has_link(element)

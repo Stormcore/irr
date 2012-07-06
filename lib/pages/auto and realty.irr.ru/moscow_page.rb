@@ -3,7 +3,7 @@
 class RealtyIrrRuMoscowPage
   include PageObject
 
-  div :section, :xpath => "//div[./div[@class='s-title']" +
+  div :section, xpath: "//div[./div[@class='s-title']" +
                           "[.//a[text()='Районы Москвы']]]"
 
   def map_displayed?

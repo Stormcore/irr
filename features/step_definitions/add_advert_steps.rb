@@ -86,7 +86,7 @@ end
 
     expected_message =<<PACKAGE_MESSAGE
     У Вас нет пакета для выполнения данного действия. Приобретите соответствующий пакет или зарегистрируйтесь как обычный пользователь, после чего Вам будет доступно данное действие.
-      PACKAGE_MESSAGE
+PACKAGE_MESSAGE
 
     page.get_package_message.strip.should eq(expected_message.strip),
       "Неправильное сообщение об отсутствии пакета"
