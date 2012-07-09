@@ -57,6 +57,8 @@ class StargateNewPremiumDataPage
         end
       end
     end
+    # Закрываем поле, потому что оно может мешать следующим полям
+    self.panel_element.div_element(class: "x-grid3-col-title", text: name).click
   end
 
   def set_select_value(editor, value)
@@ -74,8 +76,6 @@ class StargateNewPremiumDataPage
       editor.text_field.value = value
     rescue Watir::Exception::UnknownObjectException => e
       editor.textarea.value = value
-      # Закрываем textarea, потому что она мешает следующим полям
-      editor.textarea.send_keys :tab
     end
   end
 
