@@ -11,6 +11,9 @@ class AddAdvertStep2 < AdDetailsPage
   text_field  :address_sosshe, name: "sosshe"
   select_list :rent_period, name: "rent_period"
 
+  select_list :mark, name: "make"
+  select_list :model, name: "model"
+
   text_field :f_title, id: "f_title"
   text_field :f_text, id: "f_text"
   file_field :upload, id: "input-file-upload"
@@ -97,25 +100,33 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def set_parameter(hash)
-    case hash['parameter']
-    when "Регион"
-      self.set_region hash['value']
-    when "Населённый пункт"
-      self.set_city hash['value']
-    when "Улица"
-      self.set_street hash['value']
-    when "Дом"
-      self.set_house hash['value']
-    when "Ближайшее метро"
-      self.set_metro hash['value']
-    when "Заголовок"
-      self.f_title = hash['value']
-    when "Срок сдачи"
-      self.rent_period = hash['value']
-    when "Текст"
-      self.f_text = hash['value']
-    else
-      self.set_custom_parameter(hash)
+    begin
+      case hash['parameter']
+      when "Регион"
+        self.set_region hash['value']
+      when "Населённый пункт"
+        self.set_city hash['value']
+      when "Улица"
+        self.set_street hash['value']
+      when "Дом"
+        self.set_house hash['value']
+      when "Ближайшее метро"
+        self.set_metro hash['value']
+      when "Заголовок"
+        self.f_title = hash['value']
+      when "Срок сдачи"
+        self.rent_period = hash['value']
+      when "Марка"
+        self.mark = hash['value']
+      when "Модель"
+        self.model = hash['value']
+      when "Текст"
+        self.f_text = hash['value']
+      else
+        self.set_custom_parameter(hash)
+      end
+    rescue Exception => e
+      raise "Ошибка установки параметра #{hash['parameter']} = '#{hash['value']}':\n#{e}"
     end
   end
 
