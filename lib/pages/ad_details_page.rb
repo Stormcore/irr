@@ -33,9 +33,12 @@ class AdDetailsPage
   div :ad_content, class: "b-content"
 
   def get_address
-    self.address_element.when_present.text
+    self.address_element.when_present.text.split("\n")[0]
   end
 
+  def get_shosse
+    self.address_element.when_present.text.split("\n")[1]
+  end
 
   def singleselect(element, value)
     begin

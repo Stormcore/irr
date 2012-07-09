@@ -105,6 +105,12 @@ end
   end
 end
 
+Допустим /^шоссе в объявлении равно "(.*?)"$/ do |expected|
+  on AdDetailsPage do |page|
+    page.get_shosse.should eq(expected), 
+      "Неправильное шоссе в деталях объявления"
+  end
+end
 
 То %{в деталях объявления отображается загруженная фотография} do
   if BASE_URL.include? 'prontosoft.by'
