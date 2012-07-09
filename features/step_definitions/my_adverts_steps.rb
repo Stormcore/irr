@@ -100,15 +100,13 @@ end
 
 Допустим /^адрес в объявлении равен "(.*?)"$/ do |expected|
   on AdDetailsPage do |page|
-    page.get_address.should eq(expected), 
-      "Неправильный адрес в деталях объявления"
+    page.get_address.should eq(expected)
   end
 end
 
 Допустим /^шоссе в объявлении равно "(.*?)"$/ do |expected|
   on AdDetailsPage do |page|
-    page.get_shosse.should eq(expected), 
-      "Неправильное шоссе в деталях объявления"
+    page.get_shosse.should eq(expected)
   end
 end
 
