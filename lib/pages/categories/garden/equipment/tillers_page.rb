@@ -13,6 +13,6 @@ class CategoryGardenEquipmentTillersPage < AdDetailsPage
   irr_single_select "Тип привода", "privod"
   irr_range_select "Мощность, л.с.", "power_output"
   irr_range_select "Ширина захвата, см", "shirina_zahvata"
-  irr_range_select "Вес, кг", "ves"
+  irr_range_select "Вес, кг", "vas"
 
 end
