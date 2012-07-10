@@ -328,6 +328,15 @@ end
   end
 end
 
+То %{в списке объявлений отсутствует объявление "$title"} do |title|
+  on SearchResultsPage do |page|
+    all_results = @results.select{|result| result['title'] == title}
+    (all_results.size > 0).should eq(false), 
+      "Объявление '#{title}' присутствует в листинге"
+  end
+end
+
+
 То %{у объявления "$title" отображается загруженная фотография} do |title|
   # Не проверять картинки на *.prontosoft.by
   if BASE_URL.include? 'prontosoft.by'

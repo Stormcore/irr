@@ -13,6 +13,13 @@ end
   end
 end
 
+Когда %{объявление с названием "$title" отсутствует в списке} do |title|
+  on MyAdvertsPage do |page|
+    lambda {page.get_ad_with_title(title)}.should raise_error,
+      "Объявление '#{title}' присутствует в списке"
+  end
+end
+
 Допустим %{я удаляю все объявления ИП} do
   on MyAdvertsPage do |page|
     page.delete_all_ads
@@ -152,6 +159,17 @@ end
     page.do_activate
   end
 end
+
+Допустим /^я деактивирую данное объявление$/ do
+  @ad_element.do_action("Деактивировать")
+  @browser.alert.ok
+end
+
+Допустим /^я удаляю данное объявление$/ do
+  @ad_element.do_action("Удалить")
+  @browser.alert.ok
+end
+
 
 Допустим %{я делаю данное объявление премиумом} do
   @ad_element.do_action("Премиум")
