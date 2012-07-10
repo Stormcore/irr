@@ -324,7 +324,7 @@ end
       "Объявление '#{title}' отсутствует в листинге"
     result = all_results[0]
     result['premium'].should eq(false), 
-      "Объявление '<a href='#{result['url']}'>#{title}</a>' является премиумом"
+      "Объявление '#{title}' (#{result['url']}) является премиумом"
   end
 end
 
