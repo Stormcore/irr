@@ -124,7 +124,7 @@ class SearchResultsPage
       if url.include? "http://"
         @browser.goto("#{url}")
       else
-        @browser.goto("#{BASEURL+url}")
+        @browser.goto("#{BASE_URL+url}")
       end
     rescue Timeout::Error => e
       raise "Страница не была загружена за ожидаемое время"
