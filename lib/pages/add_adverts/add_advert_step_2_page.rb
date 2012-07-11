@@ -132,8 +132,8 @@ class AddAdvertStep2 < AdDetailsPage
 
   def load_photo
     # Загружаем файл из URL
-    Net::HTTP.start("userlogos.org") do |http|
-      resp = http.get("/files/logos/x-b/irr.png")
+    Net::HTTP.start("mandroid.ru") do |http|
+      resp = http.get("/sites/default/files/imagecache/full-node-news/softattached/irr.png")
       open("/tmp/logo_irr.png", "wb") do |file|
         file.write(resp.body)
       end
