@@ -121,7 +121,11 @@ class SearchResultsPage
   
   def open_ad(url)
     begin
-      @browser.goto("#{url}")
+      if url.include? "http://"
+        @browser.goto("#{url}")
+      else
+        @browser.goto("#{BASEURL+url}")
+      end
     rescue Timeout::Error => e
       raise "Страница не была загружена за ожидаемое время"
     end

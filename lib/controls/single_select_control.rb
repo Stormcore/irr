@@ -27,7 +27,6 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
     begin
       self.expand_all_parameters
       element.div_element(class: "controlSelectS").when_present(10).click
-      debugger
       element.element.div(text: hash['value'].strip).attribute("class") == "act"
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"

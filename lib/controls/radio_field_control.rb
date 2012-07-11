@@ -29,7 +29,6 @@ def irr_radio_select(getter_name, identifier, setter_name = nil, table = "allPar
       self.expand_all_parameters
       element = self.div_element(xpath: "//div[@data-item-name='#{identifier}']")
       element.when_present.visible?
-      debugger
       element.radio_button_element(xpath: "//label[@class='chk-b '][contains(.,'#{hash['value']}')]/input").selected?
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
