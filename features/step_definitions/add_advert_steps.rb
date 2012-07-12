@@ -14,7 +14,7 @@ end
 end
 
 Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
-  steps %Q{* загружены параметры объявления для категории "#{long_category}"}
+  #steps %Q{* загружены параметры объявления для категории "#{long_category}"}
   on AddAdvertStep1 do |page|
     # сохраняем категории для дальнейшей проверки
     long_category.split(' -> ').each_with_index do |category, index|
