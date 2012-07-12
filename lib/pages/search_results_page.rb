@@ -59,6 +59,7 @@ class SearchResultsPage
 
       begin
         h['url'] = row.css('td.tdTxt > div.h3 > a')[0]['href']
+        h['url'] = BASE_URL + h['url'] unless h['url'].include? BASE_URL.gsub('http://','')
         ad_id = h['url'].match(/\/advert\/(.*)\//)[1]
       rescue
       end
@@ -121,11 +122,7 @@ class SearchResultsPage
   
   def open_ad(url)
     begin
-      if url.include? "http://"
-        @browser.goto("#{url}")
-      else
-        @browser.goto("#{BASE_URL+url}")
-      end
+      @browser.goto(url)
     rescue Timeout::Error => e
       raise "Страница не была загружена за ожидаемое время"
     end

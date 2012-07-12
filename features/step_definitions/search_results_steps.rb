@@ -2,14 +2,12 @@
 
 Когда %{на странице поиска загружен список результатов} do 
   on SearchResultsPage do |page| 
-    puts "Обрабатываю результаты страницы <a href='#{@browser.url}'>#{@browser.url}</a>"
     @results = page.search_results
   end
 end
 
 Когда %{на странице поиска загружен список результатов для недвижимости} do
   on SearchResultsForRealEstatePage do |page| 
-    puts "Обрабатываю результаты страницы <a href='#{@browser.url}'>#{@browser.url}</a>"
     @results = page.search_results
   end
 end
@@ -217,7 +215,7 @@ end
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
       if UnicodeUtils.downcase(result['title']).include? downcased_keyword
-        puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>':" +
+        puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
              " найдено ключевое слово '#{keyword}' в заголовке"
         keyword_found = true
         break
@@ -226,7 +224,7 @@ end
       # Текст объявления на странице
       next if result['description'].nil?
       if UnicodeUtils.downcase(result['description']).include? downcased_keyword
-        puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>':" +
+        puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
              " найдено ключевое слово '#{keyword}' в тексте на странице поиска"
         keyword_found = true
         break
@@ -235,15 +233,14 @@ end
 
     # Если не нашли объявление нигде раньше, то ищем в деталях объявления
     unless keyword_found
-      full_url = BASE_URL+result['url']
-      @browser.goto(full_url)
+      @browser.goto(result['url'])
       on AdDetailsPage do |page|
         page.show_all_text if page.show_all_text_element.exists?
         keywords.split(", ").each do |keyword|
           downcased_keyword = UnicodeUtils.downcase(keyword)
           # Полный текст объявления
           if UnicodeUtils.downcase(page.advert_text_element.text).include? downcased_keyword
-            puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>':" +
+            puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
                  " найдено ключевое слово '#{keyword}' в полном тексте объявления"
             keyword_found = true
             break
@@ -251,7 +248,7 @@ end
 
           # Текст параметров
           if UnicodeUtils.downcase(page.all_params_element.element.html).include? downcased_keyword
-            puts "URL <a href='#{BASE_URL+result['url']}'>#{result['title']}</a>':" +
+            puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
                  " найдено ключевое слово '#{keyword}' в параметрах объявления"
             keyword_found = true
             break
@@ -402,8 +399,7 @@ def first_result_page_soft_assert(description)
       yield result
     rescue Exception => verification_error
       page.highlight_result_by_url(result['url'])
-      full_url = "#{BASE_URL}#{result['url']}"
-      validation_errors[full_url] = verification_error.message
+      validation_errors[result['url']] = verification_error.message
     end
   end
 
@@ -421,8 +417,7 @@ def results_page_soft_assert(description)
         yield result
       rescue Exception => verification_error
         page.highlight_result_by_url(result['url'])
-        full_url = "#{BASE_URL}#{result['url']}"
-        validation_errors[full_url] = verification_error.message
+        validation_errors[result['url']] = verification_error.message
       end
     end
   end
