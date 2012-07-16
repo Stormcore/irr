@@ -151,12 +151,11 @@ class AddAdvertStep2 < AdDetailsPage
     Watir::Wait.until { self.videoPopup_element.exists? }
 
     self.videoContents_element.when_present.value = <<RUTUBE_VIDEO
-      <OBJECT width="470" height="353">
-        <PARAM name="movie" value="http://video.rutube.ru/ba83acd900676ba99ef743541430f070"></PARAM>
-        <PARAM name="wmode" value="window"></PARAM>
-        <PARAM name="allowFullScreen" value="true"></PARAM>
-        <EMBED src="http://video.rutube.ru/ba83acd900676ba99ef743541430f070" type="application/x-shockwave-flash" wmode="window" width="470" height="353" allowFullScreen="true" ></EMBED>
-      </OBJECT>
+    <OBJECT width="470" height="353">
+      <PARAM name="movie" value="http://video.rutube.ru/945e273fd29ca440ba453030b458b6bf"></PARAM>
+      <PARAM name="wmode" value="window"></PARAM><PARAM name="allowFullScreen" value="true"></PARAM>
+      <EMBED src="http://video.rutube.ru/945e273fd29ca440ba453030b458b6bf" type="application/x-shockwave-flash" wmode="window" width="470" height="353" allowFullScreen="true" ></EMBED>
+    </OBJECT>
 RUTUBE_VIDEO
 
     self.uploadVideoButton
