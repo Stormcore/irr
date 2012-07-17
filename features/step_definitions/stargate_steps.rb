@@ -19,7 +19,7 @@ end
 
 Когда %{на stargate я вхожу под логином "$login" и паролем "$password"} do |login, password|
   visit StargateLoginPage do |page|
-    page.logout if page.has_logout
+    page.logout if page.logout?
   end
 
   visit StargateLoginPage do |page|
