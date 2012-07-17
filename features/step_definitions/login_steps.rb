@@ -46,6 +46,13 @@ end
   end
 end
 
+Допустим %{на странице логина показано сообщение о том, что такого пользователя не существует} do
+  on LoginPage do |page|
+    page.incorrect_login_message?.should eq(true), "Сообщение не показано"
+    page.incorrect_login_message.should eq("Введен неверный логин или пароль")
+  end
+end
+
 То %{на главной странице отображено имя пользователя} do 
   on MainPage do |page|
     page.logged_in_element.when_present(10).text.should == @current_user_name 

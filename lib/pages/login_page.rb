@@ -8,6 +8,8 @@ class LoginPage
   checkbox :remember_me, xpath: "//div[@id='popup-wrap']//input[@name='is_remember_me']"
   link :login, xpath: "//div[@id='popup-wrap']//a[@class='loginFormSubmit']"
 
+  paragraph :incorrect_login_message, class: "authFailedMessage", index: 1
+
   def login_as(username, password, remember_me)
     self.username_element.when_present
     self.username = username
