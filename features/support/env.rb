@@ -52,7 +52,7 @@ def start_browser
     client = Selenium::WebDriver::Remote::Http::Persistent.new
     client.timeout = 60
     profile = Selenium::WebDriver::Chrome::Profile.new
-    switches  = %w[--bwsi --disable-translate]
+    switches  = %w[--bwsi --disable-translate --start-maximized]
     browser = Watir::Browser.new(DRIVER, profile: profile, http_client: client, switches: switches)
   end
   return browser
