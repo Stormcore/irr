@@ -295,7 +295,7 @@ end
         steps %Q{Then я перехожу на страницу #{@current_page_number+1}}
       end
     end 
-    raise "Ad was not found" unless ad_found
+    raise "Объявление не найдено" unless ad_found
   end
 end
 

@@ -11,7 +11,7 @@ class SearchResultsForRealEstatePage < SearchResultsPage
     begin
       doc = Nokogiri::HTML.parse(results_table_element.when_present.element.html)
     rescue
-      raise "Result list was not displayed" if attempts == 0
+      raise "Список объявлений не был загружен" if attempts == 0
       self.refresh
       attempts -= 1
       retry
