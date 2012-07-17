@@ -248,7 +248,15 @@ end
             end
           end
 
-          # Текст параметров
+          # Текст основных параметров
+          if UnicodeUtils.downcase(page.main_params_element.element.html).include? downcased_keyword
+            puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
+                 " найдено ключевое слово '#{keyword}' в параметрах объявления"
+            keyword_found = true
+            break
+          end
+
+          # Текст всех параметров
           if UnicodeUtils.downcase(page.all_params_element.element.html).include? downcased_keyword
             puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
                  " найдено ключевое слово '#{keyword}' в параметрах объявления"

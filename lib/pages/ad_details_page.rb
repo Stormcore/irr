@@ -30,6 +30,7 @@ class AdDetailsPage
   # Весь текст объявления
   div :advert_text, class: "txtAdvert"
   table :all_params, id: "allParams"
+  table :main_params, id: "mainParams"
   div :ad_content, class: "b-content"
 
   def get_address
