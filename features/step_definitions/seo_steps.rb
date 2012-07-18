@@ -34,7 +34,6 @@ def popular_marks_soft_assert(description, section)
         @browser.goto(result[1])
         yield result
       rescue Exception => verification_error
-        debugger
         validation_errors[result[1]] = verification_error.message
       end
     end

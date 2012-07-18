@@ -274,7 +274,7 @@ class AdDetailsPage
   def has_tag_cloud_with_name?(name)
     begin
       self.div_element(class: "popularMark").when_present.
-           span_element(text: /#{name}/).exists?
+           span_element(text: "#{name}").exists?
     rescue Watir::Wait::TimeoutError => e
       return false
     end
@@ -290,7 +290,7 @@ class AdDetailsPage
   end
 
   def get_links_from_section(section)
-    div = self.div_element(xpath: "//div[@class='popularMark'][./div/span[text()='#{section} ']]").when_present
+    div = self.div_element(xpath: "//div[@class='popularMark'][./div/span[text()='#{section}']]").when_present
     Hash[*div.element.as.map{|a| [a.text, a.href]}.flatten]
   end
 
