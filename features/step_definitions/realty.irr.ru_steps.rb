@@ -154,11 +154,35 @@ end
 end
 
 Допустим %{в календаре на странице недвижимости выбран текущий день} do
+  steps %Q{
+    * в календаре на странице недвижимости выбран текущий год
+    * в календаре на странице недвижимости выбран текущий месяц
+    * в календаре на странице недвижимости выбран текущий день месяца
+  }
+end
+
+Допустим %{в календаре на странице недвижимости выбран текущий год} do
   time = Time.new
   on RealtyIrrRuCalendarPage do |page|
-    page.get_selected_year.to_i.should == time.year
-    page.get_selected_month.to_i.should == time.month
-    page.get_selected_day.to_i.should == time.day
+    href = page.month_and_year_element.attribute("href")
+    year = /select_date\=(.*)\-(.*)/.match(href)[1]
+    year.to_i.should == time.year
+  end
+end
+
+Допустим %{в календаре на странице недвижимости выбран текущий месяц} do
+  time = Time.new
+  on RealtyIrrRuCalendarPage do |page|
+    href = page.month_and_year_element.attribute("href")
+    month = /select_date\=(.*)\-(.*)/.match(href)[2]
+    month.to_i.should == time.month
+  end
+end
+
+Допустим %{в календаре на странице недвижимости выбран текущий день месяца} do
+  time = Time.new
+  on RealtyIrrRuCalendarPage do |page|
+    page.day_element.text.to_i.should == time.day
   end
 end
 
