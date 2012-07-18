@@ -3,10 +3,11 @@
 class LoginPage
   include PageObject
 
-  text_field :username, xpath: "//div[@id='popup-wrap']//input[@name='login']"
-  text_field :password, xpath: "//div[@id='popup-wrap']//input[@name='password']"
-  checkbox :remember_me, xpath: "//div[@id='popup-wrap']//input[@name='is_remember_me']"
-  link :login, xpath: "//div[@id='popup-wrap']//a[@class='loginFormSubmit']"
+  div :popupWrap, id: "popup-wrap"
+  text_field (:username)  {|page| page.popupWrap_element.text_field_element(name:'login')}
+  text_field (:password)  {|page| page.popupWrap_element.text_field_element(name:'password')}
+  checkbox (:remember_me) {|page| page.popupWrap_element.checkbox_element(name:'is_remember_me')}
+  link (:login)           {|page| page.popupWrap_element.link_element(class: 'loginFormSubmit')}
 
   paragraph :incorrect_login_message, class: "authFailedMessage", index: 1
 

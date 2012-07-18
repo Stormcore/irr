@@ -4,7 +4,7 @@ class InterestingAdsPage
   include PageObject
 
   div :interesting_ads, class: "associatedGoods"
-  unordered_list :ads, xpath: "//div[@class='associatedGoods two-columns']/ul"
+  unordered_list (:ads) {|page| page.interesting_ads_element.unordered_list_element}
 
   def get_ads_number
     self.ads_element.items
