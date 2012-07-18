@@ -19,10 +19,12 @@ class MainPage
   link :add_advert, link_text: "Подать объявление"
   
   checkbox :only_title, name: "only_title"
-  link :find, xpath: "//div[@class='button-style']/a"
+  div :find_div, class: "button-style"
+  link (:find) {|page| find_div_element.link_element}
   text_field :keywords, id: "id_keywords"
   
-  unordered_list :top_categories, xpath: "//div[@class='b-sidebar']/ul"
+  div :sidebar, class: "b-sidebar"
+  unordered_list (:top_categories) {|page| sidebar_element.unordered_list_element}
 
   def select_top_category(category)
     category_link = self.top_categories_element.link_element(link_text: /#{category}/)
