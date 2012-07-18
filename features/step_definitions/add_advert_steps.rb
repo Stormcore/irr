@@ -14,12 +14,16 @@ end
 end
 
 Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
-  #steps %Q{* загружены параметры объявления для категории "#{long_category}"}
   on AddAdvertStep1 do |page|
-    # сохраняем категории для дальнейшей проверки
+    # Открываем нужную категорию
     long_category.split(' -> ').each_with_index do |category, index|
-      page.wait_for_category_to_appear(index + 1)
-      page.select_item_from_category(index + 1, category)
+      li = page.list_item_element(id: "section_#{index + 1}").when_present
+      li.unordered_list_element.when_present.click
+      a = li.link_elements(href: "#").select do |a|
+        UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
+      end
+      raise "Категория '#{category}' не найдена" unless a.size > 0
+      a[0].click
     end
     page.next_step
   end
