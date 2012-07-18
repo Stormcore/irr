@@ -94,10 +94,12 @@ end
 
 # Записываем изменения URL
 AfterStep do |scenario|
-  unless @last_step == @browser.url
-    puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>"
+  if @browser
+    unless @last_step == @browser.url
+      puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>"
+    end
+    @last_step = @browser.url
   end
-  @last_step = @browser.url
 end
 
 After do |scenario|
