@@ -16,7 +16,8 @@ class GenericCategoryPage
     self.subcategory_select_element.when_present.element.hover
     
     # Wait for list to appear
-    subcategories_list = self.unordered_list_element(xpath: "//div[@id='#{expected_popupList_id}']/ul")
+    popupDiv = self.div_element(id: "#{expected_popupList_id}")
+    subcategories_list = self.popupDiv.when_present.unordered_list_element
     subcategories_list.when_present.link_element(link_text: /#{category}/).when_present.click
   end
 end

@@ -9,7 +9,8 @@ class AdDetailsPage
 
   # Настройка параметров
   link :expand_extended_more, class: "expand_extended_more"
-  text_field :keywords, xpath: "//form[@id='filter']//input[@name='keywords']"
+  form :filter, id: "filter"
+  text_field (:keywords) {|page| filter_element.text_field(name: 'keywords')}
   text_field :price_from, name: "price[from]"
   text_field :price_to, name: "price[to]"
   div :currency, xpath: "//div[@data-item-name='price']"
@@ -21,7 +22,8 @@ class AdDetailsPage
 
   # Показ параметров
   link :show_all_params, id: "showAllParamsLink"
-  div :title, xpath: "//div[@id='wrapTitle']/div[@name='wrapTitleLeft']"
+  div :wrapTitle, id: "wrapTitle"
+  div (:title) {|page| wrapTitle_element.div(name: 'wrapTitleLeft')}
   div :address, class: "b-adressAdv"
   div :photo, class: "b-photo"
   div :video, class: "b-video"
