@@ -12,7 +12,7 @@ class StargatePowersellersPage
   link :edit, class: "x-menu-item", text: "Редактировать"
 
   def search_for_powerseller(name)
-    self.login = name
+    self.login_element.when_present.value = name
     self.search
   end
 

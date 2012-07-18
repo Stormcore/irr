@@ -33,7 +33,7 @@ class StargatePowersellerDetailsPage
     self.open_right_click_menu_for_package(name)
     visible_menu = self.div_elements(class: "x-menu").
                         select {|div| div.visible? }[0]
-    visible_menu.link_element(class: "x-menu-item", text: "Удалить").click
+    visible_menu.when_present.link_element(class: "x-menu-item", text: "Удалить").click
   end
 
   def save

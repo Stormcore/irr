@@ -78,7 +78,6 @@ end
   end
 end
 
-
 Допустим /^при создании премиума я выбираю "(.*?)"$/ do |premium_length|
   on StargateNewPremiumDataPage do |page|
     page.set_premium_period(premium_length)
@@ -103,8 +102,8 @@ end
   end
 end
 
-Допустим %{на БО я ищу интернет-партнера} do
-  powerseller_login = get_login_and_password_for_role("Интернет-партнер")['login']
+Допустим %{на БО я ищу пользователя с ролью "$role"} do |role|
+  powerseller_login = get_login_and_password_for_role(role)['login']
   on StargatePowersellersPage do |page|
     page.search_for_powerseller(powerseller_login)
   end
@@ -127,6 +126,13 @@ end
   on StargatePowersellerDetailsPage do |page|
     page.edit_package(package)
   end
+end
+
+Когда %{на БО я добавляю интернет\-партнеру пакет "$package" для региона "$region"} do |package, region|
+  steps %Q{
+    * на БО я добавляю интернет-партнеру пакет "#{package}" для региона "#{region}" со следующими параметрами:
+    | поле | значение |
+  }
 end
 
 Когда /^на БО я добавляю интернет\-партнеру пакет "(.*?)" для региона "(.*?)" со следующими параметрами:$/ do |package, region, params|
@@ -186,9 +192,9 @@ end
   end
 end
 
-Когда /^на БО я удаляю все пакеты "(.*?)" у интернет\-партнера$/ do |package|
+Когда /^на БО я удаляю все пакеты "(.*?)" у пользователя роли "(.*?)"$/ do |package, role|
   steps %Q{
-    * на БО я ищу интернет-партнера
+    * на БО я ищу пользователя с ролью "#{role}"
     * на БО я открываю детали интернет\-партнера
   }
   on StargatePowersellerDetailsPage do |page|
