@@ -16,6 +16,7 @@ Cucumber::Rake::Task.new(:compile) do |task|
                         "-t @compile",
                         "--format junit --out junit",
                         "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
                         "--format pretty --color",
                         "features"]
 end
@@ -25,6 +26,7 @@ Cucumber::Rake::Task.new(:wip_no_rerun) do |task|
                       "-t @wip",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format rerun --out rerun.txt",
                       "--format pretty --color",
                       "features"]
@@ -48,6 +50,7 @@ Cucumber::Rake::Task.new(:tag_no_rerun) do |task|
                       "-t @#{ENV['TAG'] || "all"}",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format rerun --out rerun.txt",
                       "--format pretty --color"]
 end
@@ -71,6 +74,7 @@ Cucumber::Rake::Task.new(:bug_no_rerun) do |task|
                       "-t @bug#{ENV['BUG']}",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format rerun --out rerun.txt",
                       "--format pretty --color"]
 end
@@ -94,6 +98,7 @@ Cucumber::Rake::Task.new(:fast_category_check_no_rerun) do |task|
                       "-t ~@wip -t ~@bugs",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format rerun --out rerun.txt",
                       "--format pretty --color"]
 end
@@ -116,6 +121,7 @@ Cucumber::Rake::Task.new(:advert_submit_no_rerun) do |task|
                       "-t ~@wip -t ~@bugs -t @advert_submit",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format rerun --out rerun.txt",
                       "--format pretty --color",
                       ENV['FEATURE']]
@@ -139,6 +145,7 @@ Cucumber::Rake::Task.new(:after_index_no_rerun) do |task|
                       "-t ~@wip -t ~@bugs -t @after_index",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format rerun --out rerun.txt",
                       "--format pretty --color",
                       ENV['FEATURE']]
@@ -162,6 +169,7 @@ Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
                       "-t ~@wip -t ~@bugs",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format rerun --out rerun.txt",
                       "--format pretty --color",
                       ENV['FEATURE']]
@@ -184,6 +192,7 @@ Cucumber::Rake::Task.new(:all) do |task|
                       "-t @compile,~@wip",
                       "--format junit --out junit",
                       "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
                       "--format pretty --color",
                       "features"]
 end
@@ -198,6 +207,7 @@ Cucumber::Rake::Task.new(:rerun) do |task|
                         "-r features",
                         "--format junit --out junit",
                         "--format html  --out cucumber_rerun.html",
+                        "--format json  --out cucumber_rerun.json",
                         "--format pretty --color"]
 end
 
