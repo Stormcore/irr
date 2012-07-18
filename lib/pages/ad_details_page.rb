@@ -265,8 +265,16 @@ class AdDetailsPage
 
   def has_seo_link_section?
     begin
-      self.div_element(class: "quicklySearch").
-        when_present.exists?
+      self.div_element(class: "quicklySearch").when_present.exists?
+    rescue Watir::Wait::TimeoutError => e
+      return false
+    end
+  end
+
+  def has_tag_cloud_with_name?(name)
+    begin
+      self.div_element(class: "popularMark").when_present.
+           span_element(text: /#{name}/).exists?
     rescue Watir::Wait::TimeoutError => e
       return false
     end
@@ -279,6 +287,11 @@ class AdDetailsPage
     rescue Watir::Exception::UnknownObjectException => e
       raise "Отсутствует seo-линк #{link}"
     end
+  end
+
+  def get_links_from_section(section)
+    div = self.div_element(xpath: "//div[@class='popularMark'][./div/span[text()='#{section} ']]").when_present
+    Hash[*div.element.as.map{|a| [a.text, a.href]}.flatten]
   end
 
   def switch_to_tab(name)
