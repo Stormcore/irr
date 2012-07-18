@@ -20,7 +20,7 @@ class MainPage
   
   checkbox :only_title, name: "only_title"
   div :find_div, class: "button-style"
-  link (:find) {|page| find_div_element.link_element}
+  link (:find) {|page| page.find_div_element.when_present.link_element}
   text_field :keywords, id: "id_keywords"
   
   div :sidebar, class: "b-sidebar"
