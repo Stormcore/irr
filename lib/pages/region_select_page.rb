@@ -3,7 +3,8 @@ class RegionSelectPage
 
   direct_url BASE_URL
 
-  span :header, xpath: "//div[@class='popupRegions']//div[@class='b-title']/span"
+  div :popupRegions, class: "popupRegions"
+  span (:header) {|page| popupRegions_element.div_element(class: 'b-title').span_element}
 
   div :countries, id: "column-first"
   div :regions, id: "column-second"
