@@ -14,6 +14,7 @@ end
 end
 
 То %{ссылка содержит "$part"} do |part|
+  @browser.url.should_not include("404"), "Ошибка 404 при переходе по сео-линку"
   @browser.url.should include part
 end
 
