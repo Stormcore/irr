@@ -20,18 +20,4 @@ class RealtyIrrRuCalendarPage
   div :day do |page|
     page.calendar_element.cell_element(class: "td-act")
   end
-
-  def get_selected_year
-    href = self.month_and_year_element.attribute("href")
-    /select_date\=(.*)\-(.*)/.match(href)[1]
-  end
-
-  def get_selected_month
-    href = self.month_and_year_element.attribute("href")
-    /select_date\=(.*)\-(.*)/.match(href)[2]
-  end
-
-  def get_selected_day
-    self.day_element.text
-  end
 end
