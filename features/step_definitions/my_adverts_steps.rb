@@ -60,11 +60,11 @@ end
   the_response.code.should == 200.to_s
 end
 
-Допустим /^статус созданного объявления равен "(.*?)"$/ do |expected|
+Допустим %{статус созданного объявления равен "$expected"} do |expected|
   @ad_element.moderation_status.should == expected
 end
 
-Допустим /^дополнительный статус созданного объявления равен "(.*?)"$/ do |expected|
+Допустим %{дополнительный статус созданного объявления равен "$expected"} do |expected|
   @ad_element.moderation_additional_status.should == expected
 end
 
@@ -98,20 +98,20 @@ end
   end
 end
 
-Допустим /^на вкладке "Все" присутствует "(.*?)"$/ do |field|
+Допустим %{на вкладке "Все" присутствует "$field"} do |field|
   on AdDetailsPage do |page|
     page.get_parameter(field).should be_true, 
       "Параметр '#{field}' не установлен"
   end
 end
 
-Допустим /^адрес в объявлении равен "(.*?)"$/ do |expected|
+Допустим %{адрес в объявлении равен "$expected"} do |expected|
   on AdDetailsPage do |page|
     page.get_address.should eq(expected)
   end
 end
 
-Допустим /^шоссе в объявлении равно "(.*?)"$/ do |expected|
+Допустим %{шоссе в объявлении равно "$expected"} do |expected|
   on AdDetailsPage do |page|
     page.get_shosse.should eq(expected)
   end
@@ -160,12 +160,12 @@ end
   end
 end
 
-Допустим /^я деактивирую данное объявление$/ do
+Допустим %{я деактивирую данное объявление} do
   @ad_element.do_action("Деактивировать")
   @browser.alert.ok
 end
 
-Допустим /^я удаляю данное объявление$/ do
+Допустим %{я удаляю данное объявление} do
   @ad_element.do_action("Удалить")
   @browser.alert.ok
 end
@@ -245,7 +245,7 @@ end
   end
 end
 
-То /^в ЛК ИП отсутствует пакет "(.*?)"$/ do |package|
+То %{в ЛК ИП отсутствует пакет "$package"} do |package|
   steps %q{* я перехожу в список моих объявлений}
   on MyAdvertsPage do |page|
     if page.packages?
@@ -257,13 +257,13 @@ end
   end
 end
 
-Допустим /^в ЛК ИП значение поля "(.*?)" равно "(.*?)"$/ do |field, expected|
+Допустим %{в ЛК ИП значение поля "$field" равно "$expected"} do |field, expected|
   on PackageInfoPage do |page|
     page.get_field_value(field).should eq(expected)
   end
 end
 
-То /^в ЛК ИП присутствует пакет "(.*?)"$/ do |package|
+То %{в ЛК ИП присутствует пакет "$package"} do |package|
   steps %q{* я перехожу в список моих объявлений}
   on MyAdvertsPage do |page|
     page.packages_element.include?(package).should eq(true), 

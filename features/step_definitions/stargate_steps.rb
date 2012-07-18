@@ -35,7 +35,7 @@ end
   end
 end
 
-Допустим /^на БО я перехожу в категорию "(.*?)"$/ do |long_category|
+Допустим %{на БО я перехожу в категорию "$long_category"} do |long_category|
   last_category = nil
   on StargateNavigationPage do |page|
     long_category.split(' -> ').each do |category|
@@ -49,7 +49,7 @@ end
   end
 end
 
-Допустим /^на странице создания нового премиума в БО я выбираю категорию "(.*?)"$/ do |long_category|
+Допустим %{на странице создания нового премиума в БО я выбираю категорию "$long_category"} do |long_category|
   on StargateNewPremiumPage do |page|
     last_category = nil
     long_category.split(' -> ').each do |category|
@@ -71,32 +71,32 @@ end
   end
 end
 
-Допустим /^при создании премиума я указываю владельца пользователя с ролью "(.*?)"$/ do |role|
+Допустим %{при создании премиума я указываю владельца пользователя с ролью "$role"} do |role|
   credentials = get_login_and_password_for_role(role)
   on StargateNewPremiumDataPage do |page|
     page.set_value("Владелец объявления", credentials['email'])
   end
 end
 
-Допустим /^при создании премиума я выбираю "(.*?)"$/ do |premium_length|
+Допустим %{при создании премиума я выбираю "premium_length"} do |premium_length|
   on StargateNewPremiumDataPage do |page|
     page.set_premium_period(premium_length)
   end
 end
 
-Допустим /^я сохраняю введенный примиум$/ do
+Допустим %{я сохраняю введенный примиум} do
   on StargateNewPremiumDataPage do |page|
     page.save_premium
   end
 end
 
-То /^на БО показано диалоговое окно "(.*?)"$/ do |dialog_title|
+То %{на БО показано диалоговое окно "$dialog_title"} do |dialog_title|
   on StargateNewPremiumDataPage do |page|
     page.has_dialog_window.should eq(true)
   end
 end
 
-Когда /^я закрываю диалоговое окно$/ do
+Когда %{я закрываю диалоговое окно} do
   on StargateNewPremiumDataPage do |page|
     page.close_dialog_window
   end
@@ -154,7 +154,7 @@ end
   end
 end
 
-Когда /^на БО я добавляю (\d+) поднятий на пакет "(.*?)"$/ do |num, package|
+Когда %{на БО я добавляю $num поднятий на пакет "$package"} do |num, package|
   steps %Q{
     * на БО я открываю форму редактирования пакета "#{package}"
   }
@@ -165,7 +165,7 @@ end
   end
 end
 
-Когда /^на БО я добавляю (\d+) выделений на пакет "(.*?)"$/ do |num, package|
+Когда %{на БО я добавляю $num выделений на пакет "$package"} do |num, package|
   steps %Q{
     * на БО я открываю форму редактирования пакета "#{package}"
   }
@@ -175,7 +175,7 @@ end
   end
 end
 
-Когда /^на БО я добавляю (\d+) просмотров на пакет "(.*?)"$/ do |num, package|
+Когда %{на БО я добавляю $num просмотров на пакет "$package"} do |num, package|
   steps %Q{
     * на БО я открываю форму редактирования пакета "#{package}"
   }
@@ -185,14 +185,14 @@ end
   end
 end
 
-Когда /^на БО я удаляю пакет "(.*?)" у интернет\-партнера$/ do |package|
+Когда %{на БО я удаляю пакет "$package" у интернет-партнера} do |package|
   on StargatePowersellerDetailsPage do |page|
     page.delete_package(package)
     page.save
   end
 end
 
-Когда /^на БО я удаляю все пакеты "(.*?)" у пользователя роли "(.*?)"$/ do |package, role|
+Когда %{на БО я удаляю все пакеты "$package" у пользователя роли "$role"} do |package, role|
   steps %Q{
     * на БО я ищу пользователя с ролью "#{role}"
     * на БО я открываю детали интернет\-партнера

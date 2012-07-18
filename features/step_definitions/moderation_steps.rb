@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-Когда /^у интернет\-партнера нет объявлений$/ do
+Когда %{у интернет-партнера нет объявлений} do
   steps %Q{
     * открыта страница для региона "Россия"
     * я вхожу под пользователем с ролью "Интернет-партнер"
@@ -10,7 +10,7 @@
   }
 end
 
-Допустим /^я делаю поиск по созданному объявлению$/ do
+Допустим %{я делаю поиск по созданному объявлению} do
   on StargateAdSearchPage do |page|
     page.search_for_ad_by_id(@ad_id)
   end
@@ -19,7 +19,7 @@ end
   end
 end
 
-Допустим /^модератор принимает объявление$/ do
+Допустим %{модератор принимает объявление} do
   on StargateAdSearchResultsPage do |page|
     result = page.get_results.first
     page.open_menu(result)
@@ -49,14 +49,14 @@ end
   end
 end
 
-То /^интернет\-партнер получает письмо о том, что объявление было принято$/ do
+То %{интернет-партнер получает письмо о том, что объявление было принято} do
   pending # express the regexp above with the code you wish you had
 end
 
-То /^интернет\-партнер получает письмо о том, что объявление было отклонено$/ do
+То %{интернет-партнер получает письмо о том, что объявление было отклонено} do
   pending # express the regexp above with the code you wish you had
 end
 
-Допустим /^в письме об отклонении модерации указано жирным текстом "(.*?)"$/ do |arg1|
+Допустим %{в письме об отклонении модерации указано жирным текстом "(.*?)"} do |bold_text|
   pending # express the regexp above with the code you wish you had
 end

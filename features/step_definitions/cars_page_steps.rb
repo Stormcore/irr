@@ -100,7 +100,7 @@ end
   end
 end
 
-Когда /^заполнена таблица марок и моделей$/ do
+Когда %{заполнена таблица марок и моделей} do
   examples = []
   on CategoryCarsPage do |page|
     page.get_all_marks_or_models.each do |mark_text|
