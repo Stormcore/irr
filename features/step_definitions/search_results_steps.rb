@@ -214,11 +214,13 @@ end
     keywords.split(", ").each do |keyword|
       downcased_keyword = UnicodeUtils.downcase(keyword)
       # Заголовок
-      if UnicodeUtils.downcase(result['title']).include? downcased_keyword
-        puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
-             " найдено ключевое слово '#{keyword}' в заголовке"
-        keyword_found = true
-        break
+      if result['title']
+        if UnicodeUtils.downcase(result['title']).include? downcased_keyword
+          puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
+               " найдено ключевое слово '#{keyword}' в заголовке"
+          keyword_found = true
+         break
+        end
       end
       
       # Текст объявления на странице
@@ -235,33 +237,44 @@ end
     unless keyword_found
       @browser.goto(result['url'])
       on AdDetailsPage do |page|
-        page.show_all_text if page.show_all_text_element.exists?
         keywords.split(", ").each do |keyword|
           downcased_keyword = UnicodeUtils.downcase(keyword)
+
           # Полный текст объявления
-          if page.advert_text?
+          begin
+            page.advert_text_element.when_present
             if UnicodeUtils.downcase(page.advert_text_element.text).include? downcased_keyword
               puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
                    " найдено ключевое слово '#{keyword}' в полном тексте объявления"
               keyword_found = true
               break
             end
+          rescue
           end
 
           # Текст основных параметров
-          if UnicodeUtils.downcase(page.main_params_element.element.html).include? downcased_keyword
-            puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
-                 " найдено ключевое слово '#{keyword}' в параметрах объявления"
-            keyword_found = true
-            break
+          begin
+            page.main_params_element.when_present
+            if UnicodeUtils.downcase(page.main_params_element.element.html).include? downcased_keyword
+              puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
+                   " найдено ключевое слово в основных параметрах объявления"
+              keyword_found = true
+              break
+            end
+          rescue
           end
 
+          page.show_all_text if page.show_all_text_element.exists?
           # Текст всех параметров
-          if UnicodeUtils.downcase(page.all_params_element.element.html).include? downcased_keyword
-            puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
-                 " найдено ключевое слово '#{keyword}' в параметрах объявления"
-            keyword_found = true
-            break
+          begin
+            page.all_params_element.when_present
+            if UnicodeUtils.downcase(page.all_params_element.element.html).include? downcased_keyword
+              puts "URL <a href='#{result['url']}'>#{result['title']}</a>':" +
+                   " найдено ключевое слово во всех параметрах объявления"
+              keyword_found = true
+              break
+            end
+          rescue
           end
         end
       end
