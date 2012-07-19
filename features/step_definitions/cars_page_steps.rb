@@ -121,6 +121,23 @@ end
   end
 end
 
+Когда %{я заполняю ссылки в секции "$section" в сценарий "$path"} do |section, path|
+  examples = []
+  on AdDetailsPage do |page|
+    page.get_links_from_section(section).each do |result|
+      # Декодируем ссылку
+      result[1] = URI.unescape(result[1])
+      examples << "  | #{result[0]} | #{result[1]} |"
+    end
+  end
+
+  # заменяем examples в текущем сценарии
+  scenario_path = File.dirname(__FILE__)+"/../#{path}"
+  File.open(scenario_path, "a") do |file|
+    file.puts examples.join("\n")
+  end
+end
+
 def dealer_info_soft_assert
   on CategoryCarsPage do |page|
     @dealers.each do |dealer|

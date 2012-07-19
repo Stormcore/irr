@@ -274,7 +274,7 @@ class AdDetailsPage
   def has_tag_cloud_with_name?(name)
     begin
       self.div_element(class: "popularMark").when_present.
-           span_element(text: "#{name}").exists?
+           span_element(text: /#{name}/).exists?
     rescue Watir::Wait::TimeoutError => e
       return false
     end
