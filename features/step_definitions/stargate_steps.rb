@@ -78,7 +78,7 @@ end
   end
 end
 
-Допустим %{при создании премиума я выбираю "premium_length"} do |premium_length|
+Допустим %{при создании премиума я выбираю "$premium_length"} do |premium_length|
   on StargateNewPremiumDataPage do |page|
     page.set_premium_period(premium_length)
   end
