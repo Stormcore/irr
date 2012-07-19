@@ -65,10 +65,8 @@ class StargatePowersellerDetailsPackagesTabPage
   end
 
   def set_parameter(name, value)
-    row_element = self.main_element.
-        div_element(class: "x-grid3-cell-inner", text: name)
-    row_element.when_present.
-        parent.parent.cell_element(index: 2).when_present.double_click
+    table = self.main_element.element.table(xpath: "//table[.//div[contains(text(),'#{name}')]]")
+    table.td(class: "x-grid3-td-value").double_click
     editor = self.main_element.element.
                   divs(class: "x-editor").
                   select{|div| div.visible?}[0].when_present
