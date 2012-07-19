@@ -32,7 +32,9 @@ class AddAdvertStep2 < AdDetailsPage
   div :has_package, class: "ico-messagesok"
 
   def set_region(region)
-    
+    self.region_spoiler_element.when_present.click
+    self.region_element.when_present.visible?.should == true
+    self.region = region
   end
 
   def set_street(street)
