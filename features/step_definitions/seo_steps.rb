@@ -34,7 +34,7 @@ end
 То %{в поле "$field" выбраны следующие значения:} do |field, table|
   on @category_page do |page|
     table.hashes.each do |hash|
-      page.get_selected_parameter(field, hash).should eq(true), 
+      page.get_selected_parameter(field, hash['value']).should eq(true), 
         "Выбрано некорректное значение"
     end
     
