@@ -265,7 +265,7 @@ class AdDetailsPage
 
   def has_seo_link_section?
     begin
-      self.div_element(class: "quicklySearch").when_present.exists?
+      self.div_element(class: "quicklySearch").exists?
     rescue Watir::Wait::TimeoutError => e
       return false
     end

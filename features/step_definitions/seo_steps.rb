@@ -33,19 +33,16 @@ end
 
 То %{в поле "$field" выбраны следующие значения:} do |field, table|
   on @category_page do |page|
-    table.hashes.each do |hash|
-      page.get_selected_parameter(field, hash['value']).should eq(true), 
-        "Выбрано некорректное значение"
-    end
-    
-    # TODO: Проверям, что другие значения не выбраны   
+    results = page.get_selected_parameter(field, nil)
+    results.sort.should == table.hashes.map{|h| h['value']}.sort
   end
 end
 
 То %{в поле "$field" выбрано значение "$expected"} do |field, expected|
   on @category_page do |page|
-    page.get_selected_parameter(field, expected).should eq(true), 
-        "Выбрано некорректное значение"
+    result = page.get_selected_parameter(field)
+    result[0].should eq(expected), "Выбрано некорректное значение"
+    result.size.should eq(1), "Выбраны другия значения: '#{results}'"
   end
 end
 

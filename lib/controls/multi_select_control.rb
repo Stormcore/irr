@@ -34,7 +34,10 @@ def irr_multi_select(getter_name, identifier, setter_name = nil, table = "allPar
       end
       element.when_present(10).visible?.should == true
       element.div_element(class: "controlSelect").when_present(10).click
-      result = element.label_element(text: value).when_present(10).checkbox_element.checked?
+      
+      # Выбираем все отмеченные чекбоксы из возвращаем текст их парента (лейбл)
+      result = element.when_present(10).element.checkboxes.
+               select{|ch| ch.checked?}.map{|ch| ch.parent.text}
       element.div_element(class: "controlSelect").when_present(10).click
       return result
     rescue Exception => e
