@@ -53,6 +53,24 @@ end
   end
 end
 
+Допустим %{на странице логина показано сообщение о том, что пользователь не активен} do
+  on LoginPage do |page|
+    page.inactive_user_message?.should eq(true), "Сообщение не показано"
+    page.inactive_user_message.should eq("Ваша учетная запись зарегистрирована, но не активирована.\nВыслать письмо активации еще раз.")
+    page.inactive_user_link?.should eq(true), "Отсутствует ссылка на повторное письмо об активации"
+  end
+end
+
+Допустим %{на странице логина показано сообщение о том, что пользователь заблокирован} do
+  on LoginPage do |page|
+    page.inactive_irr_user_message?.should eq(true), "Сообщение не показано"
+    page.inactive_irr_user_message.should eq("Ваш аккаунт заблокирован. Пожалуйста, свяжитесь со службой поддержки по e-mail: support@irr.ru")
+    page.support?.should eq(true), "Отсутствует ссылка на адрес поддержки"
+    page.support_element.element.text.should eq("support@irr.ru")
+    page.support_element.element.href.should eq("mailto:support@irr.ru")
+  end
+end
+
 То %{на главной странице отображено имя пользователя} do 
   on MainPage do |page|
     page.logged_in_element.when_present(10).text.should == @current_user_name 

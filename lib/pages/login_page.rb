@@ -10,6 +10,10 @@ class LoginPage
   link (:login)           {|page| page.popupWrap_element.link_element(class: 'loginFormSubmit')}
 
   paragraph :incorrect_login_message, class: "authFailedMessage", index: 1
+  paragraph :inactive_irr_user_message, class: "authUserIrrNoactive", index: 1
+  link      (:support) {|page| page.inactive_irr_user_message_element.link_element}
+  paragraph :inactive_user_message, class: "authUserNoactive", index: 1
+  link      :inactive_user_link, id: "sendActivationKey"
 
   def login_as(username, password, remember_me)
     self.username_element.when_present
