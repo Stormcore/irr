@@ -30,6 +30,8 @@ class StargateNewPremiumDataPage
   div :panel, id: "propspanel"
   div :premium, xpath: "//div[@class='x-panel x-panel-noborder x-form-label-left']" + 
                           "[.//legend/span[text()='Премиум объявления']]"
+  div :photo, xpath: "//div[@class='x-panel-body x-panel-body-noheader']" + 
+                          "[.//div/span[text()='Фото']]"
   button :save, text: "Сохранить"
 
   def set_value(name, value)
@@ -106,6 +108,22 @@ class StargateNewPremiumDataPage
       xpath: "//div[@class='x-form-item '][./label[text()='#{premium_length}:']]").
       div_element(class: "x-form-radio-wrap-inner").
       click
+  end
+
+  def upload_picture()
+    # Загружаем файл из URL
+    Net::HTTP.start("mandroid.ru") do |http|
+      resp = http.get("/sites/default/files/imagecache/full-node-news/softattached/irr.png")
+      open("/tmp/logo_irr.png", "wb") do |file|
+        file.write(resp.body)
+      end
+    end
+    # Сначала удаляем стиль у элемента
+    el_id = self.photo_element.file_field_element.element.id
+    @browser.execute_script("document.getElementById('#{el_id}').setAttribute('style', '')")
+    self.photo_element.file_field_element.value="/tmp/logo_irr.png"
+    self.photo_element.element.button(text: "Закачать").click
+    Watir::Wait.until {self.photo_element.element.imgs.size > 0}
   end
 
   def save_premium

@@ -84,6 +84,12 @@ end
   end
 end
 
+Допустим %{при создании премиума я загружаю картинку} do
+  on StargateNewPremiumDataPage do |page|
+    page.upload_picture
+  end
+end
+
 Допустим %{я сохраняю введенный премиум} do
   on StargateNewPremiumDataPage do |page|
     page.save_premium
