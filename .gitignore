@@ -37,3 +37,4 @@ cucumber.html
 /rerun.txt
 /jenkins_job_creator.rb
 /nohup.out
+/junit.xml
