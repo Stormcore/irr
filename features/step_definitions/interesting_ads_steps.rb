@@ -7,7 +7,7 @@ def interesting_ads_soft_assert(description)
       begin
         ad = InterestingAd.new(element)
         yield ad
-      rescue RSpec::Expectations::ExpectationNotMetError => verification_error
+      rescue RSpec::Expectations::ExpectationNotMetError, RuntimeError => verification_error
         validation_errors[@browser.url] = verification_error.message
       end
     end
@@ -50,5 +50,16 @@ end
 То %{для каждого объявления в блоке "Интересные объявления" показана цена} do
   interesting_ads_soft_assert("Не показана цена") do |ad|
     ad.get_price.should_not be_nil
+  end
+end
+
+То %{в деталях каждого объявления в блоке "Интересные объявления" "$field" $operator "$expected"} do |field, operator, expected|
+  interesting_ads_soft_assert("Неправильное значение #{field}") do |ad|
+    begin
+      ad.open_ad
+      steps %Q{* на вкладке "Все" "#{field}" #{operator} "#{expected}"}
+    ensure
+      @browser.back
+    end
   end
 end

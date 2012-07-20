@@ -146,7 +146,7 @@ class AdDetailsPage
   def get_generic_parameter(field)
     xpath = "//table[@id='mainParams']/tbody/tr[./th/span[text()='#{field}']]/td"
     begin
-      result = self.cell_element(xpath: xpath).text
+      result = self.cell_element(xpath: xpath).when_present.text
       # Если результат пустой, то смотрим на вкладку allParams
       raise Exception if result == ""
       result

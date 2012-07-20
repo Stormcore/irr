@@ -23,4 +23,8 @@ class InterestingAd
   def get_price
     @element.paragraph_element(class: "prise").text
   end
+
+  def open_ad
+    @element.element.link.click
+  end
 end
