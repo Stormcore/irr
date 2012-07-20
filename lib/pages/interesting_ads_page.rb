@@ -27,4 +27,8 @@ class InterestingAd
   def open_ad
     @element.element.link.click
   end
+
+  def get_id
+    @element.element.link.href.match(/(\d+)/).to_s
+  end
 end

@@ -54,6 +54,10 @@ class StargateAdSearchResultsPage
     self.button_element(text: "Yes").when_present.click
   end
 
+  def menu_edit
+    self.link_element(text: "Редактировать").when_present.click
+  end
+
   def menu_approve
     self.link_element(text: "Принять").when_present.click
   end
@@ -61,6 +65,24 @@ class StargateAdSearchResultsPage
   def menu_decline
     self.link_element(text: "Отклонить").when_present.click
   end
+end
+
+class StargateAdDetailsDialog
+  include PageObject
+
+  div :main, class: "x-tab-panel", index: 1
+
+  def open_tab(name)
+    self.main_element.when_present
+    link = self.main_element.link_element(class: "x-tab-right", text: name)
+    link.click if link.exists?
+  end
+
+  def is_premium?
+    self.open_tab("Продукты объявления")
+    self.main_element.label_element(id: /premiumInfo/).when_present.text != "Не назначено"
+  end
+
 end
 
 class StargateAdModerationDeclineDialog

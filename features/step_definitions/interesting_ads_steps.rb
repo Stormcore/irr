@@ -19,6 +19,30 @@ def interesting_ads_soft_assert(description)
   end
 end
 
+def interesting_ads_list_soft_assert(description)
+  @ads = []
+  on InterestingAdsPage do |page|
+    page.ads_element.each do |element|
+      ad = InterestingAd.new(element)
+      @ads << ad.get_id
+    end
+  end
+
+  validation_errors = Hash.new
+  @ads.each do |id|
+    begin
+      yield id
+    rescue RSpec::Expectations::ExpectationNotMetError, RuntimeError => verification_error
+      validation_errors[id] = verification_error.message
+    end
+  end
+  
+  if !validation_errors.empty?
+    output_html_formatted_messages(validation_errors)
+    raise "#{description}"
+  end
+end
+
 Когда %{в блоке "Интересные объявления" показаны объявления} do
   on InterestingAdsPage do |page|
     page.interesting_ads_element.visible?.should eq(true), 
@@ -60,6 +84,26 @@ end
       steps %Q{* на вкладке "Все" "#{field}" #{operator} "#{expected}"}
     ensure
       @browser.back
+    end
+  end
+end
+
+То %{каждое объявление в блоке "Интересные объявления" является премиумом} do
+  interesting_ads_list_soft_assert("Объявление не является премиумом") do |id|
+    @ad_id = id
+    steps %Q{
+      * я перехожу на БО
+      * на БО я перехожу в категорию "Объявления -> Найти объявления"
+      * я делаю поиск по созданному объявлению
+    }
+    on StargateAdSearchResultsPage do |page|
+      result = page.get_results.first
+      page.open_menu(result)
+      page.menu_edit
+    end
+
+    on StargateAdDetailsDialog do |page|
+      page.is_premium?.should eq(true), "Объявление #{@ad_id} не премиум"
     end
   end
 end
