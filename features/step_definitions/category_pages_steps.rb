@@ -136,8 +136,7 @@ def results_details_soft_assert(description)
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
         page.highlight_result_by_url(result['url'])
-        full_url = result['url']
-        validation_errors[full_url] = verification_error.message
+        validation_errors[result['url']] = verification_error.message
       ensure
         @browser.back
       end
@@ -165,8 +164,7 @@ def first_result_details_soft_assert(description)
           end
         end
       rescue RSpec::Expectations::ExpectationNotMetError => verification_error
-        full_url = result['url']
-        validation_errors[full_url] = verification_error.message
+        validation_errors[result['url']] = verification_error.message
       end
     end
   end
