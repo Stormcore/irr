@@ -84,7 +84,7 @@ end
   end
 end
 
-Допустим %{я сохраняю введенный примиум} do
+Допустим %{я сохраняю введенный премиум} do
   on StargateNewPremiumDataPage do |page|
     page.save_premium
   end
