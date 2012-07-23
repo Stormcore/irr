@@ -6,6 +6,7 @@ class SearchResultsPage
 
   div :results_table, class: "b-adList"
   unordered_list :pages, class: "filter-pages"
+  unordered_list :ads_on_page, class: "fpages"
   div :side_column, class: "side-col"
 
   def search_results
@@ -141,5 +142,9 @@ class SearchResultsPage
     next_page.when_present
     puts "Moving to page #{number}"
     next_page.click
+  end
+
+  def show_more_ads(number)
+    self.ads_on_page_element.link_element(text: number).when_present.click
   end
 end

@@ -111,6 +111,10 @@ end
   end
 end
 
+То %{в результатах поиска присутствует объявление, у которого "$field" равно "$expected"} do |field, expected|
+  @result_details.values.any?{|d| d[field] == expected}.should eq(true), "Объявление не найдено"
+end
+
 То %{на странице категории отображен баннер справа} do
   on GenericCategoryPage do |page|
     (1..3).each do |attempt|

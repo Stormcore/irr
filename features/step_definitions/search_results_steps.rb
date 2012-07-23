@@ -12,6 +12,36 @@ end
   end
 end
 
+Когда %{на странице поиска я переключаю "Объявлений на странице" на $number} do |number|
+  on SearchResultsPage do |page| 
+    page.show_more_ads(number)
+  end
+  steps %Q{* на странице поиска загружен список результатов}
+end
+
+Когда /^на странице поиска я запоминаю следующие поля из деталей объявления:$/ do |table|
+  steps %Q{
+    * на странице поиска я переключаю "Объявлений на странице" на 80
+    * на странице поиска загружен список результатов
+  }
+  @result_details = Hash.new
+  on SearchResultsPage do |page|
+    @results.each do |result|
+      begin
+        @browser.goto(result['url'])
+        @result_details[result['url']] = Hash.new
+        on @category_page do |page|
+          table.hashes.each do |hash|
+            parameter_name = hash['поле']
+            @result_details[result['url']][parameter_name] = page.get_parameter(parameter_name)
+          end
+        end
+      rescue
+      end
+    end
+  end
+end
+
 То %{я перехожу на страницу номер $page_number} do |page_number|
   on SearchResultsPage do |page|
     page.go_to_page(page_number)
@@ -354,7 +384,6 @@ end
       "Объявление '#{title}' присутствует в листинге"
   end
 end
-
 
 То %{у объявления "$title" отображается загруженная фотография} do |title|
   # Не проверять картинки на *.prontosoft.by
