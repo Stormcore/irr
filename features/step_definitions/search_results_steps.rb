@@ -152,15 +152,9 @@ end
     next
   end
   results_page_soft_assert("Неправильный источник:") do |result|
-    case result['source_link'] 
-    when /\/user\//
-      actual_source = "Сайт IRR.RU"
-    when /#{BASE_URL}/
-      actual_source = "Интернет-партнёры"
-    else
-      actual_source = result['source_title']
-    end
-
+    actual_source = result['source_title']
+    actual_source = "Сайт IRR.RU" if result['source_link'].include? "user"
+    actual_source = "Интернет-партнёры" if result['source_link'].include? BASE_URL.gsub("http://","")
     actual_source.should be == expected_source
 
   end
