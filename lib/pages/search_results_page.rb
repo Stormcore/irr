@@ -69,7 +69,7 @@ class SearchResultsPage
       begin
         h['url'] = row.css('td.tdTxt > div.h3 > a')[0]['href']
         h['url'] = BASE_URL + h['url'] unless h['url'].include? BASE_URL.gsub('http://','')
-        ad_id = h['url'].match(/\/advert\/(.*)\//)[1]
+        ad_id = h['url'].match(/advert(.*).html/)[1]
       rescue
       end
 

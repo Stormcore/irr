@@ -186,7 +186,6 @@ end
     actual_source = "Сайт IRR.RU" if result['source_link'].include? "user"
     actual_source = "Интернет-партнёры" if result['source_link'].include? BASE_URL.gsub("http://","")
     actual_source.should be == expected_source
-
   end
 end
 
