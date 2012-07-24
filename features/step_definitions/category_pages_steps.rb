@@ -103,6 +103,10 @@ end
         actual_value.to_i.should be <= expected_array[1].to_i
       when "содержит"
         actual_value.should include(expected)
+      when "больше"
+        actual_value.to_i.should be > expected.to_i
+      when "меньше"
+        actual_value.to_i.should be < expected.to_i
       else
         eval("actual_value.to_i.should be #{operator} expected.to_i")
       end
