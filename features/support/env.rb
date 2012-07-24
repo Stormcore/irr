@@ -5,9 +5,10 @@ DRIVER = (ENV['WEB_DRIVER'] || :firefox).to_sym
 ENABLE_FLASH = ENV['FLASH'] || false
 FAIL_FAST = ENV['FAILFAST'] || false
 
-
+require 'bundler/setup'
 require 'watir-webdriver'
 require "watir-webdriver/extensions/alerts"
+require "watir-webdriver-performance"
 require 'page-object'
 require 'page-object/page_factory'
 require 'nokogiri'
@@ -36,7 +37,7 @@ end
 def start_browser
   case DRIVER
   when :firefox
-    puts "Starting firefox..."
+    puts "Запускаем firefox..."
     client = Selenium::WebDriver::Remote::Http::Persistent.new
     client.timeout = 60
     profile = Selenium::WebDriver::Firefox::Profile.new
@@ -48,11 +49,11 @@ def start_browser
     browser = Watir::Browser.new(DRIVER, profile: profile, http_client: client)
 
   when :chrome
-    puts "Starting chrome"
+    puts "Запускаем chrome"
     client = Selenium::WebDriver::Remote::Http::Persistent.new
     client.timeout = 60
     profile = Selenium::WebDriver::Chrome::Profile.new
-    switches  = %w[--bwsi --disable-translate --start-maximized]
+    switches = %w[--bwsi --disable-translate --start-maximized]
     browser = Watir::Browser.new(DRIVER, profile: profile, http_client: client, switches: switches)
   end
   return browser
@@ -83,7 +84,7 @@ Before do |scenario|
 end
 
 AfterConfiguration do |config|
-  puts "Tests have been configured, starting up.."
+  puts "Конфигурация завершена.."
 end
 
 # Проверяем наличие ошибок JS после каждого шага
@@ -94,7 +95,10 @@ end
 
 # Записываем изменения URL
 AfterStep do |scenario|
-  puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>" if @browser
+  if @browser
+    response_time = @browser.performance.summary[:response_time]/1000
+    puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, открыта за #{response_time} с"
+  end
 end
 
 After do |scenario|

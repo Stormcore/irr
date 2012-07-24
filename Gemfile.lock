@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/roignac/watir-webdriver-performance.git
+  revision: 01d315ecf4c565ca0edd2ccca123b707fe06c13b
+  specs:
+    watir-webdriver-performance (0.1.3.1)
+      watir-webdriver
+      watir-webdriver
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -68,3 +76,4 @@ DEPENDENCIES
   rspec
   unicode_utils
   watir-webdriver
+  watir-webdriver-performance!
