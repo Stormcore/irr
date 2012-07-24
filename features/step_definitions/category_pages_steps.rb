@@ -25,7 +25,6 @@ end
   end
   
   select_class_for_category(long_category)
-  puts "DEBUG: Страница категории <a href='#{@browser.url}'>#{@browser.url}</a>"
 end
 
 Когда %{на главной странице я перехожу в категорию "$long_category"} do |long_category|
@@ -35,7 +34,6 @@ end
      defined?(@url_prefix) and
      defined?(@url_suffix) and
     full_url = @url_prefix+ad_class.class_variable_get("@@url_suffix")+@url_suffix
-    puts "DEBUG: URL <a href='#{full_url}'>#{full_url}</a>"
     @browser.goto full_url
   else
     steps %Q{When на главной странице я перехожу в категорию "#{long_category}" через меню}
@@ -118,7 +116,7 @@ end
 То %{на странице категории отображен баннер справа} do
   on GenericCategoryPage do |page|
     (1..3).each do |attempt|
-      puts "DEBUG: Attempt #{attempt}"
+      puts "DEBUG: Попытка №#{attempt}"
       break if page.left_banner_element.element.visible?
       @browser.refresh
     end
