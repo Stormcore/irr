@@ -10,6 +10,7 @@ class StargatePowersellerDetailsPage
 
   def open_tab(name)
     self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
+    self.div_element(class: "ext-el-mask").element.wait_while_present
   end
 
   def open_right_click_menu_for_package(name)
