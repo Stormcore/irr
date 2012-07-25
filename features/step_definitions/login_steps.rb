@@ -3,6 +3,7 @@
 def get_login_and_password_for_role(role)
   credentials = YAML::load(File.open(File.dirname(__FILE__)+'/../credentials.yml'))
   record_name = BASE_URL.gsub("http://",'')
+  raise "Пароли и логины не найдены для данного сервера" unless credentials.has_key?(record_name)
   @passport_address = credentials[record_name]['passport_address']
   credentials[record_name][role]
 end
