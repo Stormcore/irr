@@ -26,6 +26,14 @@ class MyAdvertsPage
     return MyAdvertsRecordPage.new(element)
   end
 
+  def get_first_ad
+    element = self.wait_for_ads_loaded.element.row(index: 1)
+    unless element.exists?
+      raise "Объявления отсутствуют"
+    end
+    return MyAdvertsRecordPage.new(element)
+  end
+
   def open_tab(name)
     self.bookmarks_element.link_element(link_text: name).click
   end

@@ -270,3 +270,23 @@ end
       "Пакет '#{package}' не был добавлен"
   end
 end
+
+Допустим %{я запоминаю ID последнего объявления} do
+  on MyAdvertsPage do |page|
+    @ad_id = page.get_first_ad.get_ad_id
+  end
+end
+
+Допустим %{я жду пока объявление с таким ID проиндексируется за $timeout минут} do |timeout|
+  Timeout.timeout(timeout.to_i*60) do
+    while true do 
+      steps %Q{
+        * я ищу "#{@ad_id}"
+        * на странице поиска загружен список результатов
+      }
+      break if @results.size > 0
+      sleep 30
+    end
+  end
+end
+
