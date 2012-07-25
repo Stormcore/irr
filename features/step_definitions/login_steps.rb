@@ -20,6 +20,7 @@ end
     @current_user_name = page.logged_in_element.text if page.logged_in?
   end
   expected_credentials = get_login_and_password_for_role(role)
+  raise "Нет такой роли" if expected_credentials.nil?
   unless expected_credentials['username'] == @current_user_name
     steps %Q{* я перехожу к окну логина}
     steps %Q{* я ввожу логин и пароль роли "#{role}"}
