@@ -11,7 +11,7 @@ class CategoryElectronicsTechnicsAutoTechnicsInvertorsPage < AdDetailsPage
   irr_range_select "Выходное напряжение, В", "vihodnoe_napryajenije", "Выходное напряжение"
   irr_range_select "Выходная мощность, Вт", "vihodnaya_moshnost", "Выходная мощность"
   irr_range_select "Пиковая мощность, Вт", "cf_labelpikovaya_moshnost", "Пиковая мощность"
-  irr_range_select "КПД", "kpd"
+  irr_range_select "КПД, %", "kpd"
   irr_checkbox     "Защита от перегрузки", "zashita_ot_peregruzki"
   irr_checkbox     "USB-порт", "usb_port"
 end
