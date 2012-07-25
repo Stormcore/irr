@@ -21,4 +21,13 @@ class CategoryAnimalsPlantsAnimalsCatsPage < AdDetailsPage
     end
   end
 
+  def get_parameter(field)
+    case field
+    when "Возраст"
+      super("Возраст").split[0].to_i
+    when "Лет/мес."
+      super("Возраст").split[1]
+    end
+  end
+
 end
