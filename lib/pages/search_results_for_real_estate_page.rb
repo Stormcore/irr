@@ -91,6 +91,11 @@ class SearchResultsForRealEstatePage < SearchResultsPage
       end
 
       begin
+        h['snippet'] = row.css('td.tdTxt span.snippet')[0].content
+      rescue
+      end
+
+      begin
         h['source_title'] = parsed_json['items'][ad_id]['source_title']
         h['source_link'] = parsed_json['items'][ad_id]['source_link']
       rescue

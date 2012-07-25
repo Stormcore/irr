@@ -107,7 +107,7 @@ end
 То %{в каждом объявлении присутствует искомое слово} do
   # TODO: хотя бы один присуствует (если есть отдельное слово в тексте)
   results_page_soft_assert("Нет сниппета в объявлениях:") do |result|
-    if result['description'].include? ' #{@keywords}'
+    if result['description'].match /\b#{@keywords}/
       result.should have_key("snippet")
     else
       result.should_not have_key("snippet")
