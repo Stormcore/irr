@@ -205,10 +205,14 @@ end
   }
   on StargatePowersellerDetailsPage do |page|
     page.open_tab("Пакеты")
-    while page.has_package(package) do
-      page.delete_package(package)
+    if page.has_package(package)
+      while page.has_package(package) do
+        page.delete_package(package)
+      end
+      page.save
+    else
+      page.close
     end
-    page.save
   end
 
 end

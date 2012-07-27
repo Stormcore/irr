@@ -39,6 +39,12 @@ class StargatePowersellerDetailsPage
 
   def save
     self.main_element.button_element(text: "Сохранить").when_present.click
+    self.main_element.element.wait_while_present
+  end
+
+  def close
+    self.main_element.button_element(text: "Закрыть").when_present.click
+    self.main_element.element.wait_while_present
   end
 end
 
