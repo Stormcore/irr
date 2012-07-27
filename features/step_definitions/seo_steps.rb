@@ -42,7 +42,7 @@ end
   on @category_page do |page|
     result = page.get_selected_parameter(field)
     result[0].should eq(expected), "Выбрано некорректное значение"
-    result.size.should eq(1), "Выбраны другия значения: '#{results}'"
+    result.size.should eq(1), "Выбраны другия значения: '#{result}'"
   end
 end
 
