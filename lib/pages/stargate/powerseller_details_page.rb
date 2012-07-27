@@ -7,6 +7,8 @@ class StargatePowersellerDetailsPage
 
   button :add_package, text: "Добавить пакет"
 
+  button :close, text: "Закрыть"
+  button :save, text: "Сохранить"
 
   def open_tab(name)
     self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
@@ -38,14 +40,12 @@ class StargatePowersellerDetailsPage
   end
 
   def save
-    self.main_element.button_element(text: "Сохранить").when_present.click
+    self.save_element.click if self.save_element.exists?
   end
 
   def close
-    if self.main_element.exists?
-      self.main_element.button_element(text: "Закрыть").when_present.click
-      self.main_element.element.wait_while_present
-    end
+    self.close_element.click if self.close_element.exists?
+    self.main_element.element.wait_while_present
   end
 end
 
