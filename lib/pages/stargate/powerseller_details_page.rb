@@ -42,8 +42,10 @@ class StargatePowersellerDetailsPage
   end
 
   def close
-    self.main_element.button_element(text: "Закрыть").when_present.click
-    self.main_element.element.wait_while_present
+    if self.main_element.exists?
+      self.main_element.button_element(text: "Закрыть").when_present.click
+      self.main_element.element.wait_while_present
+    end
   end
 end
 
