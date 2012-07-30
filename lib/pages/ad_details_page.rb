@@ -283,8 +283,10 @@ class AdDetailsPage
   end
 
   def get_links_from_section(section)
-    div = self.div_elements(class: "popularMark").
-               select{|div| div.span_element(text: /#{section}/).exists?}[0].when_present
+    sections = self.div_elements(class: "popularMark").
+               select{|div| div.span_element(text: /#{section}/).exists?}
+    raise "Секция не найдена" if sections.size == 0
+    div = sections[0].when_present
     Hash[*div.element.as.map{|a| [a.text, a.href]}.flatten]
   end
 
