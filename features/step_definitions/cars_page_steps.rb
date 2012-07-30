@@ -121,7 +121,8 @@ end
   end
 end
 
-Когда %{я заполняю ссылки в секции "$section" в сценарий "$path"} do |section, path|
+Когда /^я заполняю ссылки в секции "(.*?)" с параметрами:$/ do |section, table|
+  # Получаем ссылки из облака тегов
   examples = []
   on AdDetailsPage do |page|
     page.get_links_from_section(section).each do |result|
@@ -131,11 +132,22 @@ end
     end
   end
 
+  scenario_path = File.dirname(__FILE__)+"/../tag_cloud_check.feature"
+
+  # заменяем поля в файле
+  text = File.read(scenario_path)
+  table.hashes.each do |hash|
+    text.gsub!("%#{hash['название']}%", hash['значение'])
+  end
+  File.open(scenario_path, "w") do |file|
+    file.write text
+  end
+
   # заменяем examples в текущем сценарии
-  scenario_path = File.dirname(__FILE__)+"/../#{path}"
   File.open(scenario_path, "a") do |file|
     file.puts examples.join("\n")
   end
+
 end
 
 def dealer_info_soft_assert
