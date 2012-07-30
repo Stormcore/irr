@@ -156,6 +156,9 @@ end
       page.set_parameter(hash['поле'], hash['значение'])
     end
 
+    page.set_parameter("Номер счета пакета", "123")
+    page.set_parameter("Статус оплаты", "пробное")
+
     page.save
   end
 end
