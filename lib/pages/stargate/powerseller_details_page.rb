@@ -7,8 +7,9 @@ class StargatePowersellerDetailsPage
 
   button :add_package, text: "Добавить пакет"
 
-  button :close, text: "Закрыть"
-  button :save, text: "Сохранить"
+  
+  button (:close) {|page| page.main_element.button_element(text: 'Закрыть')}
+  button (:save) {|page| page.main_element.button_element(text: "Сохранить")}
 
   def open_tab(name)
     self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
