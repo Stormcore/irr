@@ -34,6 +34,7 @@ class StargatePowersellerDetailsPage
   end
 
   def has_package(name)
+    main_element = self.div_element(xpath: "//div[@class=' x-tab-panel'][.//span[text()='Свойства']]")
     self.main_element.div_element(class: "x-grid3-cell-inner", text: name).exists?
   end
 
