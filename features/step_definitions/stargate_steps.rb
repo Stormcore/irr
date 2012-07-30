@@ -157,7 +157,7 @@ end
     end
 
     page.set_parameter("Номер счета пакета", "123")
-    page.set_parameter("Статус оплаты", "пробное")
+    page.set_combobox_value("Статус оплаты", "пробное")
 
     page.save
   end
