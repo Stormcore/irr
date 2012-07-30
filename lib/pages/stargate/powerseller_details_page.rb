@@ -17,9 +17,13 @@ class StargatePowersellerDetailsPage
   end
 
   def open_right_click_menu_for_package(name)
-    self.main_element.
-         div_element(class: "x-grid3-cell-inner", text: name).when_present.
-         element.right_click
+    begin
+      self.main_element.
+           div_element(class: "x-grid3-cell-inner", text: name).when_present.
+           element.right_click
+    rescue Watir::Wait::TimeoutError => e
+      raise "Пакет '#{name}' не найден"
+    end
   end
 
   def edit_package(name)
