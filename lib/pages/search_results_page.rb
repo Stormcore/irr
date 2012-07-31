@@ -145,6 +145,7 @@ class SearchResultsPage
   end
 
   def show_more_ads(number)
-    self.ads_on_page_element.link_element(text: number).when_present.click
+    ads_on_page = self.ads_on_page_element.link_element(text: number)
+    ads_on_page.click if ads_on_page.exists?
   end
 end
