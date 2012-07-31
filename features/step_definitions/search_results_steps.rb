@@ -296,7 +296,7 @@ end
           rescue
           end
 
-          page.show_all_text if page.show_all_text_element.exists?
+          page.show_all_params if page.show_all_params_element.exists?
           # Текст всех параметров
           begin
             page.all_params_element.when_present
