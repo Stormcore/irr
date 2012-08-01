@@ -3,7 +3,7 @@
 class CategoryElectronicsTechnicsGamesGamesForConsolesPage < AdDetailsPage
   include PageObject
  
-  @@url_suffix = "/electronics-technics/games/game-for-consoles"
+  @@url_suffix = "/electronics-technics/games/games-for-consoles"
   @category = "Электроника и техника -> Игры, игровые приставки -> Игры для приставок"
   
   irr_multi_select "Тип предложения", "offertype"
