@@ -23,11 +23,12 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
   end
 
   #selected
-  define_method("#{function_name}_selected") do |hash|
+  define_method("#{function_name}_selected") do |value|
     begin
       self.expand_all_parameters
       element.div_element(class: "controlSelectS").when_present(10).click
-      element.element.div(text: hash['value'].strip).attribute("class") == "act"
+      text = element.div_element(xpath: "//div[@class='act']").text
+      return [text]
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
     end
