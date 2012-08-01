@@ -123,7 +123,8 @@ end
 
 То %{в каждом объявлении не более $n знаков} do |n|
   results_page_soft_assert("Слишком длинное описание:") do |result|
-    result['description'].length.should be < n.to_i
+    length = result['description'].length - 4 # Удаляем пробел и троеточие
+    length.should be <= n.to_i
   end
 end
 

@@ -86,7 +86,7 @@ class SearchResultsForRealEstatePage < SearchResultsPage
       end
 
       begin
-        h['description'] = row.css('td.tdTxt > p')[0].content
+        h['description'] = row.css('td.tdTxt > p')[0].inner_html
       rescue
       end
 

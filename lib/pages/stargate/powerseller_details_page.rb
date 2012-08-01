@@ -34,7 +34,8 @@ class StargatePowersellerDetailsPage
   end
 
   def has_package(name)
-    main_element = self.div_element(xpath: "//div[@class=' x-tab-panel'][.//span[text()='Свойства']]")
+    main_element = self.div_elements(class: 'x-tab-panel').
+                        select {|div| div.span_element.text == 'Свойства'}[0]
     self.main_element.div_element(class: "x-grid3-cell-inner", text: name).exists?
   end
 
@@ -46,11 +47,11 @@ class StargatePowersellerDetailsPage
   end
 
   def save
-    self.save_element.click if self.save_element.exists?
+    self.save_element.click if self.save_element.visible?
   end
 
   def close
-    self.close_element.click if self.close_element.exists?
+    self.close_element.click if self.close_element.visible?
     self.main_element.element.wait_while_present
   end
 end
