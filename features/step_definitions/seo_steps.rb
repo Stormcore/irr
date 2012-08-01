@@ -41,8 +41,8 @@ end
 То %{в поле "$field" выбрано значение "$expected"} do |field, expected|
   on @category_page do |page|
     result = page.get_selected_parameter(field)
-    result[0].should eq(expected), "Выбрано некорректное значение"
-    result.size.should eq(1), "Выбраны другия значения: '#{result}'"
+    result[0].should eq(expected)
+    result.size.should eq(1), "Выбраны другие значения: '#{result}'"
   end
 end
 
