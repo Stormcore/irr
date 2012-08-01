@@ -23,7 +23,7 @@ def irr_single_select(getter_name, identifier, setter_name = nil)
   end
 
   #selected
-  define_method("#{function_name}_selected") do |value|
+  define_method("#{function_name}_selected") do
     begin
       self.expand_all_parameters
       element.div_element(class: "controlSelectS").when_present(10).click
