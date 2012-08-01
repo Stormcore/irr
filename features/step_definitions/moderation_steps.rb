@@ -27,7 +27,7 @@ end
     # Страница перезагружается
     result = page.get_results.first
     page.is_approved?(result).should eq(true), 
-        "Ошибка при активации объявления"
+        "Ошибка при активации объявления - объявление не отмечено как одобренное"
   end
 end
 
