@@ -4,7 +4,7 @@ class CategoryEquipmentTradePage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/equipment/trade"
-  @category = "Оборудование -> Для торговли и услуг"
+  @category = "Оборудование -> Торговое и холодильное оборудование"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
