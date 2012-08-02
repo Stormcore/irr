@@ -13,6 +13,7 @@ class AddAdvertStep2 < AdDetailsPage
 
   select_list :mark, name: "make"
   select_list :model, name: "model"
+  text_field :model_text, name: "model"
 
   text_field :f_title, id: "f_title"
   text_field :f_text, id: "f_text"
@@ -119,7 +120,11 @@ class AddAdvertStep2 < AdDetailsPage
       when "Марка"
         self.mark = hash['value']
       when "Модель"
-        self.model = hash['value']
+        if self.model?
+          self.model = hash['value'] 
+        else
+          self.model_text = hash['value'] 
+        end
       when "Текст"
         self.f_text = hash['value']
       else
