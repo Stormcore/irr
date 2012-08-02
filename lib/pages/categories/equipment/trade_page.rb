@@ -8,5 +8,5 @@ class CategoryEquipmentTradePage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
-  irr_multi_select "Тип оборудования", "type"
+  irr_multi_select "Тип оборудования", "advert_type_id"
 end
