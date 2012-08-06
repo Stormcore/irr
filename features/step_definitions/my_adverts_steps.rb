@@ -113,9 +113,7 @@ end
     end
   end
   if errors.size > 0
-    errors.each do |field, error|
-      puts "Поле '#{field}'<br>#{error}"
-    end
+    errors.each do {|error| puts error }
     raise "Найдены ошибки при проверке деталей"
   end
 end
