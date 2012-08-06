@@ -81,11 +81,7 @@ end
     when "равно одному из"
       expected.split(', ').should include actual_value
     when "равно"
-      begin
-        actual_value.to_i.should == expected.to_i
-      rescue
-        actual_value.should == expected
-      end
+      actual_value.should eq(expected)
     when "в границах"
       expected_array = expected.split(" - ")
       actual_value.to_i.should be >= expected_array[0].to_i
@@ -102,6 +98,25 @@ end
   on AdDetailsPage do |page|
     page.get_parameter(field).should be_true, 
       "Параметр '#{field}' не установлен"
+  end
+end
+
+Допустим /^на вкладке "Все" указаны следующие параметры:$/ do |table|
+  errors = Hash.new
+  on AdDetailsPage do |page|
+    table.hashes.each do |hash|
+      begin
+        steps %Q{* на вкладке "Все" "#{hash['поле']}" равно "#{hash['значение']}"}
+      rescue Exception => e
+        errors[hash['поле']] = e.message
+      end
+    end
+  end
+  if errors.size > 0
+    errors.each do |field, error|
+      puts "Поле '#{field}'<br>#{error}"
+    end
+    raise "Найдены ошибки при проверке деталей"
   end
 end
 
