@@ -4,7 +4,7 @@ class CategoryChildrenBabyCarriagePage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/children/baby-carriage"
-  @category = "Товары для детей -> Детские коляски"
+  @category = "Товары для детей -> Коляски"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
