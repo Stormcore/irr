@@ -3,7 +3,7 @@
 class CategoryComputerDevicesMonitorsCRTPage < AdDetailsPage
   include PageObject
 
-  @@url_suffix = "/computers-devices/monitors/lcd"
+  @@url_suffix = "/computers-devices/monitors/crt"
   @category = "Компьютерная техника -> Мониторы -> ЭЛТ"
 
   irr_multi_select "Тип предложения", "offertype"
