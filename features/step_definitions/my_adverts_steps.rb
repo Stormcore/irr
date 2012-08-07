@@ -113,7 +113,7 @@ end
     end
   end
   if errors.size > 0
-    errors.each do {|error| puts error }
+    errors.each {|error| puts error }
     raise "Найдены ошибки при проверке деталей"
   end
 end
