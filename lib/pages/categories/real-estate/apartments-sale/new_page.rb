@@ -7,6 +7,7 @@ class CategoryRealEstateApartmentsSaleNewPage < AdDetailsPage
   @@url_suffix = "/real-estate/apartments-sale/new"
   @category = "Недвижимость -> Квартиры. Продажа -> Новостройки"
 
+  irr_inline_select "Тип объекта", "object_type"
   irr_inline_select "Комнат в квартире", "rooms"
   irr_range_select  "Общая площадь", "meters-total"
   
