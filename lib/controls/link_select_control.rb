@@ -27,7 +27,7 @@ def irr_link_select(getter_name, identifier, popup, setter_name = nil)
     begin
       self.expand_all_parameters
       element = self.div_element(xpath: identifier)
-      [element.link_element(class: "combo_drop_link").text]
+      [element.link_element(class: "combo_drop_link").text.strip]
     rescue Exception => e
       raise "Ошибка в поле #{getter_name} (id '#{identifier}')\n#{e}"
     end
