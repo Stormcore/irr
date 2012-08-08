@@ -7,4 +7,6 @@ class CategoryRealEstateOutoftownPage < AdDetailsPage
   @@url_suffix = "/real-estate/out-of-town"
   @category = "Недвижимость -> Дома, дачи и участки. Продажа"
 
+  irr_multi_select  "Строение", "object"
+
 end
