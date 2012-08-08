@@ -26,7 +26,8 @@ def irr_inline_select(getter_name, identifier, setter_name = nil)
   define_method("#{function_name}_selected") do |hash|
     begin
       self.expand_all_parameters
-      self.link_element(xpath: "//div[@data-item-name='#{identifier}']//a[./span[text()='#{hash['value']}']]").attribute("class") == "act"
+      div = self.div_element(xpath: "//div[@data-item-name='#{identifier}']")
+      div.link_elements(class: "act").map{|link| link.span_element(index: 0).text}
     rescue Exception => e
       raise "Ошибка в поле #{setter_name} (id '#{identifier}')\n#{e}"
     end
