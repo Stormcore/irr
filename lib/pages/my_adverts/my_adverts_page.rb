@@ -97,6 +97,10 @@ class MyAdvertsRecordPage
     @element.wd.attribute("class").include?("mark").should == true
   end
 
+  def is_ad_premium
+    @element.wd.attribute("class").include?("premium").should == true
+  end
+
   def get_ad_id
     self.get_url_for_ad.match(/(\d+)/).to_s
   end

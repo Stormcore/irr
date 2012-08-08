@@ -196,6 +196,10 @@ end
   @ad_element.is_ad_highlighted.should == true
 end
 
+Допустим %{в ЛК ИП данное объявление является премиумом} do
+  @ad_element.is_ad_premium.should == true
+end
+
 Допустим %{в ЛК ИП я выбираю регион "$region"} do |region|
   on MyAdvertsPage do |page|
     page.select_region(region)
@@ -227,7 +231,30 @@ end
   end
 end
 
-#TODO: Refactor
+Когда %{на странице оплаты я выбираю SMS} do
+  on PaymentOptionsPage do |page|
+    page.select_sms
+  end
+end
+
+Когда %{на странице оплаты я запоминаю ID объявления} do
+  on PaymentOptionsPage do |page|
+    @ad_id = /paysms\/(.*)\/premium/.match(@browser.url)[1]
+  end
+end
+
+Допустим %{я отсылаю SMS для оплаты} do
+  @browser.goto @sms_debug_page
+
+  on SMSDebugPage do |page|
+    page.send_sms("7971 premium #{@ad_id}")
+  end
+
+  on SMSDebugResponse do |page|
+    page.get_response.should include("Операция успешно выполнена")
+  end
+end
+
 
 То %{в ЛК ИП на вкладке "$tab" отображены следующие секции:} do |tab, table|
   case tab
