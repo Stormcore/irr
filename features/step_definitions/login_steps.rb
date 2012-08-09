@@ -5,7 +5,6 @@ def get_login_and_password_for_role(role)
   record_name = BASE_URL.gsub("http://",'')
   raise "Пароли и логины не найдены для данного сервера" unless credentials.has_key?(record_name)
   @passport_address = credentials[record_name]['passport_address']
-  @sms_debug_page = credentials[record_name]['sms_debug']
   credentials[record_name][role]
 end
 

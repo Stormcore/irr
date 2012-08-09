@@ -169,6 +169,14 @@ end
   end
 end
 
+Допустим %{я делаю данное объявление премиумом} do
+  @ad_element.do_action("Премиум")
+
+  on AdvertActionConfirmPage do |page|
+    page.do_activate
+  end
+end
+
 Допустим %{я выделяю данное объявление} do
   @ad_element.do_action("Выделить")
 
@@ -185,15 +193,6 @@ end
 Допустим %{я удаляю данное объявление} do
   @ad_element.do_action("Удалить")
   @browser.alert.ok
-end
-
-
-Допустим %{я делаю данное объявление премиумом} do
-  @ad_element.do_action("Премиум")
-
-  on AdvertActionConfirmPage do |page|
-    page.do_activate
-  end
 end
 
 Допустим %{в ЛК ИП данное объявление выделено} do
@@ -239,18 +238,19 @@ end
   on PaymentOptionsPage do |page|
     page.select_sms
     @text = page.get_sms_text
+    @number = page.get_sms_number
   end
 end
 
 Допустим %{я отсылаю SMS для оплаты} do
-  @browser.goto @sms_debug_page
+  visit SMSDebugPage
 
   on SMSDebugPage do |page|
-    page.send_sms(@text)
+    page.send_sms(@number, @text)
   end
 
   on SMSDebugResponse do |page|
-    page.get_response.should include("Операция успешно выполнена")
+    page.get_response.should include("Спасибо")
   end
 end
 

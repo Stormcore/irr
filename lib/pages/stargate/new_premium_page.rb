@@ -41,9 +41,9 @@ class StargateNewAdDataPage
     row.element.wd.location_once_scrolled_into_view
     row.cell_element(index: 2).when_present.double_click
     # Появляется editor
-    editor = self.panel_element.element.
-                  divs(class: "x-editor").select{|div| div.visible?}[0].
-                  when_present
+    editor = self.panel_element.when_present.element.
+                  divs(class: "x-editor").select{|div| div.visible?}[0]
+    editor.when_present unless editor.nil?
     if name == "Регион"
       self.set_region_value(editor, value)
     else
