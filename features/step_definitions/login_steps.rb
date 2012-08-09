@@ -27,6 +27,12 @@ end
     steps %Q{* я перехожу к окну логина}
     steps %Q{* я ввожу логин и пароль роли "#{role}"}
   end
+
+  if role.include?("партнер")
+    @my_adverts_page = MyAdvertsPage
+  else
+    @my_adverts_page = OPAdvertsPage
+  end
 end
 
 Когда %{я выхожу из текущего пользователя} do

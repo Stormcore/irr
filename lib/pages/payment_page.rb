@@ -8,4 +8,8 @@ class PaymentOptionsPage
   def select_sms
     self.sms_element.element.input.click
   end
+
+  def get_sms_text
+    self.element("strong").text
+  end
 end

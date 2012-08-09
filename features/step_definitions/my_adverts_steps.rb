@@ -1,12 +1,12 @@
 # encoding: utf-8
 Когда %{открыт список объявлений пользователя} do
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     page.wait_for_ads_loaded
   end
 end
 
 Когда %{объявление с названием "$title" присутствует в списке} do |title|
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     @ad_element = page.get_ad_with_title(title)
     @ad_id = @ad_element.get_ad_id
     puts "Найдено объявление <a href='#{@ad_element.get_url_for_ad}'>#{title}</a>, ID: #{@ad_id}"
@@ -14,14 +14,14 @@ end
 end
 
 Когда %{объявление с названием "$title" отсутствует в списке} do |title|
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     lambda {page.get_ad_with_title(title)}.should raise_error,
       "Объявление '#{title}' присутствует в списке"
   end
 end
 
 Допустим %{я удаляю все объявления ИП} do
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     page.delete_all_ads
   end
 end
@@ -157,6 +157,10 @@ end
   @ad_element.do_action("Редактировать")
 end
 
+Когда %{я размещаю данное объявление} do
+  @ad_element.do_place
+end
+
 Допустим %{я поднимаю данное объявление} do
   @ad_element.do_action("Поднять")
 
@@ -201,7 +205,7 @@ end
 end
 
 Допустим %{в ЛК ИП я выбираю регион "$region"} do |region|
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     page.select_region(region)
   end
 end
@@ -226,7 +230,7 @@ end
 end
 
 Допустим %{в ЛК ИП я перехожу на вкладку "$tab"} do |tab|
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     page.open_tab(tab)
   end
 end
@@ -234,12 +238,7 @@ end
 Когда %{на странице оплаты я выбираю SMS} do
   on PaymentOptionsPage do |page|
     page.select_sms
-  end
-end
-
-Когда %{на странице оплаты я запоминаю ID объявления} do
-  on PaymentOptionsPage do |page|
-    @ad_id = /paysms\/(.*)\/premium/.match(@browser.url)[1]
+    @text = page.get_sms_text
   end
 end
 
@@ -247,7 +246,7 @@ end
   @browser.goto @sms_debug_page
 
   on SMSDebugPage do |page|
-    page.send_sms("7971 premium #{@ad_id}")
+    page.send_sms(@text)
   end
 
   on SMSDebugResponse do |page|
@@ -287,7 +286,7 @@ end
 
 То %{в ЛК ИП отсутствует пакет "$package"} do |package|
   steps %q{* я перехожу в список моих объявлений}
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     if page.packages?
       page.packages_element.include?(package).should eq(false), 
         "Пакет '#{package}' не был удален"
@@ -305,14 +304,14 @@ end
 
 То %{в ЛК ИП присутствует пакет "$package"} do |package|
   steps %q{* я перехожу в список моих объявлений}
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     page.packages_element.include?(package).should eq(true), 
       "Пакет '#{package}' не был добавлен"
   end
 end
 
 Допустим %{я запоминаю ID последнего объявления} do
-  on MyAdvertsPage do |page|
+  on @my_adverts_page do |page|
     @ad_id = page.get_first_ad.get_ad_id
   end
 end

@@ -49,8 +49,14 @@ end
   end
 end
 
-Допустим %{на странице создания нового премиума в БО я выбираю категорию "$long_category"} do |long_category|
-  on StargateNewPremiumPage do |page|
+Допустим %{я созданию новое объявление в БО} do
+  on StargateCatalogSelectPage do |page|
+    page.create_new_advert
+  end
+end
+
+Допустим %{на странице дерева объявлений в БО я выбираю категорию "$long_category"} do |long_category|
+  on StargateCatalogSelectPage do |page|
     last_category = nil
     long_category.split(' -> ').each do |category|
       page.expand_category category
@@ -61,9 +67,9 @@ end
   end
 end
 
-Допустим /^при создании премиума я ввожу следующие данные:$/ do |table|
+Допустим /^при создании объявления я ввожу следующие данные:$/ do |table|
   # table is a Cucumber::Ast::Table
-  on StargateNewPremiumDataPage do |page|
+  on StargateNewAdDataPage do |page|
     table.hashes.each do |hash|
       puts "Устанавливаем значение #{hash['parameter']} = #{hash['value']}"
       page.set_value(hash['parameter'], hash['value'])
@@ -71,9 +77,9 @@ end
   end
 end
 
-Допустим %{при создании премиума я указываю владельца пользователя с ролью "$role"} do |role|
+Допустим %{при создании объявления я указываю владельца пользователя с ролью "$role"} do |role|
   credentials = get_login_and_password_for_role(role)
-  on StargateNewPremiumDataPage do |page|
+  on StargateNewAdDataPage do |page|
     page.set_value("Владелец объявления", credentials['email'])
   end
 end
@@ -84,26 +90,33 @@ end
   end
 end
 
-Допустим %{при создании премиума я загружаю картинку} do
-  on StargateNewPremiumDataPage do |page|
+Допустим %{при создании объявления я перехожу на вкладку "Изображения" и загружаю картинку} do
+  on StargateNewAdDataPage do |page|
+    page.go_to_tab("Изображения")
+  end
+  steps %Q{* при создании объявления я загружаю картинку}
+end
+
+Допустим %{при создании объявления я загружаю картинку} do
+  on StargateNewAdDataPage do |page|
     page.upload_picture
   end
 end
 
-Допустим %{я сохраняю введенный премиум} do
-  on StargateNewPremiumDataPage do |page|
-    page.save_premium
+Допустим %{я сохраняю введенное объявление} do
+  on StargateNewAdDataPage do |page|
+    page.save_ad
   end
 end
 
 То %{на БО показано диалоговое окно "$dialog_title"} do |dialog_title|
-  on StargateNewPremiumDataPage do |page|
+  on StargateNewAdDataPage do |page|
     page.has_dialog_window.should eq(true)
   end
 end
 
 Когда %{я закрываю диалоговое окно} do
-  on StargateNewPremiumDataPage do |page|
+  on StargateNewAdDataPage do |page|
     page.close_dialog_window
   end
 end

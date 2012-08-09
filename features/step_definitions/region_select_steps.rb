@@ -45,6 +45,10 @@ end
     @url_prefix = BASE_URL.gsub("http://", "http://astana.")
     @url_suffix = ''
     @browser.goto(@url_prefix+@url_suffix)
+  when "Актобе"
+    @url_prefix = BASE_URL.gsub("http://", "http://akt-obl.")
+    @url_suffix = '/aktobe-gorod/'
+    @browser.goto(@url_prefix+@url_suffix)
   when "Казахстан"
     @url_prefix = BASE_URL
     @url_suffix = ''
