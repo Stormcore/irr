@@ -31,7 +31,7 @@ if HEADLESS
   puts "Starting xvfb.."
   require 'headless'
   headless = Headless.new
-  headless.start
+  headless.start(dimensions: "1600x1200x16")
 end
 
 def start_browser
