@@ -43,7 +43,12 @@ class StargateNewAdDataPage
     # Появляется editor
     editor = self.panel_element.when_present.element.
                   divs(class: "x-editor").select{|div| div.visible?}[0]
-    editor.when_present unless editor.nil?
+    if editor.nil?
+       row.cell_element(index: 2).when_present.click
+       editor = self.panel_element.when_present.element.
+                  divs(class: "x-editor").select{|div| div.visible?}[0]
+       raise "Не открыт редактор" if editor.nil?
+    end
     if name == "Регион"
       self.set_region_value(editor, value)
     else
