@@ -14,6 +14,11 @@ end
     * я ввожу логин "#{credentials['login']}" и пароль "#{credentials['password']}"
   }
   @current_user_name = credentials['username']
+  if role.include?("партнер")
+    @my_adverts_page = MyAdvertsPage
+  else
+    @my_adverts_page = OPAdvertsPage
+  end
 end
 
 Когда %{я вхожу под пользователем с ролью "$role"} do |role|
@@ -27,11 +32,6 @@ end
     steps %Q{* я ввожу логин и пароль роли "#{role}"}
   end
 
-  if role.include?("партнер")
-    @my_adverts_page = MyAdvertsPage
-  else
-    @my_adverts_page = OPAdvertsPage
-  end
 end
 
 Когда %{я выхожу из текущего пользователя} do
