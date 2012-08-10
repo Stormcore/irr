@@ -81,7 +81,7 @@ class StargatePowersellerDetailsPackagesTabPage
   def set_parameter(name, value)
     table = self.main_element.element.table(xpath: "//table[.//div[contains(text(),'#{name}')]]")
     # Скроллим до элемента
-    unless table.exists?
+    if table.exists?
       table.element.wd.location_once_scrolled_into_view
       table.td(class: "x-grid3-td-value").double_click
       editor = self.main_element.element.
