@@ -257,7 +257,7 @@ end
 end
 
 Допустим %{я отсылаю SMS для оплаты используя казахский сендер} do
-  visit SMSDebugPage
+  visit SMSDebugKZPage
 
   puts "DEBUG: Страница <a href='#{@browser.url}>#{@browser.url}</a>, номер '#{@number}' текст '#{@text}'"
 
