@@ -46,6 +46,16 @@ class StargatePowersellerDetailsPage
     visible_menu.when_present.link_element(class: "x-menu-item", text: "Удалить").click
   end
 
+  def get_premium_number(period)
+    self.table_element(id: "table_premium")[1][period.to_i / 7].text.to_i
+  end
+
+  def set_premium_count(delta, period)
+    self.div_element(class: "x-form-item", text: /на #{period} дней/).
+         text_field_element.value=delta
+    self.button_element(text: "добавить")
+  end
+
   def save
     self.save_element.click if self.save_element.visible?
   end

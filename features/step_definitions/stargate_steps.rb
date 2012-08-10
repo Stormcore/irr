@@ -229,3 +229,16 @@ end
   end
 
 end
+
+Когда %{на БО я делаю интернет-партнеру $num премиумов на $period дней} do |num, period|
+  steps %Q{* на БО я открываю детали интернет-партнера}
+  on StargatePowersellerDetailsPage do |page|
+    page.open_tab("Премиум")
+    current_premium_count = page.get_premium_number(period)
+    delta = num.to_i - current_premium_count
+    page.set_premium_count(delta, period) unless delta == 0
+    page.save
+    page.close
+  end
+
+end
