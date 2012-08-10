@@ -24,3 +24,25 @@ class SMSDebugResponse
     self.element("pre").text
   end
 end
+
+class SMSDebugKZPage
+  include PageObject
+
+  direct_url BASE_URL+"/controllers/kz/debug_sms.php"
+
+  text_field :sms_text, name: "sms_text"
+  button :submit, value: "Отправить SMS"
+
+  def send_sms(text)
+    self.sms_text = text
+    self.submit
+  end
+end
+
+class SMSDebugKZResponse
+  include PageObject
+
+  def get_response
+    self.element("div").text
+  end
+end

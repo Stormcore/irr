@@ -256,6 +256,19 @@ end
   end
 end
 
+Допустим %{я отсылаю SMS для оплаты используя казахский сендер} do
+  visit SMSDebugPage
+
+  puts "DEBUG: Страница <a href='#{@browser.url}>#{@browser.url}</a>, номер '#{@number}' текст '#{@text}'"
+
+  on SMSDebugKZPage do |page|
+    page.send_sms(@text)
+  end
+
+  on SMSDebugKZResponse do |page|
+    page.get_response.should include("Операция успешно выполнена")
+  end
+end
 
 То %{в ЛК ИП на вкладке "$tab" отображены следующие секции:} do |tab, table|
   case tab
