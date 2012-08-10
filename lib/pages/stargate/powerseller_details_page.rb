@@ -63,7 +63,7 @@ class StargatePowersellerDetailsPackagesTabPage
 
   def set_combobox_value(name, value)
     table = self.main_element.element.table(xpath: 
-            "//table[.//div[contains(text(),'#{name}')][@class='x-grid3-cell-inner x-grid3-col-title']]").when_present
+            "//table[.//div[contains(text(),'#{name}')][@class='x-grid3-cell-inner x-grid3-col-title']]")
     if table.exists?
       table.td(class: "x-grid3-td-value").double_click
       editor = self.main_element.element.
