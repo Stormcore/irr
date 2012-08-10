@@ -30,8 +30,8 @@ World PageObject::PageFactory
 if HEADLESS
   puts "Starting xvfb.."
   require 'headless'
-  headless = Headless.new
-  headless.start(dimensions: "1600x1200x16")
+  headless = Headless.new(dimensions: "1600x1200x16")
+  headless.start
 end
 
 def start_browser
