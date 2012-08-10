@@ -245,6 +245,8 @@ end
 Допустим %{я отсылаю SMS для оплаты} do
   visit SMSDebugPage
 
+  puts "DEBUG: Страница <a href='#{@browser.url}>#{@browser.url}</a>, номер '#{@number}' текст '#{@text}'"
+
   on SMSDebugPage do |page|
     page.send_sms(@number, @text)
   end
