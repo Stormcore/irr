@@ -131,6 +131,7 @@ class SearchResultsPage
   
   def open_ad(url)
     begin
+      puts "DEBUG: Переходим на <a href='#{url}>#{url}</a>"
       @browser.goto(url)
     rescue Timeout::Error => e
       raise "Страница не была загружена за ожидаемое время"

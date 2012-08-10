@@ -19,6 +19,7 @@ end
 end
 
 Когда %{я перехожу по ссылке "$url"} do |url|
+  puts "DEBUG: Переходим на <a href='#{url}>#{url}</a>"
   @browser.goto(url)
 end
 
