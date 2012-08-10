@@ -64,18 +64,20 @@ class StargatePowersellerDetailsPackagesTabPage
   def set_combobox_value(name, value)
     table = self.main_element.element.table(xpath: 
             "//table[.//div[contains(text(),'#{name}')][@class='x-grid3-cell-inner x-grid3-col-title']]").when_present
-    table.td(class: "x-grid3-td-value").double_click
-    editor = self.main_element.element.
-                  divs(class: "x-editor").
-                  select{|div| div.visible?}[0].when_present
-    item = self.div_element(class: "x-combo-list-item", text: value)
-    unless item.exists? and item.visible?
-      editor.img.click
-      item.when_present.element.wd.location_once_scrolled_into_view
-      Watir::Wait.until {item.visible?}
+    if table.exists?
+      table.td(class: "x-grid3-td-value").double_click
+      editor = self.main_element.element.
+                    divs(class: "x-editor").
+                   select{|div| div.visible?}[0].when_present
+      item = self.div_element(class: "x-combo-list-item", text: value)
+      unless item.exists? and item.visible?
+        editor.img.click
+        item.when_present.element.wd.location_once_scrolled_into_view
+        Watir::Wait.until {item.visible?}
+      end
+      item.click
+      self.div_element(class: "x-tab-panel-body").click
     end
-    item.click
-    self.div_element(class: "x-tab-panel-body").click
   end
 
   def set_parameter(name, value)
