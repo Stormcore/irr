@@ -20,6 +20,9 @@ class CategoryCarsPage < AdDetailsPage
   irr_multi_select "Модель", "model"
   irr_multi_select "Тип кузова", "bodytype"
 
+  #Этого селекта нет, но он требуется для теста облака тегов "Двигатели"
+  irr_multi_select "Тип двигателя", "turbo"
+
   def get_all_marks_or_models
     self.popular_marks_element.when_present.div_element(id: "short_items_list").
          element.as.collect{|link| link.text}
