@@ -187,6 +187,30 @@ task :feature do
   end
 end
 
+Cucumber::Rake::Task.new(:feature_ignore_bug_no_rerun) do |task|
+  task.cucumber_opts = ["HEADLESS=true",
+                      "-r features",
+                      "-t ~@wip",
+                      "--format junit --out junit",
+                      "--format html  --out cucumber.html",
+                      "--format json  --out cucumber.json",
+                      "--format rerun --out rerun.txt",
+                      "--format pretty --color",
+                      ENV['FEATURE']]
+end
+
+task :feature_ignore_bug do
+  selenium_successful = run_rake_task("feature_ignore_bug_no_rerun")
+  rerun_successful = true
+  unless selenium_successful
+    puts "\n\n Rerunning failed tests"
+    rerun_successful = run_rake_task("rerun")
+  end
+  unless selenium_successful || rerun_successful
+    fail 'Cucumber tests failed'
+  end
+end
+
 Cucumber::Rake::Task.new(:all) do |task|
   task.cucumber_opts = ["HEADLESS=true",
                       "-t @compile,~@wip",
