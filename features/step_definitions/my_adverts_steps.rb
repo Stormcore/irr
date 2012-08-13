@@ -47,6 +47,12 @@ end
   end
 end
 
+Допустим %{в ЛК ОП я удаляю все объявления} do
+  on OPAdvertsPage do |page|
+    page.delete_all_ads
+  end
+end
+
 То %{у объявления указан регион "$region"} do |region|
   @ad_element.get_region.should == region
 end

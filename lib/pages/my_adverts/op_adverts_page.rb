@@ -34,6 +34,12 @@ class OPAdvertsPage
   def open_tab(name)
     self.bookmarks_element.link_element(link_text: name).click
   end
+
+  def delete_all_ads
+    self.checkbox_element(id: "checkAll").click
+    self.link_element(id: "groupActionDeleteSelected").click
+    @browser.alert.ok
+  end
 end
 
 class OPAdvertsRecordPage
