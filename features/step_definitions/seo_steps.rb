@@ -65,7 +65,7 @@ end
   end
 end
 
-Допустим %{значение в поле "$field" равно от $min до $max} do |field, min, max|
+Допустим %{значение в поле "$field" равно в границах "$min - $max"} do |field, min, max|
   steps %Q{* значение в поле "#{field}" равно от #{min}}
   steps %Q{* значение в поле "#{field}" равно до #{max}}
 end
