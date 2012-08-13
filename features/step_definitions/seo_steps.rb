@@ -39,6 +39,12 @@ end
   end
 end
 
+То %{поле "$field" отмечено} do |field|
+  on @category_page do |page|
+    page.get_selected_parameter(field).should eq(true)
+  end
+end
+
 То %{в поле "$field" выбрано значение "$expected"} do |field, expected|
   on @category_page do |page|
     result = page.get_selected_parameter(field)
