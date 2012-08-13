@@ -345,7 +345,7 @@ end
 end
 
 То %{в ЛК ИП присутствует пакет "$package"} do |package|
-  steps %q{* в ЛК ИП я перехожу в список моих объявлений}
+  steps %q{* я перехожу в список моих объявлений}
   on MyAdvertsPage do |page|
     page.packages_element.include?(package).should eq(true), 
       "Пакет '#{package}' не был добавлен"
