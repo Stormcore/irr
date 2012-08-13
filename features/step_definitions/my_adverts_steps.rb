@@ -1,27 +1,48 @@
 # encoding: utf-8
-Когда %{открыт список объявлений пользователя} do
-  on @my_adverts_page do |page|
+Когда %{в ЛК ИП открыт список объявлений пользователя} do
+  on MyAdvertsPage do |page|
     page.wait_for_ads_loaded
   end
 end
 
-Когда %{объявление с названием "$title" присутствует в списке} do |title|
-  on @my_adverts_page do |page|
+Когда %{в ЛК ОП открыт список объявлений пользователя} do
+  on OPAdvertsPage do |page|
+    page.wait_for_ads_loaded
+  end
+end
+
+Когда %{в ЛК ОП объявление с названием "$title" присутствует в списке} do |title|
+  on OPAdvertsPage do |page|
     @ad_element = page.get_ad_with_title(title)
     @ad_id = @ad_element.get_ad_id
     puts "Найдено объявление <a href='#{@ad_element.get_url_for_ad}'>#{title}</a>, ID: #{@ad_id}"
   end
 end
 
-Когда %{объявление с названием "$title" отсутствует в списке} do |title|
-  on @my_adverts_page do |page|
+Когда %{в ЛК ИП объявление с названием "$title" присутствует в списке} do |title|
+  on MyAdvertsPage do |page|
+    @ad_element = page.get_ad_with_title(title)
+    @ad_id = @ad_element.get_ad_id
+    puts "Найдено объявление <a href='#{@ad_element.get_url_for_ad}'>#{title}</a>, ID: #{@ad_id}"
+  end
+end
+
+Когда %{в ЛК ИП объявление с названием "$title" отсутствует в списке} do |title|
+  on MyAdvertsPage do |page|
     lambda {page.get_ad_with_title(title)}.should raise_error,
       "Объявление '#{title}' присутствует в списке"
   end
 end
 
-Допустим %{я удаляю все объявления ИП} do
-  on @my_adverts_page do |page|
+Когда %{в ЛК ОП объявление с названием "$title" отсутствует в списке} do |title|
+  on OPAdvertsPage do |page|
+    lambda {page.get_ad_with_title(title)}.should raise_error,
+      "Объявление '#{title}' присутствует в списке"
+  end
+end
+
+Допустим %{в ЛК ИП я удаляю все объявления} do
+  on MyAdvertsPage do |page|
     page.delete_all_ads
   end
 end
@@ -195,16 +216,16 @@ end
   @browser.alert.ok
 end
 
-Допустим %{в ЛК ИП данное объявление выделено} do
+Допустим %{в ЛК данное объявление выделено} do
   @ad_element.is_ad_highlighted.should == true
 end
 
-Допустим %{в ЛК ИП данное объявление является премиумом} do
+Допустим %{в ЛК данное объявление является премиумом} do
   @ad_element.is_ad_premium.should == true
 end
 
 Допустим %{в ЛК ИП я выбираю регион "$region"} do |region|
-  on @my_adverts_page do |page|
+  on MyAdvertsPage do |page|
     page.select_region(region)
   end
 end
@@ -229,7 +250,7 @@ end
 end
 
 Допустим %{в ЛК ИП я перехожу на вкладку "$tab"} do |tab|
-  on @my_adverts_page do |page|
+  on MyAdvertsPage do |page|
     page.open_tab(tab)
   end
 end
@@ -300,8 +321,8 @@ end
 end
 
 То %{в ЛК ИП отсутствует пакет "$package"} do |package|
-  steps %q{* я перехожу в список моих объявлений}
-  on @my_adverts_page do |page|
+  steps %q{* в ЛК ИП я перехожу в список моих объявлений}
+  on MyAdvertsPage do |page|
     if page.packages?
       page.packages_element.include?(package).should eq(false), 
         "Пакет '#{package}' не был удален"
@@ -318,15 +339,21 @@ end
 end
 
 То %{в ЛК ИП присутствует пакет "$package"} do |package|
-  steps %q{* я перехожу в список моих объявлений}
-  on @my_adverts_page do |page|
+  steps %q{* в ЛК ИП я перехожу в список моих объявлений}
+  on MyAdvertsPage do |page|
     page.packages_element.include?(package).should eq(true), 
       "Пакет '#{package}' не был добавлен"
   end
 end
 
-Допустим %{я запоминаю ID последнего объявления} do
-  on @my_adverts_page do |page|
+Допустим %{в ЛК ИП я запоминаю ID последнего объявления} do
+  on MyAdvertsPage do |page|
+    @ad_id = page.get_first_ad.get_ad_id
+  end
+end
+
+Допустим %{в ЛК ОП я запоминаю ID последнего объявления} do
+  on MyAdvertsPage do |page|
     @ad_id = page.get_first_ad.get_ad_id
   end
 end
