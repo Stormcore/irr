@@ -74,7 +74,7 @@ class SearchResultsPage
       end
 
       begin
-        h['description'] = row.css('td.tdTxt > p')[0].inner_html
+        h['description'] = row.css('td.tdTxt > p')[0].text.gsub('...','').strip
       rescue
       end
 

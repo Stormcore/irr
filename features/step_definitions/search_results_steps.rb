@@ -124,8 +124,14 @@ end
 
 То %{в каждом объявлении не более $n знаков} do |n|
   results_page_soft_assert("Слишком длинное описание:") do |result|
-    length = result['description'].length - 4 # Удаляем пробел и троеточие
-    length.should be <= n.to_i
+    length = result['description'].length
+    if length > n.to_i
+      # Описание показывается до конца слова
+      # Ищем пробел или знак препинания до конца строки начиная с позиции n
+      # Если он найден - то строка не обрезана
+      result['description'][n.to_i..-1].should_not match(/\s/), 
+        "Слишком длинное описание (#{length} символов, остаток слова '#{result['description'][n.to_i..-1]}')"
+    end
   end
 end
 
