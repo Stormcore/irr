@@ -4,7 +4,7 @@ class CategorySportsTourismFitnessBoxingPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/sports-tourism/fitness/boxing"
-  @category = "Спорт, туризм, отдых -> Фитнесс, атлетика, борьба -> Бокс, товары для единоборств"
+  @category = "Спорт, туризм, отдых -> Фитнес, атлетика, борьба -> Бокс, товары для единоборств"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "type"
