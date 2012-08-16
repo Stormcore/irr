@@ -7,5 +7,5 @@ class CategoryGiftsBusinessSouvenirPage < AdDetailsPage
   @category = "Праздники и подарки -> Бизнес сувениры"
 
   irr_multi_select "Тип предложения", "offertype"
-  irr_multi_select "Тип", "cfd_business_souvenir"
+  irr_single_select "Тип", "cfd_business_souvenir"
 end
