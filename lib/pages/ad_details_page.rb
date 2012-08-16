@@ -10,7 +10,7 @@ class AdDetailsPage
   # Настройка параметров
   link :expand_extended_more, class: "expand_extended_more"
   form :filter, id: "filter"
-  text_field (:keywords) {|page| filter_element.text_field(name: 'keywords')}
+  text_field (:keywords) {|page| self.filter_element.when_present.text_field(name: 'keywords')}
   text_field :price_from, name: "price[from]"
   text_field :price_to, name: "price[to]"
   div :currency, xpath: "//div[@data-item-name='price']"
@@ -130,7 +130,7 @@ class AdDetailsPage
       begin
         result = self.keywords
       rescue Exception => e
-        raise "Отсутствует поле Ключевые слов\n#{e}"
+        raise "Отсутствует поле Ключевые слова\n#{e}"
       end
 
     when "Валюта"
