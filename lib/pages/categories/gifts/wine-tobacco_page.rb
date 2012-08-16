@@ -8,5 +8,5 @@ class CategoryGiftsWineTobaccoPage < AdDetailsPage
 
   irr_multi_select "Тип предложения", "offertype"
   irr_multi_select "Состояние", "used-or-new"
-  irr_multi_select "Тип", "cfd_tobacco_type"
+  irr_single_select "Тип", "cfd_tobacco_type"
 end
