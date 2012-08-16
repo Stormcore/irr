@@ -4,7 +4,7 @@ class CategoryAnimalsPlantsAnimalsOtherPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/animals-plants/animals/other"
-  @category = "Животные и растения -> Животные -> Другие животные"
+  @category = "Животные и растения -> Животные -> Другое"
 
   irr_multi_select "Тип предложения", "offertype"
   irr_range_select "Возраст", "age"
