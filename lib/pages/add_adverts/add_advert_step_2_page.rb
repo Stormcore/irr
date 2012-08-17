@@ -2,7 +2,6 @@
 class AddAdvertStep2 < AdDetailsPage
   include PageObject
 
-  link :region_spoiler, name: "region_link"
   select_list :region, id: "fr-region"
   text_field  :address_city, name: "address_city"
   text_field  :address_street, name: "mapStreetVisible"
@@ -13,6 +12,7 @@ class AddAdvertStep2 < AdDetailsPage
 
   select_list :mark, name: "make"
   select_list :model, name: "model"
+  select_list :currency, name: "currency"
   text_field :model_text, name: "model"
 
   text_field :f_title, id: "f_title"
@@ -27,16 +27,10 @@ class AddAdvertStep2 < AdDetailsPage
   div :video_preview, id: "videoContentBlock"
 
   link :save, id: "submit-edit-form"
-  link :next_step, id: "next_link"
+  button :next_step, id: "next_link"
 
   div :no_package_message, id: "message-free-add"
   div :has_package, class: "ico-messagesok"
-
-  def set_region(region)
-    self.region_spoiler_element.when_present.click
-    self.region_element.when_present.visible?.should == true
-    self.region = region
-  end
 
   def set_street(street)
     self.address_street = street
@@ -73,14 +67,15 @@ class AddAdvertStep2 < AdDetailsPage
     case control.tag_name
     when "select"
       # Комбобокс
-      self.select_list_element(id: control.id).select hash["value"]
-    when "label"
-      # Другие параметры - скрыты внутри лейбла
-      control.text_field.value = hash["value"]
+      control.parent.to_subtype.div(class: "ik_select_link").click
+      list = self.div_elements(class: "ik_select_list_inner").select{|div| div.visible?}[0]
+      list.span_element(text: hash['value']).click
+    when "input"
+      control.value = hash["value"]
     else
       # Текстбокс и комбобокс - разделены ~
-      control.text_field.value = hash["value"].split(" ~ ")[0]
-      control.parent.select_list.select hash['value'].split(" ~ ")[1]
+      control.value = hash["value"].split(" ~ ")[0]
+      set_value_for_custom(control.parent.parent.select_list, hash['value'].split(" ~ ")[1])
     end
   end
 
@@ -90,21 +85,16 @@ class AddAdvertStep2 < AdDetailsPage
     begin
       self.checkbox_element(xpath: "//label[contains(.,'#{hash['parameter']}')]/input").check
     rescue Watir::Exception::UnknownObjectException => e
-      label = self.div_element(text: /#{hash['parameter']}/, class: "lbl")
-      control = label.element.elements(xpath: "following-sibling::*")[0]
-      if (control.tag_name == 'div') and
-         (control.attribute_value("class") == "hid-o")
-         control = control.label
-      end
-      set_value_for_custom(control, hash)
+      label = self.label_element(text: /#{hash['parameter']}/, class: "b-form-LK_control-label")
+      control_id = label.element.attribute_value("for")
+      control = self.div_element(id: "customfields").element.element(id: control_id)
+      set_value_for_custom(control.to_subtype, hash)
     end
   end
 
   def set_parameter(hash)
     begin
       case hash['parameter']
-      when "Регион"
-        self.set_region hash['value']
       when "Населённый пункт"
         self.set_city hash['value']
       when "Улица"
@@ -117,11 +107,13 @@ class AddAdvertStep2 < AdDetailsPage
         self.f_title = hash['value']
       when "Срок сдачи"
         self.rent_period = hash['value']
+      when "Валюта"
+        set_value_for_custom(self.currency_element, hash)
       when "Марка"
         self.mark = hash['value']
       when "Модель"
         if self.model?
-          self.model = hash['value'] 
+          set_value_for_custom(self.model_element, hash)
         else
           self.model_text = hash['value'] 
         end
@@ -144,6 +136,8 @@ class AddAdvertStep2 < AdDetailsPage
       end
     end
     # Указываем этот файл
+    el_id = self.upload_element.element.id
+    @browser.execute_script("document.getElementById('#{el_id}').setAttribute('class', '')")
     self.upload_element.element.set "/tmp/logo_irr.png"
     # Ждём пока появится загруженная фотография
     self.uploaded_photos_element.
@@ -179,10 +173,16 @@ RUTUBE_VIDEO
     self.no_package_message_element.when_present.text
   end
 
-  def ensure_section_is_visible(name)
-    if self.table_element.element.th(text: name).a.exists?
-      self.table_element.element.th(text: name).a.click
+  def ensure_additional_parameters_are_displayed
+    unless self.div_element(class: "b-form-LK_other-params").visible?
+      self.link_element(text: "Дополнительные характеристики").click
     end
+  end
+
+  def ensure_section_is_visible(name)
+    self.div_elements(class: "b-form-LK_wrap_tabs_item").select{|div| 
+      div.div_element(class: "b-form-LK_wrap_tabs_item_title_wrap", text: name).exists?
+    }[0].click
   end
 
 end

@@ -1,12 +1,14 @@
 # encoding: utf-8
 Когда %{я перехожу к подаче объявления} do
-  on MainPage do |page|
-    page.add_advert_element.when_present.click
-  end
+  #on MainPage do |page|
+  #  page.add_advert_element.when_present.click
+  #end
 
-  on AddAdvertMenuPage do |page|
-    page.addOnlineAdvert_element.when_present.click
-  end
+  #on AddAdvertMenuPage do |page|
+  #  page.addOnlineAdvert_element.when_present.click
+  #end
+
+  visit AddAdvertMenuPage
 end
 
 Когда %{загружены параметры объявления для категории "$long_category"} do |long_category|
@@ -17,15 +19,11 @@ end
   on AddAdvertStep1 do |page|
     # Открываем нужную категорию
     long_category.split(' -> ').each_with_index do |category, index|
-      li = page.list_item_element(id: "section_#{index + 1}").when_present
-      li.unordered_list_element.when_present.click
-      a = li.link_elements(href: "#").select do |a|
-        UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
-      end
-      raise "Категория '#{category}' не найдена" unless a.size > 0
-      a[0].click
+      page.span_element(class: "ik_select_link_text", text: "Выберите категорию").when_present.click
+      page.span_element(class: "ik_select_option", text: category).when_present.click
     end
-    page.next_step
+    # Ждём пока появятся кастомфилды
+    page.wait_for_custom_fields_to_appear
   end
 end
 
@@ -57,6 +55,7 @@ end
 
 Допустим /^я ввожу следующие данные на шаге 2 в секции "(.*?)":$/ do |section, page_params|
   on AddAdvertStep2 do |page|
+    page.ensure_additional_parameters_are_displayed
     page.ensure_section_is_visible(section)
     page_params.hashes.each do |hash|
       page.set_parameter(hash)

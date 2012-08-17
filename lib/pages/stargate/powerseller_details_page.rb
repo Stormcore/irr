@@ -61,6 +61,7 @@ class StargatePowersellerDetailsPage
   end
 
   def close
+    self.div_element(class: "ext-el-mask").element.wait_while_present
     self.close_element.click if self.close_element.visible?
     self.main_element.element.wait_while_present
   end
