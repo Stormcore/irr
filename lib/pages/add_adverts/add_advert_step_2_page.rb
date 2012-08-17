@@ -87,7 +87,14 @@ class AddAdvertStep2 < AdDetailsPage
     rescue Watir::Exception::UnknownObjectException => e
       label = self.label_element(text: /#{hash['parameter']}/, class: "b-form-LK_control-label")
       control_id = label.element.attribute_value("for")
-      control = self.div_element(id: "customfields").element.element(id: control_id)
+      if control_id.empty?
+        control = label.parent.element.input
+        unless control.exists?
+          control = label.parent.element.select_list
+        end
+      else
+        control = self.div_element(id: "customfields").element.element(id: control_id)
+      end
       set_value_for_custom(control.to_subtype, hash)
     end
   end
