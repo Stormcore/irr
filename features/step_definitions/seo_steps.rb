@@ -18,6 +18,17 @@ end
   end
 end
 
+Когда %{я выбираю ссылку "$seo_link" в секции "Быстрый поиск" если есть результаты поиска} do |link_text|
+  on @category_page do |page|
+    puts "Запрос вернул #{@results.length} результатов"
+    unless @results.length > 0
+      raise "Результаты поиска пустые - не проверяем этот seo-линк"
+    else
+      page.select_link_with_text_from_quick_search_section(link_text)
+    end
+  end
+end
+
 Когда %{я перехожу по ссылке "$url"} do |url|
   puts "DEBUG: Переходим на <a href='#{url}>#{url}</a>"
   @browser.goto(url)
