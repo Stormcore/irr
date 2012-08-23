@@ -56,7 +56,7 @@ end
 
 Допустим %{я перехожу на страницу интернет-партнера "$name"} do |name|
   full_url = BASE_URL.gsub(/http\:\/\//, "http://#{name}.")
-  puts "DEBUG: Переходим на <a href='#{full_url}>#{full_url}</a>"
+  puts "DEBUG: Переходим на <a href='#{full_url}'>#{full_url}</a>"
   @browser.goto full_url
 end
 
@@ -124,7 +124,7 @@ end
   on PowersellerPage do |page|
     map_object = page.get_ads.select{|ad| ad.has_map_badge}
     raise "Объявлений с картой не найдено" unless map_object
-    puts "DEBUG: Переходим на <a href='#{map_object[0].get_map_href}>#{map_object[0].get_map_href}</a>"
+    puts "DEBUG: Переходим на <a href='#{map_object[0].get_map_href}'>#{map_object[0].get_map_href}</a>"
     @browser.goto map_object[0].get_map_href
   end
 end

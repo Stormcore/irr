@@ -38,7 +38,7 @@ end
 Когда %{я перехожу к окну логина} do
   steps %Q{* я выхожу из текущего пользователя}
   full_url = @url_prefix+@url_suffix
-  puts "DEBUG: Переходим на <a href='#{full_url}>#{full_url}</a>"
+  puts "DEBUG: Переходим на <a href='#{full_url}'>#{full_url}</a>"
   @browser.goto(full_url)
   on MainPage do |page| 
     page.login_element.when_present.click
@@ -113,7 +113,7 @@ end
 end
 
 Когда %{я перехожу на страницу паспорта} do
-  puts "DEBUG: Переходим на <a href='#{@passport_address}>#{@passport_address}</a>"
+  puts "DEBUG: Переходим на <a href='#{@passport_address}'>#{@passport_address}</a>"
   @browser.goto @passport_address
 end
 

@@ -28,7 +28,7 @@ end
   on SearchResultsPage do |page|
     @results.each do |result|
       begin
-        puts "DEBUG: Переходим на <a href='#{result['url']}>#{result['url']}</a>"
+        puts "DEBUG: Переходим на <a href='#{result['url']}'>#{result['url']}</a>"
         @browser.goto(result['url'])
         @result_details[result['url']] = Hash.new
         on @category_page do |page|
@@ -275,7 +275,7 @@ end
 
     # Если не нашли объявление нигде раньше, то ищем в деталях объявления
     unless keyword_found
-      puts "DEBUG: Переходим на <a href='#{result['url']}>#{result['url']}</a>"
+      puts "DEBUG: Переходим на <a href='#{result['url']}'>#{result['url']}</a>"
       @browser.goto(result['url'])
       on AdDetailsPage do |page|
         keywords.split(", ").each do |keyword|
