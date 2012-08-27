@@ -5,7 +5,7 @@ class CategoryRealEstateCommercialsaleEatingPage < AdDetailsPage
   include CityWithMetro
 
   @@url_suffix = "/real-estate/commercial-sale/eating"
-  @category = "Недвижимость -> Коммерческая. Продажа -> Кафе. Бары. Рестораны"
+  @category = "Недвижимость -> Коммерческая. Продажа -> Кафе. Бары. Рестораны."
 
   irr_range_select "Общая площадь", "meters-total"
   irr_range_select "Площадь зала", "square-hall"
