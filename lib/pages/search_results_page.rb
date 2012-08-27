@@ -8,6 +8,15 @@ class SearchResultsPage
   unordered_list :pages, class: "filter-pages"
   unordered_list :ads_on_page, class: "fpages"
   div :side_column, class: "side-col"
+  span :results_found, id: "filteredCountBlock"
+
+  def get_number_of_found_results
+    begin
+      self.results_found.split[1]
+    rescue Watir::Exception::UnknownObjectException
+      raise "Отсутствует лейбл с количеством результатов"
+    end
+  end
 
   def search_results
     results = []
