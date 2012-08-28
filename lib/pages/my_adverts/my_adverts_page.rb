@@ -56,6 +56,10 @@ class MyAdvertsRecordPage
     @actions_for_row = element.tr(xpath: "following-sibling::*")
   end
 
+  def get_photo
+    @element[2].img.attribute_value("src")
+  end
+
   def get_region
     @element[4].text.split(" » ")[0].strip
   end
