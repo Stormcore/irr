@@ -44,3 +44,28 @@ end
     page.get_number_of_found_results.to_i.should eq(@counter.to_i)
   end
 end
+
+Допустим %{в ЛК ИП я запоминаю количество счетчика для категории "$category"} do |category|
+  on PSellerCategoriesPage do |page|
+    @counter = page.get_counter_for_category(category)
+    puts "Значение счетчика: #{@counter}"
+  end
+end
+
+Допустим /^в ЛК ИП счетчик для категории "(.*)" (увеличился|уменьшился) на (.+)$/ do |category, clause, value|
+  on PSellerCategoriesPage do |page|
+    new_value = page.get_counter_for_category(category)
+    puts "Новое значение счетчика: #{new_value}"
+    if clause == "увеличился"
+      (new_value.to_i - @counter.to_i).should eq(1)
+    else
+      (@counter.to_i - new_value.to_i).should eq(1)
+    end
+  end
+end
+
+Допустим /^в ЛК ИП счетчик для категории "(.*)" не изменился$/ do |category|
+  on PSellerCategoriesPage do |page|
+    page.get_counter_for_category(category).should eq(@counter)
+  end
+end
