@@ -63,8 +63,6 @@ class StargateNewAdDataPage
         end
       end
     end
-    # Закрываем поле, потому что оно может мешать следующим полям
-    self.panel_element.div_element(class: "x-grid3-col-title", text: name).click
   end
 
   def set_select_value(editor, value)
@@ -75,6 +73,7 @@ class StargateNewAdDataPage
       Watir::Wait.until {item.visible?}
     end
     item.click
+    Watir::Wait.while { item.parent.visible? }
   end
 
   def set_text_value(editor, value)
