@@ -45,6 +45,17 @@ end
   end
 end
 
+Когда %{на шаге 2 я ввожу логин и пароль роли "$role"} do |role|
+  credentials = get_login_and_password_for_role(role)
+  steps %Q{
+    * я ввожу следующие данные на шаге 2:
+     | parameter | value                      |
+     | email     | #{credentials['login']}    |
+     | Пароль    | #{credentials['password']} |
+  }
+  @current_user_name = credentials['username']
+end
+
 Когда %{я ввожу следующие данные на шаге 2:} do |page_params|
   on AddAdvertStep2 do |page|
     page_params.hashes.each do |hash|
