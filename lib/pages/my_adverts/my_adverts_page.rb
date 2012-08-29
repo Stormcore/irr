@@ -116,9 +116,8 @@ class PSellerCategoriesPage
   div :category_list, id: "category_tree_list"
 
   def get_counter_for_category(category)
-    last_category = category.split(" -> ")[-1]
     begin
-      link = self.category_list_element.link_element(link_text: last_category)
+      link = self.category_list_element.link_element(link_text: category)
       link.parent.span_element.text
     rescue Exception => e
       return 0

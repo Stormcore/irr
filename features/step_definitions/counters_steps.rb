@@ -45,21 +45,27 @@ end
   end
 end
 
-Допустим %{в ЛК ИП я запоминаю количество счетчика для категории "$category"} do |category|
+Допустим %{в ЛК ИП я запоминаю количество счетчика для категории "$category"} do |long_category|
   on PSellerCategoriesPage do |page|
-    @counter = page.get_counter_for_category(category)
+    # В хэше сохраняем значения для всех категорий - включая корневые
+    @counter = {}
+    long_category.split(" -> ").each do |category|
+      @counter[category] = page.get_counter_for_category(category)
+    end
     puts "Значение счетчика: #{@counter}"
   end
 end
 
 Допустим /^в ЛК ИП счетчик для категории "(.*)" (увеличился|уменьшился) на (.+)$/ do |category, clause, value|
   on PSellerCategoriesPage do |page|
-    new_value = page.get_counter_for_category(category)
-    puts "Новое значение счетчика: #{new_value}"
-    if clause == "увеличился"
-      (new_value.to_i - @counter.to_i).should eq(1)
-    else
-      (@counter.to_i - new_value.to_i).should eq(1)
+    @counter.each do |category, expected_counter|
+      new_value = page.get_counter_for_category(category)
+      puts "Новое значение счетчика для категории '#{category}': #{new_value}"
+      if clause == "увеличился"
+        (new_value.to_i - expected_counter.to_i).should eq(1)
+      else
+        (expected_counter.to_i - new_value.to_i).should eq(1)
+      end
     end
   end
   steps %{* в ЛК ИП я запоминаю количество счетчика для категории "#{category}"}
@@ -67,6 +73,8 @@ end
 
 Допустим /^в ЛК ИП счетчик для категории "(.*)" не изменился$/ do |category|
   on PSellerCategoriesPage do |page|
-    page.get_counter_for_category(category).should eq(@counter)
+    @counter.each do |category, expected_counter|
+      page.get_counter_for_category(category).should eq(expected_counter)
+    end
   end
 end
