@@ -62,6 +62,7 @@ end
       (@counter.to_i - new_value.to_i).should eq(1)
     end
   end
+  steps %{* в ЛК ИП я запоминаю количество счетчика для категории "#{category}"}
 end
 
 Допустим /^в ЛК ИП счетчик для категории "(.*)" не изменился$/ do |category|
