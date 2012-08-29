@@ -55,4 +55,12 @@ class MainPage
     self.personal_cabinet_element.when_visible.click
     self.adverts_profile.when_visible.click
   end
+
+  def get_user_ads_count
+    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    ad_count = self.adverts_my_element.span_element.text
+    # Нажимаем по комбобоксу чтобы закрыть попап
+    self.only_title_element.check
+    ad_count
+  end
 end

@@ -1,5 +1,28 @@
 # encoding: utf-8
 
+Допустим %{я запоминаю количество объявлений пользователя} do
+  on MainPage do |page|
+    @total_ads_num = page.get_user_ads_count
+  end
+end
+
+Допустим /^счетчик объявлений пользователя (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+  on MainPage do |page|
+    new_value = page.get_user_ads_count
+    case clause
+    when /увеличился на/
+      @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+    when /уменьшился на/
+      @total_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+    when "не изменился"
+      @total_ads_num.should eq(new_value)
+    else
+      raise "Неизвестное условие: '#{clause}'"
+    end
+  end
+  steps %{* я запоминаю количество объявлений пользователя}
+end
+
 Допустим %{я запоминаю сумму значений в выпадающем меню в секции "$section"} do |section|
   on CategoriesBarPage do |page|
     @sum = 0
