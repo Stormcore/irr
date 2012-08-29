@@ -1,22 +1,25 @@
 # encoding: utf-8
 Когда %{я перехожу к подаче объявления} do
-  #on MainPage do |page|
-  #  page.add_advert_element.when_present.click
-  #end
+  on MainPage do |page|
+    page.add_advert_element.when_present.click
+  end
 
-  #on AddAdvertMenuPage do |page|
-  #  page.addOnlineAdvert_element.when_present.click
-  #end
-
-  visit AddAdvertMenuPage
+  on AddAdvertMenuPage do |page|
+    page.addOnlineAdvert_element.when_present.click
+  end
 end
+
+Когда %{я перехожу к подаче объявления используя новую подачу} do
+  visit AddAdvertMenuPageNew
+end
+
 
 Когда %{загружены параметры объявления для категории "$long_category"} do |long_category|
   select_class_for_category(long_category)
 end
 
-Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
-  on AddAdvertStep1 do |page|
+Когда %{я подаю объявление в категорию "$long_category" используя новую подачу} do |long_category|
+  on AddAdvertStep1New do |page|
     # Открываем нужную категорию
     long_category.split(' -> ').each_with_index do |category, index|
       page.span_element(class: "ik_select_link_text", text: "Выберите категорию").when_present.click
@@ -27,6 +30,22 @@ end
   end
 end
 
+Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
+  on AddAdvertStep1 do |page|
+    # Открываем нужную категорию
+    long_category.split(' -> ').each_with_index do |category, index|
+      li = page.list_item_element(id: "section_#{index + 1}").when_present
+      li.unordered_list_element.when_present.click
+      a = li.link_elements(href: "#").select do |a|
+        UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
+      end
+      raise "Категория '#{category}' не найдена" unless a.size > 0
+      a[0].click
+     end
+    page.next_step
+  end
+end
+
 Когда %{я перехожу на шаг 3} do
   on AddAdvertStep2 do |page|
     page.next_step
@@ -34,11 +53,22 @@ end
 end
 
 Когда %{я подаю объявление в категорию "$category" с параметрами:} do |category, page_params|
-  steps %Q{
-    * я перехожу к подаче объявления
-    * я подаю объявление в категорию "#{category}"
-  }
-  on AddAdvertStep2 do |page|
+  new_categories = ['Авто и мото -> Легковые автомобили -> Автомобили с пробегом',
+                    'Недвижимость -> Квартиры. аренда']
+  @new_advert_can_be_used = new_categories.include?(category)
+  if @new_advert_can_be_used
+    steps %Q{
+      * я перехожу к подаче объявления используя новую подачу
+      * я подаю объявление в категорию "#{category}" используя новую подачу
+    }
+  else
+    steps %Q{
+      * я перехожу к подаче объявления
+      * я подаю объявление в категорию "#{category}"
+    }
+  end
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
@@ -57,7 +87,8 @@ end
 end
 
 Когда %{я ввожу следующие данные на шаге 2:} do |page_params|
-  on AddAdvertStep2 do |page|
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
@@ -65,7 +96,8 @@ end
 end
 
 Допустим /^я ввожу следующие данные на шаге 2 в секции "(.*?)":$/ do |section, page_params|
-  on AddAdvertStep2 do |page|
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page.ensure_additional_parameters_are_displayed
     page.ensure_section_is_visible(section)
     page_params.hashes.each do |hash|
@@ -76,25 +108,29 @@ end
 
 
 Когда %{я сохраняю редактируемое объявление} do
-  on AddAdvertStep2 do |page|
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page.save
   end
 end
 
 Когда %{я загружаю фото на шаге 2} do
-  on AddAdvertStep2 do |page|
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page.load_photo
   end
 end
 
 Когда %{я загружаю видео на шаге 2} do
-  on AddAdvertStep2 do |page|
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page.load_video
   end
 end
 
 То %{на шаге 2 выводится сообщение об отсутствии пакета} do
-  on AddAdvertStep2 do |page|
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page.has_package_message.should eq(false),
       "Сообщение об отсутствии пакета не показано"
 
