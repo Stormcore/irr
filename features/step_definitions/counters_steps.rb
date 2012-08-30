@@ -32,7 +32,7 @@ end
 end
 
 Допустим /^счетчик количества активных объявлений продавца (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
-  on AdDetailPage do |page|
+  on AdDetailsPage do |page|
     new_value = page.get_seller_ad_count
     puts "'Все объявления продавца' количество: #{@total_ads_num}"
     case clause
