@@ -95,7 +95,7 @@ end
 
 # Записываем изменения URL
 def after_step(scenario)
-  if @browser
+  begin
     response_time = @browser.performance.summary[:response_time]/1000
     unless @last_page == @browser.url
       @last_page = @browser.url
@@ -105,8 +105,11 @@ def after_step(scenario)
       puts "Шаг пройден за %.1f с" % (Time.now - @last_step_time)
     end
     @last_step_time = Time.now
+  rescue Exception => e
+    puts "Ошибка получения времени: #{e.message}"
   end
 end
+
 AfterStep do |scenario|
   after_step(scenario)
 end
