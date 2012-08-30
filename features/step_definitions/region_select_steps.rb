@@ -35,11 +35,11 @@ end
     @browser.goto(@url_prefix+@url_suffix)
   when "Усть-Алтан"
     @url_prefix = BASE_URL.gsub("http://", "http://ust-orda.")
-    @url_suffix = '/irkutskaya-obl-ust-ordyinskiy-buryatskiy-kray/osinskiy-r_n/ust-altan-selo/'
+    @url_suffix = '/osinskiy-r_n/ust-altan-selo/'
     @browser.goto(@url_prefix+@url_suffix)
   when "Пушкино"
     @url_prefix = BASE_URL
-    @url_suffix = '/moskovskaya-obl/pushkinskiy-r_n/pushkino-gorod/'
+    @url_suffix = '/pushkinskiy-r_n/pushkino-gorod/'
     @browser.goto(@url_prefix+@url_suffix)
   when "Астана"
     @url_prefix = BASE_URL.gsub("http://", "http://astana.")
