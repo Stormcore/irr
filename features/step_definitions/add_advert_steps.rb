@@ -10,7 +10,8 @@
 end
 
 Когда %{я перехожу к подаче объявления используя новую подачу} do
-  visit AddAdvertMenuPageNew
+  new_url = construct_region_url(BASE_URL+"/advertSubmission/step1/", @region)
+  @browser.goto(new_url)
 end
 
 

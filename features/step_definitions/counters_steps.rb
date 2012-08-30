@@ -10,7 +10,7 @@ end
 Допустим /^счетчик объявлений пользователя (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
   on MainPage do |page|
     new_value = page.get_user_ads_count
-    puts "'Мои объявления' новое количество: #{@total_ads_num}"
+    puts "'Мои объявления' новое количество: #{new_value}"
     case clause
     when /увеличился на/
       @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
@@ -34,7 +34,7 @@ end
 Допустим /^счетчик количества активных объявлений продавца (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
   on AdDetailsPage do |page|
     new_value = page.get_seller_ad_count
-    puts "'Все объявления продавца' количество: #{@total_ads_num}"
+    puts "'Все объявления продавца' новое количество: #{new_value}"
     case clause
     when /увеличился на/
       @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)
@@ -48,10 +48,10 @@ end
   end
 end
 
-Допустим /^счетчик количества активных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+Допустим /^счетчик количества размещенных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
   on PackageInfoPage do |page|
     new_value = page.get_ad_field_value("Размещено")
-    puts "'Размещено' новое количество: #{@total_ads_num}"
+    puts "'Размещено' новое количество: #{new_value}"
     case clause
     when /увеличился на/
       @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
@@ -68,7 +68,7 @@ end
 Допустим /^счетчик объявлений во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
   on PSellerCategoriesPage do |page|
     new_value = page.get_counter_for_category("Все разделы")
-    puts "Новое значение счетчика для категории 'Все разделы': #{new_value}"
+    puts "'Все разделы' новое значение: #{new_value}"
     case clause
     when /увеличился на/
       @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)

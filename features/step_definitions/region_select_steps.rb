@@ -19,51 +19,31 @@ end
   on RegionSelectPage do |page| page.selected_region.should == region end
 end
 
-Допустим /^открыта страница для (города|региона) "(.*)"$/ do |other, region|
+def construct_region_url(url, region)
   case region
   when "Москва"
-    @url_prefix = BASE_URL
-    @url_suffix = '/moskva-gorod/'
-    @browser.goto(@url_prefix+@url_suffix)
+    url+'/moskva-gorod/'
   when "Россия"
-    @url_prefix = BASE_URL.gsub("http://", "http://russia.")
-    @url_suffix = ''
-    @browser.goto(@url_prefix+@url_suffix)
-  when "Москва и область"
-    @url_prefix = BASE_URL
-    @url_suffix = ''
-    @browser.goto(@url_prefix+@url_suffix)
+    url.gsub("http://", "http://russia.")
+  when "Москва и область", "Казахстан"
+    url
   when "Усть-Алтан"
-    @url_prefix = BASE_URL.gsub("http://", "http://ust-orda.")
-    @url_suffix = '/osinskiy-r_n/ust-altan-selo/'
-    @browser.goto(@url_prefix+@url_suffix)
+    url.gsub("http://", "http://ust-orda.")+'/osinskiy-r_n/ust-altan-selo/'
   when "Пушкино"
-    @url_prefix = BASE_URL
-    @url_suffix = '/pushkinskiy-r_n/pushkino-gorod/'
-    @browser.goto(@url_prefix+@url_suffix)
+    url+'/pushkinskiy-r_n/pushkino-gorod/'
   when "Астана"
-    @url_prefix = BASE_URL.gsub("http://", "http://astana.")
-    @url_suffix = ''
-    @browser.goto(@url_prefix+@url_suffix)
+    url.gsub("http://", "http://astana.")
   when "Актобе"
-    @url_prefix = BASE_URL.gsub("http://", "http://akt-obl.")
-    @url_suffix = '/aktobe-gorod/'
-    @browser.goto(@url_prefix+@url_suffix)
-  when "Казахстан"
-    @url_prefix = BASE_URL
-    @url_suffix = ''
-    @browser.goto(@url_prefix+@url_suffix)
-  else
-    @url_prefix = BASE_URL
-    steps %Q{
-      Given открыта главная страница
-        And я выбираю страну "Популярные города"
-        And я выбираю регион "#{region}"
-    }
+    url.gsub("http://", "http://akt-obl.")+'/aktobe-gorod/'
   end
 end
 
-Допустим %{открыта страница для города "$region" (без проверок)} do |region|
+Допустим /^открыта страница для (города|региона) "(.*)"$/ do |other, region|
+  @region = region
+  @browser.goto(construct_region_url(BASE_URL,region))
+end
+
+Допустим %{открыта страница для (города|региона) "$region" (без проверок)} do |other, region|
   steps %Q{
     Given открыта главная страница
       And я выбираю страну "Популярные города"
