@@ -93,7 +93,7 @@ class MyAdvertsRecordPage
     begin
       @actions_for_row[0].a(text: action_name).when_present.click
     rescue Watir::Wait::TimeoutError => e
-      raise "Действие '#{action_name}' для пакета недоступно"
+      raise "Действие '#{action_name}' для объявления недоступно"
     end
   end
 
