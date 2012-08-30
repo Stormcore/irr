@@ -11,14 +11,13 @@ end
   on MainPage do |page|
     new_value = page.get_user_ads_count
     puts "'Мои объявления' новое количество: #{new_value}"
-    @total_ads_num = 0 if @total_ads_num.nil?
     case clause
     when /увеличился на/
-      @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
     when /уменьшился на/
-      @total_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
     when "не изменился"
-      @total_ads_num.should eq(new_value)
+      new_value.to_i.should eq(@active_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end
@@ -36,14 +35,13 @@ end
   on AdDetailsPage do |page|
     new_value = page.get_seller_ad_count
     puts "'Все объявления продавца' новое количество: #{new_value}"
-    @active_ads_num = 0 if @active_ads_num.nil?
     case clause
     when /увеличился на/
-      @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
     when /уменьшился на/
-      @active_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
     when "не изменился"
-      @active_ads_num.should eq(new_value)
+      new_value.to_i.should eq(@active_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end
@@ -54,14 +52,13 @@ end
   on PackageInfoPage do |page|
     new_value = page.get_ad_field_value("Размещено")
     puts "'Размещено' новое количество: #{new_value}"
-    @total_ads_num = 0 if @total_ads_num.nil?
     case clause
     when /увеличился на/
-      @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i + value.to_i)
     when /уменьшился на/
-      @total_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i - value.to_i)
     when "не изменился"
-      @total_ads_num.should eq(new_value)
+      new_value.to_i.should eq(@total_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end
@@ -72,14 +69,13 @@ end
   on PSellerCategoriesPage do |page|
     new_value = page.get_counter_for_category("Все разделы")
     puts "'Все разделы' новое значение: #{new_value}"
-    @active_ads_num = 0 if @active_ads_num.nil?
     case clause
     when /увеличился на/
-      @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
     when /уменьшился на/
-      @active_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
     when "не изменился"
-      @active_ads_num.should eq(new_value)
+      new_value.to_i.should eq(@active_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end
@@ -142,14 +138,13 @@ end
     @counter.each do |category, expected_counter|
       new_value = page.get_counter_for_category(category)
       puts "Новое значение счетчика для категории '#{category}': #{new_value}"
-
       case clause
       when /увеличился на/
-        (new_value.to_i - expected_counter.to_i).should eq(1)
+        new_value.to_i.should eq(expected_counter.to_i + value.to_i)
       when /уменьшился на/
-        (expected_counter.to_i - new_value.to_i).should eq(1)
+        new_value.to_i.should eq(expected_counter.to_i - value.to_i)
       when "не изменился"
-        new_value.should eq(expected_counter)
+        new_value.to_i.should eq(expected_counter)
       else
         raise "Неизвестное условие: '#{clause}'"
       end
