@@ -5,6 +5,10 @@ class PackageInfoPage
 
   select_list :package, name: "package"
 
+  def get_ad_field_value(field)
+    self.span_element(xpath: "//div[contains(.,'#{field}')]/span").when_present.text.strip
+  end
+
   def get_field_value(field)
     self.element("strong", xpath: "//div[contains(.,'#{field}')]/strong").when_present.text.strip
   end

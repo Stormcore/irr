@@ -3,12 +3,14 @@
 Допустим %{я запоминаю количество объявлений пользователя} do
   on MainPage do |page|
     @total_ads_num = page.get_user_ads_count
+    puts "'Мои объявления' количество: #{@total_ads_num}"
   end
 end
 
 Допустим /^счетчик объявлений пользователя (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
   on MainPage do |page|
     new_value = page.get_user_ads_count
+    puts "'Мои объявления' новое количество: #{@total_ads_num}"
     case clause
     when /увеличился на/
       @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
@@ -20,7 +22,64 @@ end
       raise "Неизвестное условие: '#{clause}'"
     end
   end
-  steps %{* я запоминаю количество объявлений пользователя}
+end
+
+Допустим %{я запоминаю количество активных объявлений ИП} do
+  on PackageInfoPage do |page|
+    @active_ads_num = page.get_ad_field_value("Размещено")
+    puts "'Размещено' количество: #{@total_ads_num}"
+  end
+end
+
+Допустим /^счетчик количества активных объявлений продавца (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+  on AdDetailPage do |page|
+    new_value = page.get_seller_ad_count
+    puts "'Все объявления продавца' количество: #{@total_ads_num}"
+    case clause
+    when /увеличился на/
+      @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+    when /уменьшился на/
+      @active_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+    when "не изменился"
+      @active_ads_num.should eq(new_value)
+    else
+      raise "Неизвестное условие: '#{clause}'"
+    end
+  end
+end
+
+Допустим /^счетчик количества активных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+  on PackageInfoPage do |page|
+    new_value = page.get_ad_field_value("Размещено")
+    puts "'Размещено' новое количество: #{@total_ads_num}"
+    case clause
+    when /увеличился на/
+      @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+    when /уменьшился на/
+      @total_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+    when "не изменился"
+      @total_ads_num.should eq(new_value)
+    else
+      raise "Неизвестное условие: '#{clause}'"
+    end
+  end
+end
+
+Допустим /^счетчик объявлений во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+  on PSellerCategoriesPage do |page|
+    new_value = page.get_counter_for_category("Все разделы")
+    puts "Новое значение счетчика для категории 'Все разделы': #{new_value}"
+    case clause
+    when /увеличился на/
+      @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)
+    when /уменьшился на/
+      @active_ads_num.to_i.should eq(new_value.to_i + value.to_i)
+    when "не изменился"
+      @active_ads_num.should eq(new_value)
+    else
+      raise "Неизвестное условие: '#{clause}'"
+    end
+  end
 end
 
 Допустим %{я запоминаю сумму значений в выпадающем меню в секции "$section"} do |section|
@@ -31,11 +90,6 @@ end
       @sum += page.get_counter_value(category).to_i
     end
   end
-end
-
-Допустим %{я запоминаю сумму значений в выпадающем меню последней категории} do
-  last_category = @category_name.split(" -> ")[-1]
-  steps %Q{* я запоминаю сумму значений в выпадающем меню в секции "#{last_category}"}
 end
 
 Допустим %{сумма равна значению счетчика в выпадающем меню в секции "$section"} do |section|
@@ -68,7 +122,7 @@ end
   end
 end
 
-Допустим %{в ЛК ИП я запоминаю количество счетчика для категории "$category"} do |long_category|
+Допустим %{в ЛК ИП я запоминаю значение счетчика для категории "$category"} do |long_category|
   on PSellerCategoriesPage do |page|
     # В хэше сохраняем значения для всех категорий - включая корневые
     @counter = {}
@@ -79,25 +133,22 @@ end
   end
 end
 
-Допустим /^в ЛК ИП счетчик для категории "(.*)" (увеличился|уменьшился) на (.+)$/ do |category, clause, value|
+Допустим /^в ЛК ИП счетчик для категории "(.*)" (увеличился на (.+)|уменьшился на (.+)|не изменился)$/ do |category, clause, value, not_used|
   on PSellerCategoriesPage do |page|
     @counter.each do |category, expected_counter|
       new_value = page.get_counter_for_category(category)
       puts "Новое значение счетчика для категории '#{category}': #{new_value}"
-      if clause == "увеличился"
-        (new_value.to_i - expected_counter.to_i).should eq(1)
-      else
-        (expected_counter.to_i - new_value.to_i).should eq(1)
-      end
-    end
-  end
-  steps %{* в ЛК ИП я запоминаю количество счетчика для категории "#{category}"}
-end
 
-Допустим /^в ЛК ИП счетчик для категории "(.*)" не изменился$/ do |category|
-  on PSellerCategoriesPage do |page|
-    @counter.each do |category, expected_counter|
-      page.get_counter_for_category(category).should eq(expected_counter)
+      case clause
+      when /увеличился на/
+        (new_value.to_i - expected_counter.to_i).should eq(1)
+      when /уменьшился на/
+        (expected_counter.to_i - new_value.to_i).should eq(1)
+      when "не изменился"
+        new_value.should eq(expected_counter)
+      else
+        raise "Неизвестное условие: '#{clause}'"
+      end
     end
   end
 end

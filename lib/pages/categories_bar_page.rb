@@ -24,4 +24,8 @@ class CategoriesBarPage
     li = @popup.unordered_list_element.element.lis.select{|li| li.text.include?(category_name)}[0]
     li.span.text.gsub(" ",'')
   end
+
+  def get_total_ads_count
+    self.get_counter_value("Все разделы")
+  end
 end

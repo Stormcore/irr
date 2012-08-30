@@ -47,7 +47,8 @@ end
 end
 
 Когда %{я перехожу на шаг 3} do
-  on AddAdvertStep2 do |page|
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
     page.next_step
   end
 end

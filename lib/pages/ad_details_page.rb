@@ -306,4 +306,9 @@ class AdDetailsPage
     self.div_element(class: "YMaps-layer-container").when_present.exists?
   end
 
+  def get_seller_ad_count
+    self.link_element(link_text: "Все объявлений продавца").parent.
+         span_element.text
+  end
+
 end
