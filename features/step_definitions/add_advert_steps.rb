@@ -98,8 +98,7 @@ end
 end
 
 Когда %{я ввожу следующие данные на шаге 2 (старая подача):} do |page_params|
-  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
-  on classs do |page|
+  on AddAdvertStep2 do |page|
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
