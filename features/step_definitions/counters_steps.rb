@@ -13,11 +13,11 @@ end
     puts "'Мои объявления' новое количество: #{new_value}"
     case clause
     when /увеличился на/
-      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i + value.to_i)
     when /уменьшился на/
-      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i - value.to_i)
     when "не изменился"
-      new_value.to_i.should eq(@active_ads_num.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end
@@ -27,7 +27,7 @@ end
 Допустим %{я запоминаю количество активных объявлений ИП} do
   on PackageInfoPage do |page|
     @active_ads_num = page.get_ad_field_value("Размещено")
-    puts "'Размещено' количество: #{@total_ads_num}"
+    puts "'Размещено' количество: #{@active_ads_num}"
   end
 end
 
@@ -54,11 +54,11 @@ end
     puts "'Размещено' новое количество: #{new_value}"
     case clause
     when /увеличился на/
-      new_value.to_i.should eq(@total_ads_num.to_i + value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
     when /уменьшился на/
-      new_value.to_i.should eq(@total_ads_num.to_i - value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
     when "не изменился"
-      new_value.to_i.should eq(@total_ads_num.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end
@@ -71,11 +71,11 @@ end
     puts "'Все разделы' новое значение: #{new_value}"
     case clause
     when /увеличился на/
-      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i + value.to_i)
     when /уменьшился на/
-      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i - value.to_i)
     when "не изменился"
-      new_value.to_i.should eq(@active_ads_num.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end

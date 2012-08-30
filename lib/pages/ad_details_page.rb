@@ -307,7 +307,7 @@ class AdDetailsPage
   end
 
   def get_seller_ad_count
-    self.link_element(link_text: "Все объявлений продавца").parent.
+    self.link_element(link_text: "Все объявления продавца").parent.
          span_element.text
   end
 
