@@ -94,17 +94,28 @@ end
 #end
 
 # Записываем изменения URL
-AfterStep do |scenario|
+def after_step(scenario)
   if @browser
     response_time = @browser.performance.summary[:response_time]/1000
-    puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, открыта за #{response_time} с"
+    unless @last_page == @browser.url
+      @last_page = @browser.url
+      puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, открыта за #{response_time} с"
+    end
+    unless @last_step_time.nil?
+      puts "Шаг пройден за %.1f с" % (Time.now - @last_step_time)
+    end
+    @last_step_time = Time.now
   end
+end
+AfterStep do |scenario|
+  after_step(scenario)
 end
 
 After do |scenario|
   Dir::mkdir('screenshots') if not File.directory?('screenshots')
   screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
   if scenario.failed?
+    after_step(scenario)
     begin
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
