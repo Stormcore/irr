@@ -67,7 +67,7 @@ class AddAdvertStep2New < AdDetailsPage
     case control.tag_name
     when "select"
       # Комбобокс
-      control.parent.to_subtype.div(class: "ik_select_link").click
+      control.parent.parent.element.div(class: "ik_select_link").click
       list = self.div_elements(class: "ik_select_list_inner").select{|div| div.visible?}[0]
       list.span_element(text: hash['value']).click
     when "input"
