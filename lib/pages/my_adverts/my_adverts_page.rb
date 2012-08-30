@@ -120,7 +120,8 @@ class PSellerCategoriesPage
       link = self.category_list_element.link_element(link_text: category)
       link.parent.span_element.text
     rescue Exception => e
-      return 0
+      puts "Ошибка при получении значения счетчика: #{e.message}"
+      return -1
     end
   end
 end
