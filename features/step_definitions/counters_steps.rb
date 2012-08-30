@@ -65,11 +65,15 @@ end
   end
 end
 
+Допустим %{я жду $timeout секунд и перезагружаю страницу} do |timeout|
+  # Счетчик запаздывает - ждём #{timeout} секунд и обновляем страницу
+  sleep timeout.to_i
+  @browser.refresh
+end
+
 Допустим /^счетчик объявлений во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
   on PSellerCategoriesPage do |page|
-    # Счетчик запаздывает на 10 секунд - ждём 10 секунд и обновляем страницу
-    sleep 10
-    @browser.refresh
+    steps %{* я жду 10 секунд и перезагружаю страницу}
     new_value = page.get_counter_for_category("Все разделы")
     puts "'Все разделы' новое значение: #{new_value}"
     case clause
