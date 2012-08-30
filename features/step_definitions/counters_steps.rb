@@ -11,6 +11,7 @@ end
   on MainPage do |page|
     new_value = page.get_user_ads_count
     puts "'Мои объявления' новое количество: #{new_value}"
+    @total_ads_num = 0 if @total_ads_num.nil?
     case clause
     when /увеличился на/
       @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
@@ -35,6 +36,7 @@ end
   on AdDetailsPage do |page|
     new_value = page.get_seller_ad_count
     puts "'Все объявления продавца' новое количество: #{new_value}"
+    @active_ads_num = 0 if @active_ads_num.nil?
     case clause
     when /увеличился на/
       @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)
@@ -52,6 +54,7 @@ end
   on PackageInfoPage do |page|
     new_value = page.get_ad_field_value("Размещено")
     puts "'Размещено' новое количество: #{new_value}"
+    @total_ads_num = 0 if @total_ads_num.nil?
     case clause
     when /увеличился на/
       @total_ads_num.to_i.should eq(new_value.to_i - value.to_i)
@@ -69,6 +72,7 @@ end
   on PSellerCategoriesPage do |page|
     new_value = page.get_counter_for_category("Все разделы")
     puts "'Все разделы' новое значение: #{new_value}"
+    @active_ads_num = 0 if @active_ads_num.nil?
     case clause
     when /увеличился на/
       @active_ads_num.to_i.should eq(new_value.to_i - value.to_i)
