@@ -144,7 +144,7 @@ end
       when /уменьшился на/
         new_value.to_i.should eq(expected_counter.to_i - value.to_i)
       when "не изменился"
-        new_value.to_i.should eq(expected_counter)
+        new_value.to_i.should eq(expected_counter.to_i)
       else
         raise "Неизвестное условие: '#{clause}'"
       end
