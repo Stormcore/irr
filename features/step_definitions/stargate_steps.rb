@@ -31,7 +31,9 @@ end
 
 То %{отображена основная страница БО} do
   on StargatePage do |page|
-    page.westpanel_element.when_present(30)
+    Watir::Wait.until { @browser.alert.exists? || page.westpanel_element.exists?}
+    raise "Ошибка на странице: '#{@browser.alert.text}'" if @browser.alert.exists?
+    page.westpanel_element.when_present()
   end
 end
 

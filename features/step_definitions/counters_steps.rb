@@ -67,6 +67,9 @@ end
 
 Допустим /^счетчик объявлений во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
   on PSellerCategoriesPage do |page|
+    # Счетчик запаздывает на 10 секунд - ждём 10 секунд и обновляем страницу
+    sleep 10
+    @browser.refresh
     new_value = page.get_counter_for_category("Все разделы")
     puts "'Все разделы' новое значение: #{new_value}"
     case clause
