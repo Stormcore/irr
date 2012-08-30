@@ -6,10 +6,10 @@ class MainPage
   link :login, id: "a_login"
   span :logged_in, id: "passport_userInfo"
   
-  link :personal_cabinet, link_text: /Личный кабинет/
-  link :favourites, link_text: /Избранное/
+  link :personal_cabinet, id: "load_user_ads_counter"
+  link (:favourites) {|page| page.list_item_element(id: "blocknote").link_element}
   
-  link :adverts_my, link_text: /Мои объявления/
+  link (:adverts_my) {|page| page.span_element(id: "user_ads_counter").parent}
   link :adverts_favourites, link_text: "Избранные"
   link :adverts_payments, link_text: "Платежи"
   link :adverts_profile, link_text: "Профиль"
