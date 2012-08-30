@@ -23,7 +23,7 @@ class AddAdvertStep2New < AdDetailsPage
 
   div :videoPopup, id: "popupVideoAdd"
   text_field :videoContents, id: "video_content"
-  link :uploadVideoButton, id: "uploadVideoButton"
+  button :uploadVideoButton, id: "uploadVideoButton"
   div :video_preview, id: "videoContentBlock"
 
   link :save, id: "submit-edit-form"
