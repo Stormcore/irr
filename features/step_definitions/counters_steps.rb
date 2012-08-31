@@ -7,15 +7,15 @@
   end
 end
 
-Допустим /^счетчик объявлений пользователя (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+Допустим /^счетчик объявлений пользователя (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
   on MainPage do |page|
     new_value = page.get_user_ads_count
     puts "'Мои объявления' новое количество: #{new_value}"
     case clause
     when /увеличился на/
-      new_value.to_i.should eq(@total_ads_num.to_i + value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i + value1.to_i)
     when /уменьшился на/
-      new_value.to_i.should eq(@total_ads_num.to_i - value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i - value2.to_i)
     when "не изменился"
       new_value.to_i.should eq(@total_ads_num.to_i)
     else
@@ -31,15 +31,22 @@ end
   end
 end
 
-Допустим /^счетчик количества активных объявлений продавца (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+Допустим %{я запоминаю количество неактивных объявлений ИП} do
+  on PackageInfoPage do |page|
+    @inactive_ads_num = page.get_ad_field_value("Неактивно")
+    puts "'Неактивно' количество: #{@inactive_ads_num}"
+  end
+end
+
+Допустим /^счетчик количества активных объявлений продавца (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
   on AdDetailsPage do |page|
     new_value = page.get_seller_ad_count
     puts "'Все объявления продавца' новое количество: #{new_value}"
     case clause
     when /увеличился на/
-      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i + value1.to_i)
     when /уменьшился на/
-      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i - value2.to_i)
     when "не изменился"
       new_value.to_i.should eq(@active_ads_num.to_i)
     else
@@ -48,17 +55,34 @@ end
   end
 end
 
-Допустим /^счетчик количества размещенных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+Допустим /^счетчик количества размещенных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
   on PackageInfoPage do |page|
     new_value = page.get_ad_field_value("Размещено")
     puts "'Размещено' новое количество: #{new_value}"
     case clause
     when /увеличился на/
-      new_value.to_i.should eq(@active_ads_num.to_i + value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i + value1.to_i)
     when /уменьшился на/
-      new_value.to_i.should eq(@active_ads_num.to_i - value.to_i)
+      new_value.to_i.should eq(@active_ads_num.to_i - value2.to_i)
     when "не изменился"
       new_value.to_i.should eq(@active_ads_num.to_i)
+    else
+      raise "Неизвестное условие: '#{clause}'"
+    end
+  end
+end
+
+Допустим /^счетчик количества неактивных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
+  on PackageInfoPage do |page|
+    new_value = page.get_ad_field_value("Неактивно")
+    puts "'Неактивно' новое количество: #{new_value}"
+    case clause
+    when /увеличился на/
+      new_value.to_i.should eq(@inactive_ads_num.to_i + value1.to_i)
+    when /уменьшился на/
+      new_value.to_i.should eq(@inactive_ads_num.to_i - value2.to_i)
+    when "не изменился"
+      new_value.to_i.should eq(@inactive_ads_num.to_i)
     else
       raise "Неизвестное условие: '#{clause}'"
     end
@@ -71,16 +95,16 @@ end
   @browser.refresh
 end
 
-Допустим /^счетчик объявлений во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value, not_used|
+Допустим /^счетчик объявлений во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
   on PSellerCategoriesPage do |page|
     steps %{* я жду 10 секунд и перезагружаю страницу}
     new_value = page.get_counter_for_category("Все разделы")
     puts "'Все разделы' новое значение: #{new_value}"
     case clause
     when /увеличился на/
-      new_value.to_i.should eq(@total_ads_num.to_i + value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i + value1.to_i)
     when /уменьшился на/
-      new_value.to_i.should eq(@total_ads_num.to_i - value.to_i)
+      new_value.to_i.should eq(@total_ads_num.to_i - value2.to_i)
     when "не изменился"
       new_value.to_i.should eq(@total_ads_num.to_i)
     else
@@ -140,16 +164,16 @@ end
   end
 end
 
-Допустим /^в ЛК ИП счетчик для категории "(.*)" (увеличился на (.+)|уменьшился на (.+)|не изменился)$/ do |category, clause, value, not_used|
+Допустим /^в ЛК ИП счетчик для категории "(.*)" (увеличился на (.+)|уменьшился на (.+)|не изменился)$/ do |category, clause, value1, value2|
   on PSellerCategoriesPage do |page|
     @counter.each do |category, expected_counter|
       new_value = page.get_counter_for_category(category)
       puts "Новое значение счетчика для категории '#{category}': #{new_value}"
       case clause
       when /увеличился на/
-        new_value.to_i.should eq(expected_counter.to_i + value.to_i)
+        new_value.to_i.should eq(expected_counter.to_i + value1.to_i)
       when /уменьшился на/
-        new_value.to_i.should eq(expected_counter.to_i - value.to_i)
+        new_value.to_i.should eq(expected_counter.to_i - value2.to_i)
       when "не изменился"
         new_value.to_i.should eq(expected_counter.to_i)
       else
