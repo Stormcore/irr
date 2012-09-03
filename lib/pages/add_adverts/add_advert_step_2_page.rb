@@ -376,12 +376,6 @@ RUTUBE_VIDEO
     self.no_package_message_element.when_present.text
   end
 
-  def ensure_additional_parameters_are_displayed
-    unless self.div_element(class: "b-form-LK_other-params").visible?
-      self.link_element(text: "Дополнительные характеристики").click
-    end
-  end
-
   def ensure_section_is_visible(name)
     if self.table_element.element.th(text: name).a.exists?
       self.table_element.element.th(text: name).a.click

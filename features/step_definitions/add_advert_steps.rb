@@ -108,7 +108,7 @@ end
 Допустим /^я ввожу следующие данные на шаге 2 в секции "(.*?)":$/ do |section, page_params|
   classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
   on classs do |page|
-    page.ensure_additional_parameters_are_displayed
+    page.ensure_additional_parameters_are_displayed if classs == AddAdvertStep2New
     page.ensure_section_is_visible(section)
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
