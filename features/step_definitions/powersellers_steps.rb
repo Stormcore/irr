@@ -25,7 +25,7 @@ def powersellers_soft_assert(description)
 end
 
 Когда %{я перехожу на страницу списка интернет-партнеров} do
-  visit PowersellersListPage
+  @browser.goto(construct_region_url(BASE_URL+"/powerSellers/list/", @region))
 end
 
 То %{в списке присутствуют интернет-партнеры} do

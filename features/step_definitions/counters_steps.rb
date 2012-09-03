@@ -7,6 +7,17 @@
   end
 end
 
+Допустим %{в списке ИП для пользователя с ролью "$role" указано правильное количество объявлений} do |role|
+  on PowersellersListPage do |page|
+    credentials = get_login_and_password_for_role(role)
+    raise "Пароли и логины не найдены для данного сервера" unless credentials.has_key?('username')
+    name = credentials['username']
+    powerseller = page.get_powerseller_by_name(name)
+    new_value = powerseller.get_counter
+    new_value.to_i.should eq(@active_ads_num.to_i)
+  end
+end
+
 Допустим /^счетчик объявлений пользователя (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
   on MainPage do |page|
     new_value = page.get_user_ads_count

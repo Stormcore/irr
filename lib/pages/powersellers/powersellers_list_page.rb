@@ -3,12 +3,16 @@
 class PowersellersListPage
   include PageObject
 
-  direct_url BASE_URL+"/powerSellers/list/"
-
   table :powersellers, xpath: "//div[@class='b-adListTable b-adTblIP']/table"
 
   def get_powerseller_number
     self.powersellers_element.when_present.rows
+  end
+
+  def get_powerseller_by_name(name)
+    link = self.powersellers_element.link_element(text: name)
+    raise "Не найден интернет-партнер '#{name}'" unless link.exists?
+    Powerseller.new(link.parent.parent)
   end
 end
 
@@ -19,6 +23,10 @@ class Powerseller
 
   def get_name
     @element.element.cell(index: 1).text
+  end
+
+  def get_counter
+    @element.element.cell(index: 3).text
   end
 
   def has_photo
