@@ -21,31 +21,31 @@ end
 
 Допустим %{модератор принимает объявление} do
   on StargateAdSearchResultsPage do |page|
-    result = page.get_results.first
-    page.open_menu(result)
+    page.open_menu(page.get_results.first)
     page.menu_approve
     # Страница перезагружается
-    result = page.get_results.first
-    page.is_approved?(result).should eq(true), 
+    page.is_approved?(page.get_results.first).should eq(true), 
         "Ошибка при активации объявления - объявление не отмечено как одобренное"
   end
 end
 
 Допустим /^модератор отклоняет объявление с причиной "(.*?)" и текстом$/ do |reason, string|
   on StargateAdSearchResultsPage do |page|
-    result = page.get_results.first
-    page.open_menu(result)
+    page.open_menu(page.get_results.first)
     page.menu_decline
     # Страница перезагружается
-    result = page.get_results.first
-    page.is_declined?(result).should eq(true), 
-        "Ошибка при отклонении объявления"
   end
 
   on StargateAdModerationDeclineDialog do |page|
     page.specify_reason(reason)
     page.set_text(string)
     page.confirm
+  end
+
+  on StargateAdSearchResultsPage do |page|
+    page.open_menu(page.get_results.first)
+    page.is_declined?(page.get_results.first).should eq(true), 
+        "Ошибка при отклонении объявления"
   end
 end
 
