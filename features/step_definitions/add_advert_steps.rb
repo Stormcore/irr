@@ -32,18 +32,25 @@ end
 end
 
 Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
-  on AddAdvertStep1 do |page|
-    # Открываем нужную категорию
-    long_category.split(' -> ').each_with_index do |category, index|
-      li = page.list_item_element(id: "section_#{index + 1}").when_present
-      li.unordered_list_element.when_present.click
-      a = li.link_elements(href: "#").select do |a|
-        UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
-      end
-      raise "Категория '#{category}' не найдена" unless a.size > 0
-      a[0].click
-     end
-    page.next_step
+  new_categories = ['Авто и мото -> Легковые автомобили -> Автомобили с пробегом',
+                    'Недвижимость -> Квартиры. аренда']
+  @new_advert_can_be_used = new_categories.include?(long_category)
+  if @new_advert_can_be_used
+    steps %{* я подаю объявление в категорию "#{long_category}" используя новую подачу}
+  else
+    on AddAdvertStep1 do |page|
+      # Открываем нужную категорию
+      long_category.split(' -> ').each_with_index do |category, index|
+        li = page.list_item_element(id: "section_#{index + 1}").when_present
+        li.unordered_list_element.when_present.click
+        a = li.link_elements(href: "#").select do |a|
+          UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
+        end
+        raise "Категория '#{category}' не найдена" unless a.size > 0
+        a[0].click
+       end
+      page.next_step
+    end
   end
 end
 
