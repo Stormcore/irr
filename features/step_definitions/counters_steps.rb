@@ -35,16 +35,18 @@ end
   end
 end
 
-Допустим %{я запоминаю количество активных объявлений ИП} do
-  on PackageInfoPage do |page|
-    @active_ads_num = page.get_ad_field_value("Размещено")
+Допустим /^я запоминаю количество активных объявлений (ИП|ОП)$/ do |type|
+  classs = type == 'ИП' ? PackageInfoPage : OPPackageInfoPage
+  on classs do |page|
+    @active_ads_num = page.get_active_counter
     puts "'Размещено' количество: #{@active_ads_num}"
   end
 end
 
-Допустим %{я запоминаю количество неактивных объявлений ИП} do
-  on PackageInfoPage do |page|
-    @inactive_ads_num = page.get_ad_field_value("Неактивно")
+Допустим /^я запоминаю количество неактивных объявлений (ИП|ОП)$/ do |type|
+  classs = type == 'ИП' ? PackageInfoPage : OPPackageInfoPage
+  on classs do |page|
+    @inactive_ads_num = page.get_inactive_counter
     puts "'Неактивно' количество: #{@inactive_ads_num}"
   end
 end
@@ -66,9 +68,10 @@ end
   end
 end
 
-Допустим /^счетчик количества размещенных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
-  on PackageInfoPage do |page|
-    new_value = page.get_ad_field_value("Размещено")
+Допустим /^счетчик количества размещенных объявлений в ЛК (ИП|ОП) (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |type, clause, value1, value2|
+  classs = type == 'ИП' ? PackageInfoPage : OPPackageInfoPage
+  on classs do |page|
+    new_value = page.get_active_counter
     puts "'Размещено' новое количество: #{new_value}"
     case clause
     when /увеличился на/
@@ -83,9 +86,10 @@ end
   end
 end
 
-Допустим /^счетчик количества неактивных объявлений в ЛК ИП (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
-  on PackageInfoPage do |page|
-    new_value = page.get_ad_field_value("Неактивно")
+Допустим /^счетчик количества неактивных объявлений в ЛК (ИП|ОП) (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |type, clause, value1, value2|
+  classs = type == 'ИП' ? PackageInfoPage : OPPackageInfoPage
+  on classs do |page|
+    new_value = page.get_inactive_counter
     puts "'Неактивно' новое количество: #{new_value}"
     case clause
     when /увеличился на/
@@ -106,10 +110,11 @@ end
   @browser.refresh
 end
 
-Допустим /^счетчик объявлений во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
-  on PSellerCategoriesPage do |page|
+Допустим /^счетчик объявлений (ИП|ОП) во всех разделах (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |type, clause, value1, value2|
+  classs = type == 'ИП' ? PSellerCategoriesPage : OPAdvertsPage
+  on classs do |page|
     steps %{* я жду 10 секунд и перезагружаю страницу}
-    new_value = page.get_counter_for_category("Все разделы")
+    new_value = page.get_counter_for_all_categories
     puts "'Все разделы' новое значение: #{new_value}"
     case clause
     when /увеличился на/
@@ -164,8 +169,9 @@ end
   end
 end
 
-Допустим %{в ЛК ИП я запоминаю значение счетчика для категории "$category"} do |long_category|
-  on PSellerCategoriesPage do |page|
+Допустим /^в ЛК (ИП|ОП) я запоминаю значение счетчика для категории "(.*)"$/ do |type, long_category|
+  classs = type == 'ИП' ? PSellerCategoriesPage : OPAdvertsPage
+  on classs do |page|
     # В хэше сохраняем значения для всех категорий - включая корневые
     @counter = {}
     long_category.split(" -> ").each do |category|
@@ -175,8 +181,9 @@ end
   end
 end
 
-Допустим /^в ЛК ИП счетчик для категории "(.*)" (увеличился на (.+)|уменьшился на (.+)|не изменился)$/ do |category, clause, value1, value2|
-  on PSellerCategoriesPage do |page|
+Допустим /^в ЛК (ИП|ОП) счетчик для категории "(.*)" (увеличился на (.+)|уменьшился на (.+)|не изменился)$/ do |type, category, clause, value1, value2|
+  classs = type == 'ИП' ? PSellerCategoriesPage : OPAdvertsPage
+  on classs do |page|
     @counter.each do |category, expected_counter|
       new_value = page.get_counter_for_category(category)
       puts "Новое значение счетчика для категории '#{category}': #{new_value}"

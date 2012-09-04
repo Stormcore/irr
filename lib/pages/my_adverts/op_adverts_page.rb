@@ -5,6 +5,12 @@ class OPAdvertsPage
   table :ads, id: "myadvertslist"
   unordered_list :bookmarks, class: "b-bookmarksAdv"
 
+  div (:categories) { |page| 
+    page.div_elements(class: "b-blockInf").select{ |div| 
+      div.div_element(class: "b-title", text: "Категории").exists?
+    }[0]
+  }
+
   def wait_for_ads_loaded
     begin
       self.ads_element.when_present(30)
@@ -39,6 +45,20 @@ class OPAdvertsPage
     self.checkbox_element(id: "checkAll").click
     self.link_element(id: "groupActionDeleteSelected").click
     @browser.alert.ok
+  end
+
+  def get_counter_for_category(category)
+    links = self.categories_element.element.links.select{|l| 
+      l.text.split("\n")[1] == category}
+    return 0 if links.size == 0
+    links[0].div.text
+  end
+
+  def get_counter_for_all_categories
+    links = self.categories_element.element.links.select{|l| 
+      l.text.split("\n")[1] == "Все категории"}
+    return 0 if links.size == 0
+    links[0].div.text
   end
 end
 
@@ -99,5 +119,29 @@ class OPAdvertsRecordPage
 
   def get_ad_id
     self.get_url_for_ad.match(/(\d+)/).to_s
+  end
+end
+
+class OPPackageInfoPage
+  include PageObject
+
+  div (:statuses) { |page| 
+    page.div_elements(class: "b-blockInf").select{ |div| 
+      div.div_element(class: "b-title", text: "Статус").exists?
+    }[0]
+  }
+
+  def get_active_counter
+    links = self.statuses_element.element.links.select{|l| 
+      l.text.split("\n")[1] == "Активные"}
+    return 0 if links.size == 0
+    links[0].div.text
+  end
+
+  def get_inactive_counter
+    links = self.statuses_element.element.links.select{|l| 
+      l.text.split("\n")[1] == "Снятые с размещения"}
+    return 0 if links.size == 0
+    links[0].div.text
   end
 end
