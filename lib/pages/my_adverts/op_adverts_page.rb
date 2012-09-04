@@ -55,10 +55,10 @@ class OPAdvertsPage
   end
 
   def get_counter_for_all_categories
-    links = self.categories_element.element.links.select{|l| 
+    links = self.categories_element.element.lis.select{|l| 
       l.text.split("\n")[1] == "Все категории"}
     return 0 if links.size == 0
-    links[0].div.text
+    links[0].div(class: "floatRight").text
   end
 end
 

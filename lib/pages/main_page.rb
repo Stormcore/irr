@@ -37,22 +37,22 @@ class MainPage
   end
   
   def open_my_adverts
-    self.personal_cabinet_element.when_present.click
+    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
     self.adverts_my_element.when_present.click
   end
   
   def open_favourite_adverts
-    self.personal_cabinet_element.when_visible.click
+    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
     self.adverts_favourites.when_visible.click
   end
   
   def open_payments
-    self.personal_cabinet_element.when_visible.click
+    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
     self.adverts_payments.when_visible.click
   end
   
   def open_profile
-    self.personal_cabinet_element.when_visible.click
+    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
     self.adverts_profile.when_visible.click
   end
 
