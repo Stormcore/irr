@@ -133,7 +133,7 @@ end
   on CategoriesBarPage do |page|
     @sum = 0
     page.open_popup_for_section(section)
-    page.get_categories_list.each do |category|
+    page.get_categories_list().each do |category|
       @sum += page.get_counter_value(category).to_i
     end
   end
@@ -161,6 +161,11 @@ end
 Допустим %{я запоминаю значение счетчика для последней категории в выпадающем меню} do
   last_category = @category_name.split(" -> ")[-1]
   steps %Q{* я запоминаю значение счетчика в выпадающем меню для секции "#{last_category}"}
+end
+
+Допустим %{я запоминаю сумму значений счетчиков для последней категории в выпадающем меню} do
+  last_category = @category_name.split(" -> ")[-1]
+  steps %Q{* я запоминаю сумму значений в выпадающем меню в секции "#{last_category}"}
 end
 
 Допустим %{на странице результатов количество результатов равно значению счетчика из выпадающего меню} do
