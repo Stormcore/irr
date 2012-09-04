@@ -272,7 +272,7 @@ end
 Допустим %{я отсылаю SMS для оплаты} do
   visit SMSDebugPage
 
-  puts "DEBUG: Страница <a href='#{@browser.url}>#{@browser.url}</a>, номер '#{@number}' текст '#{@text}'"
+  puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, номер '#{@number}' текст '#{@text}'"
 
   on SMSDebugPage do |page|
     page.send_sms(@number, @text)
@@ -286,7 +286,7 @@ end
 Допустим %{я отсылаю SMS для оплаты используя казахский сендер} do
   visit SMSDebugKZPage
 
-  puts "DEBUG: Страница <a href='#{@browser.url}>#{@browser.url}</a>, номер '#{@number}' текст '#{@text}'"
+  puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, номер '#{@number}' текст '#{@text}'"
 
   on SMSDebugKZPage do |page|
     page.send_sms(@text)
