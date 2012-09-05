@@ -119,14 +119,15 @@ end
 
 То %{на странице паспорта отображено имя пользователя} do 
   on PassportPage do |page|
-    element = page.div_element(:text => /#{@current_user_name}/)
-    element.when_present(10).visible?.should == true
+    divs = page.div_elements(class: "b_li").select{ |div| div.element.b.exists?}
+    divs.size.should > 0
+    divs[0].element.b.text.should == @current_user_name
   end
 end
 
 То %{на странице паспорта отображена ссылка на настройки} do 
   on PassportPage do |page|
-    element = page.settings_element.when_present
+    element = page.settings_element
     element.visible?.should == true
     element.text.should match "Настройки"
   end
@@ -134,7 +135,7 @@ end
 
 То %{на странице паспорта отображена ссылка на выход} do 
   on PassportPage do |page|
-    element = page.logout_element.when_present
+    element = page.logout_element
     element.visible?.should be true
     element.text.should == "Выйти"
   end
