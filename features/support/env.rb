@@ -102,7 +102,14 @@ def after_step(scenario)
       puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, открыта за #{response_time} с"
     end
     unless @last_step_time.nil?
-      puts "Шаг пройден за %.1f с" % (Time.now - @last_step_time)
+      step_time = Time.now - @last_step_time
+      # Если шаг пройден более чем за 5 секунд - то выделим это в отчете
+      if step_time > 5
+        step_time = "<font color='red'>%.1f</font>" % step_time
+      else
+        step_time = "%.1f" % step_time
+      end
+      puts "Шаг пройден за #{step_time} с"
     end
     @last_step_time = Time.now
   rescue Exception => e
