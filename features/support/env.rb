@@ -97,10 +97,6 @@ end
 def after_step(scenario)
   begin
     response_time = @browser.performance.summary[:response_time]/1000
-    unless @last_page == @browser.url
-      @last_page = @browser.url
-      puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, открыта за #{response_time} с"
-    end
     unless @last_step_time.nil?
       step_time = Time.now - @last_step_time
       # Если шаг пройден более чем за 5 секунд - то выделим это в отчете
@@ -109,7 +105,7 @@ def after_step(scenario)
       else
         step_time = "%.1f" % step_time
       end
-      puts "Шаг пройден за #{step_time} с"
+      puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, загружена за #{response_time} с, шаг пройден за #{step_time} с"
     end
     @last_step_time = Time.now
   rescue Exception => e
