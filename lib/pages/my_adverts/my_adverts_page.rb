@@ -127,7 +127,7 @@ class PSellerCategoriesPage
 
   def get_counter_for_all_categories
     begin
-      link = self.category_list_element.link_element(link_text: "Все разда\елы")
+      link = self.category_list_element.link_element(link_text: "Все разделы")
       link.parent.span_element.text
     rescue Exception => e
       puts "Не найден счетчик для всех разделов"
