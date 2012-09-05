@@ -5,11 +5,15 @@ class StargatePowersellerDetailsPage
 
   div :main, xpath: "//div[@class=' x-tab-panel'][.//span[text()='Свойства']]"
 
-  button :add_package, text: "Добавить пакет"
+  button :add_package_btn, text: "Добавить пакет"
 
-  
   button (:close) {|page| page.main_element.button_element(text: 'Закрыть')}
   button (:save) {|page| page.main_element.button_element(text: "Сохранить")}
+
+  def add_package
+    self.div_element(class: "ext-el-mask").element.wait_while_present
+    self.add_package_btn
+  end
 
   def open_tab(name)
     self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
