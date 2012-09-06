@@ -363,15 +363,10 @@ end
   end
 end
 
-Допустим %{в ЛК ИП я запоминаю ID последнего объявления} do
-  on MyAdvertsPage do |page|
-    @ad_id = page.get_first_ad.get_ad_id
-  end
-end
-
-Допустим %{в ЛК ОП я запоминаю ID последнего объявления} do
-  on MyAdvertsPage do |page|
-    @ad_id = page.get_first_ad.get_ad_id
+Допустим /^в ЛК (ИП|ОП) я запоминаю ID последнего объявления$/ do |type|
+  @class = type == 'ИП' ? MyAdvertsPage : OPAdvertsPage
+  on @class do |page|
+    @ad_id = page.get_first_ad_id
   end
 end
 
