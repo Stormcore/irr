@@ -21,20 +21,15 @@ class OPAdvertsPage
 
   def get_ad_with_title(title)
     self.wait_for_ads_loaded
-    elements = self.ads_element.element.rows.
-               select{|row| row.a(text: title).exists?}
-    unless elements.size > 0
-      raise "Объявление с заголовком '#{title}' не найдено"
-    end
-    return OPAdvertsRecordPage.new(elements[0])
+    element = self.ads_element.element.rows.find{|row| row.a(text: title).exists?}
+    raise "Объявление с заголовком '#{title}' не найдено" if element.nil?
+    return element
   end
 
-  def get_first_ad
-    element = self.wait_for_ads_loaded.element.row(index: 1)
-    unless element.exists?
-      raise "Объявления отсутствуют"
-    end
-    return OPAdvertsRecordPage.new(element)
+  def get_first_ad_id
+    element = self.ads_element.element.row(index: 1)
+    raise "Объявления отсутствуют" unless element.exists?
+    element[2].a.href.match(/(\d+)/).to_s
   end
 
   def open_tab(name)
@@ -60,65 +55,64 @@ class OPAdvertsPage
     return 0 if link.nil?
     link.div(class: "floatRight").text
   end
-end
 
-class OPAdvertsRecordPage
-  def initialize(element)
-    @element = element
-    @actions_for_row = element.tr(xpath: "following-sibling::*")
+# Действия над объявлением
+  def get_photo(title)
+    self.has_ad_with_title(title)[2].img.attribute_value("src")
   end
 
-    def get_region
-    @element[4].text.split(" » ")[0].strip
+  def get_region(title)
+    self.has_ad_with_title(title)[4].text.split(" » ")[0].strip
   end
 
-  def get_city
-    @element[4].text.split(" » ")[-1].strip
+  def get_city(title)
+    self.has_ad_with_title(title)[4].text.split(" » ")[-1].strip
   end
 
-  def get_price(currency)
-    @element[1].span(class: currency).
+  def get_price(title, currency)
+    self.has_ad_with_title(title)[1].span(class: currency).
                 html[/> .* </].gsub(/[>< ]/,'').gsub(/\&nbsp\;/,'')
   end
 
-  def get_url_for_ad
-    @element[2].when_present.a.href
+  def get_url_for_ad(title)
+    self.has_ad_with_title(title)[2].when_present.a.href
   end
 
-  def open_ad
-    @element[2].a.click
+  def open_ad(title)
+    self.has_ad_with_title(title)[2].a.click
   end
 
-  def moderation_status
-    @element[6].div.text
+  def moderation_status(title)
+    self.has_ad_with_title(title)[6].div.text
   end
 
-  def moderation_additional_status
-    @element[6].p.text
+  def moderation_additional_status(title)
+    self.has_ad_with_title(title)[6].p.text
   end
 
-  def do_action(action_name)
+  def do_action(title, action_name)
     begin
-      @actions_for_row[1].a(text: action_name).when_present.click
+      self.has_ad_with_title(title).tr(xpath: "following-sibling::*")[1].
+           a(text: action_name).when_present.click
     rescue Watir::Wait::TimeoutError => e
       raise "Действие '#{action_name}' для объявления недоступно"
     end
   end
 
-  def do_place
-    @element.a(text: "Разместить").click
+  def do_place(title)
+    self.has_ad_with_title(title).a(text: "Разместить").click
   end
 
-  def is_ad_highlighted
-    @element.wd.attribute("class").include?("mark").should == true
+  def is_ad_highlighted(title)
+    self.has_ad_with_title(title).wd.attribute("class").include?("mark")
   end
 
-  def is_ad_premium
-    @element.wd.attribute("class").include?("premium").should == true
+  def is_ad_premium(title)
+    self.has_ad_with_title(title).wd.attribute("class").include?("premium")
   end
 
-  def get_ad_id
-    self.get_url_for_ad.match(/(\d+)/).to_s
+  def get_ad_id(title)
+    self.has_ad_with_title(title)[2].when_present.a.href.match(/(\d+)/).to_s
   end
 end
 
@@ -139,7 +133,7 @@ class OPPackageInfoPage
   end
 
   def get_inactive_counter
-    links = self.statuses_element.element.links.find{|l| 
+    link = self.statuses_element.element.links.find{|l| 
       l.text.split("\n")[1] == "Снятые с размещения"}
     return 0 if link.nil?
     link.div.text

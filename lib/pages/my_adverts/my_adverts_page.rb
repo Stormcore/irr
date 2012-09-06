@@ -25,7 +25,7 @@ class MyAdvertsPage
   end
 
   def get_first_ad_id
-    element = self.ads_element.element.row
+    element = self.ads_element.element.row(index: 1)
     raise "Объявления отсутствуют" unless element.exists?
     element[3].a.href.match(/(\d+)/).to_s
   end
@@ -99,15 +99,6 @@ class MyAdvertsPage
   def get_ad_id(title)
     self.get_url_for_ad(title).match(/(\d+)/).to_s
   end
-end
-
-class MyAdvertsRecordPage
-  def initialize(element)
-    @element = element
-    @actions_for_row = element.tr(xpath: "following-sibling::*")
-  end
-
-  
 end
 
 class PSellerCategoriesPage
