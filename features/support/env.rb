@@ -96,20 +96,28 @@ end
 # Записываем изменения URL
 def after_step(scenario)
   begin
-    response_time = @browser.performance.summary[:response_time]/1000
+    # Если url не изменился с прошлого шага, то не выводим его
+    unless @last_url == @browser.url
+      response_time = @browser.performance.summary[:response_time]/1000
+      performance_time_string = 
+          "Страница <a href='#{@browser.url}'>#{@browser.url}</a>," +
+          " загружена за #{response_time} с, "
+      @last_url = @browser.url
+    end
+
     unless @last_step_time.nil?
       step_time = Time.now - @last_step_time
       # Если шаг пройден более чем за 5 секунд - то выделим это в отчете
-      if step_time > 5
+      if step_time > 10
         step_time = "<font color='red'>%.1f</font>" % step_time
       else
         step_time = "%.1f" % step_time
       end
-      puts "DEBUG: Страница <a href='#{@browser.url}'>#{@browser.url}</a>, загружена за #{response_time} с, шаг пройден за #{step_time} с"
+      puts "DEBUG: #{performance_time_string}шаг пройден за #{step_time} с"
     end
     @last_step_time = Time.now
   rescue Exception => e
-    puts "Ошибка получения времени: #{e.message}"
+    puts "Ошибка действий после шага: #{e.message}"
   end
 end
 
