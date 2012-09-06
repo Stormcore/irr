@@ -33,20 +33,20 @@ class StargatePowersellerDetailsPage
   def edit_package(name)
     self.open_right_click_menu_for_package(name)
     visible_menu = self.div_elements(class: "x-menu").
-                        select {|div| div.visible? }[0]
+                        find {|div| div.visible? }
     visible_menu.link_element(class: "x-menu-item", text: "Редактировать").click
   end
 
   def has_package(name)
     main_element = self.div_elements(class: 'x-tab-panel').
-                        select {|div| div.span_element.text == 'Свойства'}[0]
+                        find {|div| div.span_element.text == 'Свойства'}
     self.main_element.div_element(class: "x-grid3-cell-inner", text: name).exists?
   end
 
   def delete_package(name)
     self.open_right_click_menu_for_package(name)
     visible_menu = self.div_elements(class: "x-menu").
-                        select {|div| div.visible? }[0]
+                        find {|div| div.visible? }
     visible_menu.when_present.link_element(class: "x-menu-item", text: "Удалить").click
   end
 

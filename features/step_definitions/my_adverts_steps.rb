@@ -25,7 +25,7 @@ end
   end
 end
 
-Допустим /^в ЛК ИП я удаляю все объявления$/ do |type|
+Допустим /^в ЛК (ИП|ОП) я удаляю все объявления$/ do |type|
   @classs = type == 'ИП' ? MyAdvertsPage : OPAdvertsPage
   on @classs do |page|
     page.delete_all_ads
