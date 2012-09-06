@@ -1,104 +1,97 @@
 # encoding: utf-8
-Когда %{в ЛК ИП открыт список объявлений пользователя} do
-  on MyAdvertsPage do |page|
+Когда /^в ЛК (ИП|ОП) открыт список объявлений пользователя$/ do |type|
+  @classs = type == 'ИП' ? MyAdvertsPage : OPAdvertsPage
+  on @classs do |page|
     page.wait_for_ads_loaded
   end
 end
 
-Когда %{в ЛК ОП открыт список объявлений пользователя} do
-  on OPAdvertsPage do |page|
-    page.wait_for_ads_loaded
+
+Когда /^в ЛК (ИП|ОП) объявление с названием "(.*)" присутствует в списке$/ do |type, title|
+  @classs = type == 'ИП' ? MyAdvertsPage : OPAdvertsPage
+  on @classs do |page|
+    url = page.get_url_for_ad(title)
+    @ad_id = page.get_ad_id(title)
+    puts "Найдено объявление <a href='#{url}'>#{title}</a>, ID: #{@ad_id}"
+    @title = title
   end
 end
 
-Когда %{в ЛК ОП объявление с названием "$title" присутствует в списке} do |title|
-  on OPAdvertsPage do |page|
-    @ad_element = page.get_ad_with_title(title)
-    @ad_id = @ad_element.get_ad_id
-    puts "Найдено объявление <a href='#{@ad_element.get_url_for_ad}'>#{title}</a>, ID: #{@ad_id}"
-  end
-end
-
-Когда %{в ЛК ИП объявление с названием "$title" присутствует в списке} do |title|
-  on MyAdvertsPage do |page|
-    @ad_element = page.get_ad_with_title(title)
-    @ad_id = @ad_element.get_ad_id
-    puts "Найдено объявление <a href='#{@ad_element.get_url_for_ad}'>#{title}</a>, ID: #{@ad_id}"
-  end
-end
-
-Когда %{в ЛК ИП объявление с названием "$title" отсутствует в списке} do |title|
-  on MyAdvertsPage do |page|
+Когда /^в ЛК (ИП|ОП) объявление с названием "(.*)" отсутствует в списке$/ do |type, title|
+  @classs = type == 'ИП' ? MyAdvertsPage : OPAdvertsPage
+  on @classs do |page|
     lambda {page.get_ad_with_title(title)}.should raise_error,
       "Объявление '#{title}' присутствует в списке"
   end
 end
 
-Когда %{в ЛК ОП объявление с названием "$title" отсутствует в списке} do |title|
-  on OPAdvertsPage do |page|
-    lambda {page.get_ad_with_title(title)}.should raise_error,
-      "Объявление '#{title}' присутствует в списке"
-  end
-end
-
-Допустим %{в ЛК ИП я удаляю все объявления} do
-  on MyAdvertsPage do |page|
-    page.delete_all_ads
-  end
-end
-
-Допустим %{в ЛК ОП я удаляю все объявления} do
-  on OPAdvertsPage do |page|
+Допустим /^в ЛК ИП я удаляю все объявления$/ do |type|
+  @classs = type == 'ИП' ? MyAdvertsPage : OPAdvertsPage
+  on @classs do |page|
     page.delete_all_ads
   end
 end
 
 То %{у объявления указан регион "$region"} do |region|
-  @ad_element.get_region.should == region
+  on @classs do |page|
+    page.get_region(@title).should == region
+  end
 end
 
 То %{у объявления указан город "$city"} do |city|
-  @ad_element.get_city.should == city
+  on @classs do |page|
+    page.get_city(@title).should == city
+  end
 end
 
 То %{у объявления указана цена "$price" в $currency} do |price, currency|
-  case currency
-  when "рублях"
-    @ad_element.get_price("RUR").gsub(/руб./, '').should == price
-  when "долларах"
-    @ad_element.get_price("USD").gsub(/\$/, '').should == price
-  when "евро"
-    @ad_element.get_price("EUR").gsub(/€/, '').should == price
+  on @classs do |page|
+    case currency
+    when "рублях"
+      page.get_price(@title, "RUR").gsub(/руб./, '').should == price
+    when "долларах"
+      page.get_price(@title, "USD").gsub(/\$/, '').should == price
+    when "евро"
+      page.get_price(@title, "EUR").gsub(/€/, '').should == price
+    end
   end
 end
 
 Допустим %{у объявления отображается загруженная фотография} do
-  if BASE_URL.include? 'prontosoft.by'
-    puts "Проверка пропущена - тестовый сайт"
-    next
+  on @classs do |page|
+    if BASE_URL.include? 'prontosoft.by'
+      puts "Проверка пропущена - тестовый сайт"
+      next
+    end
+    thumbnail = page.get_photo(@title)
+    thumbnail.should_not be_nil
+    
+    # Verify that  thumbnail url doesn't throw any error
+    url = URI.parse(thumbnail)
+    the_request = Net::HTTP::Get.new(url.path)
+    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
+    the_response.code.should == 200.to_s
   end
-  thumbnail = @ad_element.get_photo
-  thumbnail.should_not be_nil
-  
-  # Verify that  thumbnail url doesn't throw any error
-  url = URI.parse(thumbnail)
-  the_request = Net::HTTP::Get.new(url.path)
-  the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-  the_response.code.should == 200.to_s
 end
 
 Допустим %{статус созданного объявления равен "$expected"} do |expected|
-  @ad_element.moderation_status.should == expected
+  on @classs do |page|
+    page.moderation_status(@title).should == expected
+  end
 end
 
 Допустим %{дополнительный статус созданного объявления равен "$expected"} do |expected|
-  @ad_element.moderation_additional_status.should == expected
+  on @classs do |page|
+    page.moderation_additional_status(@title).should == expected
+  end
 end
 
 Когда %{я открываю детали этого объявления} do
-  url = @ad_element.get_url_for_ad
-  puts "Открываю объявление <a href=#{url}>#{url}</a>"
-  @ad_element.open_ad
+  on @classs do |page|
+    url = page.get_url_for_ad(@title)
+    puts "Открываю объявление <a href=#{url}>#{url}</a>"
+    page.open_ad(@title)
+  end
 end
 
 То %{на вкладке "Все" "$field" $operator "$expected"} do |field, operator, expected|
@@ -181,15 +174,21 @@ end
 end
 
 Когда %{я редактирую данное объявление} do
-  @ad_element.do_action("Редактировать")
+  on @classs do |page|
+    page.do_action(@title, "Редактировать")
+  end
 end
 
 Когда %{я размещаю данное объявление} do
-  @ad_element.do_place
+  on @classs do |page|
+    page.do_place(@title)
+  end
 end
 
 Допустим %{я поднимаю данное объявление} do
-  @ad_element.do_action("Поднять")
+  on @classs do |page|
+    page.do_action(@title, "Поднять")
+  end
 
   on AdvertActionConfirmPage do |page|
     page.do_activate
@@ -197,7 +196,9 @@ end
 end
 
 Допустим %{я делаю данное объявление премиумом} do
-  @ad_element.do_action("Премиум")
+  on @classs do |page|
+    page.do_action(@title, "Премиум")
+  end
 
   on AdvertActionConfirmPage do |page|
     page.do_activate
@@ -205,7 +206,9 @@ end
 end
 
 Допустим %{я выделяю данное объявление} do
-  @ad_element.do_action("Выделить")
+  on @classs do |page|
+    page.do_action(@title, "Выделить")
+  end
 
   on AdvertActionConfirmPage do |page|
     page.do_activate
@@ -213,21 +216,29 @@ end
 end
 
 Допустим %{я деактивирую данное объявление} do
-  @ad_element.do_action("Деактивировать")
+  on @classs do |page|
+    page.do_action(@title, "Деактивировать")
+  end
   @browser.alert.ok
 end
 
 Допустим %{я удаляю данное объявление} do
-  @ad_element.do_action("Удалить")
+  on @classs do |page|
+    page.do_action(@title, "Удалить")
+  end
   @browser.alert.ok
 end
 
 Допустим %{в ЛК данное объявление выделено} do
-  @ad_element.is_ad_highlighted.should == true
+  on @classs do |page|
+    page.is_ad_highlighted(@title).should == true
+  end
 end
 
 Допустим %{в ЛК данное объявление является премиумом} do
-  @ad_element.is_ad_premium.should == true
+  on @classs do |page|
+    page.is_ad_premium(@title).should == true
+  end
 end
 
 Допустим %{в ЛК ИП я выбираю регион "$region"} do |region|
