@@ -19,9 +19,9 @@ class MyAdvertsPage
 
   def get_ad_with_title(title)
     self.wait_for_ads_loaded
-    elements = self.ads_element.element.rows.select{|row| row.a(text: title).exists?}
-    raise "Объявление с заголовком '#{title}' не найдено" if elements.size == 0
-    return MyAdvertsRecordPage.new(elements[0])
+    element = self.ads_element.element.rows.find{|row| row.a(text: title).exists?}
+    raise "Объявление с заголовком '#{title}' не найдено" if element.nil?
+    return MyAdvertsRecordPage.new(element)
   end
 
   def get_first_ad
