@@ -46,11 +46,11 @@ end
       long_category.split(' -> ').each_with_index do |category, index|
         li = page.list_item_element(id: "section_#{index + 1}").when_present
         li.unordered_list_element.when_present.click
-        a = li.link_elements(href: "#").select do |a|
+        a = li.link_elements(href: "#").find do |a|
           UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
         end
-        raise "Категория '#{category}' не найдена" unless a.size > 0
-        a[0].click
+        raise "Категория '#{category}' не найдена" if a.nil?
+        a.click
        end
       page.next_step
     end

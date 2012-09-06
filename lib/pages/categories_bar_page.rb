@@ -7,7 +7,7 @@ class CategoriesBarPage
 
   def open_popup_for_section(section)
     self.path_element.link_element(link_text: section).hover
-    @popup = self.div_elements(class: "popubList").select{|div| div.visible?}[0]
+    @popup = self.div_elements(class: "popubList").find{|div| div.visible?}
     puts "Выпадающий список не открыт" if @popup.nil?
   end
 
@@ -18,8 +18,8 @@ class CategoriesBarPage
 
   def get_counter_value(category_name)
     return 0 if @popup.nil?
-    li = @popup.unordered_list_element.element.lis.select{
-      |li| li.text.split("\n")[1] == category_name}[0]
+    li = @popup.unordered_list_element.element.lis.find{
+      |li| li.text.split("\n")[1] == category_name}
     li.span.text.gsub(" ", '') unless li.nil?
   end
 

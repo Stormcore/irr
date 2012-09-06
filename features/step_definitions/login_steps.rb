@@ -119,9 +119,9 @@ end
 
 То %{на странице паспорта отображено имя пользователя} do 
   on PassportPage do |page|
-    divs = page.div_elements(class: "b_li").select{ |div| div.element.b.exists?}
-    divs.size.should > 0
-    divs[0].element.b.text.should == @current_user_name
+    div = page.div_elements(class: "b_li").find{ |div| div.element.b.exists?}
+    div.nil? eq(false), "Имя пользователя не найдено"
+    div.element.b.text.should == @current_user_name
   end
 end
 

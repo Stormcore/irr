@@ -42,11 +42,11 @@ class StargateNewAdDataPage
     row.cell_element(index: 2).when_present.double_click
     # Появляется editor
     editor = self.panel_element.when_present.element.
-                  divs(class: "x-editor").select{|div| div.visible?}[0]
+                  divs(class: "x-editor").find{|div| div.visible?}
     if editor.nil?
        row.cell_element(index: 2).when_present.click
        editor = self.panel_element.when_present.element.
-                  divs(class: "x-editor").select{|div| div.visible?}[0]
+                  divs(class: "x-editor").find{|div| div.visible?}
        raise "Не открыт редактор" if editor.nil?
     end
     if name == "Регион"

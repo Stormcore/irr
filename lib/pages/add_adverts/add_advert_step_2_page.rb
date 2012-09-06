@@ -68,7 +68,7 @@ class AddAdvertStep2New < AdDetailsPage
     when "select"
       # Комбобокс
       control.parent.parent.element.div(class: "ik_select_link").click
-      list = self.div_elements(class: "ik_select_list_inner").select{|div| div.visible?}[0]
+      list = self.div_elements(class: "ik_select_list_inner").find{|div| div.visible?}
       list.span_element(text: hash['value']).click
     when "input"
       control.value = hash["value"]
@@ -187,9 +187,9 @@ RUTUBE_VIDEO
   end
 
   def ensure_section_is_visible(name)
-    self.div_elements(class: "b-form-LK_wrap_tabs_item").select{|div| 
+    self.div_elements(class: "b-form-LK_wrap_tabs_item").find{|div| 
       div.div_element(class: "b-form-LK_wrap_tabs_item_title_wrap", text: name).exists?
-    }[0].click
+    }.click
   end
 
 end

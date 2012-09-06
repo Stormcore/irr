@@ -1,13 +1,13 @@
 # encoding: utf-8
 
 def select_class_for_category(category)
-  category_pages = AdDetailsPage.subclasses.select do |subclass|
+  category_page = AdDetailsPage.subclasses.find do |subclass|
     if subclass.instance_variables.include? :@category
       subclass.instance_variable_get(:@category) == category
     end
   end
-  raise "Не найден класс для категории #{category}" if category_pages.length == 0
-  @category_page = category_pages[0]
+  raise "Не найден класс для категории #{category}" if category_page.nil?
+  @category_page = category_page
   @category_name = category
 end
 

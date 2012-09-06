@@ -370,30 +370,26 @@ end
 
 То %{в списке обычных объявлений объявление "$title" выделено} do |title|
   on SearchResultsPage do |page|
-    all_results = @results.select{|result| result['title'] == title}
-    (all_results.size > 0).should eq(true), "Объявление '#{title}' отсутствует в листинге"
-    result = all_results[0]
-    result['mark'].should eq(true), 
-      "Объявление '<a href='#{result['url']}'>#{title}</a>' не выделено"
+    ad = @results.find{|result| result['title'] == title}
+    ad.nil?.should eq(false), "Объявление '#{title}' отсутствует в листинге"
+    ad['mark'].should eq(true), 
+      "Объявление '<a href='#{ad['url']}'>#{title}</a>' не выделено"
   end
 end
 
 То %{в списке обычных объявлений присутствует объявление "$title"} do |title|
   on SearchResultsPage do |page|
-    all_results = @results.select{|result| result['title'] == title}
-    (all_results.size > 0).should eq(true), 
-      "Объявление '#{title}' отсутствует в листинге"
-    result = all_results[0]
-    result['premium'].should eq(false), 
-      "Объявление '#{title}' (#{result['url']}) является премиумом"
+    ad = @results.find{|result| result['title'] == title}
+    ad.nil?.should eq(false), "Объявление '#{title}' отсутствует в листинге"
+    ad['premium'].should eq(false), 
+      "Объявление '#{title}' (#{ad['url']}) является премиумом"
   end
 end
 
 То %{в списке объявлений отсутствует объявление "$title"} do |title|
   on SearchResultsPage do |page|
-    all_results = @results.select{|result| result['title'] == title}
-    (all_results.size > 0).should eq(false), 
-      "Объявление '#{title}' присутствует в листинге"
+    ad = @results.find{|result| result['title'] == title}
+    ad.nil?.should eq(true), "Объявление '#{title}' присутствует в листинге"
   end
 end
 
@@ -404,7 +400,7 @@ end
     next
   end
   on SearchResultsPage do |page|
-    result = @results.select{|result| result['title'] == title}[0]
+    result = @results.find{|result| result['title'] == title}
     thumbnail = result['thumbnail']
     thumbnail.should_not be_empty 
     thumbnail.should_not include "zaglushka"
@@ -419,11 +415,10 @@ end
 
 То %{в списке премиумов присутствует объявление "$title"} do |title|
   on SearchResultsPage do |page|
-    all_results = @results.select{|result| result['title'] == title}
-    (all_results.size > 0).should eq(true), "Объявление '#{title}' отсутствует в листинге"
-    result = all_results[0]
-    result['premium'].should eq(true), 
-      "Объявление '<a href='#{result['url']}'>#{title}</a>' не является премиумом"
+    ad = @results.find{|result| result['title'] == title}
+    ad.nil?.should eq(false), "Объявление '#{title}' отсутствует в листинге"
+    ad['premium'].should eq(true), 
+      "Объявление '<a href='#{ad['url']}'>#{title}</a>' не является премиумом"
   end
 end
 

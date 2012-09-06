@@ -116,16 +116,18 @@ end
 
 Допустим %{на странице интернет-партнера есть объявления с картой} do
   on PowersellerPage do |page|
-    page.get_ads.select{|ad| ad.has_map_badge}.size > 0
+    page.get_ads.find{|ad| ad.has_map_badge}.nil? eq(false), 
+      "Объявлений с картой не найдено"
   end
 end
 
 Допустим %{я открываю первое объявление с картой} do
   on PowersellerPage do |page|
-    map_object = page.get_ads.select{|ad| ad.has_map_badge}
-    raise "Объявлений с картой не найдено" unless map_object
-    puts "DEBUG: Переходим на <a href='#{map_object[0].get_map_href}'>#{map_object[0].get_map_href}</a>"
-    @browser.goto map_object[0].get_map_href
+    map_object = page.get_ads.find{|ad| ad.has_map_badge}
+    raise "Объявлений с картой не найдено" if map_object.nil?
+    href = map_object.get_map_href
+    puts "DEBUG: Переходим на <a href='#{href}'>#{href}</a>"
+    @browser.goto href
   end
 end
 
