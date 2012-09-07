@@ -19,7 +19,7 @@ class OPAdvertsPage
     end
   end
 
-  def get_ad_with_title(title)
+  def has_ad_with_title(title)
     self.wait_for_ads_loaded
     element = self.ads_element.element.rows.find{|row| row.a(text: title).exists?}
     raise "Объявление с заголовком '#{title}' не найдено" if element.nil?
