@@ -82,7 +82,7 @@ end
   end
 end
 
-То %{на странице показано $operator $number объявлений} do |operator,number|
+То %{на странице показано $operator $number объявлени(е|й|я)} do |operator,number,other|
   on SearchResultsPage do |page|
     unless @sc.source_tag_names.include?('@empty_results') and @results.length == 0
       eval "@results.length.should #{operator} #{number}"
@@ -419,6 +419,15 @@ end
     ad.nil?.should eq(false), "Объявление '#{title}' отсутствует в листинге"
     ad['premium'].should eq(true), 
       "Объявление '<a href='#{ad['url']}'>#{title}</a>' не является премиумом"
+  end
+end
+
+Допустим /^на странице поиска показаны только объявления:$/ do |table|
+  on SearchResultsPage do |page|
+    @results.size.should eq(table.hashes.size)
+    expected = table.hashes.map{|h| h['название']}.sort
+    actual = @results.map{|r| r['title']}.sort
+    actual.should == expected
   end
 end
 
