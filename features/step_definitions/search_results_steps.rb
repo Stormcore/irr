@@ -82,7 +82,7 @@ end
   end
 end
 
-То %{на странице показано $operator $number объявлени(е|й|я)} do |operator,number,other|
+То /^на странице показано (.*) (.*) объявлени(е|й|я)$/ do |operator,number,other|
   on SearchResultsPage do |page|
     unless @sc.source_tag_names.include?('@empty_results') and @results.length == 0
       eval "@results.length.should #{operator} #{number}"
