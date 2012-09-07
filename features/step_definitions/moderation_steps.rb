@@ -21,19 +21,17 @@ end
 
 Допустим %{модератор принимает объявление} do
   on StargateAdSearchResultsPage do |page|
-    page.open_menu(page.get_results.first)
+    page.open_menu(0)
     page.menu_approve
-    # Страница перезагружается
-    page.is_approved?(page.get_results.first).should eq(true), 
+    page.is_approved?(0).should eq(true), 
         "Ошибка при активации объявления - объявление не отмечено как одобренное"
   end
 end
 
 Допустим /^модератор отклоняет объявление с причиной "(.*?)" и текстом$/ do |reason, string|
   on StargateAdSearchResultsPage do |page|
-    page.open_menu(page.get_results.first)
+    page.open_menu(0)
     page.menu_decline
-    # Страница перезагружается
   end
 
   on StargateAdModerationDeclineDialog do |page|
@@ -43,8 +41,8 @@ end
   end
 
   on StargateAdSearchResultsPage do |page|
-    page.open_menu(page.get_results.first)
-    page.is_declined?(page.get_results.first).should eq(true), 
+    page.open_menu(0)
+    page.is_declined?(0).should eq(true), 
         "Ошибка при отклонении объявления"
   end
 end

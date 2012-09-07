@@ -24,29 +24,27 @@ class StargateAdSearchResultsPage
   div :main, id: "adsfind-search-panel"
 
   def get_results
-    results = self.main_element.
-                   div_element(class: "x-grid3-body").
-                   div_elements(class: "x-grid3-row")
-    results.each do |result|
-      yield result if block_given?
-    end
-    results
+    self.main_element.div_element(class: "x-grid3-body").
+                      div_elements(class: "x-grid3-row")
   end
 
-  def open_menu(element)
-    element.element.right_click
+  def open_menu(num)
+    self.get_results[num].element.right_click
   end
 
-  def is_deleted?(element)
-    element.image_element(src: "/img/admin/ico/i-stat4.gif").exists?
+  def is_deleted?(num)
+    self.get_results[num].
+         image_element(src: "/img/admin/ico/i-stat4.gif").exists?
   end
 
-  def is_approved?(element)
-    element.image_element(src: "/img/admin/ico/i-stat1.gif").exists?
+  def is_approved?(num)
+    self.get_results[num].
+         image_element(src: "/img/admin/ico/i-stat1.gif").exists?
   end
 
-  def is_declined?(element)
-    element.image_element(src: "/img/admin/ico/i-stat2.gif").exists?
+  def is_declined?(num)
+    self.get_results[num].
+         image_element(src: "/img/admin/ico/i-stat2.gif").exists?
   end
 
   def menu_remove
