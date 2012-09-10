@@ -41,7 +41,7 @@ end
   puts "DEBUG: Переходим на <a href='#{full_url}'>#{full_url}</a>"
   @browser.goto(full_url)
   on MainPage do |page| 
-    page.login_element.when_present.click
+    page.login
   end
 end
 
@@ -78,7 +78,7 @@ end
 
 То %{на главной странице отображено имя пользователя} do 
   on MainPage do |page|
-    page.logged_in_element.when_present(10).text.should == @current_user_name 
+    page.get_logged_in_user_name.should == @current_user_name
   end
 end
 

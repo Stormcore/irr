@@ -26,6 +26,11 @@ class MainPage
   div :sidebar, class: "b-sidebar"
   unordered_list (:top_categories) {|page| sidebar_element.unordered_list_element}
 
+  def get_logged_in_user_name
+    self.unordered_list_element(class: "header_autorizationLink").
+         list_item_element(index: 2).text
+  end
+
   def select_top_category(category)
     category_link = self.top_categories_element.link_element(link_text: /#{category}/)
     category_link.when_present.click
