@@ -18,7 +18,7 @@ end
 
 Когда %{я вхожу под пользователем с ролью "$role"} do |role|
   on MainPage do |page|
-    @current_user_name = page.logged_in_element.text if page.logged_in?
+    @current_user_name = page.get_logged_in_user_name if page.logout?
   end
   expected_credentials = get_login_and_password_for_role(role)
   raise "Нет такой роли" if expected_credentials.nil?
