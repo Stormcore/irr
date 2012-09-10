@@ -19,6 +19,13 @@ class OPAdvertsPage
     end
   end
 
+  def get_first_active_ad
+    self.wait_for_ads_loaded
+    element = self.ads_element.element.rows.find{|row| 
+      row[6].div.text == "размещено"}
+    element[2].text
+  end
+
   def has_ad_with_title(title)
     self.wait_for_ads_loaded
     element = self.ads_element.element.rows.find{|row| row.a(text: title).exists?}

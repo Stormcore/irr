@@ -17,11 +17,13 @@ class MyAdvertsPage
     end
   end
 
-  def has_ad_with_title(title)
+  def get_first_active_ad
     self.wait_for_ads_loaded
-    element = self.ads_element.element.rows.find{|row| row.a(text: title).exists?}
-    raise "Объявление с заголовком '#{title}' не найдено" if element.nil?
-    return element
+    element = self.ads_element.element.rows.find{|row| 
+      row.cells.size >= 6 and
+      row[6].div.exists? and 
+      row[6].div.text == "размещено"}
+    element[3].a.href.match(/(\d+)/).to_s unless element.nil?
   end
 
   def get_first_ad_id
