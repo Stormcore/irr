@@ -107,6 +107,8 @@ end
         actual_value.to_i.should be > expected.to_i
       when "меньше"
         actual_value.to_i.should be < expected.to_i
+      when "меньше или равно"
+        actual_value.to_i.should be <= expected.to_i
       else
         eval("actual_value.to_i.should be #{operator} expected.to_i")
       end
