@@ -70,7 +70,7 @@ end
 
 То %{в деталях $option объявления отображается видео} do |option|
   # Не проверять источник на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by'
+  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
     puts "Проверка пропущена - тестовый сайт"
     next
   end

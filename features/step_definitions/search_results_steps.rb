@@ -158,7 +158,7 @@ end
  
 То %{в каждом объявлении отображается рисунок} do
   # Не проверять картинки на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by'
+  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
     puts "Проверка пропущена - тестовый сайт"
     next
   end
@@ -185,7 +185,7 @@ end
 
 То %{в каждом объявлении источник равен "$expected_source"} do |expected_source|
   # Не проверять источник на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by'
+  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
     puts "Проверка пропущена - тестовый сайт"
     next
   end
@@ -203,7 +203,7 @@ end
 
 То %{в каждом объявлении отображается загруженная фотография} do
   # Не проверять картинки на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by'
+  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
     puts "Проверка пропущена - тестовый сайт"
     next
   end
@@ -395,7 +395,7 @@ end
 
 То %{у объявления "$title" отображается загруженная фотография} do |title|
   # Не проверять картинки на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by'
+  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
     puts "Проверка пропущена - тестовый сайт"
     next
   end
