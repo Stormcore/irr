@@ -14,9 +14,9 @@ class MainPage
   link :adverts_payments, link_text: "Платежи"
   link :adverts_profile, link_text: "Профиль"
   
-  link :logout, link_text: "Выйти"
+  link :logout, id: "logout"
   
-  link :add_advert, link_text: "Подать объявление"
+  link :add_advert, link_text: "подать объявление бесплатно"
   
   checkbox :only_title, name: "only_title"
   div :find_div, class: "button-style"
