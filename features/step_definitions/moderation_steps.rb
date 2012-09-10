@@ -23,6 +23,9 @@ end
   on StargateAdSearchResultsPage do |page|
     page.open_menu(0)
     page.menu_approve
+    # Ждём 5 секунд. Лучше - дождаться когда закончится диалог "Сохранить"
+    # и "Загрузка"
+    sleep 5
     page.is_approved?(0).should eq(true), 
         "Ошибка при активации объявления - объявление не отмечено как одобренное"
   end
@@ -41,7 +44,9 @@ end
   end
 
   on StargateAdSearchResultsPage do |page|
-    page.open_menu(0)
+    # Ждём 5 секунд. Лучше - дождаться когда закончится диалог "Сохранить"
+    # и "Загрузка"
+    sleep 5
     page.is_declined?(0).should eq(true), 
         "Ошибка при отклонении объявления"
   end
