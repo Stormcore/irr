@@ -31,7 +31,7 @@ end
 
 Когда %{я выхожу из текущего пользователя} do
   on MainPage do |page|
-    page.logout if page.logged_in?
+    page.logout unless page.logged_in?
   end
 end
 
