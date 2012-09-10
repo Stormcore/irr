@@ -32,6 +32,12 @@ class MyAdvertsPage
     element[3].a.href.match(/(\d+)/).to_s
   end
 
+  def has_ad_with_title(title)
+    element = self.ads_element.element.rows.find{|row| row.a(text: title).exists?}
+    raise "Объявление с заголовком '#{title}' не найдено" if element.nil?
+    return element
+  end
+
   def open_tab(name)
     self.bookmarks_element.link_element(link_text: name).click
   end
