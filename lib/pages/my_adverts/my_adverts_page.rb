@@ -66,7 +66,7 @@ class MyAdvertsPage
   end
 
   def get_url_for_ad(title)
-    has_ad_with_title(title)[3].a.href
+    self.has_ad_with_title(title)[3].a.href
   end
 
   def open_ad(title)
