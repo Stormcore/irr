@@ -59,7 +59,7 @@ end
 
 Допустим %{у объявления отображается загруженная фотография} do
   on @classs do |page|
-    if BASE_URL.include? 'prontosoft.by'
+    if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
       puts "Проверка пропущена - тестовый сайт"
       next
     end
@@ -151,7 +151,7 @@ end
 end
 
 То %{в деталях объявления отображается загруженная фотография} do
-  if BASE_URL.include? 'prontosoft.by'
+  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
     puts "Проверка пропущена - тестовый сайт"
     next
   end
