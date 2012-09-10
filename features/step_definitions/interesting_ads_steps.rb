@@ -97,8 +97,7 @@ end
       * я делаю поиск по созданному объявлению
     }
     on StargateAdSearchResultsPage do |page|
-      result = page.get_results.first
-      page.open_menu(result)
+      page.open_menu(0)
       page.menu_edit
     end
 
