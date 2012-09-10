@@ -79,6 +79,7 @@ end
 
 Когда %{на шаге 2 я ввожу логин и пароль роли "$role"} do |role|
   credentials = get_login_and_password_for_role(role)
+  puts "DEBUG: Логин: #{credentials['login']}, пароль '#{credentials[password]}'"
   steps %Q{
     * я ввожу следующие данные на шаге 2:
      | parameter | value                      |
