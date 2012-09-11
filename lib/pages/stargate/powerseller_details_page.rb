@@ -22,6 +22,7 @@ class StargatePowersellerDetailsPage
 
   def open_right_click_menu_for_package(name)
     begin
+      self.div_element(class: "ext-el-mask").element.wait_while_present
       self.main_element.
            div_element(class: "x-grid3-cell-inner", text: name).when_present.
            element.right_click
