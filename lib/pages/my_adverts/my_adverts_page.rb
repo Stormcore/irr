@@ -26,6 +26,12 @@ class MyAdvertsPage
     element[3].a.href.match(/(\d+)/).to_s unless element.nil?
   end
 
+  def has_ad_with_title(title)
+    element = self.ads_element.element.rows.find{|row| row.a(text: title).exists?}
+    raise "Объявление с заголовком '#{title}' не найдено" if element.nil?
+    return element
+  end
+
   def get_first_ad_id
     element = self.ads_element.element.row(index: 1)
     raise "Объявления отсутствуют" unless element.exists?
