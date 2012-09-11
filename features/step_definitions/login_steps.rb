@@ -2,10 +2,25 @@
 
 def get_login_and_password_for_role(role)
   credentials = YAML::load(File.open(File.dirname(__FILE__)+'/../credentials.yml'))
+
+  # Ищем нужный паспорт, актуальный для площадки BASE_URL
   record_name = BASE_URL.gsub("http://",'')
-  raise "Пароли и логины не найдены для данного сервера" unless credentials.has_key?(record_name)
-  @passport_address = credentials[record_name]['passport_address']
-  credentials[record_name][role]
+  passport = credentials.select{ |pass| 
+    credentials[pass].has_key?("sites") and 
+    credentials[pass]["sites"].include?(record_name)}
+  raise "Пароли и логины не найдены для данного сервера" if passport.nil?
+  passport = passport.first[1]
+
+  # Запоминаем адрес паспорта
+  @passport_address = passport['address']
+
+  # Если у сайта есть элемент users, то используем ТОЛЬКО этих пользователей
+  if passport.has_key?(record_name)
+    passport[record_name]["users"][role]
+  else
+    # Иначе берем из ключа users для паспорта
+    passport["users"][role]
+  end
 end
 
 Когда %{я ввожу логин и пароль роли "$role"} do |role|
