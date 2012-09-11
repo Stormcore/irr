@@ -336,7 +336,11 @@ class AddAdvertStep2 < AdDetailsPage
         self.set_custom_parameter(hash)
       end
     rescue Exception => e
-      raise "Ошибка установки параметра #{hash['parameter']} = '#{hash['value']}':\n#{e}"
+      if e.message.include?("An open modal dialog blocked the operation")
+        raise "Открыт модальный диалог '#{@browser.alert.text}'"
+      else
+        raise "Ошибка установки параметра #{hash['parameter']} = '#{hash['value']}':\n#{e}"
+      end
     end
   end
 
