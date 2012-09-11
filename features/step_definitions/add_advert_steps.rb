@@ -32,28 +32,18 @@ end
 end
 
 Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
-  new_categories = ['Авто и мото -> Легковые автомобили -> Автомобили с пробегом',
-                    'Недвижимость -> Квартиры. аренда']
-  @new_advert_can_be_used = new_categories.include?(long_category)
-  if @new_advert_can_be_used
-    steps %{
-      * я перехожу к подаче объявления используя новую подачу
-      * я подаю объявление в категорию "#{long_category}" используя новую подачу
-    }
-  else
-    on AddAdvertStep1 do |page|
-      # Открываем нужную категорию
-      long_category.split(' -> ').each_with_index do |category, index|
-        li = page.list_item_element(id: "section_#{index + 1}").when_present
-        li.unordered_list_element.when_present.click
-        a = li.link_elements(href: "#").find do |a|
-          UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
-        end
-        raise "Категория '#{category}' не найдена" if a.nil?
-        a.click
-       end
-      page.next_step
-    end
+  on AddAdvertStep1 do |page|
+    # Открываем нужную категорию
+    long_category.split(' -> ').each_with_index do |category, index|
+      li = page.list_item_element(id: "section_#{index + 1}").when_present
+      li.unordered_list_element.when_present.click
+      a = li.link_elements(href: "#").find do |a|
+        UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
+      end
+      raise "Категория '#{category}' не найдена" if a.nil?
+      a.click
+     end
+    page.next_step
   end
 end
 
@@ -73,22 +63,11 @@ end
 end
 
 Когда %{я подаю объявление в категорию "$category" с параметрами:} do |category, page_params|
-  new_categories = ['Авто и мото -> Легковые автомобили -> Автомобили с пробегом',
-                    'Недвижимость -> Квартиры. аренда']
-  @new_advert_can_be_used = new_categories.include?(category)
-  if @new_advert_can_be_used
-    steps %{
-      * я перехожу к подаче объявления используя новую подачу
-      * я подаю объявление в категорию "#{category}" используя новую подачу
-    }
-  else
-    steps %Q{
-      * я перехожу к подаче объявления
-      * я подаю объявление в категорию "#{category}"
-    }
-  end
-  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
-  on classs do |page|
+  steps %Q{
+    * я перехожу к подаче объявления
+    * я подаю объявление в категорию "#{category}"
+  }
+  on AddAdvertStep2 do |page|
     page_params.hashes.each do |hash|
       page.set_parameter(hash)
     end
