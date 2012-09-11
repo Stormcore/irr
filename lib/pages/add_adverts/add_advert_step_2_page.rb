@@ -193,8 +193,11 @@ RUTUBE_VIDEO
   end
 
   def get_error_message
-    return nil unless self.span_element(id: "adv-errorMessage").exists?
-    self.span_element(id: "adv-errorMessage").text
+    begin
+      self.span_element(id: "adv-errorMessage").text
+    rescue
+      return nil
+    end
   end
 
 end
@@ -388,7 +391,10 @@ RUTUBE_VIDEO
   end
 
   def get_error_message
-    return unless self.div_element(id: "addAdvertErrors").exists?
-    self.div_element(id: "addAdvertErrors").text
+    begin
+      self.div_element(id: "addAdvertErrors").text
+    rescue
+      return nil
+    end
   end
 end
