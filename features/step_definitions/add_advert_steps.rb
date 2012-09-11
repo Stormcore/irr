@@ -64,11 +64,29 @@ end
   end
 end
 
+Когда %{на шаге 3 нет ошибок} do
+  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
+  on classs do |page|
+    error_message = page.get_error_message
+    raise "Ошибка на шаге 3:\n#{error_message}" unless error_message.nil?
+  end
+end
+
 Когда %{я подаю объявление в категорию "$category" с параметрами:} do |category, page_params|
-  steps %Q{
-    * я перехожу к подаче объявления
-    * я подаю объявление в категорию "#{category}"
-  }
+  new_categories = ['Авто и мото -> Легковые автомобили -> Автомобили с пробегом',
+                    'Недвижимость -> Квартиры. аренда']
+  @new_advert_can_be_used = new_categories.include?(category)
+  if @new_advert_can_be_used
+    steps %{
+      * я перехожу к подаче объявления используя новую подачу
+      * я подаю объявление в категорию "#{category}" используя новую подачу
+    }
+  else
+    steps %Q{
+      * я перехожу к подаче объявления
+      * я подаю объявление в категорию "#{category}"
+    }
+  end
   classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
   on classs do |page|
     page_params.hashes.each do |hash|

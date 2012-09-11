@@ -192,6 +192,11 @@ RUTUBE_VIDEO
     }.click
   end
 
+  def get_error_message
+    return unless self.span_element(id: "adv-errorMessage").exists?
+    self.span_element(id: "adv-errorMessage").text
+  end
+
 end
 
 class AddAdvertStep2 < AdDetailsPage
@@ -382,4 +387,8 @@ RUTUBE_VIDEO
     end
   end
 
+  def get_error_message
+    return unless self.div_element(id: "addAdvertErrors").exists?
+    self.div_element(id: "addAdvertErrors").text
+  end
 end
