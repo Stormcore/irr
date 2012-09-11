@@ -51,6 +51,7 @@ class StargatePowersellerDetailsPage
   end
 
   def get_premium_number(period)
+    self.table_element(id: "table_premium").when_present
     self.table_element(id: "table_premium")[1][period.to_i / 7].text.to_i
   end
 
