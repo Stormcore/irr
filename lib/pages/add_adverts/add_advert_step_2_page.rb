@@ -193,7 +193,7 @@ RUTUBE_VIDEO
   end
 
   def get_error_message
-    return unless self.span_element(id: "adv-errorMessage").exists?
+    return nil unless self.span_element(id: "adv-errorMessage").exists?
     self.span_element(id: "adv-errorMessage").text
   end
 

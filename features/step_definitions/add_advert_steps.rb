@@ -68,7 +68,7 @@ end
   classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
   on classs do |page|
     error_message = page.get_error_message
-    raise "Ошибка на шаге 3:\n#{error_message}" unless error_message.nil?
+    raise "Ошибка на шаге 3:\n#{error_message}" unless error_message.empty?
   end
 end
 
