@@ -10,7 +10,8 @@ class SearchResultsForRealEstatePage < SearchResultsPage
     attempts = 3
     begin
       doc = Nokogiri::HTML.parse(results_table_element.when_present.element.html)
-    rescue
+    rescue Exception => e
+      puts "Ошибка #{e.message}, попытка #{attempts}"
       raise "Список объявлений не был загружен" if attempts == 0
       self.refresh
       attempts -= 1
