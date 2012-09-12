@@ -1,7 +1,8 @@
 # encoding: utf-8
 
 Когда %{на странице поиска загружен список результатов} do 
-  on SearchResultsPage do |page| 
+  on SearchResultsPage do |page|
+    page.list_view if page.list_view?
     @results = page.search_results
   end
 end

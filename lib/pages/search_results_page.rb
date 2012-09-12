@@ -9,6 +9,7 @@ class SearchResultsPage
   unordered_list :ads_on_page, class: "fpages"
   div :side_column, class: "side-col"
   span :results_found, id: "filteredCountBlock"
+  link :list_view, title: "Списком"
 
   def get_number_of_found_results
     begin
