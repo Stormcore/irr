@@ -219,6 +219,8 @@ class AddAdvertStep2 < AdDetailsPage
   select_list :model, name: "model"
   select_list :currency, name: "currency"
   text_field :model_text, name: "model"
+  text_field :mark_other, name: "make_other"
+  text_field :model_other, name: "model_other"
 
   text_field :f_title, id: "f_title"
   text_field :f_text, id: "f_text"
@@ -323,12 +325,22 @@ class AddAdvertStep2 < AdDetailsPage
       when "Срок сдачи"
         self.rent_period = hash['value']
       when "Марка"
-        self.mark = hash['value']
+        if hash['value'].split(" ~ ")[0] == 'Другая'
+          self.mark = 'Другая'
+          self.mark_other = hash['value'].split(" ~ ")[1]
+        else
+          self.mark = hash['value']
+        end
       when "Модель"
         if self.model?
-          self.model = hash['value']
+          if hash['value'].split(" ~ ")[0] == 'Другая'
+            self.model = 'Другая'
+            self.model_other = hash['value'].split(" ~ ")[1]
+          else
+            self.model = hash['value']
+          end
         else
-          self.model_text = hash['value'] 
+          self.model_text = hash['value']
         end
       when "Текст"
         self.f_text = hash['value']
