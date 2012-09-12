@@ -11,7 +11,7 @@ end
 
 Когда %{я перехожу на БО} do
   credentials = get_login_and_password_for_role("Пользователь БО")
-  puts "DEBUG: Логин: #{credentials['login']}, пароль '#{credentials['password']}'"
+  puts "DEBUG: Логин: #{credentials['login']}, пароль #{credentials['password']}"
   steps %Q{
     * на stargate я вхожу под логином "#{credentials['login']}" и паролем "#{credentials['password']}"
     * отображена основная страница БО
