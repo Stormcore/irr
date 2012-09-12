@@ -7,7 +7,8 @@
 end
 
 Когда %{на странице поиска загружен список результатов для недвижимости} do
-  on SearchResultsForRealEstatePage do |page| 
+  on SearchResultsForRealEstatePage do |page|
+    page.list_view if page.list_view?
     @results = page.search_results
   end
 end
