@@ -36,6 +36,12 @@ class MainPage
   div :searches_list, id: "my_searches_list"
   link :clear_recent_searches, id: "clear_searches_cookie"
 
+  div :footer_counter, class: "footer-counter"
+
+  def get_ad_counter
+    self.footer_counter.split()[2..-2].join
+  end
+
   def is_searches_section_visible
     self.searches_list?
   end

@@ -14,6 +14,7 @@ class SearchResultsPage
   def get_number_of_found_results
     begin
       self.results_found.split[1]
+      self.results_found.split[0] if self.results_found.split[1].include?("объявлен")
     rescue Watir::Exception::UnknownObjectException
       raise "Отсутствует лейбл с количеством результатов"
     end

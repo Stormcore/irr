@@ -122,3 +122,20 @@ end
     page.clear_recent_searches
   end
 end
+
+Допустим %{я запоминаю значение счетчика объявления на главной странице} do
+  on MainPage do |page|
+    @main_page_ad_counter = page.get_ad_counter
+  end
+end
+
+Когда %{я перехожу на страницу поиска для этого региона} do
+  url = construct_region_url(BASE_URL+"/searchads/", @region)
+  @browser.goto(url)
+end
+
+То %{на странице результатов количество результатов равно значению счетчика на главной странице} do
+  on SearchResultsPage do |page|
+    page.get_number_of_found_results.to_i.should eq(@main_page_ad_counter.to_i)
+  end
+end
