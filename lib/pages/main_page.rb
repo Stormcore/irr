@@ -33,6 +33,17 @@ class MainPage
   div :prev_button, id: "prev_button"
   link :clear_recently_viewed, id: "clear-last-show-adverts"
 
+  div :searches_list, id: "my_searches_list"
+  link :clear_recent_searches, id: "clear_searches_cookie"
+
+  def is_searches_section_visible
+    self.searches_list?
+  end
+
+  def get_searches
+    self.searches_list_element.div_element.element.as.map{|a| a.text}
+  end
+
   def get_recently_viewed_detail(index, parameter)
     element = self.recently_viewed_list_element.list_item_element(index: index)
     case parameter

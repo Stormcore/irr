@@ -103,3 +103,22 @@ end
     page.clear_recently_viewed
   end
 end
+
+То %{на главной странице не показана секция "Вы искали"} do
+  on MainPage do |page|
+    page.is_searches_section_visible.should eq(true),
+      "Секция 'Вы искали' показана"
+  end
+end
+
+То /^в секции "Вы искали" указаны следующие поисковые запросы:$/ do |table|
+  on MainPage do |page|
+    page.get_searches.should eq(table.raw.flatten)
+  end
+end
+
+Когда %{я очищаю запросы в секции "Вы искали"} do
+  on MainPage do |page|
+    page.clear_recent_searches
+  end
+end
