@@ -58,11 +58,13 @@ class MainPage
     when "title"
       element.element.h3.a.text
     when "price"
-      element.element.p.text.split(" ")[0..-2].join(" ")
+      element.element.ps.last.text.split(" ")[0..-2].join(" ")
     when "currency"
-      element.element.p.text.split(" ")[-1]
+      element.element.ps.last.text.split(" ")[-1]
     when "URL"
       element.element.h3.a.href
+    when "customfield"
+      element.element.p(class: "i-fs11").text
     end
   end
 

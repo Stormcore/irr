@@ -39,6 +39,12 @@ end
   end
 end
 
+Допустим %{у первого объявления в секции "Вы недавно смотрели" в деталях записано "$value"} do |value|
+  on MainPage do |page|
+    page.get_recently_viewed_detail(0, "customfield").should eq(value)
+  end
+end
+
 Допустим /^у первого объявления в секции "Вы недавно смотрели" отображен(о|а|) правильн(ое|ый|ая) (.*)$/ do |other1, other2, parameter|
   on MainPage do |page|
     case parameter
