@@ -22,8 +22,8 @@ class AdDetailsPage
 
   # Показ параметров
   link :show_all_params, id: "showAllParamsLink"
-  div :wrapTitle, id: "wrapTitle"
-  div (:title) {|page| wrapTitle_element.div(name: 'wrapTitleLeft')}
+  div :wrapTitle, class: "wrapTitle"
+  div (:title) {|page| page.wrapTitle_element.div_element(class: 'wrapTitleLeft')}
   div :address, class: "b-adressAdv"
   div :photo, class: "b-photo"
   div :video, class: "b-video"
@@ -34,6 +34,8 @@ class AdDetailsPage
   table :all_params, id: "allParams"
   table :main_params, id: "mainParams"
   div :ad_content, class: "b-content"
+
+  span :selected_currency, id: "currencySelected"
 
   def get_address
     self.address_element.when_present.text.split("\n")[0]
@@ -60,7 +62,19 @@ class AdDetailsPage
   end
 
   def get_photo
-    self.photo_element.when_present.image_element.element.attribute("src")
+    self.photo_element.image_element.element.src
+  end
+
+  def get_title
+    self.title_element.text
+  end
+
+  def get_currency
+    self.selected_currency_element.text
+  end
+
+  def get_price
+    self.element("b", id: "priceSelected").text
   end
 
   def has_video?

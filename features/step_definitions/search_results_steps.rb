@@ -45,6 +45,30 @@ end
   end
 end
 
+Допустим %{в деталях объявления я запоминаю $parameter первого объявления} do |parameter|
+  @result_details = Hash.new if @result_details.nil?
+  on AdDetailsPage do |page|
+    case parameter
+    when "фото"
+      @result_details["photo"] = page.get_photo
+    when "заголовок"
+      @result_details["title"] = page.get_title
+    when "цену"
+      @result_details["price"] = page.get_price
+    when "валюту"
+      @result_details["currency"] = page.get_currency
+    when "URL"
+      @result_details["url"] = @browser.url
+    end
+  end
+end
+
+Допустим %{на странице поиска я открываю детали первого объявления} do
+  url = @results[0]['url']
+  puts "Открываю объявление <a href=#{url}>#{url}</a>"
+  @browser.goto(url)
+end
+
 То %{я перехожу на страницу номер $page_number} do |page_number|
   on SearchResultsPage do |page|
     page.go_to_page(page_number)
@@ -355,7 +379,7 @@ end
   end
 end
 
-Допустим %{первым в списке обычных объявлений первым идёт объявление "$expected_title"} do |expected_title|
+Допустим %{в списке обычных объявлений первым идёт объявление "$expected_title"} do |expected_title|
   # Ищем первое обычное объявление
   ad_found = false
   on SearchResultsPage do |page|

@@ -26,6 +26,33 @@ class MainPage
   div :sidebar, class: "b-sidebar"
   unordered_list (:top_categories) {|page| sidebar_element.unordered_list_element}
 
+  div :recently_viewed_section, class: "b-recently-look"
+  unordered_list :recently_viewed_list, id: "recently-look-items"
+
+  def get_recently_viewed_detail(index, parameter)
+    element = self.recently_viewed_list_element.list_item_element(index: index)
+    case parameter
+    when "photo"
+      element.element.img.src
+    when "title"
+      element.element.h3.a.text
+    when "price"
+      element.element.p.text.split(" ")[0..-2].join(" ")
+    when "currency"
+      element.element.p.text.split(" ")[-1]
+    when "URL"
+      element.element.h3.a.href
+    end
+  end
+
+  def get_recently_viewed_number
+    self.recently_viewed_list_element.element.lis.size
+  end
+
+  def has_recently_viewed_section
+    self.recently_viewed_section?
+  end
+
   def get_logged_in_user_name
     self.unordered_list_element(class: "header_autorizationLink").
          list_item_element(index: 2).text
