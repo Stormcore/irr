@@ -43,6 +43,15 @@ end
   @browser.url.should include part
 end
 
+То %{открытая ссылка соответствует категории} do
+  steps %Q{* открыта не страница 404}
+  ad_class = Kernel.const_get(@category_page.to_s)
+  suffix = (ad_class.class_variable_get("@@url_suffix")+"/")
+  full_url = construct_region_url(BASE_URL+suffix, @region)
+  full_url = "http://"+full_url.gsub("http://","").gsub("//","/")
+  @browser.url.should eq(full_url)
+end
+
 То %{в поле "$field" выбраны следующие значения:} do |field, table|
   on @category_page do |page|
     results = page.get_selected_parameter(field, nil)

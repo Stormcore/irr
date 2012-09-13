@@ -22,20 +22,24 @@ end
 def construct_region_url(url, region)
   case region
   when "Москва"
-    url+'/moskva-gorod/'
+    url = url+'/moskva-gorod/'
   when "Россия"
-    url.gsub("http://", "http://russia.")
+    url = url.gsub("http://", "http://russia.")
+  when "Бийск"
+    url = url.gsub("http://", "http://biysk.")
   when "Москва и область", "Казахстан"
     url
   when "Усть-Алтан"
-    url.gsub("http://", "http://ust-orda.")+'/osinskiy-r_n/ust-altan-selo/'
+    url = url.gsub("http://", "http://ust-orda.")+'/osinskiy-r_n/ust-altan-selo/'
   when "Пушкино"
-    url+'/pushkinskiy-r_n/pushkino-gorod/'
+    url = url+'/pushkinskiy-r_n/pushkino-gorod/'
   when "Астана"
-    url.gsub("http://", "http://astana.")
+    url = url.gsub("http://", "http://astana.")
   when "Актобе"
-    url.gsub("http://", "http://akt-obl.")+'/aktobe-gorod/'
+    url = url.gsub("http://", "http://akt-obl.")+'/aktobe-gorod/'
   end
+  # Вырезаем лишние двойные слэши (но не в http://)
+  url = "http://"+url.gsub("http://","").gsub("//","/")
 end
 
 Допустим /^открыта страница для (города|региона) "(.*)"$/ do |other, region|

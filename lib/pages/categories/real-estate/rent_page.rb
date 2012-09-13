@@ -7,6 +7,7 @@ class CategoryRealEstateRentPage < AdDetailsPage
 
   @@url_suffix = "/real-estate/rent"
   @category = "Недвижимость -> Квартиры. аренда"
+  @alternate_category = "Недвижимость -> Аренда квартир"
 
   irr_inline_select "Комнат в квартире", "rooms"
   irr_range_select "Общая площадь", "meters-total"

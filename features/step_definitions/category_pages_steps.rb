@@ -2,30 +2,24 @@
 
 def select_class_for_category(category)
   category_page = AdDetailsPage.subclasses.find do |subclass|
-    if subclass.instance_variables.include? :@category
-      subclass.instance_variable_get(:@category) == category
-    end
+    class_category = subclass.instance_variable_get(:@category) if 
+      subclass.instance_variables.include? :@category
+    class_alt_category = subclass.instance_variable_get(:@alternate_category) if 
+      subclass.instance_variables.include? :@alternate_category
+
+    category == class_category or category == class_alt_category
   end
   raise "Не найден класс для категории #{category}" if category_page.nil?
   @category_page = category_page
   @category_name = category
 end
 
-Когда %{на главной странице я перехожу в категорию "$long_category" через меню} do |long_category|
+Когда %{на главной странице я перехожу в категорию "$category" через меню} do |category|
   # Open category via menu
-  long_category.split(' -> ').each_with_index do |category, index|
-    if index == 0
-      on MainPage do |page|
-        page.select_top_category category
-      end
-    else
-      on GenericCategoryPage do |page|
-        page.select_sub_category category
-      end
-    end
+  on MainPage do |page|
+    page.select_category(category)
   end
-  
-  select_class_for_category(long_category)
+  select_class_for_category(category)
 end
 
 Когда %{на главной странице я перехожу в категорию "$long_category"} do |long_category|

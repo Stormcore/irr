@@ -31,9 +31,19 @@ class MainPage
          list_item_element(index: 2).text
   end
 
-  def select_top_category(category)
-    category_link = self.top_categories_element.link_element(link_text: /#{category}/)
-    category_link.when_present.click
+  def select_category(category)
+    if category.split(" -> ").size == 1
+      self.div_element(class: "b-rubricate_item_title", text: category).link_element.click
+    else
+      top_category = category.split(" -> ")[0]
+      sub_category = category.split(" -> ")[1]
+      top_title = self.div_element(class: "b-rubricate_item_title", text: top_category)
+      raise "Не найдена родительская категория #{top_category}" unless top_title.exists?
+      sub_category_element = top_title.parent.unordered_list_element.
+                                       link_element(link_text: sub_category)
+      raise "Не найдена категория #{sub_category} в категории '#{top_category}'" unless sub_category_element.exists?
+      sub_category_element.click
+    end
   end
   
   def search_for(keywords)
