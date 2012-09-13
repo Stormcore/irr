@@ -35,6 +35,7 @@ end
 Допустим %{в секции "Вы недавно смотрели" показано $operator $number объявлений} do |operator, number|
   on MainPage do |page|
     eval("page.get_recently_viewed_number.should #{operator} #{number}")
+    @elements = page.get_recently_viewed_urls
   end
 end
 
@@ -44,10 +45,14 @@ end
     when "фото"
       page.get_recently_viewed_detail(0, "photo").should eq(@result_details["photo"])
     when "заголовок"
-      # тайтл обрезается до 35 символов + троеточие
-      original_title = page.get_recently_viewed_detail(0, "title")
-      if original_title.length > 35
-        shortened_title = original_title[0..35] + "..."
+      puts "Длина оригинального заголовка: #{@result_details["title"].length}"
+      puts "Длина текущего заголовка: #{page.get_recently_viewed_detail(0, "title").length}"
+      # тайтл обрезается до 32 символов + троеточие (всего 35)
+      original_title = @result_details["title"]
+      if original_title.length >= 35
+        shortened_title = original_title[0..33] + "..."
+        puts "Обрезаем исходный заголовок: #{shortened_title}"
+        page.get_recently_viewed_detail(0, "title").should eq(shortened_title)
       else
         page.get_recently_viewed_detail(0, "title").should eq(original_title)
       end
@@ -58,5 +63,37 @@ end
     when "URL"
       page.get_recently_viewed_detail(0, "URL").should eq(@result_details["url"])
     end
+  end
+end
+
+Допустим %{в секции "Вы недавно смотрели" отображено $number объявлений} do |number|
+  on MainPage do |page|
+    page.get_recently_viewed_displayed_number.should eq(number.to_i)
+  end
+end
+
+Допустим /^в секции "Вы недавно смотрели" (отображена|спрятана) стрелка прокрутки (вправо|влево)$/ do |state, direction|
+  on MainPage do |page|
+    page.get_recently_viewed_scroll_state(direction).should eq(state=="отображена"),
+      "В блоке 'Вы недавно смотрели' стрелка #{direction} не #{state}"
+  end
+end
+
+Допустим /^в секции "Вы недавно смотрели" (первое|последнее) объявление (отображено|спрятано)$/ do |position, state|
+  case position
+  when "первое"
+    url = @elements[0]
+  when "последнее"
+    url = @elements[-1]
+  end
+  on MainPage do |page|
+    page.is_recently_viewed_item_visible(url).should eq(state == "отображено"),
+      "#{position} объявление в секции 'Вы недавно смотрели' не #{state}"
+  end
+end
+
+Когда /^в секции "Вы недавно смотрели" я нажимаю на стрелку прокрутки (вправо|влево)$/ do |direction|
+  on MainPage do |page|
+    page.recently_viewed_scroll_click(direction)
   end
 end

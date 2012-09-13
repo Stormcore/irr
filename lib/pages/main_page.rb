@@ -28,6 +28,9 @@ class MainPage
 
   div :recently_viewed_section, class: "b-recently-look"
   unordered_list :recently_viewed_list, id: "recently-look-items"
+  div :carousel, class: "caroufredsel_wrapper"
+  div :next_button, id: "next_button"
+  div :prev_button, id: "prev_button"
 
   def get_recently_viewed_detail(index, parameter)
     element = self.recently_viewed_list_element.list_item_element(index: index)
@@ -42,6 +45,54 @@ class MainPage
       element.element.p.text.split(" ")[-1]
     when "URL"
       element.element.h3.a.href
+    end
+  end
+
+  def get_recently_viewed_urls
+    self.recently_viewed_list_element.element.lis.map{|li| li.h3.a.href}
+  end
+
+  def is_recently_viewed_item_visible(url)
+    max = self.carousel_element.element.wd.location.x +
+          self.carousel_element.element.wd.size.width
+    min = self.carousel_element.element.wd.location.x
+    current_pos = self.recently_viewed_list_element.element.lis.find{|li| 
+                       li.h3.a.href == url}.wd.location.x
+    puts "min=#{min} current_pos=#{current_pos} max=#{max}"
+    current_pos >= min and current_pos <= max
+  end
+
+  def get_recently_viewed_displayed_number
+    # определяем количество отображенных объявлений
+    # раз это всё li, то visible? не катит
+    # определяем так - они должны быть в рамках карусели
+    max = self.carousel_element.element.wd.location.x +
+          self.carousel_element.element.wd.size.width
+    min = self.carousel_element.element.wd.location.x
+
+    puts "min=#{min} max=#{max}"
+    puts "#{self.recently_viewed_list_element.element.lis.map{|li| li.element.wd.location.x}}"
+    self.recently_viewed_list_element.element.lis.select{|li| 
+      li.element.wd.location.x >= min and 
+      li.element.wd.location.x <= max 
+    }.size
+  end
+
+  def get_recently_viewed_scroll_state(direction)
+    case direction
+    when "вправо"
+      self.next_button_element.div_element.visible?
+    when "влево"
+      self.prev_button_element.div_element.visible?
+    end
+  end
+
+  def recently_viewed_scroll_click(direction)
+    case direction
+    when "вправо"
+      self.next_button_element.div_element.click
+    when "влево"
+      self.prev_button_element.div_element.click
     end
   end
 

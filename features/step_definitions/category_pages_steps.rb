@@ -124,6 +124,19 @@ end
   end
 end
 
+Допустим %{я открываю первые $number объявлений} do |limit|
+  on SearchResultsPage do |page|
+    @results[0...limit.to_i].each do |result|
+      begin
+        if result and result.has_key?('url') and result.has_key?('title')
+          puts "DEBUG: Открываем объявление <a href='#{result['url']}'>#{result['title']}</a>"
+          page.open_ad(result['url'])
+        end
+      end
+    end
+  end
+end
+
 def results_details_soft_assert(description)
   validation_errors = Hash.new
   on SearchResultsPage do |page|

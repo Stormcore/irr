@@ -22,8 +22,7 @@ class AdDetailsPage
 
   # Показ параметров
   link :show_all_params, id: "showAllParamsLink"
-  div :wrapTitle, class: "wrapTitle"
-  div (:title) {|page| page.wrapTitle_element.div_element(class: 'wrapTitleLeft')}
+  div :title, class: "cb_header"
   div :address, class: "b-adressAdv"
   div :photo, class: "b-photo"
   div :video, class: "b-video"
@@ -63,6 +62,11 @@ class AdDetailsPage
 
   def get_photo
     self.photo_element.image_element.element.src
+  end
+
+  def get_shortened_title
+    # Сокращенный тайтл объявления (например 4-комн.кв. вместо 4-комн. кв.)
+    self.image_element(class: "cb_picture").element.alt.gsub("  ", " ")
   end
 
   def get_title

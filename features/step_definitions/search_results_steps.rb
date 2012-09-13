@@ -52,7 +52,7 @@ end
     when "фото"
       @result_details["photo"] = page.get_photo
     when "заголовок"
-      @result_details["title"] = page.get_title
+      @result_details["title"] = page.get_shortened_title
     when "цену"
       @result_details["price"] = page.get_price
     when "валюту"
