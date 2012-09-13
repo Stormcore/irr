@@ -31,6 +31,7 @@ class MainPage
   div :carousel, class: "caroufredsel_wrapper"
   div :next_button, id: "next_button"
   div :prev_button, id: "prev_button"
+  link :clear_recently_viewed, id: "clear-last-show-adverts"
 
   def get_recently_viewed_detail(index, parameter)
     element = self.recently_viewed_list_element.list_item_element(index: index)

@@ -97,3 +97,9 @@ end
     page.recently_viewed_scroll_click(direction)
   end
 end
+
+Когда %{в секции "Вы недавно смотрели" я нажимаю "Очистить"} do
+  on MainPage do |page|
+    page.clear_recently_viewed
+  end
+end
