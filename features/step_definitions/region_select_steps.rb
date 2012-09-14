@@ -1,22 +1,41 @@
 # encoding: utf-8
-Допустим %{открыта главная страница} do
-  visit RegionSelectPage
+Допустим %{я открываю окно выбора региона} do
+  on RegionSelectPage do |page|
+    page.open_dialog
+  end
 end
 
-Допустим %{я выбираю страну "$country"} do |country|
-  on RegionSelectPage do |page| page.select_country(country) end
+Допустим /^в окне выбора региона в секции (\d+) я выбираю "(.*)"$/ do |level, region|
+  on RegionSelectPage do |page|
+    page.select_link_from_level(level.to_i, region)
+  end
 end
 
-Допустим %{я выбираю регион "$region"} do |region|
-  on RegionSelectPage do |page| page.select_region(region) end
+Допустим /^в окне выбора региона секция (\d+) (не |)показана$/ do |level, state|
+  on RegionSelectPage do |page|
+    page.is_level_visible(level.to_i).should eq(state!="не ")
+  end
+end
+
+Допустим /^в окне выбора региона в секции (\d+) показаны следующие регионы:$/ do |level, table|
+  actual = []
+  on RegionSelectPage do |page|
+    actual = page.get_all_links_in_level(level.to_i)
+    expected = table.raw.flatten
+    (actual - expected).size == 0
+  end
 end
 
 Допустим %{в окне выбора региона нажать OK} do
-  on RegionSelectPage do |page| page.ok end
+  on RegionSelectPage do |page|
+    page.ok
+  end
 end
 
-Допустим %{в окне выбора региона в статусбаре показан "$region"} do |region|
-  on RegionSelectPage do |page| page.selected_region.should == region end
+Допустим %{в окне выбора региона выбрано "$region"} do |region|
+  on RegionSelectPage do |page|
+    page.selected_region.should == region
+  end
 end
 
 def construct_region_url(url, region)
