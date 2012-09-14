@@ -32,6 +32,8 @@ class AddAdvertStep2New < AdDetailsPage
   div :no_package_message, id: "message-free-add"
   div :has_package, class: "ico-messagesok"
 
+  span :error_message, id: "adv-errorMessage"
+
   def set_street(street)
     self.address_street = street
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
@@ -190,14 +192,6 @@ RUTUBE_VIDEO
     self.div_elements(class: "b-form-LK_wrap_tabs_item").find{|div| 
       div.div_element(class: "b-form-LK_wrap_tabs_item_title_wrap", text: name).exists?
     }.click
-  end
-
-  def get_error_message
-    begin
-      self.span_element(id: "adv-errorMessage").text
-    rescue
-      return nil
-    end
   end
 
 end

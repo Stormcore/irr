@@ -67,8 +67,7 @@ end
 Когда %{на шаге 3 нет ошибок} do
   classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
   on classs do |page|
-    error_message = page.get_error_message
-    raise "Ошибка на шаге 3:\n#{error_message}" unless error_message.empty?
+    raise "Ошибка на шаге 3:\n#{page.error_message}" if page.error_message?
   end
 end
 
