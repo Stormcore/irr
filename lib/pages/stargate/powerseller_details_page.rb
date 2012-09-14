@@ -23,9 +23,13 @@ class StargatePowersellerDetailsPage
   def open_right_click_menu_for_package(name)
     begin
       self.div_element(class: "ext-el-mask").element.wait_while_present
-      self.main_element.
-           div_element(class: "x-grid3-cell-inner", text: name).when_present.
-           element.right_click
+      self.div_elements(class: "x-tab-panel").find{|div| 
+        div.span_element(text: 'Свойства').exists?}.
+            div_element(class: "x-grid3-cell-inner", text: name).when_present.
+            element.right_click
+      Watir::Wait.until {
+        not self.div_elements(class: "x-menu").find {|div| div.visible? }.nil?
+      }
     rescue Watir::Wait::TimeoutError => e
       raise "Пакет '#{name}' не найден"
     end
@@ -33,9 +37,8 @@ class StargatePowersellerDetailsPage
 
   def edit_package(name)
     self.open_right_click_menu_for_package(name)
-    visible_menu = self.div_elements(class: "x-menu").
-                        find {|div| div.visible? }
-    visible_menu.link_element(class: "x-menu-item", text: "Редактировать").click
+    self.div_elements(class: "x-menu").find {|div| div.visible? }.
+         link_element(class: "x-menu-item", text: "Редактировать").click
   end
 
   def has_package(name)
@@ -46,9 +49,8 @@ class StargatePowersellerDetailsPage
 
   def delete_package(name)
     self.open_right_click_menu_for_package(name)
-    visible_menu = self.div_elements(class: "x-menu").
-                        find {|div| div.visible? }
-    visible_menu.when_present.link_element(class: "x-menu-item", text: "Удалить").click
+    self.div_elements(class: "x-menu").find {|div| div.visible? }.
+         link_element(class: "x-menu-item", text: "Удалить").click
   end
 
   def get_premium_number(period)
