@@ -417,7 +417,7 @@ end
 
 То %{в списке премиумов присутствует объявление "$title"} do |title|
   on SearchResultsPage do |page|
-    ad = @results.find{|result| result['title'] == title}
+    ad = @results.find{|result| result['title'].gsub("  ", " ") == title}
     ad.nil?.should eq(false), "Объявление '#{title}' отсутствует в листинге"
     ad['premium'].should eq(true), 
       "Объявление '<a href='#{ad['url']}'>#{title}</a>' не является премиумом"
