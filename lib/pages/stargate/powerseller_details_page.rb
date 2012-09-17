@@ -23,12 +23,14 @@ class StargatePowersellerDetailsPage
   def open_right_click_menu_for_package(name)
     begin
       self.div_element(class: "ext-el-mask").element.wait_while_present
-      self.div_elements(class: "x-tab-panel").find{|div| 
+      div = self.div_elements(class: "x-tab-panel").find{|div| 
         div.span_element(text: 'Свойства').exists?}.
-            div_element(class: "x-grid3-cell-inner", text: name).when_present.
-            element.right_click
+            div_element(class: "x-grid3-cell-inner", text: name).when_present
       Watir::Wait.until {
-        not self.div_elements(class: "x-menu").find {|div| div.visible? }.nil?
+        if self.div_elements(class: "x-menu").find {|div| div.visible? }.nil?
+          sleep 1
+          div.element.right_click
+        end
       }
     rescue Watir::Wait::TimeoutError => e
       raise "Пакет '#{name}' не найден"
