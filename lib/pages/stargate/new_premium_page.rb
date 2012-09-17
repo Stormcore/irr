@@ -42,13 +42,8 @@ class StargateNewAdDataPage
     row.cell_element(index: 2).when_present.click
     # Появляется editor
     editor = self.panel_element.when_present.element.
-                  divs(class: "x-editor").find{|div| div.visible?}
-    if editor.nil?
-       row.cell_element(index: 2).when_present.click
-       editor = self.panel_element.when_present.element.
-                  divs(class: "x-editor").find{|div| div.visible?}
-       raise "Не открыт редактор" if editor.nil?
-    end
+                  divs(class: "x-editor").find {|e| e.visible?}
+    raise "Не открыт редактор" if editor.nil?
     if name == "Регион"
       self.set_region_value(editor, value)
     else
@@ -66,14 +61,16 @@ class StargateNewAdDataPage
   end
 
   def set_select_value(editor, value)
-    item = self.div_element(class: "x-combo-list-item", text: value)
+    item = self.div_elements(class: "x-combo-list-inner").last.
+                div_element(class: "x-combo-list-item", text: value)
     unless item.exists? and item.visible?
-      editor.img.click
+      editor.img.when_present.click
       item.when_present.element.wd.location_once_scrolled_into_view
       Watir::Wait.until {item.visible?}
     end
     item.click
-    Watir::Wait.while { item.parent.visible? }
+    # Закрываем комбобокс, если это чеклист, например
+    editor.img.click if item.visible?
   end
 
   def set_text_value(editor, value)
