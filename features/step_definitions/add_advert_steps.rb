@@ -62,12 +62,11 @@ end
   on classs do |page|
     page.next_step
   end
-end
 
-Когда %{на шаге 3 нет ошибок} do
-  classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
   on classs do |page|
-    raise "Ошибка на шаге 3:\n#{page.error_message}" if page.error_message?
+    if page.error_message? and not page.error_message.empty?
+      raise "Ошибка на шаге 3:\n#{page.error_message}"
+    end
   end
 end
 
