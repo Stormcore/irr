@@ -64,8 +64,11 @@ end
   end
 
   on classs do |page|
-    if page.error_message?
-      raise "Ошибка на шаге 3:\n#{page.error_message}" unless page.error_message.empty?
+    begin
+      if page.error_message?
+        raise "Ошибка на шаге 3:\n#{page.error_message}" unless page.error_message.empty?
+      end
+    rescue
     end
   end
 end
