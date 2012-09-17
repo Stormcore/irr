@@ -64,8 +64,8 @@ end
   end
 
   on classs do |page|
-    if page.error_message? and not page.error_message.empty?
-      raise "Ошибка на шаге 3:\n#{page.error_message}"
+    if page.error_message?
+      raise "Ошибка на шаге 3:\n#{page.error_message}" unless page.error_message.empty?
     end
   end
 end
