@@ -233,6 +233,8 @@ class AddAdvertStep2 < AdDetailsPage
   div :no_package_message, id: "message-free-add"
   div :has_package, class: "ico-messagesok"
 
+  div :error_message, id: "addAdvertErrors"
+
   def set_region(region)
     self.region_spoiler_element.when_present.click
     self.region_element.when_present.visible?.should == true
