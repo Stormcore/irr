@@ -21,12 +21,14 @@ class RegionSelectPage
 
   def get_element_by_level(level)
     case level
-    when 1
+    when "1"
       self.firstlevel_element
-    when 2
+    when "2"
       self.secondlevel_element
-    when 3
+    when "3"
       self.thirdlevel_element
+    when "поиска"
+      self.suggests_element
     end
   end
 
@@ -34,11 +36,20 @@ class RegionSelectPage
     self.trigger_element.click unless self.popupRegions_element.visible?
   end
 
+  def search_for(search_term)
+    self.search = search_term
+    self.suggests_element.when_present
+  end
+
   def select_link_from_level(level, text)
     text = "Москва " if text == "Москва"
     link = get_element_by_level(level).element.as.find{|a| a.text == text}
     link.wd.location_once_scrolled_into_view
     link.click
+  end
+
+  def get_all_links_elements_in_level(level)
+    get_element_by_level(level).element.as
   end
 
   def get_all_links_in_level(level)

@@ -5,22 +5,39 @@
   end
 end
 
-Допустим /^в окне выбора региона в секции (\d+) я выбираю "(.*)"$/ do |level, region|
+Допустим /^в окне выборе региона я ищу "(.*?)"$/ do |search_term|
   on RegionSelectPage do |page|
-    page.select_link_from_level(level.to_i, region)
+    page.search_for(search_term)
   end
 end
 
-Допустим /^в окне выбора региона секция (\d+) (не |)показана$/ do |level, state|
+Допустим /^в окне выбора региона в секции (.*) я выбираю "(.*)"$/ do |level, region|
   on RegionSelectPage do |page|
-    page.is_level_visible(level.to_i).should eq(state!="не ")
+    page.select_link_from_level(level, region)
   end
 end
 
-Допустим /^в окне выбора региона в секции (\d+) показаны следующие регионы:$/ do |level, table|
+Допустим /^в окне выбора региона в секции поиска в каждой ссылке выделено "(.*)"$/ do |selection|
+  on RegionSelectPage do |page|
+    links = page.get_all_links_elements_in_level("поиска")
+    no_spans = links.select {|a| a.span.present? == false}
+    no_spans.size.should eq(0), "Не выделены слова в регионах '#{no_spans.map{|a| a.text}}"
+
+    wrong_text = links.select {|a| a.span.text != selection}
+    wrong_text.size.should eq(0), "Неправильное выделение слова в регионах '#{wrong_text.map{|a| a.text}}"
+  end
+end
+
+Допустим /^в окне выбора региона секция (.*) (не |)показана$/ do |level, state|
+  on RegionSelectPage do |page|
+    page.is_level_visible(level).should eq(state!="не ")
+  end
+end
+
+Допустим /^в окне выбора региона в секции (.*) показаны следующие регионы:$/ do |level, table|
   actual = []
   on RegionSelectPage do |page|
-    actual = page.get_all_links_in_level(level.to_i)
+    actual = page.get_all_links_in_level(level)
     expected = table.raw.flatten
     (actual - expected).size == 0
   end
