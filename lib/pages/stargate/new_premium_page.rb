@@ -61,13 +61,26 @@ class StargateNewAdDataPage
   end
 
   def set_select_value(editor, value)
-    item = self.div_elements(class: "x-combo-list-inner").last.
-                div_element(class: "x-combo-list-item", text: value)
-    unless item.exists? and item.visible?
-      editor.img.when_present.click
-      item.when_present.element.wd.location_once_scrolled_into_view
-      Watir::Wait.until {item.visible?}
+
+    attempts = 0
+    begin
+      attempts += 1
+      Watir::Wait.until(5) {
+        self.div_elements(class: "x-combo-list-inner").
+           find { |div| div.visible?}.nil? == false
+      }
+    rescue Watir::Wait::TimeoutError => e
+      editor.img.click
+      retry if attempts == 1
     end
+    begin
+      item = self.div_element(class: "x-combo-list-item", text: value)
+      item.when_present(10)
+    rescue Watir::Wait::TimeoutError => e
+      debugger
+      raise "Нет такого значения '#{value}'"
+    end
+    item.when_present.element.wd.location_once_scrolled_into_view
     item.click
     # Закрываем комбобокс, если это чеклист, например
     editor.img.click if item.visible?
