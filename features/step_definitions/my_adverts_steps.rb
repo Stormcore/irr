@@ -126,7 +126,15 @@ end
   on AdDetailsPage do |page|
     table.hashes.each do |hash|
       begin
-        steps %Q{* на вкладке "Все" "#{hash['поле']}" равно "#{hash['значение']}"}
+        unless hash['значение'] == "x"
+          steps %Q{
+            * на вкладке "Все" "#{hash['поле']}" равно "#{hash['значение']}"
+          }
+        else
+          steps %Q{
+            * на вкладке "Все" присутствует "#{hash['поле']}"
+          }
+        end
       rescue Exception => e
         errors[hash['поле']] = e.message
       end
