@@ -249,6 +249,7 @@ end
 
 Допустим %{в ЛК ИП я выбираю пакет "$package"} do |package|
   on PackageInfoPage do |page|
+    puts "DEBUG: Список пакетов: #{page.get_all_packages}"
     page.select_package(package)
   end
 end

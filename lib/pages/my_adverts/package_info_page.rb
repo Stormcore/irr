@@ -21,6 +21,14 @@ class PackageInfoPage
     self.element("strong", xpath: "//div[contains(.,'#{field}')]/strong").when_present.text.strip
   end
 
+  def get_all_packages
+    begin
+      package_element.options.map{ |o| o.text }
+    rescue Watir::Wait::TimeoutError => e
+      []
+    end
+  end
+
   def select_package(name)
     begin
       self.package_element.when_present(10).select(name)
