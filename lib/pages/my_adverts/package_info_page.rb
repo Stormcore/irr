@@ -24,7 +24,7 @@ class PackageInfoPage
   def get_all_packages
     begin
       package_element.options.map{ |o| o.text }
-    rescue Watir::Wait::TimeoutError => e
+    rescue Exception => e
       []
     end
   end
