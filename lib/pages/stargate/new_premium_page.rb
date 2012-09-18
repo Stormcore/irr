@@ -33,13 +33,17 @@ class StargateNewAdDataPage
   div :panel, class: "x-grid-panel", text: /Поле/
   button :save, text: "Сохранить"
 
-  def set_value(name, value)
+  def set_value(name, value, dont_do_the_double_click)
     # Нажимаем по полю и обрабатываем
     row = self.panel_element.div_element(class: "x-grid3-col-title", 
                                          text: name).when_present.parent.parent
     # Скроллим до элемента
     row.element.wd.location_once_scrolled_into_view
-    row.cell_element(index: 2).when_present.click
+    if dont_do_the_double_click
+      row.cell_element(index: 2).when_present.click
+    else
+      row.cell_element(index: 2).when_present.double_click
+    end
     # Появляется editor
     editor = self.panel_element.when_present.element.
                   divs(class: "x-editor").find {|e| e.visible?}

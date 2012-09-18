@@ -38,6 +38,7 @@ end
 end
 
 Допустим %{на БО я перехожу в категорию "$long_category"} do |long_category|
+  @dont_do_the_double_click = true
   last_category = nil
   on StargateNavigationPage do |page|
     long_category.split(' -> ').each do |category|
@@ -52,6 +53,7 @@ end
 end
 
 Допустим %{я созданию новое объявление в БО} do
+  @dont_do_the_double_click = false
   on StargateCatalogSelectPage do |page|
     page.create_new_advert
   end
@@ -70,11 +72,10 @@ end
 end
 
 Допустим /^при создании объявления я ввожу следующие данные:$/ do |table|
-  # table is a Cucumber::Ast::Table
   on StargateNewAdDataPage do |page|
     table.hashes.each do |hash|
       puts "Устанавливаем значение #{hash['parameter']} = #{hash['value']}"
-      page.set_value(hash['parameter'], hash['value'])
+      page.set_value(hash['parameter'], hash['value'], @dont_do_the_double_click)
     end
   end
 end
