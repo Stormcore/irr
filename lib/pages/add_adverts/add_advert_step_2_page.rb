@@ -166,6 +166,13 @@ class AddAdvertStep2New < AdDetailsPage
     </OBJECT>
 RUTUBE_VIDEO
 
+    # См. http://tp.prontosoft.by//Project/Planning/Task/View.aspx?TaskID=38786&ProjectID=30031
+    # Рандомно вставляем youtube или vimeo видео
+    #videos = ["http://www.youtube.com/watch?v=3VLcLH97eRw", "http://vimeo.com/7265982"]
+    #video_url = videos[Random.rand(videos.length)]
+    #puts "DEBUG: Вставляем видео #{video_url}"
+    #self.videoContents_element.when_present.value = video_url
+
     self.uploadVideoButton
     Watir::Wait.until {self.video_preview?}
   end
