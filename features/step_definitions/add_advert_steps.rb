@@ -61,15 +61,9 @@ end
   classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
   on classs do |page|
     page.next_step
-  end
-
-  on classs do |page|
-    begin
-      if page.error_message_element.when_present(10)
-        raise "Ошибка на шаге 3:\n#{page.error_message}" unless page.error_message.empty?
-      end
-    rescue
-    end
+    Watir::Wait.until { page.next_step_element.text == "Далее" or 
+                        page.next_step_element.exists? == false}
+    raise "Ошибка на шаге 3:\n#{page.error_message}" if page.next_step_element.exists?
   end
 end
 
