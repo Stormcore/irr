@@ -65,7 +65,7 @@ end
 
   on classs do |page|
     begin
-      if page.error_message?
+      if page.error_message_element.when_present(10)
         raise "Ошибка на шаге 3:\n#{page.error_message}" unless page.error_message.empty?
       end
     rescue
