@@ -18,21 +18,36 @@ class StargatePowersellerDetailsPage
   def open_tab(name)
     self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
     self.div_element(class: "ext-el-mask").element.wait_while_present
+    # Ждём пока загрузятся пакеты
+    if name == "Пакеты"
+
+      len = self.div_elements(class: "x-tab-panel").select{|div| 
+            div.span_element(text: 'Пакеты').exists?}.last.element.
+                divs(class: "x-grid3-body").last.
+                    divs(class: "x-grid3-row").length
+      puts "Найдено пакетов: #{len}"
+      if len == 0
+        self.open_tab("Свойства")
+        self.open_tab("Пакеты")
+      end
+    end
   end
 
   def open_right_click_menu_for_package(name)
     begin
       self.div_element(class: "ext-el-mask").element.wait_while_present
-      div = self.div_elements(class: "x-tab-panel").find{|div| 
-        div.span_element(text: 'Свойства').exists?}.
-            div_element(class: "x-grid3-cell-inner", text: name).when_present
+      # Ищем пакет
+      package = self.div_elements(class: "x-tab-panel").select{|div| 
+                  div.span_element(text: 'Пакеты').exists?}.last.element.
+                    divs(class: "x-grid3-body").last.when_present.
+                      div(class: "x-grid3-cell-inner", text: name).when_present
+      # Открываем меню райт-кликом
+      package.right_click
+      # Ждём пока меню откроется
       Watir::Wait.until {
-        if self.div_elements(class: "x-menu").find {|div| div.visible? }.nil?
-          sleep 1
-          div.element.right_click
-        end
+        not self.div_elements(class: "x-menu").find {|div| div.visible? }.nil?
       }
-    rescue Watir::Wait::TimeoutError => e
+    rescue Exception => e
       raise "Пакет '#{name}' не найден"
     end
   end
@@ -44,9 +59,10 @@ class StargatePowersellerDetailsPage
   end
 
   def has_package(name)
-    main_element = self.div_elements(class: 'x-tab-panel').
-                        find {|div| div.span_element.text == 'Свойства'}
-    self.main_element.div_element(class: "x-grid3-cell-inner", text: name).exists?
+    self.div_elements(class: "x-tab-panel").select{|div| 
+         div.span_element(text: 'Пакеты').exists?}.last.element.
+             divs(class: "x-grid3-body").last.when_present.
+                 div(class: "x-grid3-cell-inner", text: name).exists?
   end
 
   def delete_package(name)
