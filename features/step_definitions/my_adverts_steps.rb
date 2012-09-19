@@ -203,12 +203,13 @@ end
   end
 end
 
-Допустим %{я делаю данное объявление премиумом} do
+Допустим %{я делаю данное объявление премиумом $length} do |length|
   on @classs do |page|
     page.do_action(@title, "Премиум")
   end
 
   on AdvertActionConfirmPage do |page|
+    page.select_premium_length(length)
     page.do_activate
   end
 end
