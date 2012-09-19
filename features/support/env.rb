@@ -1,6 +1,7 @@
 # encoding: utf-8
 BASE_URL = ENV['BASE_URL'] || "http://irr.ru"
 HEADLESS = ENV['HEADLESS'] || false
+HEADLESS = false
 DRIVER = (ENV['WEB_DRIVER'] || :firefox).to_sym
 ENABLE_FLASH = ENV['FLASH'] || false
 FAIL_FAST = ENV['FAILFAST'] || false
