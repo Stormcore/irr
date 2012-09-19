@@ -83,7 +83,7 @@ end
 Допустим %{при создании объявления я указываю владельца пользователя с ролью "$role"} do |role|
   credentials = get_login_and_password_for_role(role)
   on StargateNewAdDataPage do |page|
-    page.set_value("Владелец объявления", credentials['email'])
+    page.set_value("Владелец объявления", credentials['email'], @dont_do_the_double_click)
   end
 end
 
