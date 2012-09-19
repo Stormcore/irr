@@ -73,12 +73,12 @@ class OPAdvertsPage
   end
 
   def get_city(title)
-    self.has_ad_with_title(title)[4].text.split(" » ")[-1].strip
+    self.has_ad_with_title(title)[2].p(index: 1).text.split(",")[0]
   end
 
   def get_price(title, currency)
-    self.has_ad_with_title(title)[1].span(class: currency).
-                html[/> .* </].gsub(/[>< ]/,'').gsub(/\&nbsp\;/,'')
+    self.has_ad_with_title(title)[3].span(class: currency).
+         html[/> .* </].gsub(/[>< ]/,'').split("&nbsp\;")[0..-2].join("")
   end
 
   def get_url_for_ad(title)

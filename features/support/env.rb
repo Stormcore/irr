@@ -20,6 +20,8 @@ require 'unicode_utils/downcase'
 require 'cucumber/formatter/unicode'
 require 'selenium/webdriver/remote/http/persistent'
 require 'yaml'
+require 'net/ssh'
+require 'net/sftp'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'

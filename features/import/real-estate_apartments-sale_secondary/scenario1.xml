@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+<user deactivate-untouched="false">
+<match>
+  <user-id>9531971</user-id>
+</match>
+<store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="2001" file-id="1" power-ad="0" category="/real-estate/apartments-sale/secondary">
+  <title>Продается квартира, общая площадь: 200 кв.м., этаж 3</title>
+  <description>Продается квартира в Москве</description>
+  <regions>
+    <region path="/russia/moscow-region/moscow"/>
+  </regions>
+  <custom-fields>
+    <field name="rooms">3</field>
+    <field name="meters-total">200</field>
+    <field name="meters-living">170</field>
+    <field name="etage">3</field>
+
+    <field name="title">Продается квартира, общая площадь: 100 кв.м., этаж 3</field>
+    <field name="description">Продается новостройка в Москве</field>
+  </custom-fields>
+  <price currency="RUR" value="3000000"/>
+</store-ad>
+
+</user>
+</users>
