@@ -11,9 +11,6 @@
 		<region path="/russia/moscow-region/moscow"/>
 	</regions>
 	<custom-fields>
-		<field name="region">Москва</field>
-		<field name="address_city">Москва</field>
-		
 		<field name="rooms">3</field>
 		<field name="meters-total">100</field>
 		<field name="meters-living">70</field>
