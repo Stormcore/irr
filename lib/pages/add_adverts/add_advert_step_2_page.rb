@@ -1,4 +1,6 @@
 # encoding: utf-8
+require './lib/pages/ad_details_page.rb'
+
 class AddAdvertStep2New < AdDetailsPage
   include PageObject
 
