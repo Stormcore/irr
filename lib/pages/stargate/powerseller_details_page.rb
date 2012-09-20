@@ -55,7 +55,6 @@ class StargatePowersellerDetailsPage
         not self.div_elements(class: "x-menu").find {|div| div.visible? }.nil?
       }
     rescue Exception => e
-      puts e.message
       raise "Пакет '#{name}' не найден"
     end
   end
