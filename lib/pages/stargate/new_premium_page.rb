@@ -22,7 +22,9 @@ class StargateCatalogSelectPage
   end
 
   def create_new_advert
-    self.div_element(class: "ext-el-mask").element.wait_while_present
+    Watir::Wait.until { 
+      self.div_elements(class: "ext-el-mask").find {|d| d.visible?}.nil? 
+    }
     self.button_element(text: "Создать").when_present.click
   end
 end

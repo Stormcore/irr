@@ -11,7 +11,9 @@ class StargatePowersellerDetailsPage
   button (:save) {|page| page.main_element.button_element(text: "Сохранить")}
 
   def wait_for_masks_to_disappear
-    Watir::Wait.until { self.div_elements(class: "ext-el-mask").find {|d| d.visible?} }
+    Watir::Wait.until { 
+      self.div_elements(class: "ext-el-mask").find {|d| d.visible?}.nil? 
+    }
   end
 
   def add_package
