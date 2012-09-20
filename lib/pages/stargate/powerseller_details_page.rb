@@ -110,7 +110,9 @@ class StargatePowersellerDetailsPackagesTabPage
   div :main, id: "pu-packagesitems-properties"
 
   def open_editor_for_title(name)
-    title = self.main_element.div_element(class: "x-grid3-col-title", text: name)
+    title = self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
+      div.text.include?(name)
+    }
     title.when_present.element.wd.location_once_scrolled_into_view
     title.parent.parent.element.td(class: "x-grid3-td-value").double_click
     Watir::Wait.until {
