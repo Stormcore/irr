@@ -9,7 +9,7 @@ class MainPage
   link :personal_cabinet, id: "load_user_ads_counter"
   link (:favourites) {|page| page.list_item_element(id: "blocknote").link_element}
   
-  link (:adverts_my) {|page| page.span_element(id: "user_ads_counter").parent}
+  link (:adverts_my) {|page| page.span_element(id: "user_ads_counter").when_present.parent}
   link :adverts_favourites, link_text: "Избранные"
   link :adverts_payments, link_text: "Платежи"
   link :adverts_profile, link_text: "Профиль"
