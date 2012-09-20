@@ -111,7 +111,7 @@ class StargatePowersellerDetailsPackagesTabPage
 
   def open_editor_for_title(name)
     title = self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
-      div.text.include?(name)
+      d.text.include?(name)
     }
     puts self.main_element.element.divs(class: "x-grid3-col-title").map{|d|
       d.text}
