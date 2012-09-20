@@ -78,6 +78,7 @@ class StargatePowersellerDetailsPage
       self.open_right_click_menu_for_package(name)
       self.div_elements(class: "x-menu").find {|div| div.visible? }.
            link_element(class: "x-menu-item", text: "Удалить").click
+    rescue
     end
   end
 
