@@ -107,6 +107,12 @@ class StargatePowersellerDetailsPackagesTabPage
   div :main, id: "pu-packagesitems-properties"
 
   def set_combobox_value(name, value)
+    Watir::Wait.until {
+      not self.main_element.element.tables.find { |t| 
+          t.div(class: "x-grid3-col-title", text: name).exists?
+        }.nil?
+    }
+
     table = self.main_element.element.table(xpath: 
             "//table[.//div[contains(text(),'#{name}')][@class='x-grid3-cell-inner x-grid3-col-title']]")
     if table.exists?
@@ -134,9 +140,13 @@ class StargatePowersellerDetailsPackagesTabPage
     if table.exists?
       table.element.wd.location_once_scrolled_into_view
       table.td(class: "x-grid3-td-value").double_click
+      Watir::Wait.until {
+        not self.main_element.element.divs(class: "x-editor").
+                 find{|div| div.visible?}.nil?
+      }
       editor = self.main_element.element.
                     divs(class: "x-editor").
-                    select{|div| div.visible?}[0]
+                    find{|div| div.visible?}
       raise "Нет параметра '#{name}'" if editor.nil?
       editor.text_field.value = value
     end
