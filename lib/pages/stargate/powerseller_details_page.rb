@@ -108,9 +108,7 @@ class StargatePowersellerDetailsPackagesTabPage
 
   def set_combobox_value(name, value)
     Watir::Wait.until {
-      not self.main_element.element.tables.find { |t| 
-          t.div(class: "x-grid3-col-title", text: name).exists?
-        }.nil?
+      self.main_element.div(class: "x-grid3-col-title", text: name).exists?
     }
 
     table = self.main_element.element.table(xpath: 
