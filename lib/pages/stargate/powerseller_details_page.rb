@@ -111,9 +111,12 @@ class StargatePowersellerDetailsPackagesTabPage
             "//table[.//div[contains(text(),'#{name}')][@class='x-grid3-cell-inner x-grid3-col-title']]")
     if table.exists?
       table.td(class: "x-grid3-td-value").double_click
-      editor = self.main_element.element.
-                    divs(class: "x-editor").
-                   select{|div| div.visible?}[0].when_present
+      Watir::Wait.until {
+        not self.main_element.element.divs(class: "x-editor").
+                 find{|div| div.visible?}.nil?
+      }
+      editor = self.main_element.element.divs(class: "x-editor").
+                    find{|div| div.visible?}.when_present
       item = self.div_element(class: "x-combo-list-item", text: value)
       unless item.exists? and item.visible?
         editor.img.click
