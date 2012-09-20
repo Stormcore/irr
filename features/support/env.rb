@@ -32,6 +32,7 @@ if HEADLESS
   require 'headless'
   headless = Headless.new(dimensions: "1366x768x16")
   headless.start
+  %x[x11vnc -display :99]
 end
 
 def start_browser
