@@ -20,6 +20,7 @@ require 'unicode_utils/downcase'
 require 'cucumber/formatter/unicode'
 require 'selenium/webdriver/remote/http/persistent'
 require 'yaml'
+require 'open3'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'
@@ -32,7 +33,7 @@ if HEADLESS
   require 'headless'
   headless = Headless.new(dimensions: "1366x768x16")
   headless.start
-  dummy = `x11vnc -display :99`
+  stdin, stdout, stderr = Open3.popen3("x11vnc")
 end
 
 def start_browser
