@@ -22,6 +22,7 @@ class StargatePowersellerDetailsPage
   end
 
   def open_tab(name)
+    self.wait_for_masks_to_disappear
     self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
     self.wait_for_masks_to_disappear
     # Ждём пока загрузятся пакеты
@@ -72,7 +73,7 @@ class StargatePowersellerDetailsPage
   end
 
   def delete_package(name)
-    if self.has_package(name)
+    begin
       self.open_right_click_menu_for_package(name)
       self.div_elements(class: "x-menu").find {|div| div.visible? }.
            link_element(class: "x-menu-item", text: "Удалить").click
@@ -109,7 +110,7 @@ class StargatePowersellerDetailsPackagesTabPage
   def set_combobox_value(name, value)
     self.main_element.
          div_element(class: "x-grid3-col-title", text: name).when_present.
-         parent.parent..td(class: "x-grid3-td-value").double_click
+         parent.parent.element.td(class: "x-grid3-td-value").double_click
     Watir::Wait.until {
       not self.main_element.element.divs(class: "x-editor").
                find{|div| div.visible?}.nil?
