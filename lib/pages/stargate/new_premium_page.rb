@@ -141,7 +141,9 @@ class StargateNewAdDataPage
   end
 
   def save_ad
-    self.save_element.when_present.click
+    self.save_element.when_present
+    self.save_element.element.wd.location_once_scrolled_into_view
+    self.save_element.click
   end
 
   def go_to_tab(name)
