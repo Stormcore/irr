@@ -310,13 +310,10 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def set_combobox_model(value)
-    Watir::Wait.until {
-      begin
-        self.model_element.options.map{|o| o.text}.include?(value)
-      rescue
-      end
+    Watir::Wait.while {
+      self.select_list_element(name: "model").options.find {|o| o.text == value}.nil?
     }
-    self.model = value
+    self.select_list_element(name: "model").select value
   end
 
   def set_parameter(hash)
