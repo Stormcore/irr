@@ -309,7 +309,10 @@ class AddAdvertStep2 < AdDetailsPage
 
   def set_combobox_model(value)
     Watir::Wait.until {
-      self.model_element.options.map{|o| o.text}.include?(value)
+      begin
+        self.model_element.options.map{|o| o.text}.include?(value)
+      rescue
+      end
     }
     self.model = value
   end
