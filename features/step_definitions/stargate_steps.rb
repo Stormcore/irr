@@ -26,7 +26,8 @@ end
   visit StargateLoginPage do |page|
     page.login_element.when_present.value = login
     page.password_element.when_present.value = password
-    page.enter
+    Watir::Wait.until {page.enter_element.enabled?}
+    page.enter_element.click
   end
 end
 
