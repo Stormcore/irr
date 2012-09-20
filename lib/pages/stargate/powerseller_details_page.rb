@@ -113,6 +113,9 @@ class StargatePowersellerDetailsPackagesTabPage
     title = self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
       div.text.include?(name)
     }
+    puts self.main_element.element.divs(class: "x-grid3-col-title").map{|d|
+      d.text}
+    raise "Не найдено поле ввода с текстом '#{name}'" if title.nil?
     title.when_present.element.wd.location_once_scrolled_into_view
     title.parent.parent.element.td(class: "x-grid3-td-value").double_click
     Watir::Wait.until {
