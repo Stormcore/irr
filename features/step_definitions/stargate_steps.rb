@@ -207,7 +207,7 @@ end
     * на БО я открываю форму редактирования пакета "#{package}"
   }
   on StargatePowersellerDetailsPackagesTabPage do |page|
-    page.set_parameter("Просмотры", num)
+    page.set_parameter("Просмотров", num)
     page.save
   end
 end
