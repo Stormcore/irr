@@ -27,7 +27,7 @@ end
     page.login_element.when_present.value = login
     page.password_element.when_present.value = password
     Watir::Wait.until {page.enter_element.enabled?}
-    sleep 5
+    sleep 1
     page.enter_element.click
   end
 end
