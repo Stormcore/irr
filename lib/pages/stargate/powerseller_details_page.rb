@@ -110,14 +110,15 @@ class StargatePowersellerDetailsPackagesTabPage
   div :main, id: "pu-packagesitems-properties"
 
   def open_editor_for_title(name)
-    title = self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
-      d.text.include?(name)
+    Watir::Wait.until {
+      not self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
+      d.text.include?(name) }.nil?
     }
-    puts self.main_element.element.divs(class: "x-grid3-col-title").map{|d|
-      d.text}
+    title = self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
+      d.text.include?(name) }
     raise "Не найдено поле ввода с текстом '#{name}'" if title.nil?
-    title.when_present.element.wd.location_once_scrolled_into_view
-    title.parent.parent.element.td(class: "x-grid3-td-value").double_click
+    title.wd.location_once_scrolled_into_view
+    title.parent.parent.td(class: "x-grid3-td-value").double_click
     Watir::Wait.until {
       not self.main_element.element.divs(class: "x-editor").
                find{|div| div.visible?}.nil?
