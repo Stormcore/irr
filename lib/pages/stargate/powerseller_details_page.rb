@@ -118,7 +118,12 @@ class StargatePowersellerDetailsPackagesTabPage
     editor = self.main_element.element.divs(class: "x-editor").
                   find{|div| div.visible?}.when_present
     item = self.div_element(class: "x-combo-list-item", text: value)
-    item.when_present.element.wd.location_once_scrolled_into_view
+    begin
+      item.when_present.element.wd.location_once_scrolled_into_view
+    rescue
+      editor.img.click
+      item.when_present.element.wd.location_once_scrolled_into_view
+    end
     item.click
     self.div_element(class: "x-tab-panel-body").click
   end
