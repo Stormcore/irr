@@ -13,7 +13,9 @@ class MainPage
   link :adverts_favourites, link_text: "Избранные"
   link :adverts_payments, link_text: "Платежи"
   link :adverts_profile, link_text: "Профиль"
-  
+  div :popupLoading, id: "popup-loading"
+
+
   link :logout, link_text: "Выйти"
   
   link :add_advert, link_text: "Подать объявление"
@@ -38,26 +40,31 @@ class MainPage
   
   def open_my_adverts
     self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    Watir::Wait.until {self.popupLoading_element.visible?}
     self.adverts_my_element.when_present.click
   end
   
   def open_favourite_adverts
     self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    Watir::Wait.until {self.popupLoading_element.visible?}
     self.adverts_favourites.when_visible.click
   end
   
   def open_payments
     self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    Watir::Wait.until {self.popupLoading_element.visible?}
     self.adverts_payments.when_visible.click
   end
   
   def open_profile
     self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    Watir::Wait.until {self.popupLoading_element.visible?}
     self.adverts_profile.when_visible.click
   end
 
   def get_user_ads_count
     self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    Watir::Wait.until {self.popupLoading_element.visible?}
     ad_count = self.adverts_my_element.span_element.text
     # Нажимаем по комбобоксу чтобы закрыть попап
     self.only_title_element.check
