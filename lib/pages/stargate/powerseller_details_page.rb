@@ -107,29 +107,23 @@ class StargatePowersellerDetailsPackagesTabPage
   div :main, id: "pu-packagesitems-properties"
 
   def set_combobox_value(name, value)
+    self.main_element.
+         div_element(class: "x-grid3-col-title", text: name).when_present.
+         parent.parent..td(class: "x-grid3-td-value").double_click
     Watir::Wait.until {
-      self.main_element.div_element(class: "x-grid3-col-title", text: name).exists?
+      not self.main_element.element.divs(class: "x-editor").
+               find{|div| div.visible?}.nil?
     }
-
-    table = self.main_element.element.table(xpath: 
-            "//table[.//div[contains(text(),'#{name}')][@class='x-grid3-cell-inner x-grid3-col-title']]")
-    if table.exists?
-      table.td(class: "x-grid3-td-value").double_click
-      Watir::Wait.until {
-        not self.main_element.element.divs(class: "x-editor").
-                 find{|div| div.visible?}.nil?
-      }
-      editor = self.main_element.element.divs(class: "x-editor").
-                    find{|div| div.visible?}.when_present
-      item = self.div_element(class: "x-combo-list-item", text: value)
-      unless item.exists? and item.visible?
-        editor.img.click
-        item.when_present.element.wd.location_once_scrolled_into_view
-        Watir::Wait.until {item.visible?}
-      end
-      item.click
-      self.div_element(class: "x-tab-panel-body").click
+    editor = self.main_element.element.divs(class: "x-editor").
+                  find{|div| div.visible?}.when_present
+    item = self.div_element(class: "x-combo-list-item", text: value)
+    unless item.exists? and item.visible?
+      editor.img.click
+      item.when_present.element.wd.location_once_scrolled_into_view
+      Watir::Wait.until {item.visible?}
     end
+    item.click
+    self.div_element(class: "x-tab-panel-body").click
   end
 
   def set_parameter(name, value)
