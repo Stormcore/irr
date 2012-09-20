@@ -67,9 +67,11 @@ class StargatePowersellerDetailsPage
   end
 
   def delete_package(name)
-    self.open_right_click_menu_for_package(name)
-    self.div_elements(class: "x-menu").find {|div| div.visible? }.
-         link_element(class: "x-menu-item", text: "Удалить").click
+    if self.has_package(name)
+      self.open_right_click_menu_for_package(name)
+      self.div_elements(class: "x-menu").find {|div| div.visible? }.
+           link_element(class: "x-menu-item", text: "Удалить").click
+    end
   end
 
   def get_premium_number(period)
