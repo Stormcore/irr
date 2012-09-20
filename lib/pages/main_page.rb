@@ -40,7 +40,8 @@ class MainPage
 
   def expand_personal_cabinet_popup
     self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
-    Watir::Wait.until {self.popupLoading_element.div_element.visible?}
+    Watir::Wait.until {
+      self.popupLoading_element.div_element.visible?}
   end
 
   def open_my_adverts
