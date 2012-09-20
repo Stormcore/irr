@@ -55,6 +55,7 @@ class StargatePowersellerDetailsPage
         not self.div_elements(class: "x-menu").find {|div| div.visible? }.nil?
       }
     rescue Exception => e
+      puts e.message
       raise "Пакет '#{name}' не найден"
     end
   end
@@ -107,19 +108,23 @@ class StargatePowersellerDetailsPackagesTabPage
 
   div :main, id: "pu-packagesitems-properties"
 
-  def set_combobox_value(name, value)
-    self.main_element.
-         div_element(class: "x-grid3-col-title", text: name).when_present.
-         parent.parent.element.td(class: "x-grid3-td-value").double_click
+  def open_editor_for_title(name)
+    title = self.main_element.div_element(class: "x-grid3-col-title", text: name)
+    title.when_present.element.wd.location_once_scrolled_into_view
+    title.parent.parent.element.td(class: "x-grid3-td-value").double_click
     Watir::Wait.until {
       not self.main_element.element.divs(class: "x-editor").
                find{|div| div.visible?}.nil?
     }
-    editor = self.main_element.element.divs(class: "x-editor").
+    self.main_element.element.divs(class: "x-editor").
                   find{|div| div.visible?}.when_present
+  end
+
+  def set_combobox_value(name, value)
+    editor = self.open_editor_for_title(name)
     item = self.div_element(class: "x-combo-list-item", text: value)
     begin
-      item.when_present.element.wd.location_once_scrolled_into_view
+      item.when_present(1).element.wd.location_once_scrolled_into_view
     rescue
       editor.img.click
       item.when_present.element.wd.location_once_scrolled_into_view
@@ -129,21 +134,9 @@ class StargatePowersellerDetailsPackagesTabPage
   end
 
   def set_parameter(name, value)
-    table = self.main_element.element.table(xpath: "//table[.//div[contains(text(),'#{name}')]]")
-    # Скроллим до элемента
-    if table.exists?
-      table.element.wd.location_once_scrolled_into_view
-      table.td(class: "x-grid3-td-value").double_click
-      Watir::Wait.until {
-        not self.main_element.element.divs(class: "x-editor").
-                 find{|div| div.visible?}.nil?
-      }
-      editor = self.main_element.element.
-                    divs(class: "x-editor").
-                    find{|div| div.visible?}
-      raise "Нет параметра '#{name}'" if editor.nil?
-      editor.text_field.value = value
-    end
+    editor = self.open_editor_for_title(name)
+    raise "Нет параметра '#{name}'" if editor.nil?
+    editor.text_field.value = value
   end
   
   def save
