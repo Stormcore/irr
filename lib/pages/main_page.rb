@@ -66,6 +66,9 @@ class MainPage
   end
 
   def get_user_ads_count
+    # Перезагружаем страницу
+    sleep 10
+    @browser.refresh
     self.expand_personal_cabinet_popup
     ad_count = self.adverts_my_element.span_element.text
     # Нажимаем по комбобоксу чтобы закрыть попап
