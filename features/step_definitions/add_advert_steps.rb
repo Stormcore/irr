@@ -44,6 +44,7 @@ end
     on AddAdvertStep1 do |page|
       # Открываем нужную категорию
       long_category.split(' -> ').each_with_index do |category, index|
+        Watir::Wait.until {page.list_item_element(id: "section_#{index + 1}").exists?}
         li = page.list_item_element(id: "section_#{index + 1}").when_present
         li.unordered_list_element.when_present.click
         a = li.link_elements(href: "#").find do |a|
