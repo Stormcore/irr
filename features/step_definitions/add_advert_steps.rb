@@ -51,6 +51,7 @@ end
           UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
         end
         raise "Категория '#{category}' не найдена" if a.nil?
+        sleep 1
         a.click
        end
       page.next_step_element.when_present.click
