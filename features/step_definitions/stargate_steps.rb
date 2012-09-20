@@ -187,7 +187,7 @@ end
   }
 
   on StargatePowersellerDetailsPackagesTabPage do |page|
-    page.set_parameter("Поднятий (на весь период)", num)
+    page.set_parameter("Поднятий", num)
     page.save
   end
 end
@@ -197,7 +197,7 @@ end
     * на БО я открываю форму редактирования пакета "#{package}"
   }
   on StargatePowersellerDetailsPackagesTabPage do |page|
-    page.set_parameter("Выделений (на весь период)", num)
+    page.set_parameter("Выделений", num)
     page.save
   end
 end
@@ -207,7 +207,7 @@ end
     * на БО я открываю форму редактирования пакета "#{package}"
   }
   on StargatePowersellerDetailsPackagesTabPage do |page|
-    page.set_parameter("Просмотры (на весь период)", num)
+    page.set_parameter("Просмотры", num)
     page.save
   end
 end

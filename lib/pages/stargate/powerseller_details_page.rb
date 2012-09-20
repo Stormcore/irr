@@ -110,10 +110,13 @@ class StargatePowersellerDetailsPackagesTabPage
   div :main, id: "pu-packagesitems-properties"
 
   def open_editor_for_title(name)
-    Watir::Wait.until {
-      not self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
-      d.text.include?(name) }.nil?
-    }
+    begin
+      Watir::Wait.until {
+        not self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
+          d.text.include?(name) }.nil?
+      }
+    rescue
+    end
     title = self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
       d.text.include?(name) }
     raise "Не найдено поле ввода с текстом '#{name}'" if title.nil?
