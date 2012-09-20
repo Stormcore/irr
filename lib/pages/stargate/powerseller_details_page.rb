@@ -10,16 +10,18 @@ class StargatePowersellerDetailsPage
   button (:close) {|page| page.main_element.button_element(text: 'Закрыть')}
   button (:save) {|page| page.main_element.button_element(text: "Сохранить")}
 
-  div :mask, class: "ext-el-mask"
+  def wait_for_masks_to_disappear
+    Watir::Wait.until { self.div_elements(class: "ext-el-mask").find {|d| d.visible?} }
+  end
 
   def add_package
-    Watir::Wait.until {self.mask_element.visible?}
+    self.wait_for_masks_to_disappear
     self.add_package_btn
   end
 
   def open_tab(name)
     self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
-    Watir::Wait.until {self.mask_element.visible?}
+    self.wait_for_masks_to_disappear
     # Ждём пока загрузятся пакеты
     if name == "Пакеты"
 
@@ -37,7 +39,7 @@ class StargatePowersellerDetailsPage
 
   def open_right_click_menu_for_package(name)
     begin
-      Watir::Wait.until {self.mask_element.visible?}
+      self.wait_for_masks_to_disappear
       # Ищем пакет
       package = self.div_elements(class: "x-tab-panel").select{|div| 
                   div.span_element(text: 'Пакеты').exists?}.last.element.
@@ -91,7 +93,7 @@ class StargatePowersellerDetailsPage
   end
 
   def close
-    self.div_element(class: "ext-el-mask").element.wait_while_present
+    self.wait_for_masks_to_disappear
     self.close_element.click if self.close_element.visible?
     self.main_element.element.wait_while_present
   end
