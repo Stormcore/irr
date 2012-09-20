@@ -172,6 +172,8 @@ class AddAdvertStep2New < AdDetailsPage
 
     self.uploadVideoButton
     Watir::Wait.until {self.video_preview?}
+    # Ждём 5 секунд
+    sleep 5
   end
 
   def save
