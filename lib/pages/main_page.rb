@@ -37,34 +37,34 @@ class MainPage
     self.keywords = keywords
     self.find
   end
-  
-  def open_my_adverts
+
+  def expand_personal_cabinet_popup
     self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
-    Watir::Wait.until {self.popupLoading_element.visible?}
+    Watir::Wait.until {self.popupLoading_element.div_element.visible?}
+  end
+
+  def open_my_adverts
+    self.expand_personal_cabinet_popup
     self.adverts_my_element.when_present.click
   end
   
   def open_favourite_adverts
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
-    Watir::Wait.until {self.popupLoading_element.visible?}
+    self.expand_personal_cabinet_popup
     self.adverts_favourites.when_visible.click
   end
   
   def open_payments
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
-    Watir::Wait.until {self.popupLoading_element.visible?}
+    self.expand_personal_cabinet_popup
     self.adverts_payments.when_visible.click
   end
   
   def open_profile
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
-    Watir::Wait.until {self.popupLoading_element.visible?}
+    self.expand_personal_cabinet_popup
     self.adverts_profile.when_visible.click
   end
 
   def get_user_ads_count
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
-    Watir::Wait.until {self.popupLoading_element.visible?}
+    self.expand_personal_cabinet_popup
     ad_count = self.adverts_my_element.span_element.text
     # Нажимаем по комбобоксу чтобы закрыть попап
     self.only_title_element.check
