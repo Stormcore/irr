@@ -53,7 +53,7 @@ end
         raise "Категория '#{category}' не найдена" if a.nil?
         a.click
        end
-      page.next_step
+      page.next_step_element.when_present.click
     end
   end
 end
