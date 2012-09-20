@@ -12,6 +12,7 @@ class StargatePowersellerDetailsPage
 
   def add_package
     self.div_element(class: "ext-el-mask").element.wait_while_present
+    self.div_element(class: "ext-el-mask").element.wait_while_present
     self.add_package_btn
   end
 
