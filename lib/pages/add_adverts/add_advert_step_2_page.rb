@@ -307,6 +307,13 @@ class AddAdvertStep2 < AdDetailsPage
     end
   end
 
+  def set_combobox_model(value)
+    Watir::Wait.until {
+      self.model_element.options.map{|o| o.text}.include?(value)
+    }
+    self.model = value
+  end
+
   def set_parameter(hash)
     begin
       case hash['parameter']
@@ -334,10 +341,10 @@ class AddAdvertStep2 < AdDetailsPage
       when "Модель"
         if self.model?
           if hash['value'].split(" ~ ")[0] == 'Другая'
-            self.model = 'Другая'
+            self.set_combobox_model("Другая")
             self.model_other = hash['value'].split(" ~ ")[1]
           else
-            self.model = hash['value']
+            self.set_combobox_model(hash['value'])
           end
         else
           self.model_text = hash['value']
