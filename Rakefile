@@ -22,14 +22,13 @@ Cucumber::Rake::Task.new(:compile) do |task|
 end
 
 Cucumber::Rake::Task.new(:wip_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-t @wip",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color",
-                      "features"]
+  task.cucumber_opts = ["-t @wip",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color",
+                        "features"]
 end
 
 task :wip do
@@ -45,14 +44,13 @@ task :wip do
 end
 
 Cucumber::Rake::Task.new(:tag_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-r features",
-                      "-t @#{ENV['TAG'] || "all"}",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color"]
+  task.cucumber_opts = ["-r features",
+                        "-t @#{ENV['TAG'] || "all"}",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color"]
 end
 
 task :tag do
@@ -68,15 +66,14 @@ task :tag do
 end
 
 Cucumber::Rake::Task.new(:bug_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "FAILFAST=true",
-                      "-r features",
-                      "-t @bug#{ENV['BUG']}",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color"]
+  task.cucumber_opts = ["FAILFAST=true",
+                        "-r features",
+                        "-t @bug#{ENV['BUG']}",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color"]
 end
 
 task :bug do
@@ -92,15 +89,14 @@ task :bug do
 end
 
 Cucumber::Rake::Task.new(:fast_category_check_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-r features",
-                      "-t @all_results,@customfield",
-                      "-t ~@wip -t ~@bugs",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color"]
+  task.cucumber_opts = ["-r features",
+                        "-t @all_results,@customfield",
+                        "-t ~@wip -t ~@bugs",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color"]
 end
 
 task :fast_category_check do
@@ -116,15 +112,14 @@ task :fast_category_check do
 end
 
 Cucumber::Rake::Task.new(:advert_submit_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-r features",
-                      "-t ~@wip -t ~@bugs -t @advert_submit",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color",
-                      ENV['FEATURE']]
+  task.cucumber_opts = ["-r features",
+                        "-t ~@wip -t ~@bugs -t @advert_submit",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color",
+                        ENV['FEATURE']]
 end
 
 task :advert_submit do
@@ -140,15 +135,14 @@ task :advert_submit do
 end
 
 Cucumber::Rake::Task.new(:after_index_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-r features",
-                      "-t ~@wip -t ~@bugs -t @after_index",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color",
-                      ENV['FEATURE']]
+  task.cucumber_opts = ["-r features",
+                        "-t ~@wip -t ~@bugs -t @after_index",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color",
+                        ENV['FEATURE']]
 end
 
 task :after_index do
@@ -164,15 +158,14 @@ task :after_index do
 end
 
 Cucumber::Rake::Task.new(:feature_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-r features",
-                      "-t ~@wip -t ~@bugs",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color",
-                      ENV['FEATURE']]
+  task.cucumber_opts = ["-r features",
+                        "-t ~@wip -t ~@bugs",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color",
+                        ENV['FEATURE']]
 end
 
 task :feature do
@@ -188,15 +181,14 @@ task :feature do
 end
 
 Cucumber::Rake::Task.new(:feature_ignore_bug_no_rerun) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-r features",
-                      "-t ~@wip",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format rerun --out rerun.txt",
-                      "--format pretty --color",
-                      ENV['FEATURE']]
+  task.cucumber_opts = ["-r features",
+                        "-t ~@wip",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format rerun --out rerun.txt",
+                        "--format pretty --color",
+                        ENV['FEATURE']]
 end
 
 task :feature_ignore_bug do
@@ -212,13 +204,12 @@ task :feature_ignore_bug do
 end
 
 Cucumber::Rake::Task.new(:all) do |task|
-  task.cucumber_opts = ["HEADLESS=true",
-                      "-t @compile,~@wip",
-                      "--format junit --out junit",
-                      "--format html  --out cucumber.html",
-                      "--format json  --out cucumber.json",
-                      "--format pretty --color",
-                      "features"]
+  task.cucumber_opts = ["-t @compile,~@wip",
+                        "--format junit --out junit",
+                        "--format html  --out cucumber.html",
+                        "--format json  --out cucumber.json",
+                        "--format pretty --color",
+                        "features"]
 end
 
 Cucumber::Rake::Task.new(:rerun) do |task|
@@ -226,8 +217,7 @@ Cucumber::Rake::Task.new(:rerun) do |task|
     File.open('rerun.txt', 'w+').close
   end
   ENV['FEATURE'] = ''
-  task.cucumber_opts = ["HEADLESS=true",
-                        "@rerun.txt",
+  task.cucumber_opts = ["@rerun.txt",
                         "-r features",
                         "--format junit --out junit",
                         "--format html  --out cucumber_rerun.html",

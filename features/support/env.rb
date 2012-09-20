@@ -1,7 +1,5 @@
 # encoding: utf-8
 BASE_URL = ENV['BASE_URL'] || "http://irr.ru"
-HEADLESS = ENV['HEADLESS'] || false
-HEADLESS = false
 DRIVER = (ENV['WEB_DRIVER'] || :firefox).to_sym
 ENABLE_FLASH = ENV['FLASH'] || false
 FAIL_FAST = ENV['FAILFAST'] || false
@@ -27,13 +25,6 @@ $: << File.dirname(__FILE__)+'/../../lib'
 require 'pages.rb'
 
 World PageObject::PageFactory
-
-if HEADLESS
-  puts "Starting xvfb.."
-  require 'headless'
-  headless = Headless.new(dimensions: "1600x1200x16")
-  headless.start
-end
 
 def start_browser
   case DRIVER
@@ -144,11 +135,6 @@ if(FAIL_FAST)
   After do |s|
     Cucumber.wants_to_quit = true if s.failed?
   end
-end
-
-at_exit do
-  browser.quit if browser
-  headless.destroy if HEADLESS
 end
 
 # Store all subclasses
