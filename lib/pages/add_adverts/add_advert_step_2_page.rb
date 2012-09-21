@@ -64,6 +64,7 @@ class AddAdvertStep2New < AdDetailsPage
     self.address_city = city
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
+    Watir::Wait.until{ not self.div_element(id: "popupCurtain").visible? }
   end
 
   def set_value_for_custom(control, hash)
