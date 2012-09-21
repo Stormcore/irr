@@ -35,69 +35,53 @@ class StargateNewAdDataPage
   div :panel, class: "x-grid-panel", text: /Поле/
   button :save, text: "Сохранить"
 
-  def set_value(name, value, dont_do_the_double_click)
-    # Нажимаем по полю и обрабатываем
-    row = self.panel_element.div_element(class: "x-grid3-col-title", 
-                                         text: name).when_present.parent.parent
-    # Скроллим до элемента
-    row.element.wd.location_once_scrolled_into_view
+  def open_editor_for_title(name, dont_do_the_double_click)
+    title = nil
+    Watir::Wait.until {
+      title = self.main_element.element.divs(class: "x-grid3-col-title").find {|d|
+        d.text.include?(name) }
+      not title.nil?
+    }
+    raise "Не найдено поле ввода с текстом '#{name}'" if title.nil?
+    title.wd.location_once_scrolled_into_view
     if dont_do_the_double_click
-      row.cell_element(index: 2).when_present.click
+      title.parent.parent.td(class: "x-grid3-td-value").click
     else
-      row.cell_element(index: 2).when_present.double_click
+      title.parent.parent.td(class: "x-grid3-td-value").double_click
     end
-    # Появляется editor
-    editor = self.panel_element.when_present.element.
-                  divs(class: "x-editor").find {|e| e.visible?}
-    raise "Не открыт редактор" if editor.nil?
-    if name == "Регион"
-      self.set_region_value(editor, value)
-    else
-      # Если в поле есть картинка - то это селект
-      if editor.img.exists?
-        self.set_select_value(editor, value)
-      else
-        if editor.select.exists?
-          self.set_checkbox_value(editor, value)
-        else
-          self.set_text_value(editor, value)
-        end
-      end
-    end
+    editor = nil
+    Watir::Wait.until {
+      editor = self.main_element.element.divs(class: "x-editor").
+               find{|div| div.visible?}
+      not editor.nil?
+    }
+    editor
   end
 
-  def set_select_value(editor, value)
-
-    attempts = 0
-    begin
-      attempts += 1
-      Watir::Wait.until(5) {
-        self.div_elements(class: "x-combo-list-inner").
-           find { |div| div.visible?}.nil? == false
+  def set_combobox_value(editor, value)
+    combolist = nil
+    item = nil
+    attempts = 1
+    begin 
+      Watir::Wait.until {
+        combolist = self.div_elements(class: "x-combo-list-inner").
+                         find { |div| div.visible? }
+        combolist.nil? == false
       }
-    rescue Watir::Wait::TimeoutError => e
+      item = combolist.div_element(class: "x-combo-list-item", text: value)
+      item.when_present.element.wd.location_once_scrolled_into_view
+    rescue Watir::Wait::TimeoutError
       editor.img.click
-      retry if attempts == 1
+      attempts =- 1
+      retry if attempts >= 0
     end
-    begin
-      item = self.div_element(class: "x-combo-list-item", text: value)
-      item.when_present(10)
-    rescue Watir::Wait::TimeoutError => e
-      debugger
-      raise "Нет такого значения '#{value}'"
-    end
-    item.when_present.element.wd.location_once_scrolled_into_view
     item.click
     # Закрываем комбобокс, если это чеклист, например
     editor.img.click if item.visible?
   end
 
   def set_text_value(editor, value)
-    begin
-      editor.text_field.value = value
-    rescue Watir::Exception::UnknownObjectException => e
-      editor.textarea.value = value
-    end
+    editor.text_field.value = value
   end
 
   def set_checkbox_value(editor, value)
@@ -120,6 +104,37 @@ class StargateNewAdDataPage
     combolist.div_element(class: "x-combo-list-item").when_present.click
     # Нажимаем "Сохранить"
     edit_window.button_element(text: "Сохранить").when_present.click
+  end
+
+  def set_value(name, value, dont_do_the_double_click)
+    # Нажимаем по полю и обрабатываем
+    row = self.panel_element.div_element(class: "x-grid3-col-title", 
+                                         text: name).when_present.parent.parent
+    # Скроллим до элемента
+    row.element.wd.location_once_scrolled_into_view
+    if dont_do_the_double_click
+      row.cell_element(index: 2).when_present.click
+    else
+      row.cell_element(index: 2).when_present.double_click
+    end
+    # Появляется editor
+    editor = self.panel_element.when_present.element.
+                  divs(class: "x-editor").find {|e| e.visible?}
+    raise "Не открыт редактор" if editor.nil?
+    if name == "Регион"
+      self.set_region_value(editor, value)
+    else
+      # Если в поле есть картинка - то это селект
+      if editor.img.exists?
+        self.set_combobox_value(editor, value)
+      else
+        if editor.select.exists?
+          self.set_checkbox_value(editor, value)
+        else
+          self.set_text_value(editor, value)
+        end
+      end
+    end
   end
 
   def upload_picture()
