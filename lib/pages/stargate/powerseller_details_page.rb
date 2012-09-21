@@ -23,20 +23,24 @@ class StargatePowersellerDetailsPage
 
   def open_tab(name)
     self.wait_for_masks_to_disappear
-    self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
-    self.wait_for_masks_to_disappear
-    # Ждём пока загрузятся пакеты
-    if name == "Пакеты"
+    begin
+      self.span_element(class: "x-tab-strip-text ", text: name).when_present.click
+      self.wait_for_masks_to_disappear
+      # Ждём пока загрузятся пакеты
+      if name == "Пакеты"
 
-      len = self.div_elements(class: "x-tab-panel").select{|div| 
-            div.span_element(text: 'Пакеты').exists?}.last.element.
-                divs(class: "x-grid3-body").last.
-                    divs(class: "x-grid3-row").length
-      puts "Найдено пакетов: #{len}"
-      if len == 0
-        self.open_tab("Свойства")
-        self.open_tab("Пакеты")
+        len = self.div_elements(class: "x-tab-panel").select{|div| 
+              div.span_element(text: 'Пакеты').exists?}.last.element.
+                  divs(class: "x-grid3-body").last.
+                      divs(class: "x-grid3-row").length
+        puts "Найдено пакетов: #{len}"
+        if len == 0
+          self.open_tab("Свойства")
+          self.open_tab("Пакеты")
+        end
       end
+    rescue Selenium::WebDriver::Error::UnknownError
+      # Таба уже открыта
     end
   end
 

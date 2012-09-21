@@ -137,7 +137,7 @@ end
 Допустим %{на БО я открываю детали интернет-партнера} do
   @details_opened = false
   on StargatePowersellerDetailsPage do |page|
-    @details_opened = page.main_element.exists?
+    @details_opened = page.main_element.element.wd.location.x > 0
   end
 
   unless @details_opened
@@ -227,7 +227,7 @@ end
   end
 end
 
-Когда %{на БО я удаляю все пакеты "$package"} do |package|
+Когда /^на БО я удаляю все пакеты "(.*)"$/ do |package|
   on StargatePowersellerDetailsPage do |page|
     page.open_tab("Пакеты")
     while page.has_package(package) do
@@ -238,7 +238,7 @@ end
   end
 end
 
-Когда %{на БО я удаляю все пакеты "$package" у пользователя роли "$role"} do |package, role|
+Когда /^на БО у пользователя роли "(.*)" я удаляю все пакеты "(.*)"$/ do |role, package|
   steps %Q{
     * на БО я ищу пользователя с ролью "#{role}"
     * на БО я открываю детали интернет\-партнера
