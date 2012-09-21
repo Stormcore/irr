@@ -44,6 +44,7 @@ end
   last_category = nil
   on StargateNavigationPage do |page|
     long_category.split(' -> ').each do |category|
+      sleep 1
       page.expand_directory category
       last_category = category
     end
