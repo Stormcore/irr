@@ -13,22 +13,25 @@ end
 
 class InterestingAd
   def initialize (element)
-    @element = element
+    @price = element.paragraph_element(class: "prise").text
+    @photo = element.image_element.attribute("src")
+    @url = element.element.link.href
+    @id = @url.match(/(\d+)/).to_s
   end
 
   def get_photo
-    @element.image_element.attribute("src")
+    @photo
   end
 
   def get_price
-    @element.paragraph_element(class: "prise").text
+    @price
   end
 
-  def open_ad
-    @element.element.link.click
+  def get_url
+    @url
   end
 
   def get_id
-    @element.element.link.href.match(/(\d+)/).to_s
+    @id
   end
 end
