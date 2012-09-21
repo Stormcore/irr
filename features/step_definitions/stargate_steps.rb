@@ -227,11 +227,7 @@ end
   end
 end
 
-Когда %{на БО я удаляю все пакеты "$package" у пользователя роли "$role"} do |package, role|
-  steps %Q{
-    * на БО я ищу пользователя с ролью "#{role}"
-    * на БО я открываю детали интернет\-партнера
-  }
+Когда %{на БО я удаляю все пакеты "$package"} do |package|
   on StargatePowersellerDetailsPage do |page|
     page.open_tab("Пакеты")
     while page.has_package(package) do
@@ -240,7 +236,14 @@ end
     page.save
     page.close
   end
+end
 
+Когда %{на БО я удаляю все пакеты "$package" у пользователя роли "$role"} do |package, role|
+  steps %Q{
+    * на БО я ищу пользователя с ролью "#{role}"
+    * на БО я открываю детали интернет\-партнера
+    * на БО я удаляю все пакеты "#{package}"
+  }
 end
 
 Когда %{на БО я делаю интернет-партнеру $num премиумов на $period дней} do |num, period|
