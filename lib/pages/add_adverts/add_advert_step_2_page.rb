@@ -255,7 +255,7 @@ class AddAdvertStep2 < AdDetailsPage
       retry
     end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
-                                 "[contains(@style,'display: block')]//a").when_present.click
+                             "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_shosse(shosse)
@@ -336,7 +336,11 @@ class AddAdvertStep2 < AdDetailsPage
 
   def set_combobox_model(value)
     Watir::Wait.while {
-      self.select_list_element(name: "model").options.find {|o| o.text == value}.nil?
+      begin
+        self.select_list_element(name: "model").options.find {|o| o.text == value}.nil?
+      rescue Selenium::WebDriver::Error::ObsoleteElementError => e
+        # Обновились опции - пропускаем этот exception
+      end
     }
     self.select_list_element(name: "model").select value
   end
