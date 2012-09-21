@@ -248,7 +248,12 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def set_street(street)
-    self.address_street = street
+    begin
+      self.address_street = street
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
@@ -275,7 +280,6 @@ class AddAdvertStep2 < AdDetailsPage
     self.address_city = city
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
-    Watir::Wait.until{ not self.div_element(id: "popupCurtain").visible? }
   end
 
   def set_value_for_custom(control, hash)
