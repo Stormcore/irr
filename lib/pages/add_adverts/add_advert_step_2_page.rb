@@ -37,9 +37,14 @@ class AddAdvertStep2New < AdDetailsPage
   span :error_message, id: "adv-errorMessage"
 
   def set_street(street)
-    self.address_street = street
-    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
-                                 "[contains(@style,'display: block')]//a").when_present.click
+    begin
+      self.address_street = street
+      self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                               "[contains(@style,'display: block')]//a").when_present.click
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
   end
 
   def set_shosse(shosse)
@@ -250,12 +255,12 @@ class AddAdvertStep2 < AdDetailsPage
   def set_street(street)
     begin
       self.address_street = street
+      self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                               "[contains(@style,'display: block')]//a").when_present.click
     rescue Selenium::WebDriver::Error::InvalidElementStateError => e
       sleep 1
       retry
     end
-    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
-                             "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_shosse(shosse)
