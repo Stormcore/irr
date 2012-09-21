@@ -135,8 +135,15 @@ end
 end
 
 Допустим %{на БО я открываю детали интернет-партнера} do
-  on StargatePowersellersPage do |page|
-    page.open_details_for_first_found_result
+  @details_opened = false
+  on StargatePowersellerDetailsPage do |page|
+    @details_opened = page.main_element.exists?
+  end
+
+  unless @details_opened
+    on StargatePowersellersPage do |page|
+      page.open_details_for_first_found_result
+    end
   end
 end
 
