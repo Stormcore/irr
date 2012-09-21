@@ -259,25 +259,45 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def set_shosse(shosse)
-    self.address_shosse = shosse
+    begin
+      self.address_shosse = shosse
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_house(house)
-    self.address_house = house
+    begin
+      self.address_house = house
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_metro(metro)
-    self.address_metro = metro
+    begin
+      self.address_metro = metro
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_city(city)
-    self.address_city = city
+    begin
+      self.address_city = city
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
