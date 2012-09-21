@@ -33,7 +33,7 @@ if HEADLESS
   require 'headless'
   headless = Headless.new(dimensions: "1366x768x16")
   headless.start
-  stdin, stdout, stderr = Open3.popen3("x11vnc")
+  stdin, stdout, stderr = Open3.popen3("x11vnc -forever -input M")
 end
 
 def start_browser
