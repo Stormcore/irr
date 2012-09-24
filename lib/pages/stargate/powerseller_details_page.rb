@@ -69,6 +69,15 @@ class StargatePowersellerDetailsPage
          link_element(class: "x-menu-item", text: "Редактировать").click
   end
 
+  def is_package_active(name)
+     text = self.div_elements(class: "x-tab-panel").select{|div| 
+                 div.span_element(text: 'Пакеты').exists?}.last.element.
+                 divs(class: "x-grid3-body").last.when_present.
+                    div(class: "x-grid3-cell-inner", text: name).
+                    parent.parent.div(class: "x-grid3-col-3").text
+     text.strip.size == 0
+  end
+
   def has_package(name)
     self.div_elements(class: "x-tab-panel").select{|div| 
          div.span_element(text: 'Пакеты').exists?}.last.element.

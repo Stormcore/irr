@@ -238,6 +238,24 @@ end
   end
 end
 
+Допустим /^на БО я активирую пакет "(.*)"$/ do |package|
+  on StargatePowersellerDetailsPage do |page|
+    page.open_tab("Пакеты")
+    unless page.has_package(package)
+      steps %Q{
+        * на БО я добавляю интернет-партнеру пакет "#{package}" для региона "Вся Россия"
+      }
+    else
+      unless page.is_package_active(package)
+        steps %Q{
+          * на БО я удаляю все пакеты "#{package}"
+          * на БО я добавляю интернет-партнеру пакет "#{package}" для региона "Вся Россия"
+        }
+      end
+    end
+  end
+end
+
 Когда /^на БО у пользователя роли "(.*)" я удаляю все пакеты "(.*)"$/ do |role, package|
   steps %Q{
     * на БО я ищу пользователя с ролью "#{role}"
