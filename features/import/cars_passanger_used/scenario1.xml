@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+<user deactivate-untouched="false">
+<match>
+  <user-id>9531971</user-id>
+</match>
+<store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="1001" file-id="1" power-ad="0" category="/cars/passenger/used">
+  <title>Продаю Ауди A1</title>
+  <description>Продается Audi A1 в Москве</description>
+  <regions>
+    <region path="/russia/moscow-region/moscow"/>
+  </regions>
+  <custom-fields>
+    <field name="make">Audi</field>
+    <field name="model">A1</field>
+    <field name="car-year">2001</field>
+    <field name="bodytype">купе</field>
+    <field name="transmittion">механическая</field>
+
+    <field name="title">Продаю Ауди A1</field>
+    <field name="description">Продается Audi A1 в Москве</field>
+  </custom-fields>
+  <price currency="USD" value="1000"/>
+</store-ad>
+
+</user>
+</users>
