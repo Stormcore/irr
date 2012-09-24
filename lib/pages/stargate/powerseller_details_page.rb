@@ -79,10 +79,14 @@ class StargatePowersellerDetailsPage
   end
 
   def has_package(name)
-    self.div_elements(class: "x-tab-panel").select{|div| 
+    begin
+      self.div_elements(class: "x-tab-panel").select{|div| 
          div.span_element(text: 'Пакеты').exists?}.last.element.
              divs(class: "x-grid3-body").last.when_present.
                  div(class: "x-grid3-cell-inner", text: name).exists?
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
+      retry
+    end
   end
 
   def delete_package(name)
@@ -95,7 +99,7 @@ class StargatePowersellerDetailsPage
   end
 
   def get_premium_number(period)
-    self.table_element(id: "table_premium").when_present
+    self.table_element(id: "table_premium").when_present(30)
     self.table_element(id: "table_premium")[1][period.to_i / 7].text.to_i
   end
 
