@@ -3,6 +3,7 @@
 Допустим %{я обновляю и импортирую файл "$import_file_name" для роли "$role"} do |import_file_name, role|
   # Обновляем userid в файле сценария
   new_userid = get_login_and_password_for_role(role)['userid']
+  raise "У пользователя с ролью '#{role}' нет userid" if new_userid.nil?
 
   import_path = "#{File.dirname(__FILE__)}/../import/#{import_file_name}"
   text = File.read(import_path)
