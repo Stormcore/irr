@@ -99,8 +99,12 @@ class StargatePowersellerDetailsPage
   end
 
   def get_premium_number(period)
-    self.table_element(id: "table_premium").when_present(30)
-    self.table_element(id: "table_premium")[1][period.to_i / 7].text.to_i
+    begin
+      self.table_element(id: "table_premium").when_present(30)
+      self.table_element(id: "table_premium")[1][period.to_i / 7].text.to_i
+    rescue Selenium::WebDriver::Error::StaleElementReferenceError
+      retry
+    end
   end
 
   def set_premium_count(delta, period)
