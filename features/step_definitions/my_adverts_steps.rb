@@ -123,8 +123,14 @@ end
       File.open("/tmp/file2", 'w') {|f| 
         f.write(actual_table.to_s(options = {color: false})) }
 
-      puts "<style type='text/css'>" + Diffy::CSS + "</style>"
+      # Разрываем таблицу
+      puts "</table>"
+      # Вставляем diff css + цвет черный (cucumber сделает красным)
+      puts "<style type='text/css'>#{Diffy::CSS} .diff {color: black}</style>"
+      # Выводим diff
       puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', :source => 'files').to_s(:html)
+      # Прячем оставшуюся таблицу
+      puts "<table style='display:none'><tbody><tr><td>"
       raise "Ошибка проверки деталей"
     end
   end
