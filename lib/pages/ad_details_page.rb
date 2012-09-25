@@ -48,6 +48,7 @@ class AdDetailsPage
       temp = Hash.new
       temp['поле'] = name
       temp['значение'] = self.get_parameter(name)
+      temp['значение'] = "x" if temp['значение'].empty?
       result << temp
     end
     result
