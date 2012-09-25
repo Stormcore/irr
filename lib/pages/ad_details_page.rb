@@ -45,10 +45,11 @@ class AdDetailsPage
                                    gsub("<span>",'').gsub("</span>",'')}
     result = []
     names.each do |name|
-      temp = Hash.new
-      temp['поле'] = name
-      temp['значение'] = self.get_parameter(name)
-      temp['значение'] = "x" if temp['значение'].empty?
+      temp = []
+      temp << name
+      value = self.get_parameter(name)
+      value = 'x' if value.empty?
+      temp << value
       result << temp
     end
     result

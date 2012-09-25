@@ -113,9 +113,20 @@ end
 Допустим /^на вкладке "Все" указаны следующие параметры:$/ do |table|
   errors = Hash.new
   on AdDetailsPage do |page|
-    actual = page.get_all_parameters_on_all_tab.sort {|a1,a2| a1["поле"]<=>a2["поле"]}
-    expected = table.hashes.flatten.sort {|a1,a2| a1["поле"]<=>a2["поле"]}
-    actual.should =~ expected
+    actual = page.get_all_parameters_on_all_tab
+
+    unless actual.sort == table.rows.sort
+      actual_table = Cucumber::Ast::Table.new(actual.sort)
+      expected_table = Cucumber::Ast::Table.new(table.rows.sort)
+      File.open("/tmp/file1", 'w') {|f| 
+        f.write(actual_table.to_s(options = {color: false})) }
+      File.open("/tmp/file2", 'w') {|f| 
+        f.write(expected_table.to_s(options = {color: false})) }
+
+      puts "<style type='text/css'>" + Diffy::CSS + "</style>"
+      puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', :source => 'files').to_s(:html)
+      raise "Ошибка проверки деталей"
+    end
   end
 end
 

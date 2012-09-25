@@ -23,6 +23,7 @@ require 'yaml'
 require 'net/ssh'
 require 'net/sftp'
 require 'open3'
+require 'diffy'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'
