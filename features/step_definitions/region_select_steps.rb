@@ -27,6 +27,8 @@ def construct_region_url(url, region)
     url.gsub("http://", "http://russia.")
   when "Москва и область", "Казахстан"
     url
+  when "Бийск"
+    url.gsub("http://", "http://biysk.")
   when "Усть-Алтан"
     url.gsub("http://", "http://ust-orda.")+'/osinskiy-r_n/ust-altan-selo/'
   when "Пушкино"
