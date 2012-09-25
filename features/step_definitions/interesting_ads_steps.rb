@@ -2,41 +2,14 @@
 
 def interesting_ads_soft_assert(description)
   validation_errors = Hash.new
-  on InterestingAdsPage do |page|
-    page.ads_element.each do |element|
-      begin
-        ad = InterestingAd.new(element)
-        yield ad
-      rescue RSpec::Expectations::ExpectationNotMetError, RuntimeError => verification_error
-        validation_errors[@browser.url] = verification_error.message
-      end
-    end
-  end
-
-  if !validation_errors.empty?
-    output_html_formatted_messages(validation_errors)
-    raise "#{description}"
-  end
-end
-
-def interesting_ads_list_soft_assert(description)
-  @ads = []
-  on InterestingAdsPage do |page|
-    page.ads_element.each do |element|
-      ad = InterestingAd.new(element)
-      @ads << ad.get_id
-    end
-  end
-
-  validation_errors = Hash.new
-  @ads.each do |id|
+  @interesting_ads.each do |element|
     begin
-      yield id
+      yield element
     rescue RSpec::Expectations::ExpectationNotMetError, RuntimeError => verification_error
-      validation_errors[id] = verification_error.message
+      validation_errors[element.get_url] = verification_error.message
     end
   end
-  
+
   if !validation_errors.empty?
     output_html_formatted_messages(validation_errors)
     raise "#{description}"
@@ -44,9 +17,14 @@ def interesting_ads_list_soft_assert(description)
 end
 
 Когда %{в блоке "Интересные объявления" показаны объявления} do
+  @interesting_ads = []
   on InterestingAdsPage do |page|
     page.interesting_ads_element.visible?.should eq(true), 
         "Отсутствует секция 'Интересные объявления'"
+    page.ads_element.each do |element|
+      ad = InterestingAd.new(element)
+      @interesting_ads << ad
+    end
   end
 end
 
@@ -79,18 +57,14 @@ end
 
 То %{в деталях каждого объявления в блоке "Интересные объявления" "$field" $operator "$expected"} do |field, operator, expected|
   interesting_ads_soft_assert("Неправильное значение #{field}") do |ad|
-    begin
-      ad.open_ad
-      steps %Q{* на вкладке "Все" "#{field}" #{operator} "#{expected}"}
-    ensure
-      @browser.back
-    end
+    @browser.goto(ad.get_url)
+    steps %Q{* на вкладке "Все" "#{field}" #{operator} "#{expected}"}
   end
 end
 
 То %{каждое объявление в блоке "Интересные объявления" является премиумом} do
-  interesting_ads_list_soft_assert("Объявление не является премиумом") do |id|
-    @ad_id = id
+  interesting_ads_soft_assert("Объявление не является премиумом") do |ad|
+    @ad_id = ad.get_id
     steps %Q{
       * я перехожу на БО
       * на БО я перехожу в категорию "Объявления -> Найти объявления"

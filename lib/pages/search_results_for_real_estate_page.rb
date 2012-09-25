@@ -42,7 +42,7 @@ class SearchResultsForRealEstatePage < SearchResultsPage
   
       h = Hash.new
       begin
-        h['title'] = row.css('td.tdTxt > div.h3 > a')[0].content
+        h['title'] = row.css('td.tdTxt > div.h3 > a')[0].content.gsub("  ", " ")
       rescue
       end
 

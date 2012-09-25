@@ -37,9 +37,14 @@ class AddAdvertStep2New < AdDetailsPage
   span :error_message, id: "adv-errorMessage"
 
   def set_street(street)
-    self.address_street = street
-    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
-                                 "[contains(@style,'display: block')]//a").when_present.click
+    begin
+      self.address_street = street
+      self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                               "[contains(@style,'display: block')]//a").when_present.click
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
   end
 
   def set_shosse(shosse)
@@ -160,23 +165,20 @@ class AddAdvertStep2New < AdDetailsPage
     self.add_video_element.when_present.click
     Watir::Wait.until { self.videoPopup_element.exists? }
 
-    self.videoContents_element.when_present.value = <<RUTUBE_VIDEO
-    <OBJECT width="470" height="353">
-      <PARAM name="movie" value="http://video.rutube.ru/945e273fd29ca440ba453030b458b6bf"></PARAM>
-      <PARAM name="wmode" value="window"></PARAM><PARAM name="allowFullScreen" value="true"></PARAM>
-      <EMBED src="http://video.rutube.ru/945e273fd29ca440ba453030b458b6bf" type="application/x-shockwave-flash" wmode="window" width="470" height="353" allowFullScreen="true" ></EMBED>
-    </OBJECT>
-RUTUBE_VIDEO
-
     # См. http://tp.prontosoft.by//Project/Planning/Task/View.aspx?TaskID=38786&ProjectID=30031
     # Рандомно вставляем youtube или vimeo видео
-    #videos = ["http://www.youtube.com/watch?v=3VLcLH97eRw", "http://vimeo.com/7265982"]
-    #video_url = videos[Random.rand(videos.length)]
-    #puts "DEBUG: Вставляем видео #{video_url}"
-    #self.videoContents_element.when_present.value = video_url
+    videos = ["http://www.youtube.com/watch?v=3VLcLH97eRw", 
+              "http://vimeo.com/7265982", 
+              "http://youtu.be/yv0zA9kN6L8", 
+             ]
+    video_url = videos[Random.rand(videos.length)]
+    puts "DEBUG: Вставляем видео #{video_url}"
+    self.videoContents_element.when_present.value = video_url
 
     self.uploadVideoButton
     Watir::Wait.until {self.video_preview?}
+    # Ждём 5 секунд
+    sleep 5
   end
 
   def save
@@ -251,31 +253,56 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def set_street(street)
-    self.address_street = street
-    self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
-                                 "[contains(@style,'display: block')]//a").when_present.click
+    begin
+      self.address_street = street
+      self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
+                               "[contains(@style,'display: block')]//a").when_present.click
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
   end
 
   def set_shosse(shosse)
-    self.address_shosse = shosse
+    begin
+      self.address_shosse = shosse
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_house(house)
-    self.address_house = house
+    begin
+      self.address_house = house
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_metro(metro)
-    self.address_metro = metro
+    begin
+      self.address_metro = metro
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
 
   def set_city(city)
-    self.address_city = city
+    begin
+      self.address_city = city
+    rescue Selenium::WebDriver::Error::InvalidElementStateError => e
+      sleep 1
+      retry
+    end
     self.link_element(xpath: "//ul[contains(@class,'ui-autocomplete')]" + 
                                  "[contains(@style,'display: block')]//a").when_present.click
   end
@@ -312,6 +339,17 @@ class AddAdvertStep2 < AdDetailsPage
     end
   end
 
+  def set_combobox_model(value)
+    Watir::Wait.while {
+      begin
+        self.select_list_element(name: "model").options.find {|o| o.text == value}.nil?
+      rescue Selenium::WebDriver::Error::ObsoleteElementError => e
+        # Обновились опции - пропускаем этот exception
+      end
+    }
+    self.select_list_element(name: "model").select value
+  end
+
   def set_parameter(hash)
     begin
       case hash['parameter']
@@ -339,10 +377,10 @@ class AddAdvertStep2 < AdDetailsPage
       when "Модель"
         if self.model?
           if hash['value'].split(" ~ ")[0] == 'Другая'
-            self.model = 'Другая'
+            self.set_combobox_model("Другая")
             self.model_other = hash['value'].split(" ~ ")[1]
           else
-            self.model = hash['value']
+            self.set_combobox_model(hash['value'])
           end
         else
           self.model_text = hash['value']
@@ -381,14 +419,13 @@ class AddAdvertStep2 < AdDetailsPage
     self.add_video_element.when_present.click
     Watir::Wait.until { self.videoPopup_element.exists? }
 
-    self.videoContents_element.when_present.value = <<RUTUBE_VIDEO
-    <OBJECT width="470" height="353">
-      <PARAM name="movie" value="http://video.rutube.ru/945e273fd29ca440ba453030b458b6bf"></PARAM>
-      <PARAM name="wmode" value="window"></PARAM><PARAM name="allowFullScreen" value="true"></PARAM>
-      <EMBED src="http://video.rutube.ru/945e273fd29ca440ba453030b458b6bf" type="application/x-shockwave-flash" wmode="window" width="470" height="353" allowFullScreen="true" ></EMBED>
-    </OBJECT>
-RUTUBE_VIDEO
-
+    videos = ["http://www.youtube.com/watch?v=3VLcLH97eRw", 
+              "http://vimeo.com/7265982", 
+              "http://youtu.be/yv0zA9kN6L8", 
+             ]
+    video_url = videos[Random.rand(videos.length)]
+    puts "DEBUG: Вставляем видео #{video_url}"
+    self.videoContents_element.when_present.value = video_url
     self.uploadVideoButton
     Watir::Wait.until {self.video_preview?}
   end

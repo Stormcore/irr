@@ -44,15 +44,17 @@ end
     on AddAdvertStep1 do |page|
       # Открываем нужную категорию
       long_category.split(' -> ').each_with_index do |category, index|
+        Watir::Wait.until {page.list_item_element(id: "section_#{index + 1}").exists?}
         li = page.list_item_element(id: "section_#{index + 1}").when_present
         li.unordered_list_element.when_present.click
         a = li.link_elements(href: "#").find do |a|
           UnicodeUtils.downcase(a.text) == UnicodeUtils.downcase(category)
         end
         raise "Категория '#{category}' не найдена" if a.nil?
+        sleep 1
         a.click
        end
-      page.next_step
+      page.next_step_element.when_present.click
     end
   end
 end

@@ -9,11 +9,13 @@ class MainPage
   link :personal_cabinet, id: "load_user_ads_counter"
   link (:favourites) {|page| page.list_item_element(id: "blocknote").link_element}
   
-  link (:adverts_my) {|page| page.span_element(id: "user_ads_counter").parent}
+  link (:adverts_my) {|page| page.span_element(id: "user_ads_counter").when_present.parent}
   link :adverts_favourites, link_text: "Избранные"
   link :adverts_payments, link_text: "Платежи"
   link :adverts_profile, link_text: "Профиль"
-  
+  div :popupLoading, id: "popup-loading"
+
+
   link :logout, link_text: "Выйти"
   
   link :add_advert, link_text: "Подать объявление"
@@ -35,29 +37,39 @@ class MainPage
     self.keywords = keywords
     self.find
   end
-  
+
+  def expand_personal_cabinet_popup
+    unless self.span_element(id: "user_ads_counter").visible?
+      self.personal_cabinet_element.when_visible.click 
+    end
+    Watir::Wait.until { not self.popupLoading_element.div_element.visible?}
+  end
+
   def open_my_adverts
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    self.expand_personal_cabinet_popup
     self.adverts_my_element.when_present.click
   end
   
   def open_favourite_adverts
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    self.expand_personal_cabinet_popup
     self.adverts_favourites.when_visible.click
   end
   
   def open_payments
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    self.expand_personal_cabinet_popup
     self.adverts_payments.when_visible.click
   end
   
   def open_profile
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    self.expand_personal_cabinet_popup
     self.adverts_profile.when_visible.click
   end
 
   def get_user_ads_count
-    self.personal_cabinet_element.when_visible.click unless self.adverts_my_element.visible?
+    # Перезагружаем страницу
+    sleep 10
+    @browser.refresh
+    self.expand_personal_cabinet_popup
     ad_count = self.adverts_my_element.span_element.text
     # Нажимаем по комбобоксу чтобы закрыть попап
     self.only_title_element.check

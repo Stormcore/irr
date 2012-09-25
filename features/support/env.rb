@@ -1,7 +1,7 @@
 # encoding: utf-8
 BASE_URL = ENV['BASE_URL'] || "http://irr.ru"
-HEADLESS = ENV['HEADLESS'] || false
 DRIVER = (ENV['WEB_DRIVER'] || :firefox).to_sym
+HEADLESS = ENV['HEADLESS'] || true
 ENABLE_FLASH = ENV['FLASH'] || false
 FAIL_FAST = ENV['FAILFAST'] || false
 
@@ -22,6 +22,7 @@ require 'selenium/webdriver/remote/http/persistent'
 require 'yaml'
 require 'net/ssh'
 require 'net/sftp'
+require 'open3'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'
@@ -29,12 +30,13 @@ require 'pages.rb'
 
 World PageObject::PageFactory
 
-#if HEADLESS
-#  puts "Starting xvfb.."
-#  require 'headless'
-#  headless = Headless.new(dimensions: "1600x1200x16")
-#  headless.start
-#end
+if HEADLESS
+  puts "Starting xvfb.."
+  require 'headless'
+  headless = Headless.new(dimensions: "1366x768x16")
+  headless.start
+  stdin, stdout, stderr = Open3.popen3("x11vnc -forever -input M")
+end
 
 def start_browser
   case DRIVER

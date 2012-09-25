@@ -24,6 +24,10 @@ class StargateAdSearchResultsPage
   div :main, id: "adsfind-search-panel"
 
   def get_results
+    Watir::Wait.until {
+      self.main_element.div_element(class: "x-grid3-body").
+                      div_elements(class: "x-grid3-row").size > 0
+    }
     self.main_element.div_element(class: "x-grid3-body").
                       div_elements(class: "x-grid3-row")
   end

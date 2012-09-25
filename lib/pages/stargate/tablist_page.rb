@@ -11,7 +11,7 @@ class StargateTabListPage
   end
 
   def switch_to_tab(name)
-    self.main_element.element.li(text: name).click
+    self.main_element.element.li(text: name).when_present.click
   end
 
 end

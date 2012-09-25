@@ -26,7 +26,9 @@ end
   visit StargateLoginPage do |page|
     page.login_element.when_present.value = login
     page.password_element.when_present.value = password
-    page.enter
+    Watir::Wait.until {page.enter_element.enabled?}
+    sleep 1
+    page.enter_element.click
   end
 end
 
@@ -42,6 +44,7 @@ end
   last_category = nil
   on StargateNavigationPage do |page|
     long_category.split(' -> ').each do |category|
+      sleep 1
       page.expand_directory category
       last_category = category
     end
@@ -132,8 +135,15 @@ end
 end
 
 Допустим %{на БО я открываю детали интернет-партнера} do
-  on StargatePowersellersPage do |page|
-    page.open_details_for_first_found_result
+  @details_opened = false
+  on StargatePowersellerDetailsPage do |page|
+    @details_opened = page.main_element.element.wd.location.x > 0
+  end
+
+  unless @details_opened
+    on StargatePowersellersPage do |page|
+      page.open_details_for_first_found_result
+    end
   end
 end
 
@@ -217,11 +227,7 @@ end
   end
 end
 
-Когда %{на БО я удаляю все пакеты "$package" у пользователя роли "$role"} do |package, role|
-  steps %Q{
-    * на БО я ищу пользователя с ролью "#{role}"
-    * на БО я открываю детали интернет\-партнера
-  }
+Когда /^на БО я удаляю все пакеты "(.*)"$/ do |package|
   on StargatePowersellerDetailsPage do |page|
     page.open_tab("Пакеты")
     while page.has_package(package) do
@@ -230,7 +236,32 @@ end
     page.save
     page.close
   end
+end
 
+Допустим /^на БО я активирую пакет "(.*)"$/ do |package|
+  on StargatePowersellerDetailsPage do |page|
+    page.open_tab("Пакеты")
+    unless page.has_package(package)
+      steps %Q{
+        * на БО я добавляю интернет-партнеру пакет "#{package}" для региона "Вся Россия"
+      }
+    else
+      unless page.is_package_active(package)
+        steps %Q{
+          * на БО я удаляю все пакеты "#{package}"
+          * на БО я добавляю интернет-партнеру пакет "#{package}" для региона "Вся Россия"
+        }
+      end
+    end
+  end
+end
+
+Когда /^на БО у пользователя роли "(.*)" я удаляю все пакеты "(.*)"$/ do |role, package|
+  steps %Q{
+    * на БО я ищу пользователя с ролью "#{role}"
+    * на БО я открываю детали интернет\-партнера
+    * на БО я удаляю все пакеты "#{package}"
+  }
 end
 
 Когда %{на БО я делаю интернет-партнеру $num премиумов на $period дней} do |num, period|
