@@ -24,7 +24,7 @@
           "./custom_import_test.php autoimport.xml && " +
           'awk \'/^importing autoimport.xml/ { buf = "" } { buf = buf "\n" $0 } END { print buf }\' import.log'
     import_output = ssh.exec!(import_command).to_s.force_encoding("UTF-8")
-    puts "Лог импорта: \n #{import_output}\n"
+    puts "Лог импорта: <pre>#{import_output}</pre>"
   end
 
   # анализирует вывод импорта
