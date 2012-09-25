@@ -119,9 +119,9 @@ end
       actual_table = Cucumber::Ast::Table.new(actual.sort)
       expected_table = Cucumber::Ast::Table.new(table.rows.sort)
       File.open("/tmp/file1", 'w') {|f| 
-        f.write(actual_table.to_s(options = {color: false})) }
-      File.open("/tmp/file2", 'w') {|f| 
         f.write(expected_table.to_s(options = {color: false})) }
+      File.open("/tmp/file2", 'w') {|f| 
+        f.write(actual_table.to_s(options = {color: false})) }
 
       puts "<style type='text/css'>" + Diffy::CSS + "</style>"
       puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', :source => 'files').to_s(:html)
