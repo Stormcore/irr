@@ -40,7 +40,7 @@ def check_picture_availability thumbnail
 
   if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
     puts "Проверка пропущена - тестовый сайт"
-    next
+    return
   end
 
   url = URI.parse(thumbnail)
