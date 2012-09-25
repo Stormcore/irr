@@ -35,6 +35,24 @@ class AdDetailsPage
   table :main_params, id: "mainParams"
   div :ad_content, class: "b-content"
 
+  def get_all_parameters_on_all_tab
+    self.expand_all_parameters
+
+    elements = self.table_element(id: "allParams").element.trs
+    # Span возвращает пустой text - вырезаем теги из html
+    names = elements.select {|e| e.th.exists?}.
+                     map {|e| e.th.spans.last.html.
+                                   gsub("<span>",'').gsub("</span>",'')}
+    result = []
+    names.each do |name|
+      temp = Hash.new
+      temp['поле'] = name
+      temp['значение'] = self.get_parameter(name)
+      result << temp
+    end
+    result
+  end
+
   def get_address
     self.address_element.when_present.text.split("\n")[0]
   end

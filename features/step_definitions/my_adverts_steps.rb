@@ -124,25 +124,9 @@ end
 Допустим /^на вкладке "Все" указаны следующие параметры:$/ do |table|
   errors = Hash.new
   on AdDetailsPage do |page|
-    table.hashes.each do |hash|
-      begin
-        unless hash['значение'] == "x"
-          steps %Q{
-            * на вкладке "Все" "#{hash['поле']}" равно "#{hash['значение']}"
-          }
-        else
-          steps %Q{
-            * на вкладке "Все" присутствует "#{hash['поле']}"
-          }
-        end
-      rescue Exception => e
-        errors[hash['поле']] = e.message
-      end
-    end
-  end
-  if errors.size > 0
-    errors.each {|error| puts error }
-    raise "Найдены ошибки при проверке деталей"
+    actual = page.get_all_parameters_on_all_tab.sort {|a1,a2| a1["поле"]<=>a2["поле"]}
+    expected = table.hashes.flatten.sort {|a1,a2| a1["поле"]<=>a2["поле"]}
+    actual.should =~ expected
   end
 end
 
