@@ -59,18 +59,7 @@ end
 
 Допустим %{у объявления отображается загруженная фотография} do
   on @classs do |page|
-    if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
-      puts "Проверка пропущена - тестовый сайт"
-      next
-    end
-    thumbnail = page.get_photo(@title)
-    thumbnail.should_not be_nil
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
+    check_picture_availability page.get_photo(@title)
   end
 end
 
@@ -143,19 +132,8 @@ end
 end
 
 То %{в деталях объявления отображается загруженная фотография} do
-  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
-    puts "Проверка пропущена - тестовый сайт"
-    next
-  end
   on AdDetailsPage do |page|
-    thumbnail = page.get_photo
-    thumbnail.should_not be_nil
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
+    check_picture_availability  page.get_photo
   end
 end
 

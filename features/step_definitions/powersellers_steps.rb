@@ -35,22 +35,10 @@ end
 end
 
 Допустим %{у каждого интернет-партнера отображается логотип} do
-  if BASE_URL.include? "prontosoft.by"
-    puts "Пропускаем проверку картинки - тестовый сервер"
-    next
-  end
   powersellers_soft_assert("Не показан логотип") do |powerseller|
     puts "Интернет-парнет '#{powerseller.get_name}'"
     next unless powerseller.has_photo
-    thumbnail = powerseller.get_photo
-    thumbnail.should_not be_empty
-    thumbnail.should_not include "zaglushka"
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
+    check_picture_availability powerseller.get_photo
   end
 end
 
@@ -61,20 +49,8 @@ end
 end
 
 То %{на странице интернет-партнера отображается логотип} do
-  if BASE_URL.include? "prontosoft.by"
-    puts "Пропускаем проверку картинки - тестовый сервер"
-    next
-  end
   on PowersellerPage do |page|
-    thumbnail = page.get_icon
-    thumbnail.should_not be_empty
-    thumbnail.should_not include "zaglushka"
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
+    check_picture_availability page.get_icon
   end
 end
 

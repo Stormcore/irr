@@ -159,20 +159,8 @@ end
 end
  
 То %{в каждом объявлении отображается рисунок} do
-  # Не проверять картинки на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
-    puts "Проверка пропущена - тестовый сайт"
-    next
-  end
   results_page_soft_assert("Не отображен рисунок:") do |result|
-    thumbnail = result['thumbnail']
-    thumbnail.should_not be_nil
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
+    check_picture_availability result['thumbnail']
   end
 end
 
@@ -204,21 +192,8 @@ end
 end
 
 То %{в каждом объявлении отображается загруженная фотография} do
-  # Не проверять картинки на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
-    puts "Проверка пропущена - тестовый сайт"
-    next
-  end
   results_page_soft_assert("Не отображена загруженная фотография:") do |result|
-    thumbnail = result['thumbnail']
-    thumbnail.should_not be_empty 
-    thumbnail.should_not include "zaglushka"
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
+    check_picture_availability result['thumbnail']
   end
 end
 
@@ -396,22 +371,9 @@ end
 end
 
 То %{у объявления "$title" отображается загруженная фотография} do |title|
-  # Не проверять картинки на *.prontosoft.by
-  if BASE_URL.include? 'prontosoft.by' or BASE_URL.include? 'devel.ps'
-    puts "Проверка пропущена - тестовый сайт"
-    next
-  end
   on SearchResultsPage do |page|
     result = @results.find{|result| result['title'] == title}
-    thumbnail = result['thumbnail']
-    thumbnail.should_not be_empty 
-    thumbnail.should_not include "zaglushka"
-    
-    # Verify that  thumbnail url doesn't throw any error
-    url = URI.parse(thumbnail)
-    the_request = Net::HTTP::Get.new(url.path)
-    the_response = Net::HTTP.start(url.host, url.port) { |http| http.request(the_request) }
-    the_response.code.should == 200.to_s
+    check_picture_availability result['thumbnail']
   end
 end
 
