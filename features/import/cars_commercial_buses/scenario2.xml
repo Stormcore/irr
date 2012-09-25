@@ -17,8 +17,10 @@
     <field name="used-or-new">б/у</field>
 
     <field name="title">Продаю автобус</field>
-    <field name="description">Продаю междугородний автобус</field>
   </custom-fields>
+  <fotos>
+    <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>
+  </fotos>
   <price currency="USD" value="10000"/>
 </store-ad>
 

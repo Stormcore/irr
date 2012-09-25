@@ -17,7 +17,6 @@
     <field name="used-or-new">б/у</field>
 
     <field name="title">Продаю автобус</field>
-    <field name="description">Продаю междугородний автобус</field>
   </custom-fields>
   <price currency="USD" value="10000"/>
 </store-ad>
