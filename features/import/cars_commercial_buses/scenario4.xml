@@ -5,8 +5,8 @@
   <user-id>9531859</user-id>
 </match>
 <store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="1001" file-id="1" power-ad="0" category="/cars/commercial/buses">
-  <title>Продаю автобус</title>
-  <description>Продаю междугородний автобус</description>
+  <title>Продаю автобус в Бийске</title>
+  <description>Продаю междугородний автобус в Бийске</description>
   <regions>
     <region path="/russia/biysk-region/biysk"/>
   </regions>
@@ -16,7 +16,7 @@
     <field name="volume">5</field>
     <field name="used-or-new">б/у</field>
 
-    <field name="title">Продаю автобус</field>
+    <field name="title">Продаю автобус в Бийске</field>
   </custom-fields>
   <price currency="USD" value="10000"/>
 </store-ad>

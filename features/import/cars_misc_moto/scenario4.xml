@@ -5,10 +5,10 @@
   <user-id>9531859</user-id>
 </match>
 <store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="1001" file-id="1" power-ad="0" category="/cars/misc/moto">
-  <title>Продам Хонду с фото</title>
-  <description>Продам Хонду в Москве</description>
+  <title>Продам Хонду в Бийске</title>
+  <description>Продам Хонду в Бийске</description>
   <regions>
-    <region path="/russia/moscow-region/moscow"/>
+    <region path="/russia/biysk-region/biysk"/>
   </regions>
   <custom-fields>
     <field name="make">Honda</field>

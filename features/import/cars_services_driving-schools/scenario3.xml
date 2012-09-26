@@ -12,7 +12,6 @@
   </regions>
   <custom-fields>
     <field name="title">Автошкола</field>
-    <field name="description">Приглашаем в автошколу в центре</field>
   </custom-fields>
   <fotos>
     <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>

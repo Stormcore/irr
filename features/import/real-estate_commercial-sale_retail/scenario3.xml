@@ -14,7 +14,6 @@
     <field name="square-min">200</field>
 
     <field name="title">Продается магазин, общая площадь: 200 кв.м.</field>
-    <field name="description">Продается магазин в Москве</field>
   </custom-fields>
   <fotos>
     <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>

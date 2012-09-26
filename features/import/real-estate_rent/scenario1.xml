@@ -15,7 +15,6 @@
     <field name="etage">3</field>
 
     <field name="title">Сдается 2х-комнатная квартира, этаж 3</field>
-    <field name="description">Сдаю квартиру в Москве</field>
   </custom-fields>
   <price currency="RUR" value="30000"/>
 </store-ad>

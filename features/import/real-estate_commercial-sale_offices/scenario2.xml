@@ -5,7 +5,7 @@
   <user-id>9531859</user-id>
 </match>
 <store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="2001" file-id="1" power-ad="0" category="/real-estate/commercial-sale/offices/">
-  <title>Продается офис, общая площадь: 200 кв.м.</title>
+  <title>Продается офис, общая площадь: 200 кв.м. (фото)</title>
   <description>Продается офис в Москве</description>
   <regions>
     <region path="/russia/moscow-region/moscow"/>
@@ -14,8 +14,10 @@
     <field name="square-min">200</field>
 
     <field name="title">Продается офис, общая площадь: 200 кв.м.</field>
-    <field name="description">Продается офис в Москве</field>
   </custom-fields>
+  <fotos>
+    <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>
+  </fotos>
   <price currency="USD" value="300000"/>
 </store-ad>
 

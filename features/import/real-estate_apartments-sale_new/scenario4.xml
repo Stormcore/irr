@@ -2,13 +2,13 @@
 <users>
 <user deactivate-untouched="false">
 <match>
-  <user-id>9531859</user-id>
+  <user-id>9531971</user-id>
 </match>
 <store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="1001" file-id="1" power-ad="0" category="/real-estate/apartments-sale/new">
-  <title>Новая 2х-комнатная квартира в Москве (фото)</title>
-  <description>Продается новостройка в Москве</description>
+  <title>Новая 2х-комнатная квартира в Бийске</title>
+  <description>Продается новостройка в Бийске</description>
   <regions>
-    <region path="/russia/moscow-region/moscow"/>
+    <region path="/russia/biysk-region/biysk"/>
   </regions>
   <custom-fields>
     <field name="rooms">3</field>
@@ -16,11 +16,8 @@
     <field name="meters-living">70</field>
     <field name="etage">7</field>
 
-    <field name="title">Новая 2х-комнатная квартира в Москве (фото)</field>
+    <field name="title">Новая 2х-комнатная квартира в Бийске</field>
   </custom-fields>
-  <fotos>
-    <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>
-  </fotos>
   <price currency="USD" value="100000"/>
 </store-ad>
 

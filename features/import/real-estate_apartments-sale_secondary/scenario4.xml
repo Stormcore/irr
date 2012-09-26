@@ -2,13 +2,13 @@
 <users>
 <user deactivate-untouched="false">
 <match>
-  <user-id>9531859</user-id>
+  <user-id>9531971</user-id>
 </match>
 <store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="2001" file-id="1" power-ad="0" category="/real-estate/apartments-sale/secondary">
-  <title>Продается квартира, общая площадь: 200 кв.м., этаж 3 (фото)</title>
-  <description>Продается квартира в Москве</description>
+  <title>Продается квартира в Бийске, общая площадь: 200 кв.м., этаж 3</title>
+  <description>Продается квартира в Бийске</description>
   <regions>
-    <region path="/russia/moscow-region/moscow"/>
+    <region path="/russia/biysk-region/biysk"/>
   </regions>
   <custom-fields>
     <field name="rooms">3</field>
@@ -16,11 +16,8 @@
     <field name="meters-living">170</field>
     <field name="etage">3</field>
 
-    <field name="title">Продается квартира, общая площадь: 200 кв.м., этаж 3</field>
+    <field name="title">Продается квартира в Бийске, общая площадь: 200 кв.м., этаж 3</field>
   </custom-fields>
-  <fotos>
-    <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>
-  </fotos>
   <price currency="RUR" value="3000000"/>
 </store-ad>
 

@@ -5,15 +5,15 @@
   <user-id>9531971</user-id>
 </match>
 <store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="2001" file-id="1" power-ad="0" category="/real-estate/out-of-town/lands">
-  <title>Продается участок, общая площадь: 20 соток</title>
-  <description>Продается участок в Москве</description>
+  <title>Продается участок в Бийске, общая площадь: 20 соток</title>
+  <description>Продается участок в Бийске</description>
   <regions>
-    <region path="/russia/moscow-region/moscow"/>
+    <region path="/russia/biysk-region/biysk"/>
   </regions>
   <custom-fields>
     <field name="land">200</field>
 
-    <field name="title">Продается участок, общая площадь: 20 соток</field>
+    <field name="title">Продается участок в Бийске, общая площадь: 20 соток</field>
   </custom-fields>
   <price currency="USD" value="100000"/>
 </store-ad>

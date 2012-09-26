@@ -14,7 +14,6 @@
     <field name="meters-total">200</field>
 
     <field name="title">Продается дом, общая площадь: 200 кв.м.</field>
-    <field name="description">Продается дом в Москве</field>
   </custom-fields>
   <price currency="EUR" value="3000000"/>
 </store-ad>

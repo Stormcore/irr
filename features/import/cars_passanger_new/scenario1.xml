@@ -18,7 +18,6 @@
     <field name="transmittion">механическая</field>
 
     <field name="title">Продаю Ауди A1</field>
-    <field name="description">Продается Audi A1 в Москве</field>
   </custom-fields>
   <price currency="USD" value="1000"/>
 </store-ad>

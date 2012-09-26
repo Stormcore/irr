@@ -14,7 +14,6 @@
     <field name="meters-total">200</field>
 
     <field name="title">Сдам дом, общая площадь: 200 кв.м.</field>
-    <field name="description">Сдаю дачу в Москве</field>
   </custom-fields>
   <fotos>
     <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>

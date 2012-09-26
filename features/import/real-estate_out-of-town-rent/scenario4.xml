@@ -5,15 +5,15 @@
   <user-id>9531971</user-id>
 </match>
 <store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="2001" file-id="1" power-ad="0" category="/real-estate/out-of-town-rent">
-  <title>Сдам дом, общая площадь: 200 кв.м.</title>
-  <description>Сдаю дачу в Москве</description>
+  <title>Сдам дом в Бийске, общая площадь: 200 кв.м.</title>
+  <description>Сдаю дачу в Бийске</description>
   <regions>
-    <region path="/russia/moscow-region/moscow"/>
+    <region path="/russia/biysk-region/biysk"/>
   </regions>
   <custom-fields>
     <field name="meters-total">200</field>
 
-    <field name="title">Сдам дом, общая площадь: 200 кв.м.</field>
+    <field name="title">Сдам дом в Бийске, общая площадь: 200 кв.м.</field>
   </custom-fields>
   <price currency="EUR" value="30000"/>
 </store-ad>

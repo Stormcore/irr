@@ -17,7 +17,6 @@
     <field name="etage">3</field>
 
     <field name="title">Продается квартира, общая площадь: 200 кв.м., этаж 3</field>
-    <field name="description">Продается новостройка в Москве</field>
   </custom-fields>
   <price currency="RUR" value="3000000"/>
 </store-ad>

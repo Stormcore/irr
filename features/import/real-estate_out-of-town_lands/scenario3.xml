@@ -14,7 +14,6 @@
     <field name="land">200</field>
 
     <field name="title">Продается участок, общая площадь: 20 соток</field>
-    <field name="description">Продается участок в Москве</field>
   </custom-fields>
   <fotos>
     <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>

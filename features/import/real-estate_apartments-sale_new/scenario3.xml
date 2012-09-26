@@ -17,7 +17,6 @@
     <field name="etage">7</field>
 
     <field name="title">Продается квартира, общая площадь: 100 кв.м., этаж 7</field>
-    <field name="description">Продается новостройка в Москве</field>
   </custom-fields>
   <fotos>
     <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>
