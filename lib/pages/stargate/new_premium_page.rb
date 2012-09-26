@@ -61,27 +61,40 @@ class StargateNewAdDataPage
   def set_combobox_value(editor, value)
     combolist = nil
     item = nil
-    attempts = 1
+    # Ждём раскрытия комбокса
     begin 
-      Watir::Wait.until {
+      Watir::Wait.until(1) {
         combolist = self.div_elements(class: "x-combo-list-inner").
-                         find { |div| div.visible? }
+                         find {|d| d.visible?}
         combolist.nil? == false
       }
+    rescue Watir::Wait::TimeoutError => e
+      # Не раскрылся - нажимаем на кнопку еще раз и снова ждём
+      editor.click
+      retry
+    end
+
+    # Ищем элемент
+    begin
       item = combolist.div_element(class: "x-combo-list-item", text: value)
       item.when_present.element.wd.location_once_scrolled_into_view
-    rescue Watir::Wait::TimeoutError
-      editor.img.click
-      attempts =- 1
-      retry if attempts >= 0
+      item.click
+    rescue Watir::Wait::TimeoutError => e
+      puts "combolist #{combolist.visible?}"
+      puts "item.visible? #{item.visible?}"
+      raise "Значение '#{value}' не найдено"
     end
-    item.click
+    
     # Закрываем комбобокс, если это чеклист, например
     editor.img.click if item.visible?
   end
 
   def set_text_value(editor, value)
-    editor.text_field.value = value
+    if editor.text_field.exists?
+      editor.text_field.value = value
+    else
+      editor.textarea.value = value
+    end
   end
 
   def set_checkbox_value(editor, value)
