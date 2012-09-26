@@ -44,6 +44,9 @@ class StargateNewAdDataPage
     }
     raise "Не найдено поле ввода с текстом '#{name}'" if title.nil?
     title.wd.location_once_scrolled_into_view
+    Watir::Wait.until { 
+      self.div_elements(class: "ext-el-mask").find {|d| d.visible?}.nil? 
+    }
     if dont_do_the_double_click
       title.parent.parent.td(class: "x-grid3-td-value").click
     else
@@ -125,6 +128,7 @@ class StargateNewAdDataPage
                                          text: name).when_present.parent.parent
     # Скроллим до элемента
     row.element.wd.location_once_scrolled_into_view
+
     if dont_do_the_double_click
       row.cell_element(index: 2).when_present.click
     else
