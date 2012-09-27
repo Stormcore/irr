@@ -24,7 +24,7 @@
           "./custom_import_test.php autoimport.xml && " +
           'awk \'/^importing autoimport.xml/ { buf = "" } { buf = buf "\n" $0 } END { print buf }\' import.log'
     import_output = ssh.exec!(import_command).to_s.force_encoding("UTF-8")
-    puts "Лог импорта: <pre>#{import_output}</pre>"
+    puts "Лог импорта: <pre style='white-space:pre-wrap;'>#{import_output}</pre>"
   end
 
   # анализирует вывод импорта
@@ -38,7 +38,7 @@
   else
     # Делаем красивую ссылку на объявление
     /url = (.*)/.match(import_output) do |m|
-      puts "DEBUG: Проимпортировано объявление <a href='#{m[1]}>#{m[1]}</a>"
+      puts "DEBUG: Проимпортировано объявление <a href='#{m[1]}'>#{m[1]}</a>"
     end
   end
 end
