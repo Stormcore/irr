@@ -128,7 +128,8 @@ end
       # Вставляем diff css + цвет черный (cucumber сделает красным)
       puts "<style type='text/css'>#{Diffy::CSS} .diff {color: black}</style>"
       # Выводим diff
-      puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', :source => 'files').to_s(:html)
+      puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', 
+                           source:'files', diff: ['-w', '-U 10000']).to_s(:html)
       # Прячем оставшуюся таблицу
       puts "<table style='display:none'><tbody><tr><td>"
       raise "Ошибка проверки деталей"
