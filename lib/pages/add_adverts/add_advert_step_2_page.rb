@@ -172,13 +172,15 @@ class AddAdvertStep2New < AdDetailsPage
               "http://youtu.be/yv0zA9kN6L8", 
              ]
     video_url = videos[Random.rand(videos.length)]
-    puts "DEBUG: Вставляем видео #{video_url}"
     self.videoContents_element.when_present.value = video_url
 
     self.uploadVideoButton
     Watir::Wait.until {self.video_preview?}
     # Ждём 5 секунд
     sleep 5
+
+    # Возвращаем URL видео - понадобиться для дебага
+    video_url
   end
 
   def save
@@ -424,10 +426,11 @@ class AddAdvertStep2 < AdDetailsPage
               "http://youtu.be/yv0zA9kN6L8", 
              ]
     video_url = videos[Random.rand(videos.length)]
-    puts "DEBUG: Вставляем видео #{video_url}"
     self.videoContents_element.when_present.value = video_url
     self.uploadVideoButton
     Watir::Wait.until {self.video_preview?}
+    # Возвращаем URL видео - понадобиться для дебага
+    video_url
   end
 
   def save
