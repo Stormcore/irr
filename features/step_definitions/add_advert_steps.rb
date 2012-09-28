@@ -101,7 +101,7 @@ end
   steps %Q{
     * я ввожу следующие данные на шаге 2:
      | parameter | value                      |
-     | email     | #{credentials['login']}    |
+     | Email     | #{credentials['login']}    |
      | Пароль    | #{credentials['password']} |
   }
   @current_user_name = credentials['username']
@@ -153,7 +153,8 @@ end
 Когда %{я загружаю видео на шаге 2} do
   classs = @new_advert_can_be_used ? AddAdvertStep2New : AddAdvertStep2
   on classs do |page|
-    page.load_video
+    video_url = page.load_video
+    puts "DEBUG: Вставляем видео #{video_url}"
   end
 end
 
