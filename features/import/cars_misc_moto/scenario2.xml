@@ -17,7 +17,7 @@
     <field name="used-or-new">новый</field>
     <field name="car-year">2008</field>
 
-    <field name="title">Продам Хонду</field>
+    <field name="title">Продам Хонду с фото</field>
   </custom-fields>
   <fotos>
     <foto-local url="irr.jpg" md5="32d9d8e877f8d243dba11af3975f2755"/>
