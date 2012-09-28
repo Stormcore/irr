@@ -175,6 +175,7 @@ class StargateNewAdDataPage
   def save_ad
     self.save_element.when_present
     self.save_element.element.wd.location_once_scrolled_into_view
+    sleep 1
     self.save_element.click
   end
 
