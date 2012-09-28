@@ -39,6 +39,7 @@ class AdDetailsPage
     self.expand_all_parameters
 
     elements = self.table_element(id: "allParams").element.trs
+    raise "Вкладка 'Все' не открыта" if elements.nil?
     # Span возвращает пустой text - вырезаем теги из html
     names = elements.select {|e| e.th.exists?}.
                      map {|e| e.th.spans.last.html.
