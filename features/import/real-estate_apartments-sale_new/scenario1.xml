@@ -16,7 +16,7 @@
 		<field name="meters-living">70</field>
 		<field name="etage">7</field>
 
-		<field name="title">Продается квартира, общая площадь: 100 кв.м., этаж 7</field>
+		<field name="title">Новая 2х-комнатная квартира в Москве</field>
 	</custom-fields>
 	<price currency="USD" value="100000"/>
 </store-ad>
