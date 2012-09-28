@@ -18,6 +18,15 @@
       sftp.upload!(import_path, "/data/www/irr.ru.stream.final/utils/irr.ru/import/autoimport.xml")
     end
 
+    # Если на этой машине уже запущен импорт - ждём
+    process_has_ended = false
+    until process_has_ended
+      wait_command = 'ps -ef | grep custom_import_test.php | grep -v grep | wc -l'
+      wait_output = ssh.exec!(wait_command).to_s.force_encoding("UTF-8")
+      process_has_ended = wait_output.to_i == 0
+      sleep 5 unless process_has_ended
+    end
+
     # Переходим в каталог с кастомимпортом, Запускаем импорт и читаем лог
     import_command = 
           "cd /data/www/irr.ru.stream.final/utils/irr.ru/import/ &&" +
