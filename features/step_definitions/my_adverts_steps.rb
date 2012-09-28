@@ -131,7 +131,10 @@ end
       puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', 
                            source:'files', diff: ['-w', '-U 10000']).to_s(:html)
       # Прячем оставшуюся таблицу
-      puts "<table style='display:none'><tbody><tr><td>"
+       puts "<table style='display:none'><tbody><tr><td>"
+
+      # две пустых строчки комментариев
+      # Из-за html кода ломается отображение контекста ошибки
       raise "Ошибка проверки деталей"
     end
   end
