@@ -27,7 +27,7 @@
       wait_command = 'ps -ef | grep custom_import_test.php | grep -v grep | wc -l'
       wait_output = ssh.exec!(wait_command).to_s.force_encoding("UTF-8")
       process_has_ended = wait_output.to_i == 0
-      sleep 5 unless process_has_ended
+      sleep 5
     end
 
     # Переходим в каталог с кастомимпортом, Запускаем импорт и читаем лог
