@@ -104,3 +104,33 @@ end
     page.has_events_list.should be true
   end
 end
+
+Когда /^на главное странице отображен список интернет\-партнеров$/ do
+  on MainPage do |page|
+    page.has_powersellers_section?.should be true
+  end
+end
+
+Допустим /^в секции интернет\-партнеров у каждого партнера отображен логотип$/ do
+  on MainPage do |page|
+    page.get_powersellers.map{|a| a.has_key?('image')}.should_not include(false)
+  end
+end
+
+Допустим /^в секции интернет\-партнеров у каждого партнера отображено название$/ do
+  on MainPage do |page|
+    page.get_powersellers.map{|a| a.has_key?('title')}.should_not include(false)
+  end
+end
+
+Допустим /^в секции интернет\-партнеров у каждого партнера отображено описание$/ do
+  on MainPage do |page|
+    page.get_powersellers.map{|a| a.has_key?('description')}.should_not include(false)
+  end
+end
+
+Допустим /^в секции интернет\-партнеров у каждого партнера отображено количество объявлений$/ do
+  on MainPage do |page|
+    page.get_powersellers.map{|a| a.has_key?('ads_count')}.should_not include(false)
+  end
+end

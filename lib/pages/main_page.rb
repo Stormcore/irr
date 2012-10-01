@@ -14,6 +14,8 @@ class MainPage
   div :articles, class: "articles"
   div :events, class: "events"
 
+  div :powerseller_section, class: "intpartn"
+
   def user_logged_in?
     self.user_name_element.exists?
   end
@@ -84,6 +86,23 @@ class MainPage
 
   def get_events_list
     self.events_element.element.dl.dts
+  end
+
+  def has_powersellers_section?
+    self.powerseller_section_element.exists?
+  end
+
+  def get_powersellers
+    powersellers = []
+    self.powerseller_section_element.element.lis.each do |li|
+      powerseller_item = {}
+      powerseller_item['title'] = li.link_element.text rescue nil
+      powerseller_item['image'] = li.image_element.element.src rescue nil
+      powerseller_item['description'] = li.element.ps[-2].text rescue nil
+      powerseller_item['ads_count'] = li.element.ps[-1].texts rescue nil
+      powersellers << powerseller_item
+    end
+    powersellers
   end
 
 end
