@@ -11,11 +11,14 @@
   File.open(import_path, "w") {|file| file.puts result }
 
   # Устанавливаем соединение с сервером
+  ssh_data = get_ssh_credentials
   import_output = ''
-  Net::SSH.start('192.168.1.9', 'dev', password: 'devel') do |ssh|
+  Net::SSH.start(ssh_data['host'], ssh_data['login'], 
+                 password: ssh_data['pass'], port: ssh_data['port']) do |ssh|
     # Копируем файл сценария на сервер
+    filename = ssh_data['path'] + "/autoimport.xml"
     ssh.sftp.connect do |sftp|
-      sftp.upload!(import_path, "/data/www/irr.ru.stream.final/utils/irr.ru/import/autoimport.xml")
+      sftp.upload!(import_path, filename)
     end
 
     # Если на этой машине уже запущен импорт - ждём
@@ -29,8 +32,7 @@
 
     # Переходим в каталог с кастомимпортом, Запускаем импорт и читаем лог
     import_command = 
-          "cd /data/www/irr.ru.stream.final/utils/irr.ru/import/ &&" +
-          "./custom_import_test.php autoimport.xml && " +
+          "cd #{ssh_data['path']} && ./custom_import_test.php autoimport.xml && " +
           'awk \'/^importing autoimport.xml/ { buf = "" } { buf = buf "\n" $0 } END { print buf }\' import.log'
     import_output = ssh.exec!(import_command).to_s.force_encoding("UTF-8")
     puts "Лог импорта: <pre style='white-space:pre-wrap;'>#{import_output}</pre>"
