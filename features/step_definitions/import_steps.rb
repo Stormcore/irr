@@ -49,7 +49,8 @@
   else
     # Делаем красивую ссылку на объявление
     /url = (.*)/.match(import_output) do |m|
-      puts "DEBUG: Проимпортировано объявление <a href='#{m[1]}'>#{m[1]}</a>"
+      url = m[1].split(' ')[0]
+      puts "DEBUG: Проимпортировано объявление <a href='#{url}'>#{url}</a>"
     end
   end
 end
