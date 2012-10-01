@@ -38,3 +38,69 @@ end
     raise "Ошибка проверки списка марок"
   end
 end
+
+Когда /^на главной странице отображены новости$/ do
+  on MainPage do |page|
+    page.has_news_section?.should be true
+  end
+end
+
+Допустим /^у каждой новости отображен заголовок$/ do
+  on MainPage do |page|
+    page.get_news.map{|a| a.has_key?('title')}.should_not include(false)
+  end
+end
+
+Допустим /^у каждой новости показана картинка$/ do
+  on MainPage do |page|
+    page.get_news.map{|a| a.has_key?('image')}.should_not include(false)
+  end
+end
+
+Допустим /^у каждой новости показан первый абзац$/ do
+  on MainPage do |page|
+    page.get_news.map{|a| a.has_key?('description')}.should_not include(false)
+  end
+end
+
+Когда /^на главной странице отображены статьи$/ do
+  on MainPage do |page|
+    page.has_articles_section?.should be true
+  end
+end
+
+Допустим /^у каждой статьи отображен заголовок$/ do
+  on MainPage do |page|
+    page.get_articles.map{|a| a.has_key?('title')}.should_not include(false)
+  end
+end
+
+Допустим /^у каждой статьи показана картинка$/ do
+  on MainPage do |page|
+    page.get_articles.map{|a| a.has_key?('image')}.should_not include(false)
+  end
+end
+
+Допустим /^у каждой статьи показан первый абзац$/ do
+  on MainPage do |page|
+    page.get_articles.map{|a| a.has_key?('description')}.should_not include(false)
+  end
+end
+
+Когда /^на главной странице отображены события$/ do
+  on MainPage do |page|
+    page.has_events_section?.should be true
+  end
+end
+
+Допустим /^в секции событий отображен календарь$/ do
+  on MainPage do |page|
+    page.has_calendar?.should be true
+  end
+end
+
+Допустим /^в секции событий отображен список ближайших событий$/ do
+  on MainPage do |page|
+    page.has_events_list.should be true
+  end
+end
