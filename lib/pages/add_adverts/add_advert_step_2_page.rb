@@ -23,11 +23,9 @@ class AddAdvertStep2 < AdDetailsPage
   text_field :f_text, id: "f_text"
   file_field :upload, id: "input-file-upload"
   unordered_list :uploaded_photos, id: "photos"
-  link :add_video, id: "showPopupVideoAdd"
 
-  div :videoPopup, id: "popupVideoAdd"
-  text_field :videoContents, id: "video_content"
-  button :uploadVideoButton, id: "uploadVideoButton"
+  text_field :videoContents, id: "video-input"
+  link :add_video, class: "btn-add-video"
   div :video_preview, id: "videoContentBlock"
 
   link :save, id: "submit-edit-form"
@@ -174,9 +172,6 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def load_video
-    self.add_video_element.when_present.click
-    Watir::Wait.until { self.videoPopup_element.exists? }
-
     # См. http://tp.prontosoft.by//Project/Planning/Task/View.aspx?TaskID=38786&ProjectID=30031
     # Рандомно вставляем youtube или vimeo видео
     videos = ["http://www.youtube.com/watch?v=3VLcLH97eRw", 
@@ -187,8 +182,8 @@ class AddAdvertStep2 < AdDetailsPage
     puts "DEBUG: Вставляем видео #{video_url}"
     self.videoContents_element.when_present.value = video_url
 
-    self.uploadVideoButton
-    Watir::Wait.until {self.video_preview?}
+    self.add_video
+    #Watir::Wait.until {self.video_preview?}
     # Ждём 5 секунд
     sleep 5
   end
