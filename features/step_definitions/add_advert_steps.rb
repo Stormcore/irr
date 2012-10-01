@@ -1,15 +1,5 @@
 # encoding: utf-8
 Когда %{я перехожу к подаче объявления} do
-  on MainPage do |page|
-    page.add_advert_element.when_present.click
-  end
-
-  on AddAdvertMenuPage do |page|
-    page.addOnlineAdvert_element.when_present.click
-  end
-end
-
-Когда %{я перехожу к подаче объявления} do
   new_url = construct_region_url(BASE_URL+"/advertSubmission/step1/", @region)
   @browser.goto(new_url)
 end
