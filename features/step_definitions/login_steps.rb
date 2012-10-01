@@ -1,9 +1,5 @@
 # encoding: utf-8
 
-Когда %{открыта главная страница} do
-  @browser.goto(BASE_URL)
-end
-
 Когда %{я вхожу под пользователем с логином "$login" и паролем "$password"} do |login,password|
   steps %Q{
     * я перехожу к окну логина
