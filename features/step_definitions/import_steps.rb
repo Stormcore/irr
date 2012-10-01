@@ -33,7 +33,8 @@
     # Переходим в каталог с кастомимпортом, Запускаем импорт и читаем лог
     import_command = 
           "cd #{ssh_data['path']} && ./custom_import_test.php autoimport.xml && " +
-          'awk \'/^importing autoimport.xml/ { buf = "" } { buf = buf "\n" $0 } END { print buf }\' import.log'
+#          'awk \'/^importing autoimport.xml/ { buf = "" } { buf = buf "\n" $0 } END { print buf }\' import.log'
+          "tail import.log"
     import_output = ssh.exec!(import_command).to_s.force_encoding("UTF-8")
     puts "Лог импорта: <pre style='white-space:pre-wrap;'>#{import_output}</pre>"
   end
