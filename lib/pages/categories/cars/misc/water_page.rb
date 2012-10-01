@@ -4,7 +4,7 @@ class CategoryCarsMiscWaterPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/misc/water"
-  @category = "Авто и мото -> Мототехника и Автодома -> Водный транспорт"
+  @category = "Авто и мото -> Мототехника и автодома -> Водный транспорт"
 
   irr_single_select "Тип предложения", "offertype"
 

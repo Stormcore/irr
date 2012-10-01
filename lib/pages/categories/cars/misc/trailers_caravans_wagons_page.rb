@@ -4,7 +4,7 @@ class CategoryCarsMiscTrailersCaravansWagonsPage < AdDetailsPage
   include PageObject
 
   @@url_suffix = "/cars/misc/trailers-caravans-wagons"
-  @category = "Авто и мото -> Мототехника и Автодома -> Автодома и легковые прицепы"
+  @category = "Авто и мото -> Мототехника и автодома -> Автодома и легковые прицепы"
 
   irr_single_select "Тип предложения", "offertype"
   irr_single_select "Новый или подержанный", "used-or-new"
