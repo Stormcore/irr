@@ -134,3 +134,9 @@ end
     page.get_powersellers.map{|a| a.has_key?('ads_count')}.should_not include(false)
   end
 end
+
+Когда /^на главной странице я перехожу к подаче объявления$/ do
+  on MainPage do |page|
+    page.navigate_to_new_ad
+  end
+end

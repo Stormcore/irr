@@ -18,6 +18,13 @@ end
   on MainPage do |page| 
     page.login
   end
+  steps %Q{* открыто окно логина}
+end
+
+Когда %{открыто окно логина} do
+  on LoginPage do |page|
+    page.is_displayed?.should be true
+  end
 end
 
 Когда %{я ввожу логин "$login" и пароль "$password"} do |login, password|

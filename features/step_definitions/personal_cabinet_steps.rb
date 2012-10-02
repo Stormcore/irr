@@ -1,0 +1,32 @@
+# encoding: utf-8
+
+То /^открыт личный кабинет пользователя$/ do
+  on PersonalCabinetPage do |page|
+    page.is_displayed?
+  end
+end
+
+Допустим /^в списке объявлений присутствует объявление с заголовком "(.*?)"$/ do |title|
+  on PersonalCabinetPage do |page|
+    page.has_ad_with_title?(title).should be true
+    @ad_id = page.get_ad_id_for_title(title)
+  end
+end
+
+Допустим /^у выбранного объявления указана цена "(.*?)"$/ do |price|
+  on PersonalCabinetPage do |page|
+    page.get_price(@ad_id).should eq(price)
+  end
+end
+
+Допустим /^у выбранного объявления указан регион "(.*?)"$/ do |region|
+  on PersonalCabinetPage do |page|
+    page.get_region(@ad_id).should eq(region)
+  end
+end
+
+Допустим /^у выбранного объявления статус "(.*?)"$/ do |status|
+  on PersonalCabinetPage do |page|
+    page.get_status(@ad_id).should eq(status)
+  end
+end

@@ -16,6 +16,12 @@ class LoginPage
     self.window_element.when_present
   end
 
+  def is_displayed?
+    self.window_element.exists? and
+    self.login_element.exists? and
+    self.password_element.exists?
+  end
+
   def login_as(username, password, remember_me)
     self.login = username
     self.password = password

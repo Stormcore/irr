@@ -16,6 +16,8 @@ class MainPage
 
   div :powerseller_section, class: "intpartn"
 
+  link :new_ad, link_text: "Подать объявление"
+
   def user_logged_in?
     self.user_name_element.exists?
   end
@@ -103,6 +105,10 @@ class MainPage
       powersellers << powerseller_item
     end
     powersellers
+  end
+
+  def navigate_to_new_ad
+    self.new_ad
   end
 
 end
