@@ -50,4 +50,8 @@ class PersonalCabinetPage
          link_element(link_text: "Редактировать").click
   end
 
+  def open_details ad_id
+    self.find_element_by_id(ad_id).element.td(class: "lkMyAdsBlockText").a.click
+  end
+
 end

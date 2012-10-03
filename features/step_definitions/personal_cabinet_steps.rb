@@ -48,3 +48,9 @@ end
     page.do_edit(@ad_id)
   end
 end
+
+Когда /^я открываю детали выбранного объявления$/ do
+  on PersonalCabinetPage do |page|
+    page.open_details @ad_id
+  end
+end
