@@ -18,6 +18,10 @@ class MainPage
 
   link :new_ad, link_text: "Подать объявление"
 
+  def open_presonal_cabinet
+    self.user_name_element.click
+  end
+
   def user_logged_in?
     self.user_name_element.exists?
   end

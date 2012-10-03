@@ -41,7 +41,7 @@ end
 
 Когда /^на главной странице отображены новости$/ do
   on MainPage do |page|
-    page.has_news_section?.should be true
+    page.has_news_section?.should eq(true)
   end
 end
 
@@ -65,7 +65,7 @@ end
 
 Когда /^на главной странице отображены статьи$/ do
   on MainPage do |page|
-    page.has_articles_section?.should be true
+    page.has_articles_section?.should eq(true)
   end
 end
 
@@ -89,25 +89,25 @@ end
 
 Когда /^на главной странице отображены события$/ do
   on MainPage do |page|
-    page.has_events_section?.should be true
+    page.has_events_section?.should eq(true)
   end
 end
 
 Допустим /^в секции событий отображен календарь$/ do
   on MainPage do |page|
-    page.has_calendar?.should be true
+    page.has_calendar?.should eq(true)
   end
 end
 
 Допустим /^в секции событий отображен список ближайших событий$/ do
   on MainPage do |page|
-    page.has_events_list.should be true
+    page.has_events_list.should eq(true)
   end
 end
 
 Когда /^на главное странице отображен список интернет\-партнеров$/ do
   on MainPage do |page|
-    page.has_powersellers_section?.should be true
+    page.has_powersellers_section?.should eq(true)
   end
 end
 

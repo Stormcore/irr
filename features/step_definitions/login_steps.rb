@@ -23,7 +23,7 @@ end
 
 Когда %{открыто окно логина} do
   on LoginPage do |page|
-    page.is_displayed?.should be true
+    page.is_displayed?.should eq(true)
   end
 end
 

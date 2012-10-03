@@ -2,7 +2,7 @@
 
 То /^открыта страница выбора региона и категории$/ do
   on NewAdPage do |page|
-    page.is_displayed?.should be true
+    page.is_displayed?.should eq(true)
   end
 end
 
