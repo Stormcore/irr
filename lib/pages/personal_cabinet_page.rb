@@ -45,4 +45,9 @@ class PersonalCabinetPage
          img.exists?
   end
 
+  def do_edit ad_id
+    self.find_element_by_id(ad_id).
+         link_element(link_text: "Редактировать").click
+  end
+
 end

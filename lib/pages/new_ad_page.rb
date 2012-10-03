@@ -44,12 +44,15 @@ class NewAdPage
 
   def set_generic_value section, field, value
     # Ищем секцию
-    section_title = self.div_element(class: "paramGroupTitle", text: section)
-    raise "Секция '#{section}' не найдена" unless section_title.exists?
-    section_div = section_title.parent
+    begin
+      section_title = self.div_element(class: "paramGroupTitle", text: section).when_present
+      section_div = section_title.parent
+    rescue Watir::Wait::TimeoutError => e
+      raise "Секция '#{section}' не найдена"
+    end
 
     # Чекбокс
-    if section_div.element.label(text: field).exists?
+    if value == 'x' and section_div.element.label(text: field).exists?
       self.set_checkbox_value section_div, field, value 
       return
     end

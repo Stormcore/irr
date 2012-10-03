@@ -39,6 +39,7 @@ end
 Допустим /^в секции "(.*?)" я ввожу следующие параметры:$/ do |section, table|
   on NewAdPage do |page|
     table.hashes.each do |hash|
+      puts "Устанавливаем '#{hash['поле']}'='#{hash['значение']}'"
       page.set_value section, hash['поле'], hash['значение']
     end
   end

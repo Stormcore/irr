@@ -42,3 +42,9 @@ end
     page.has_photo(@ad_id).should eq(true)
   end
 end
+
+Допустим /^я редактирую выбранное объявление$/ do
+  on PersonalCabinetPage do |page|
+    page.do_edit(@ad_id)
+  end
+end
