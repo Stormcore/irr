@@ -117,7 +117,19 @@ class NewAdPage
   end
 
   def has_error_with_message? message
-    self.errors_block_element.div_element(text: message).exists?
+    self.errors_block_element.div_element(class: "red11", text: message).exists?
+  end
+
+  def get_all_errors
+    self.errors_block_element.element.divs(class: "red11").map{ |d| d.text}.join("\n")
+  end
+
+  def get_all_required_fields
+    result = self.div_elements(class: "paramName", text: /\* /).map{|d| [d.text.gsub("* ",'')]}
+    # Вырезаем регион и раздел (два первых)
+    result.delete_at 0
+    result.delete_at 0
+    result
   end
 
 end
