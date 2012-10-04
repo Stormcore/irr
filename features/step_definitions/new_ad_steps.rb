@@ -62,3 +62,10 @@ end
     page.has_errors?.should == false
   end
 end
+
+Допустим /^при подаче показано сообщение об ошибке "(.*)"$/ do |message|
+  on NewAdPage do |page|
+    page.has_errors?.should == true
+    page.has_error_with_message?(message).should == true
+  end
+end

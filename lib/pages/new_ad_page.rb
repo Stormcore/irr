@@ -116,4 +116,8 @@ class NewAdPage
     end
   end
 
+  def has_error_with_message? message
+    self.errors_block_element.div_element(text: message).exists?
+  end
+
 end
