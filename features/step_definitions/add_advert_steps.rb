@@ -9,6 +9,18 @@ end
   select_class_for_category(long_category)
 end
 
+Когда %{я подаю объявление в категорию "$category" с параметрами:} do |category, page_params|
+  steps %Q{
+      * я перехожу к подаче объявления
+      * я подаю объявление в категорию "#{category}"
+   }
+  on AddAdvertStep2 do |page|
+    page_params.hashes.each do |hash|
+      page.set_parameter(hash)
+    end
+  end
+end
+
 Когда %{я подаю объявление в категорию "$long_category"} do |long_category|
   on AddAdvertStep1 do |page|
     # Открываем нужную категорию
@@ -32,7 +44,6 @@ end
     raise "Ошибка на шаге 3:\n#{page.error_message}" if page.next_step_element.exists?
   end
 end
-
 
 Когда %{на шаге 2 я ввожу логин и пароль роли "$role"} do |role|
   credentials = get_login_and_password_for_role(role)
