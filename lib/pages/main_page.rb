@@ -14,7 +14,7 @@ class MainPage
   link :adverts_payments, link_text: "Платежи"
   link :adverts_profile, link_text: "Профиль"
   div :popupLoading, id: "popup-loading"
-
+  div :popupCurtain, id: "popupCurtain"
 
   link :logout, link_text: "Выйти"
   

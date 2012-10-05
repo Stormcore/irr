@@ -65,7 +65,8 @@ end
   full_url = construct_region_url(BASE_URL, @region)
   puts "DEBUG: Переходим на <a href='#{full_url}'>#{full_url}</a>"
   @browser.goto(full_url)
-  on MainPage do |page| 
+  on MainPage do |page|
+    Watir::Wait.until {page.popupCurtain?}
     page.login_element.when_present.click
   end
 end
