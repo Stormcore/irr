@@ -18,8 +18,16 @@ class MainPage
 
   link :new_ad, link_text: "Подать объявление"
 
+  def wait_for_loaders_to_disappear
+    # Ждём пока все лоадеры станут невидимы
+    Watir::Wait.until {
+      not self.div_elements(class: "preload").map{|d| d.visible?}.include?(true)
+    }
+  end
+
   def login
-    self.login_button.when_present(30).click
+    self.wait_for_loaders_to_disappear
+    self.login_button.when_present.click
   end
 
   def open_presonal_cabinet
