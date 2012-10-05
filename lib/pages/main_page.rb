@@ -19,7 +19,7 @@ class MainPage
   link :new_ad, link_text: "Подать объявление"
 
   def login
-    self.login_button.when_present.click
+    self.login_button.when_present(30).click
   end
 
   def open_presonal_cabinet
