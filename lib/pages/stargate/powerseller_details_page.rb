@@ -34,12 +34,6 @@ class StargatePowersellerDetailsPage
                   divs(class: "x-grid3-body").last.
                       divs(class: "x-grid3-row").length
         puts "Найдено пакетов: #{len}"
-        if len == 0
-          sleep 1
-          self.open_tab("Свойства")
-          self.wait_for_masks_to_disappear
-          self.open_tab("Пакеты")
-        end
       end
     rescue Selenium::WebDriver::Error::UnknownError
       # Таба уже открыта
