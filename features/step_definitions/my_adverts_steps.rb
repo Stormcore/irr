@@ -83,6 +83,27 @@ end
   end
 end
 
+То %{в деталях объявления категории "$category" "$field" $operator "$expected"} do |category, field, operator, expected|
+  select_class_for_category(category)
+  on @category_page do |page|
+    actual_value = page.get_parameter(field)
+    case operator
+    when "равно одному из"
+      expected.split(', ').should include actual_value
+    when "равно"
+      actual_value.should eq(expected)
+    when "в границах"
+      expected_array = expected.split(" - ")
+      actual_value.to_i.should be >= expected_array[0].to_i
+      actual_value.to_i.should be <= expected_array[1].to_i
+    when "содержит"
+      actual_value.should include(expected)
+    else
+      eval("actual_value.to_i.should be #{operator} expected.to_i")
+    end
+  end
+end
+
 То %{на вкладке "Все" "$field" $operator "$expected"} do |field, operator, expected|
   on AdDetailsPage do |page|
     actual_value = page.get_parameter(field)
