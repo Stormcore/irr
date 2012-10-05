@@ -16,7 +16,7 @@ class InterestingAd
     @price = element.paragraph_element(class: "prise").text
     @photo = element.image_element.attribute("src")
     @url = element.element.link.href
-    @id = @url.match(/(\d+)/).to_s
+    @id = @url.match(/advert(\d+).html/).to_s
   end
 
   def get_photo
