@@ -27,7 +27,7 @@ class MainPage
 
   def login
     self.wait_for_loaders_to_disappear
-    self.login_button.when_present.click
+    self.login_button_element.when_present.click
   end
 
   def open_presonal_cabinet
