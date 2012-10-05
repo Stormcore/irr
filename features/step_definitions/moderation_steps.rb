@@ -12,6 +12,7 @@ end
 
 Допустим %{я делаю поиск по созданному объявлению} do
   on StargateAdSearchPage do |page|
+    puts "Объявление #{@ad_id}"
     page.search_for_ad_by_id(@ad_id)
   end
   on StargateAdSearchResultsPage do |page|
