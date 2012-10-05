@@ -10,6 +10,19 @@ class PersonalCabinetPage
     self.title?
   end
 
+  def has_adverts?
+    self.ads_element.exists?
+  end
+
+  def select_all_ads
+    self.checkbox_element(id: "NotRuRunAll").check
+  end
+
+  def do_delete_all
+    self.link_element(id: "delete").click
+    self.link_element(id: "confirmOk").when_present.click
+  end
+
   def has_ad_with_title? title
     self.ads_element.when_present.div_elements(class: "lkMyAdsBlock").find {|d| 
             d.element.td(class: "lkMyAdsBlockText").a.text == title}.

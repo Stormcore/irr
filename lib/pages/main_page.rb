@@ -30,8 +30,9 @@ class MainPage
     self.login_button_element.when_present.click
   end
 
-  def open_presonal_cabinet
-    self.user_name_element.click
+  def open_personal_cabinet
+    self.wait_for_loaders_to_disappear
+    self.user_name_element.when_present.click
   end
 
   def user_logged_in?

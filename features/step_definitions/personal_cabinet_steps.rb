@@ -2,7 +2,7 @@
 
 Когда %{я перехожу в личный кабинет} do
   on MainPage do |page|
-    page.open_presonal_cabinet
+    page.open_personal_cabinet
   end
 end
 
@@ -52,5 +52,14 @@ end
 Когда /^я открываю детали выбранного объявления$/ do
   on PersonalCabinetPage do |page|
     page.open_details @ad_id
+  end
+end
+
+Допустим /^я удаляю все объявления пользователя$/ do
+  on PersonalCabinetPage do |page|
+    while page.has_adverts?
+      page.select_all_ads
+      page.do_delete_all
+    end
   end
 end
