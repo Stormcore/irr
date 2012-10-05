@@ -31,13 +31,13 @@ require 'pages.rb'
 
 World PageObject::PageFactory
 
-#if HEADLESS
-#  puts "Starting xvfb.."
-#  require 'headless'
-#  headless = Headless.new(dimensions: "1366x768x16")
-#  headless.start
-#  stdin, stdout, stderr = Open3.popen3("x11vnc -forever -input M")
-#end
+if HEADLESS
+  puts "Starting xvfb.."
+  require 'headless'
+  headless = Headless.new(dimensions: "1366x768x16")
+  headless.start
+  stdin, stdout, stderr = Open3.popen3("x11vnc -forever -input M")
+end
 
 def start_browser
   case DRIVER
