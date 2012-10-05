@@ -14,7 +14,6 @@ class StargateAdSearchPage
 
   def search_for_ad_by_id(id)
     self.id_element.when_present.value = id
-    sleep 1
     self.search_element.when_present.click
   end
 end
