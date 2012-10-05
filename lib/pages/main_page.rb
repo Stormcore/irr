@@ -2,7 +2,7 @@
 class MainPage
   include PageObject
 
-  link :login, link_text: "Вход"
+  link :login_button, link_text: "Вход"
 
   list_item :user_name, class: "username"
   list_item :logout, class: "logout"
@@ -17,6 +17,10 @@ class MainPage
   div :powerseller_section, class: "intpartn"
 
   link :new_ad, link_text: "Подать объявление"
+
+  def login
+    self.login_button.when_present.click
+  end
 
   def open_presonal_cabinet
     self.user_name_element.click
