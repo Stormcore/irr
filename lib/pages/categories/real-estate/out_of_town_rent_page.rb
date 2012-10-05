@@ -4,9 +4,10 @@ class CategoryRealEstateOutoftownRentPage < AdDetailsPage
   include PageObject
   include Regions
   include Rent
+  include CityWithMetro
 
   @@url_suffix = "/real-estate/out-of-town-rent"
-  @category = "Недвижимость -> Дома, дачи. Аренда"
+  @category = "Недвижимость -> Дома, дачи, участки. Аренда"
 
   irr_range_select "Год постройки/сдачи", "house-year"
   irr_range_select "Площадь участка", "land"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+<user deactivate-untouched="false">
+<match>
+  <user-id>9531971</user-id>
+</match>
+<store-ad validfrom="2012-09-18T09:06:26" validtill="2013-09-25T09:06:26" source-id="515" file-id="1" power-ad="0" category="/real-estate/rent">
+  <title>Сдается 2х-комнатная квартира в Питере, этаж 3</title>
+  <description>Сдаю квартиру в Питере</description>
+  <regions>
+    <region path="/russia/saint-petersburg-region/saint-petersburg"/>
+  </regions>
+  <custom-fields>
+    <field name="metro">Адмиралтейская</field>
+    <field name="rooms">3</field>
+    <field name="etage">3</field>
+
+    <field name="title">Сдается 2х-комнатная квартира в Питере, этаж 3</field>
+  </custom-fields>
+  <price currency="RUR" value="30000"/>
+</store-ad>
+
+</user>
+</users>
