@@ -73,6 +73,8 @@ def construct_region_url(url, region)
     url = url.gsub("http://", "http://astana.")
   when "Актобе"
     url = url.gsub("http://", "http://akt-obl.")+'/aktobe-gorod/'
+  when "Санкт-Петербург"
+    url = url.gsub("http://", "http://saint-petersburg.")
   end
   # Вырезаем лишние двойные слэши (но не в http://)
   url = "http://"+url.gsub("http://","").gsub("//","/")
