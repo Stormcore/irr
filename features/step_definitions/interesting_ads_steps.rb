@@ -73,8 +73,6 @@ end
     puts "Интересное объявление #{ad.get_url}"
     @ad_id = ad.get_id
     steps %Q{
-      * я перехожу на БО
-      * на БО я перехожу в категорию "Объявления -> Найти объявления"
       * я делаю поиск по созданному объявлению
     }
 
@@ -84,9 +82,13 @@ end
     end
 
     on StargateAdDetailsDialog do |page|
-      puts page.get_title
+      page.get_title
       page.open_tab("Продукты объявления")
-      page.is_premium?.should eq(true), "Объявление #{@ad_id} не премиум"
+      begin
+        page.is_premium?.should eq(true), "Объявление #{@ad_id} не премиум"
+      ensure
+        page.close_details
+      end
     end
   end
 end

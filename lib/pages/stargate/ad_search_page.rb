@@ -89,6 +89,10 @@ class StargateAdDetailsDialog
     self.main_element.label_element(id: /premiumInfo/).when_present.text != "Не назначено"
   end
 
+  def close_details
+    self.main_element.element.button(text: "Закрыть").click
+  end
+
 end
 
 class StargateAdModerationDeclineDialog
