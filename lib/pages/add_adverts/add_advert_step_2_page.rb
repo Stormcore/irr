@@ -31,7 +31,6 @@ class AddAdvertStep2 < AdDetailsPage
   link :save, id: "submit-edit-form"
   button :next_step, id: "next_link"
 
-  div :no_package_message, class: "b-message-info"
   div :has_package, class: "ico-messagesok"
 
   span :error_message, id: "adv-errorMessage"
@@ -193,11 +192,15 @@ class AddAdvertStep2 < AdDetailsPage
   end
 
   def has_package_message
-    self.has_package_element.exists?
+    begin
+      self.div_element(id: "customfields").div_element(class: "b-message-info").when_present.exists?
+    rescue
+      return false
+    end
   end
 
   def get_package_message
-    self.no_package_message_element.when_present.text
+    self.div_element(id: "customfields").div_element(class: "b-message-info").text
   end
 
   def ensure_additional_parameters_are_displayed

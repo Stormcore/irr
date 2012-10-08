@@ -26,7 +26,6 @@ end
     # Открываем нужную категорию
     long_category.split(' -> ').each_with_index do |category, index|
       category = UnicodeUtils.upcase(category[0]) + UnicodeUtils.downcase(category[1..-1])
-      puts category
       page.span_element(class: "ik_select_link_text", text: "Выберите категорию").when_present.click
       page.span_element(class: "ik_select_option", text: category).when_present.click
     end
@@ -99,7 +98,7 @@ end
 
 То %{на шаге 2 выводится сообщение об отсутствии пакета} do
   on AddAdvertStep2 do |page|
-    page.has_package_message.should eq(false),
+    page.has_package_message.should eq(true),
       "Сообщение об отсутствии пакета не показано"
 
     expected_message =<<PACKAGE_MESSAGE
