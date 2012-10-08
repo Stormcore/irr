@@ -84,6 +84,7 @@ end
     end
 
     on StargateAdDetailsDialog do |page|
+      page.open_tab("Продукты объявления")
       puts page.main_element.label_element(id: /premiumInfo/).when_present.text
       page.is_premium?.should eq(true), "Объявление #{@ad_id} не премиум"
     end
