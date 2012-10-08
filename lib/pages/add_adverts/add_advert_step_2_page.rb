@@ -24,7 +24,7 @@ class AddAdvertStep2 < AdDetailsPage
   file_field :upload, id: "input-file-upload"
   unordered_list :uploaded_photos, id: "photos"
 
-  text_field :videoContents, id: "video-input"
+  text_field :videoContents, id: "video_content"
   link :add_video, class: "btn-add-video"
   div :video_preview, id: "videoContentBlock"
 
