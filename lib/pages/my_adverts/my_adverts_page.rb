@@ -23,13 +23,13 @@ class MyAdvertsPage
       row.cells.size >= 6 and
       row[6].div.exists? and 
       row[6].div.text == "размещено"}
-    element[3].a.href.match(/(\d+)/).to_s unless element.nil?
+    element[3].a.href[/advert(\d+).html/, 1] unless element.nil?
   end
 
   def get_first_ad_id
     element = self.ads_element.element.row(index: 1)
     raise "Объявления отсутствуют" unless element.exists?
-    element[3].a.href.match(/(\d+)/).to_s
+    element[3].a.href[/advert(\d+).html/, 1]
   end
 
   def has_ad_with_title(title)
@@ -105,7 +105,7 @@ class MyAdvertsPage
   end
 
   def get_ad_id(title)
-    self.get_url_for_ad(title)[/advert(\d+).html/,1).to_s
+    self.get_url_for_ad(title)[/advert(\d+).html/,1]
   end
 end
 

@@ -80,6 +80,12 @@ class StargateAdDetailsDialog
     link.click if link.exists?
   end
 
+  def get_title
+    self.main_element.when_present.element.
+         trs.find{|tr| tr.text.include?("Заголовок")}.
+             div(class: "x-grid3-col-value").text
+  end
+
   def is_premium?
     self.main_element.label_element(id: /premiumInfo/).when_present.text != "Не назначено"
   end

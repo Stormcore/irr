@@ -70,7 +70,7 @@ end
 
 То %{каждое объявление в блоке "Интересные объявления" является премиумом} do
   interesting_ads_soft_assert("Объявление не является премиумом") do |ad|
-    puts "Интересное объявление #{ad.get_url} с id '#{ad.get_id}'"
+    puts "Интересное объявление #{ad.get_url}"
     @ad_id = ad.get_id
     steps %Q{
       * я перехожу на БО
@@ -84,8 +84,8 @@ end
     end
 
     on StargateAdDetailsDialog do |page|
+      puts page.get_title
       page.open_tab("Продукты объявления")
-      puts page.main_element.label_element(id: /premiumInfo/).when_present.text
       page.is_premium?.should eq(true), "Объявление #{@ad_id} не премиум"
     end
   end
