@@ -81,9 +81,11 @@ class StargateAdDetailsDialog
   end
 
   def get_title
-    self.main_element.when_present.element.
-         trs.find{|tr| tr.text.include?("Заголовок")}.
-             div(class: "x-grid3-col-value").text rescue "nill"
+    element = nil
+    Watir::Wait.until {
+    element = self.main_element.when_present.element.
+                   trs.find{|tr| tr.text.include?("Заголовок")}.nil?}
+    element = div(class: "x-grid3-col-value").text rescue "nill"
   end
 
   def is_premium?
