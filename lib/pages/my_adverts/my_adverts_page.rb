@@ -105,7 +105,7 @@ class MyAdvertsPage
   end
 
   def get_ad_id(title)
-    self.get_url_for_ad(title).match(/(\d+)/).to_s
+    self.get_url_for_ad(title)[/advert(\d+).html/,1).to_s
   end
 end
 
