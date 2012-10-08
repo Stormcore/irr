@@ -150,7 +150,7 @@ After do |scenario|
     end
 
     # Записываем URL страницы с ошибкой
-    embed('data:image/png;base64,', 'image/png',"</a>Страница: <a href='#{@browser.url}'>#{@browser.url}</a><a")
+    embed('data:image/png;base64,#{encoded_img}', 'image/png',"</a>Страница: <a href='#{@browser.url}'>#{@browser.url}</a><a")
   end
 end
 
