@@ -77,12 +77,16 @@ end
       * на БО я перехожу в категорию "Объявления -> Найти объявления"
       * я делаю поиск по созданному объявлению
     }
+
+    make_screenshot
+
     on StargateAdSearchResultsPage do |page|
       page.open_menu(0)
       page.menu_edit
     end
 
     on StargateAdDetailsDialog do |page|
+      puts page.main_element.label_element(id: /premiumInfo/).when_present.text
       page.is_premium?.should eq(true), "Объявление #{@ad_id} не премиум"
     end
   end
