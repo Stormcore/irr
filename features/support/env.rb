@@ -135,22 +135,22 @@ end
 After do |scenario|
   if scenario.failed?
     begin
+      # Делаем скриншот
       encoded_img = @browser.driver.screenshot_as(:base64)
       embed("data:image/png;base64,#{encoded_img}", 'image/png')
+  
+      # Ловим exception
+      case scenario.exception
+      when Selenium::WebDriver::Error::UnhandledAlertError
+        raise "Открыт модальный диалог: '#{@browser.alert.text}'"
+      end
+
     rescue
       Cucumber.wants_to_quit = true
     end
 
-    # Ловим exception
-    case scenario.exception
-    when Selenium::WebDriver::Error::UnhandledAlertError
-      raise "Открыт модальный диалог: '#{@browser.alert.text}'"
-    when RSpec::Expectations::ExpectationNotMetError
-      puts "woot"
-    end
-
     # Записываем URL страницы с ошибкой
-    raise "URL: <a href='#{@browser.url}'>#{@browser.url}</a>"
+    embed('sdfsdf', 'image/png',"</a>Страница: <a href='#{@browser.url}'>#{@browser.url}</a><a")
   end
 end
 
