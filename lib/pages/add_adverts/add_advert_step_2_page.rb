@@ -31,7 +31,7 @@ class AddAdvertStep2 < AdDetailsPage
   link :save, id: "submit-edit-form"
   button :next_step, id: "next_link"
 
-  div :no_package_message, id: "message-free-add"
+  div :no_package_message, class: "b-message-info"
   div :has_package, class: "ico-messagesok"
 
   span :error_message, id: "adv-errorMessage"
