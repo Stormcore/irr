@@ -144,14 +144,13 @@ After do |scenario|
       case scenario.exception
       when Selenium::WebDriver::Error::UnhandledAlertError
         raise "Открыт модальный диалог: '#{@browser.alert.text}'"
+      when Net::HTTP::Persistent::Error
+        raise "Страница не была загружена за 60 секунд"
       end
 
     rescue
       Cucumber.wants_to_quit = true
     end
-
-    # Записываем URL страницы с ошибкой
-    embed("data:image/png;base64,#{encoded_img}", 'image/png',"</a>Страница: <a href='#{@browser.url}'>#{@browser.url}</a><a")
   end
 end
 
