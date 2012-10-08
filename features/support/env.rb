@@ -138,7 +138,7 @@ After do |scenario|
       # Делаем скриншот
       # Записываем URL страницы с ошибкой
       encoded_img = @browser.driver.screenshot_as(:base64)
-      embed("data:image/png;base64,#{encoded_img}", 'image/png', "</a>Страница: <a href='#{@browser.url}'>#{@browser.url}</a><a")
+      embed("data:image/png;base64,#{encoded_img}", 'image/png')
   
       # Ловим exception
       case scenario.exception
