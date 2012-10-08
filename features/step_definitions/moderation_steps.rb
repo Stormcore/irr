@@ -11,10 +11,10 @@
 end
 
 Допустим %{я делаю поиск по созданному объявлению} do
-  puts "Поиск по объявлению - ищу id '#{@ad_id}'"
   on StargateAdSearchPage do |page|
     page.search_for_ad_by_id(@ad_id)
   end
+  
   on StargateAdSearchResultsPage do |page|
     page.get_results.size.should eq(1), "Созданное объявление не найдено"
   end

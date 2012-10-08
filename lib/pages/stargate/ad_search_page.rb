@@ -82,6 +82,7 @@ class StargateAdDetailsDialog
 
   def is_premium?
     self.open_tab("Продукты объявления")
+    puts "Текст: '#{self.main_element.label_element(id: /premiumInfo/).when_present.text}'"
     self.main_element.label_element(id: /premiumInfo/).when_present.text != "Не назначено"
   end
 
