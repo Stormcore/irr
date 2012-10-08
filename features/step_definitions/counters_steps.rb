@@ -18,20 +18,29 @@ end
   end
 end
 
+def assert_value_changed actual, expected, value1, value2, clause
+  case clause
+  when /увеличился на/
+    actual.to_i.should eq(expected.to_i + value1.to_i)
+  when /уменьшился на/
+    delta = expected.to_i - value2.to_i
+    unless delta < 0
+      actual.to_i.should eq(delta)
+    else
+      actual.to_i.should eq(0)
+    end
+  when "не изменился"
+    actual.to_i.should eq(expected.to_i)
+  else
+    raise "Неизвестное условие: '#{clause}'"
+  end
+end
+
 Допустим /^счетчик объявлений пользователя (увеличился на (.*)|уменьшился на (.*)|не изменился)$/ do |clause, value1, value2|
   on MainPage do |page|
     new_value = page.get_user_ads_count
     puts "'Мои объявления' новое количество: #{new_value}"
-    case clause
-    when /увеличился на/
-      new_value.to_i.should eq(@total_ads_num.to_i + value1.to_i)
-    when /уменьшился на/
-      new_value.to_i.should eq(@total_ads_num.to_i - value2.to_i)
-    when "не изменился"
-      new_value.to_i.should eq(@total_ads_num.to_i)
-    else
-      raise "Неизвестное условие: '#{clause}'"
-    end
+    assert_value_changed new_value, @total_ads_num, value1, value2, clause
   end
 end
 
@@ -55,16 +64,7 @@ end
   on AdDetailsPage do |page|
     new_value = page.get_seller_ad_count
     puts "'Все объявления продавца' новое количество: #{new_value}"
-    case clause
-    when /увеличился на/
-      new_value.to_i.should eq(@active_ads_num.to_i + value1.to_i)
-    when /уменьшился на/
-      new_value.to_i.should eq(@active_ads_num.to_i - value2.to_i)
-    when "не изменился"
-      new_value.to_i.should eq(@active_ads_num.to_i)
-    else
-      raise "Неизвестное условие: '#{clause}'"
-    end
+    assert_value_changed new_value, @active_ads_num, value1, value2, clause
   end
 end
 
@@ -73,16 +73,7 @@ end
   on classs do |page|
     new_value = page.get_active_counter
     puts "'Размещено' новое количество: #{new_value}"
-    case clause
-    when /увеличился на/
-      new_value.to_i.should eq(@active_ads_num.to_i + value1.to_i)
-    when /уменьшился на/
-      new_value.to_i.should eq(@active_ads_num.to_i - value2.to_i)
-    when "не изменился"
-      new_value.to_i.should eq(@active_ads_num.to_i)
-    else
-      raise "Неизвестное условие: '#{clause}'"
-    end
+    assert_value_changed new_value, @active_ads_num, value1, value2, clause
   end
 end
 
@@ -91,16 +82,7 @@ end
   on classs do |page|
     new_value = page.get_inactive_counter
     puts "'Неактивно' новое количество: #{new_value}"
-    case clause
-    when /увеличился на/
-      new_value.to_i.should eq(@inactive_ads_num.to_i + value1.to_i)
-    when /уменьшился на/
-      new_value.to_i.should eq(@inactive_ads_num.to_i - value2.to_i)
-    when "не изменился"
-      new_value.to_i.should eq(@inactive_ads_num.to_i)
-    else
-      raise "Неизвестное условие: '#{clause}'"
-    end
+    assert_value_changed new_value, @inactive_ads_num, value1, value2, clause
   end
 end
 
@@ -116,16 +98,7 @@ end
     steps %{* я жду 10 секунд и перезагружаю страницу}
     new_value = page.get_counter_for_all_categories
     puts "'Все разделы' новое значение: #{new_value}"
-    case clause
-    when /увеличился на/
-      new_value.to_i.should eq(@total_ads_num.to_i + value1.to_i)
-    when /уменьшился на/
-      new_value.to_i.should eq(@total_ads_num.to_i - value2.to_i)
-    when "не изменился"
-      new_value.to_i.should eq(@total_ads_num.to_i)
-    else
-      raise "Неизвестное условие: '#{clause}'"
-    end
+    assert_value_changed new_value, @total_ads_num, value1, value2, clause
   end
 end
 
@@ -192,16 +165,7 @@ end
     @counter.each do |category, expected_counter|
       new_value = page.get_counter_for_category(category)
       puts "Новое значение счетчика для категории '#{category}': #{new_value}"
-      case clause
-      when /увеличился на/
-        new_value.to_i.should eq(expected_counter.to_i + value1.to_i)
-      when /уменьшился на/
-        new_value.to_i.should eq(expected_counter.to_i - value2.to_i)
-      when "не изменился"
-        new_value.to_i.should eq(expected_counter.to_i)
-      else
-        raise "Неизвестное условие: '#{clause}'"
-      end
+      assert_value_changed new_value, expected_counter, value1, value2, clause
     end
   end
 end
