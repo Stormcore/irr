@@ -83,7 +83,7 @@ class StargateAdDetailsDialog
   def get_title
     self.main_element.when_present.element.
          trs.find{|tr| tr.text.include?("Заголовок")}.
-             div(class: "x-grid3-col-value").text return "nill"
+             div(class: "x-grid3-col-value").text rescue "nill"
   end
 
   def is_premium?
