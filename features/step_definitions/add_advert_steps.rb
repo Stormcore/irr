@@ -25,9 +25,8 @@ end
   on AddAdvertStep1 do |page|
     # Открываем нужную категорию
     long_category.split(' -> ').each_with_index do |category, index|
-      category.capitalize!
       page.span_element(class: "ik_select_link_text", text: "Выберите категорию").when_present.click
-      page.span_element(class: "ik_select_option", text: category).when_present.click
+      page.span_element(class: "ik_select_option", text: category.capitalize).when_present.click
     end
     # Ждём пока появятся кастомфилды
     page.wait_for_custom_fields_to_appear
