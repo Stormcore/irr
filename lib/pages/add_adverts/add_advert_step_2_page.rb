@@ -77,7 +77,12 @@ class AddAdvertStep2 < AdDetailsPage
       # Комбобокс
       control.parent.parent.element.div(class: "ik_select_link").click
       list = self.div_elements(class: "ik_select_list_inner").find{|div| div.visible?}
-      list.span_element(text: hash['value']).click
+      if list.span_element(text: hash['value']).exists?
+        list.span_element(text: hash['value']).click
+      else
+        puts "Список достуных значений: #{list.element.spans.map{|s| s.text}}"
+        raise "Не найдено значение '#{hash['value']}'"
+      end
     when "input"
       control.value = hash["value"]
     else
@@ -129,7 +134,7 @@ class AddAdvertStep2 < AdDetailsPage
           self.mark = 'Другая'
           self.mark_other = hash['value'].split(" ~ ")[1]
         else
-          self.mark = hash['value']
+          set_value_for_custom(self.mark_element, hash)
         end
       when "Модель"
         if self.model?
@@ -137,7 +142,7 @@ class AddAdvertStep2 < AdDetailsPage
             self.model = "Другая"
             self.model_other = hash['value'].split(" ~ ")[1]
           else
-            self.model = hash['value']
+            set_value_for_custom(self.model_element, hash)
           end
         else
           self.model_text = hash['value']
