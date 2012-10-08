@@ -25,6 +25,7 @@ require 'net/ssh'
 require 'net/sftp'
 require 'open3'
 require 'diffy'
+require 'base64'
 
 
 $: << File.dirname(__FILE__)+'/../../lib'
@@ -132,16 +133,24 @@ AfterStep do |scenario|
 end
 
 After do |scenario|
-  Dir::mkdir('screenshots') if not File.directory?('screenshots')
-  screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
   if scenario.failed?
-    after_step(scenario)
     begin
-      @browser.driver.save_screenshot(screenshot)
-      embed screenshot, 'image/png'
+      encoded_img = @browser.driver.screenshot_as(:base64)
+      embed("data:image/png;base64,#{encoded_img}", 'image/png')
     rescue
       Cucumber.wants_to_quit = true
     end
+
+    # Ловим exception
+    case scenario.exception
+    when Selenium::WebDriver::Error::UnhandledAlertError
+      raise "Открыт модальный диалог: '#{@browser.alert.text}'"
+    when RSpec::Expectations::ExpectationNotMetError
+      puts "woot"
+    end
+
+    # Записываем URL страницы с ошибкой
+    raise "URL: <a href='#{@browser.url}'>#{@browser.url}</a>"
   end
 end
 
