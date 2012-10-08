@@ -78,8 +78,6 @@ end
       * я делаю поиск по созданному объявлению
     }
 
-    make_screenshot
-
     on StargateAdSearchResultsPage do |page|
       page.open_menu(0)
       page.menu_edit
