@@ -32,6 +32,7 @@ class SearchResultsPage
       retry
     end
     json = doc.css("script").inner_html[/var additionalPopupMenuParams = (.*);/, 1]
+    return {} if json.nil?
     parsed_json = JSON.parse(json)
 
     banned_classes = %w[multy-list-table banner-listing-list dontSearch]
