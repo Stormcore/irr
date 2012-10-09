@@ -27,7 +27,7 @@ end
     long_category.split(' -> ').each_with_index do |category, index|
       category = UnicodeUtils.upcase(category[0]) + UnicodeUtils.downcase(category[1..-1])
       page.span_element(class: "ik_select_link_text", text: "Выберите категорию").when_present.click
-      page.span_element(class: "ik_select_option", text: category).when_present.click
+      page.span_elements(class: "ik_select_option").find{|s| s.visible? and s.text == category}.click
     end
     # Ждём пока появятся кастомфилды
     page.wait_for_custom_fields_to_appear
