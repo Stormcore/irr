@@ -77,6 +77,7 @@ end
     }
 
     on StargateAdSearchResultsPage do |page|
+      sleep 1
       page.open_menu(0)
       page.menu_edit
     end
