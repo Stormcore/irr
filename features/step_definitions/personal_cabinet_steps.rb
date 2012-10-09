@@ -49,6 +49,42 @@ end
   end
 end
 
+Допустим /^я поднимаю выбранное объявление$/ do
+  on PersonalCabinetPage do |page|
+    page.do_push(@ad_id)
+  end
+end
+
+Допустим /^выбранное объявление поднято$/ do
+  on PersonalCabinetPage do |page|
+    page.is_pushed(@ad_id).should eq(true)
+  end
+end
+
+Допустим /^я выделяю выбранное объявление$/ do
+  on PersonalCabinetPage do |page|
+    page.do_highlight(@ad_id)
+  end
+end
+
+Допустим /^выбранное объявление выделено$/ do
+  on PersonalCabinetPage do |page|
+    page.is_highlighted(@ad_id).should eq(true)
+  end
+end
+
+Допустим /^я делаю выбранное объявление премиумом$/ do
+  on PersonalCabinetPage do |page|
+    page.do_premium(@ad_id)
+  end
+end
+
+Допустим /^выбранное объявление премиум$/ do
+  on PersonalCabinetPage do |page|
+    page.is_premium(@ad_id).should eq(true)
+  end
+end
+
 Когда /^я открываю детали выбранного объявления$/ do
   on PersonalCabinetPage do |page|
     page.open_details @ad_id

@@ -58,9 +58,37 @@ class PersonalCabinetPage
          img.exists?
   end
 
+  def is_pushed ad_id
+    self.find_element_by_id(ad_id).element.i(class: "upactive").exists?
+  end
+
+  def is_premium ad_id
+    self.find_element_by_id(ad_id).element.i(class: "specactive").exists?
+  end
+
+  def is_highlighted ad_id
+    self.find_element_by_id(ad_id).element.
+         wd.attribute("class").include?("selected")
+  end
+
   def do_edit ad_id
     self.find_element_by_id(ad_id).
          link_element(link_text: "Редактировать").click
+  end
+
+  def do_push ad_id
+    self.find_element_by_id(ad_id).
+         link_element(link_text: "Поднять").click
+  end
+
+  def do_highlight ad_id
+    self.find_element_by_id(ad_id).
+         link_element(link_text: "Выделить").click
+  end
+
+  def do_premium ad_id
+    self.find_element_by_id(ad_id).
+         link_element(link_text: "Премиум").click
   end
 
   def open_details ad_id
