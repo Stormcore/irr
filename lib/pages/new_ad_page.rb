@@ -72,7 +72,10 @@ class NewAdPage
     has_textbox = value_div.text_field_element.exists?
     has_radiobox = value_div.radio_button_element.exists?
 
-    value_div.select_list_element.select value if has_select
+    if has_select
+      Watir::Wait.until {value_div.select_list_element.enabled?}
+      value_div.select_list_element.select value 
+    end
     value_div.text_field_element.value = value if has_textbox
     value_div.radio_button_element(value: value).select if has_radiobox
   end
