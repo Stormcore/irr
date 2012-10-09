@@ -136,10 +136,14 @@ After do |scenario|
   if scenario.failed?
     begin
       # Делаем скриншот
-      # Записываем URL страницы с ошибкой
-      encoded_img = @browser.driver.screenshot_as(:base64)
-      embed("data:image/png;base64,#{encoded_img}", 'image/png')
-  
+      Dir::mkdir('screenshots') if not File.directory?('screenshots')
+      screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
+      @browser.driver.save_screenshot(screenshot)
+      embed screenshot, 'image/png'
+
+      #Записываем URL
+      embed screenshot, "image/png", "</a>Страница: <a href='#{@browser.url}'>#{@browser.url}</a><a"
+
       # Ловим exception
       case scenario.exception
       when Selenium::WebDriver::Error::UnhandledAlertError
