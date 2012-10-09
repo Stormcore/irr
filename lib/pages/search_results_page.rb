@@ -29,7 +29,7 @@ class SearchResultsPage
       attempts -= 1
       retry
     end
-    json = /var additionalPopupMenuParams = (.*);/.match(doc.css("script").inner_html)[1]
+    json = doc.css("script").inner_html[/var additionalPopupMenuParams = (.*);/, 1]
     parsed_json = JSON.parse(json)
 
     banned_classes = %w[multy-list-table banner-listing-list dontSearch]
