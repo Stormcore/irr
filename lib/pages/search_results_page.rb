@@ -161,4 +161,14 @@ class SearchResultsPage
     ads_on_page = self.ads_on_page_element.link_element(text: number)
     ads_on_page.click if ads_on_page.exists?
   end
+
+  def get_all_filters
+    self.div_element(class: "b-filter").div_elements(class: "filterItem").map{|d|
+      if d.div_element(class: "lbl").exists?
+        d.div_element(class: "lbl").text.strip
+      else
+        d.label_elements(class: "chk-b").map{|l| l.text.strip}
+      end
+    }.flatten.map{|r| [r]}
+  end
 end

@@ -422,6 +422,35 @@ end
   end
 end
 
+Допустим /^в списке фильтров показаны следующие фильтры:$/ do |table|
+  on SearchResultsPage do |page|
+    actual = page.get_all_filters
+
+    unless actual == table.rows
+      actual_table = Cucumber::Ast::Table.new(actual)
+      expected_table = Cucumber::Ast::Table.new(table.rows)
+      File.open("/tmp/file1", 'w') {|f| 
+        f.write(expected_table.to_s(options = {color: false})) }
+      File.open("/tmp/file2", 'w') {|f| 
+        f.write(actual_table.to_s(options = {color: false})) }
+
+      # Разрываем таблицу
+      puts "</table>"
+      # Вставляем diff css + цвет черный (cucumber сделает красным)
+      puts "<style type='text/css'>#{Diffy::CSS} .diff {color: black}</style>"
+      # Выводим diff
+      puts Diffy::Diff.new('/tmp/file1', '/tmp/file2', 
+                           source:'files', diff: ['-w', '-U 10000']).to_s(:html)
+      # Прячем оставшуюся таблицу
+       puts "<table style='display:none'><tbody><tr><td>"
+
+      # две пустых строчки комментариев
+      # Из-за html кода ломается отображение контекста ошибки
+      raise "Ошибка проверки видимости фильтров"
+    end
+  end
+end
+
 def first_result_page_soft_assert(description)
   validation_errors = Hash.new
   on SearchResultsPage do |page|

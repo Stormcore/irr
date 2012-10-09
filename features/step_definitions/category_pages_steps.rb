@@ -40,6 +40,12 @@ end
   end
 end
 
+Когда %{я раскрываю список фильтров} do
+  on @category_page do |page|
+    page.expand_all_parameters
+  end
+end
+
 Когда %{я делаю поиск по следующим параметрам:} do |page_params|
   on @category_page do |page|
     page.expand_all_parameters
