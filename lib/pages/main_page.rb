@@ -40,6 +40,7 @@ class MainPage
   end
 
   def get_logged_in_username
+    self.user_name_element.when_present
     self.user_name_element.link_element.text
   end
 
