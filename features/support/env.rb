@@ -131,13 +131,25 @@ AfterStep do |scenario|
 end
 
 After do |scenario|
-  Dir::mkdir('screenshots') if not File.directory?('screenshots')
-  screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
   if scenario.failed?
-    after_step(scenario)
     begin
+      # Делаем скриншот
+      Dir::mkdir('screenshots') if not File.directory?('screenshots')
+      screenshot = "./screenshots/FAILED_#{(0..8).to_a.map{|a| rand(16).to_s(16)}.join}.png"
       @browser.driver.save_screenshot(screenshot)
       embed screenshot, 'image/png'
+
+      #Записываем URL
+      embed screenshot, "image/png", "</a>Страница: <a href='#{@browser.url}'>#{@browser.url}</a><a"
+
+      # Ловим exception
+      case scenario.exception
+      when Selenium::WebDriver::Error::UnhandledAlertError
+        raise "Открыт модальный диалог: '#{@browser.alert.text}'"
+      when Net::HTTP::Persistent::Error
+        raise "Страница не была загружена за 60 секунд"
+      end
+
     rescue
       Cucumber.wants_to_quit = true
     end
