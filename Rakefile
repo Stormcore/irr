@@ -43,28 +43,6 @@ task :wip do
   end
 end
 
-Cucumber::Rake::Task.new(:visible_fields_no_rerun) do |task|
-  task.cucumber_opts = ["-t @visible_filter",
-                        "--format junit --out junit",
-                        "--format html  --out cucumber.html",
-                        "--format json  --out cucumber.json",
-                        "--format rerun --out rerun.txt",
-                        "--format pretty --color",
-                        "features"]
-end
-
-task :visible_fields do
-  selenium_successful = run_rake_task("visible_fields_no_rerun")
-  rerun_successful = true
-  unless selenium_successful
-    puts "\n\n Rerunning failed tests"
-    rerun_successful = run_rake_task("rerun")
-  end
-  unless selenium_successful || rerun_successful
-    fail 'Cucumber tests failed'
-  end
-end
-
 Cucumber::Rake::Task.new(:tag_no_rerun) do |task|
   task.cucumber_opts = ["-r features",
                         "-t @#{ENV['TAG'] || "all"}",
@@ -72,7 +50,8 @@ Cucumber::Rake::Task.new(:tag_no_rerun) do |task|
                         "--format html  --out cucumber.html",
                         "--format json  --out cucumber.json",
                         "--format rerun --out rerun.txt",
-                        "--format pretty --color"]
+                        "--format pretty --color",
+                        ENV['FEATURE']]
 end
 
 task :tag do
