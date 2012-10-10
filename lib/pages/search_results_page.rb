@@ -168,7 +168,7 @@ class SearchResultsPage
       if label.exists? and label.visible?
         label.text.strip
       else
-        d.label_elements(class: "chk-b").map{|l| l.text.strip}
+        d.label_elements(class: "chk-b").map{|l| l.text.strip if l.visible?}
       end
     }.flatten.reject{|r| r.empty?}.map{|r| [r]}
   end
