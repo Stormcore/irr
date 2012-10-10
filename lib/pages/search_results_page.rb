@@ -163,12 +163,13 @@ class SearchResultsPage
   end
 
   def get_all_filters
-    self.div_element(class: "b-filter").div_elements(class: "filterItem").map{|d|
-      if d.div_element(class: "lbl").exists?
-        d.div_element(class: "lbl").text.strip
+    result = self.div_element(class: "b-filter").div_elements(class: "filterItem").map{|d|
+      label = d.div_element(class: "lbl")
+      if label.exists? and label.visible?
+        label.text.strip
       else
         d.label_elements(class: "chk-b").map{|l| l.text.strip}
       end
-    }.flatten.map{|r| [r]}
+    }.flatten.reject{|r| r.empty?}.map{|r| [r]}
   end
 end
