@@ -14,9 +14,6 @@ class SearchResultsPage
 
       if is_region
         control_td.a(id: 'regionsSelect').click
-        #debugger
-        #is_region
-        #RegionSelectPage.select_region hash['значение']
       end
 
       if is_select
@@ -71,6 +68,8 @@ class Result
   def get_parameter key
     case key
     when "Город"
+      @element.p(class: "city").text
+    when "Цена"
       @element.p(class: "city").text
     else
       puts key

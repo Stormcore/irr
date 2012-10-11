@@ -32,7 +32,7 @@ end
   end
 end
 
-Допустим /^у каждого объявления на странице "(.*?)" (равно|в границах) "(.*?)"$/ do |key, clause, expected|
+Допустим /^у каждого объявления на странице "(.*?)" (равно|в границах|равно одному из) "(.*?)"$/ do |key, clause, expected|
   results_soft_assert do |ad|
     actual = ad.get_parameter(key)
     case clause
@@ -43,6 +43,9 @@ end
       actual_max = actual.split(' - ')[1]
       actual_min.to_i.should >= expected.to_i
       actual_max.to_i.should <= expected.to_i
+    when "одному из"
+      expecteds = expected.split("; ")
+      expecteds.should include actual
     end
   end
 end
@@ -74,8 +77,6 @@ def results_soft_assert
 
   errors = {}
   on SearchResultsPage do |page|
-    results = page.get_results
-    puts "Список URL: #{results.map{|r| r.get_url}}"
     page.get_results.each do |ad|
       begin
         yield ad
@@ -103,8 +104,6 @@ def result_details_soft_assert
   on SearchResultsPage do |page|
     results = page.get_results
   end
-
-  puts "Список URL: #{results.map{|r| r.get_url}}"
 
   results.each do |ad|
     begin
