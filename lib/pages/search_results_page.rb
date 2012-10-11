@@ -13,6 +13,7 @@ class SearchResultsPage
       is_textbox = control_td.text_field.exists?
 
       if is_region
+        control_td.a(id: 'regionsSelect').click
         #debugger
         #is_region
         #RegionSelectPage.select_region hash['значение']

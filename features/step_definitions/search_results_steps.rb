@@ -11,13 +11,12 @@ end
   # table is a Cucumber::Ast::Table
 
   table.hashes.each do |hash|
+    on SearchResultsPage do |page|
+      page.set_filter_parameter(hash)
+    end
     if hash['поле'] == 'Регион'
       on RegionSelectPage do |page|
         page.select_region hash['значение']
-      end
-    else
-      on SearchResultsPage do |page|
-        page.set_filter_parameter(hash)
       end
     end
   end
