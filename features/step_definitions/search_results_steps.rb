@@ -75,7 +75,9 @@ def results_soft_assert
   end
 
   if errors.size > 0
-    puts "Ошибки: #{errors}"
+    errors.each_pair do |url, message|
+      puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
+    end
     raise "Ошибка"
   end
 end
@@ -102,7 +104,9 @@ def result_details_soft_assert
   end
 
   if errors.size > 0
-    puts "Ошибки: #{errors}"
+    errors.each_pair do |url, message|
+      puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
+    end
     raise "Ошибка"
   end
 end
