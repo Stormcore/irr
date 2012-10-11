@@ -50,6 +50,14 @@ end
   end
 end
 
+Допустим /^в деталях каждого объявления на странице:$/ do |table|
+  result_details_soft_assert do |ad|
+    table.hashes.each do |hash|
+      ad.get_value(hash['поле']).should eq(hash['значение'])
+    end
+  end
+end
+
 Допустим /^в деталях каждого объявления на странице "(.*?)" равно "(.*?)"$/ do |key, expected|
   result_details_soft_assert do |ad|
     ad.get_value(key).should eq(expected)
@@ -96,7 +104,7 @@ def results_soft_assert
 end
 
 def result_details_soft_assert
-  # Запоминаем оригинальный url, чтоб вернуться на него
+  # Запоминаем оригинальный url, чтоб вернутся на него
   original_url = @browser.url
 
   errors = {}
@@ -104,6 +112,8 @@ def result_details_soft_assert
   on SearchResultsPage do |page|
     urls = page.get_results.map{|r| r.get_url}
   end
+
+  puts urls
 
   urls.each do |url|
     begin
