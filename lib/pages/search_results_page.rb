@@ -37,8 +37,9 @@ class SearchResultsPage
       end
 
       if is_select
-        control_td.div(class: "selector").click
         Watir::Wait.until {
+          control_td.div(class: "selector").click
+          sleep 1
           control_td.select.options.find{|o| 
             o.text == hash['значение']
           }.nil? rescue false
