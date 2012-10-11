@@ -24,7 +24,11 @@ class SearchResultsPage
       end
 
       if is_textbox and not is_region
-        is_textbox
+        control_td.text_field.set hash['от']
+        # Получаем ID первого текстбокса, из него сгенерим имя второго
+        from_id = control_td.text_field.id
+        to_id = from_id.gsub('from', 'to')
+        self.table_element.element.text_field(id: to_id).set hash['до']
       end
     else
       #Чекбокс
@@ -72,7 +76,7 @@ class Result
     when "Город"
       @element.p(class: "city").text
     when "Цена"
-      @element.p(class: "city").text
+      @element.p(class: "number").text.gsub(" ","")
     else
       puts key
       get_parameter key

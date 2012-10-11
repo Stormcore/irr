@@ -39,10 +39,10 @@ end
     when "равно"
       actual.should eq(expected)
     when "в границах"
-      actual_min = actual.split(' - ')[0]
-      actual_max = actual.split(' - ')[1]
-      actual_min.to_i.should >= expected.to_i
-      actual_max.to_i.should <= expected.to_i
+      expected_min = expected.split(' - ')[0]
+      expected_max = expected.split(' - ')[1]
+      actual.to_i.should >= expected_min.to_i
+      actual.to_i.should <= expected_max.to_i
     when "одному из"
       expecteds = expected.split("; ")
       expecteds.should include actual
@@ -99,6 +99,8 @@ def results_soft_assert
     errors.each_pair do |url, message|
       puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
     end
+    # Cтрочку puts источник ошибки показывает криво
+    # Поэтому заполняем место комментариями
     raise "Ошибка"
   end
 end
@@ -131,6 +133,8 @@ def result_details_soft_assert
     errors.each_pair do |url, message|
       puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
     end
+    # Cтрочку puts источник ошибки показывает криво
+    # Поэтому заполняем место комментариями
     raise "Ошибка"
   end
 end
