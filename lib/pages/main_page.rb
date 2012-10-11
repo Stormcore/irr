@@ -129,4 +129,9 @@ class MainPage
     self.new_ad
   end
 
+  def open_ad_list category
+    self.link_element(text: "Объявления").hover
+    self.link_element(text: category).when_present.click
+  end
+
 end
