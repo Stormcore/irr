@@ -58,15 +58,33 @@ end
   end
 end
 
-Допустим /^в деталях каждого объявления на странице "(.*?)" равно "(.*?)"$/ do |key, expected|
+Допустим /^в деталях каждого объявления на странице "(.*?)" (равно|в границах|равно одному из) "(.*?)"$/ do |key, clause,expected|
   result_details_soft_assert do |ad|
-    ad.get_value(key).should eq(expected)
+    actual = ad.get_value key
+    case clause
+    when "равно"
+      actual.should eq(expected)
+    when "в границах"
+      expected_min = expected.split(' - ')[0]
+      expected_max = expected.split(' - ')[1]
+      actual.to_i.should >= expected_min.to_i
+      actual.to_i.should <= expected_max.to_i
+    when "одному из"
+      expecteds = expected.split("; ")
+      expecteds.should include actual
+    end
   end
 end
 
 Допустим /^у каждого объявления на странице присутствует фотография$/ do
   result_details_soft_assert do |ad|
     ad.has_photo?.should eq(true)
+  end
+end
+
+Допустим /^я переключаюсь на вид "(.*)"$/ do |view|
+  on SearchResultsPage do |page|
+    page.switch_to_view view
   end
 end
 

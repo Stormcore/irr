@@ -2,6 +2,26 @@
 class SearchResultsPage
   include PageObject
 
+  def set_list_type type
+    if type == "Таблица"
+      @@result_type_class = ResultTable
+    else
+      @@result_type_class = Result
+    end
+  end
+
+  def switch_to_view type
+    classs = nil
+    case type
+    when "Таблица"
+      classs = "listico"
+    when "Список"
+      classs = "extlistico"
+    end
+    self.div_element(class: "ads_list").element.i(class: classs).parent.click
+    self.set_list_type type
+  end
+
   def set_filter_parameter hash
     if self.table_element.element.td(text: hash['поле']).exists?
       td = self.table_element.element.td(text: hash['поле'])
@@ -41,7 +61,7 @@ class SearchResultsPage
   end
 
   def switch_to_page num
-    switch_to_page num
+    puts "switch_to_page num"
   end
 
   def get_results_size
@@ -49,9 +69,12 @@ class SearchResultsPage
   end
 
   def get_results
+    unless SearchResultsPage.class_variables.include? :@@result_type_class
+      self.set_list_type("Список")
+    end
     ads_list = self.div_element(class: "ads_list")
     ads_list.div_elements(class: "ads_item").each_with_index.map {|d, i|
-        Result.new ads_list, i-1
+        @@result_type_class.new ads_list, i-1
     }
   end
 
@@ -78,9 +101,21 @@ class Result
     when "Цена"
       @element.p(class: "number").text.gsub(" ","")
     else
-      puts key
-      get_parameter key
+      raise "Неизвестное поле '#{key}'"
     end
     
+  end
+end
+
+class ResultTable < Result
+  def get_parameter key
+    case key
+    when "Год выпуска"
+      @element.td(class: "year").text
+    when "Пробег"
+      @element.td(class: "mileage").text
+    else
+      raise "Неизвестное поле '#{key}'"
+    end
   end
 end
