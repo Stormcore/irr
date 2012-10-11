@@ -9,10 +9,20 @@ end
 
 Когда /^на странице фильтров я делаю поиск по параметрам:$/ do |table|
   # table is a Cucumber::Ast::Table
-  on SearchResultsPage do |page|
-    table.hashes.each do |hash|
-      page.set_filter_parameter(hash)
+
+  table.hashes.each do |hash|
+    if hash['поле'] == 'Регион'
+      on RegionSelectPage do |page|
+        page.select_region hash['значение']
+      end
+    else
+      on SearchResultsPage do |page|
+        page.set_filter_parameter(hash)
+      end
     end
+  end
+
+  on SearchResultsPage do |page|
     page.do_search
   end
 end
@@ -60,8 +70,10 @@ end
 end
 
 def results_soft_assert
-  errors = {}
+  # Запоминаем оригинальный url, чтоб вернуться на него
+  original_url = @browser.url
 
+  errors = {}
   on SearchResultsPage do |page|
     results = page.get_results
     puts "Список URL: #{results.map{|r| r.get_url}}"
@@ -75,6 +87,7 @@ def results_soft_assert
   end
 
   if errors.size > 0
+    @browser.goto original_url
     errors.each_pair do |url, message|
       puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
     end
@@ -83,6 +96,9 @@ def results_soft_assert
 end
 
 def result_details_soft_assert
+  # Запоминаем оригинальный url, чтоб вернуться на него
+  original_url = @browser.url
+
   errors = {}
   results = []
   on SearchResultsPage do |page|
@@ -104,6 +120,7 @@ def result_details_soft_assert
   end
 
   if errors.size > 0
+    @browser.goto original_url
     errors.each_pair do |url, message|
       puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
     end
