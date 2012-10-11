@@ -39,12 +39,8 @@ class SearchResultsPage
       if is_select
         Watir::Wait.until {
           control_td.div(class: "selector").click
-          sleep 1
-          control_td.select.options.find{|o| 
-            o.text == hash['значение']
-          }.nil? rescue false
+          control_td.select.select hash['значение'] rescue false
         }
-        control_td.select.select hash['значение']
       end
 
       if is_textbox and not is_region
