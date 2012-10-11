@@ -133,8 +133,6 @@ def result_details_soft_assert
     urls = page.get_results.map{|r| r.get_url}
   end
 
-  puts urls
-
   urls.each do |url|
     begin
       @browser.goto url
