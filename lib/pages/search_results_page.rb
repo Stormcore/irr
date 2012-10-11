@@ -51,8 +51,12 @@ class SearchResultsPage
         self.table_element.element.text_field(id: to_id).set hash['до']
       end
     else
-      #Чекбокс
-      is_checkbox
+      #Чекбокс или радиобокс
+      if hash['поле'] == 'Новый или подержанный'
+        self.table_element.radio_button_element(name: "used-or-new", value: hash['значение']).click
+      else  
+        self.table_element.element.td(text: hash['поле']).checkbox.click
+      end
     end
   end
 
