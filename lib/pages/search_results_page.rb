@@ -103,7 +103,10 @@ class Result
     else
       raise "Неизвестное поле '#{key}'"
     end
-    
+  end
+
+  def get_photo_url
+    @element.p(class: "link").img.src rescue ""
   end
 end
 

@@ -77,8 +77,9 @@ end
 end
 
 Допустим /^у каждого объявления на странице присутствует фотография$/ do
-  result_details_soft_assert do |ad|
-    ad.has_photo?.should eq(true)
+  results_soft_assert do |ad|
+    image = ad.get_photo_url
+    image.empty?.should eq(false)
   end
 end
 
