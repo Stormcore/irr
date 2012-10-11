@@ -100,14 +100,13 @@ def result_details_soft_assert
   original_url = @browser.url
 
   errors = {}
-  results = []
+  urls = []
   on SearchResultsPage do |page|
-    results = page.get_results
+    urls = page.get_results.map{|r| r.get_url}
   end
 
-  results.each do |ad|
+  urls.each do |url|
     begin
-      url = ad.get_url
       @browser.goto url
       on AdDetailsPage do |page|
         yield page
