@@ -24,12 +24,10 @@ class SearchResultsPage
       end
 
       if is_textbox and not is_region
-        debugger
         is_textbox
       end
     else
       #Чекбокс
-      debugger
       is_checkbox
     end
   end
@@ -39,7 +37,6 @@ class SearchResultsPage
   end
 
   def switch_to_page num
-    debugger
     switch_to_page num
   end
 
@@ -76,7 +73,6 @@ class Result
       @element.p(class: "city").text
     else
       puts key
-      debugger
       get_parameter key
     end
     
