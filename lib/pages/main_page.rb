@@ -130,7 +130,9 @@ class MainPage
   end
 
   def open_ad_list category
-    self.link_element(text: "Объявления").hover
+    unless category == "Дилеры" or category == "Лизинг"
+      self.link_element(text: "Объявления").hover
+    end
     self.link_element(text: category).when_present.click
   end
 

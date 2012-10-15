@@ -32,6 +32,36 @@ end
   end
 end
 
+То /^на странице результатов показано >= (\d+) дилера$/ do |num|
+  on SearchCompaniesResultsPage do |page|
+    page.get_results_size.should >= num.to_i
+  end
+end
+
+Допустим /^в деталях каждого дилера "(.*?)" (равно|в границах|равно одному из) "(.*?)"$/ do |key, clause, expected|
+  dealers_details_soft_assert do |ad|
+    actual = ad.get_parameter(key)
+    case clause
+    when "равно"
+      actual.should eq(expected)
+    when "в границах"
+      expected_min = expected.split(' - ')[0]
+      expected_max = expected.split(' - ')[1]
+      actual.to_i.should >= expected_min.to_i
+      actual.to_i.should <= expected_max.to_i
+    when "одному из"
+      expecteds = expected.split("; ")
+      expecteds.should include actual
+    end
+  end
+end
+
+Допустим /^у каждого дилера "(.*?)" >= (\d+)$/ do |key, expected|
+  dealers_soft_assert do |ad|
+    ad.get_parameter(key).to_i.should >= expected.to_i
+  end
+end
+
 Допустим /^у каждого объявления на странице "(.*?)" (равно|в границах|равно одному из) "(.*?)"$/ do |key, clause, expected|
   results_soft_assert do |ad|
     actual = ad.get_parameter(key)
@@ -124,6 +154,32 @@ def results_soft_assert
   end
 end
 
+def dealers_soft_assert
+  # Запоминаем оригинальный url, чтоб вернуться на него
+  original_url = @browser.url
+
+  errors = {}
+  on SearchCompaniesResultsPage do |page|
+    page.get_results.each do |ad|
+      begin
+        yield ad
+      rescue Exception => e
+        errors[ad.get_url] = e.message
+      end
+    end
+  end
+
+  if errors.size > 0
+    @browser.goto original_url
+    errors.each_pair do |url, message|
+      puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
+    end
+    # Cтрочку puts источник ошибки показывает криво
+    # Поэтому заполняем место комментариями
+    raise "Ошибка"
+  end
+end
+
 def result_details_soft_assert
   # Запоминаем оригинальный url, чтоб вернутся на него
   original_url = @browser.url
@@ -138,6 +194,38 @@ def result_details_soft_assert
     begin
       @browser.goto url
       on AdDetailsPage do |page|
+        yield page
+      end
+    rescue Exception => e
+      errors[url] = e.message
+    end
+  end
+
+  if errors.size > 0
+    @browser.goto original_url
+    errors.each_pair do |url, message|
+      puts "<a href='#{url}'>#{url}</a><br><pre>" + message.gsub(/\n/,'<br>') + "</pre>"
+    end
+    # Cтрочку puts источник ошибки показывает криво
+    # Поэтому заполняем место комментариями
+    raise "Ошибка"
+  end
+end
+
+def dealers_details_soft_assert
+  # Запоминаем оригинальный url, чтоб вернутся на него
+  original_url = @browser.url
+
+  errors = {}
+  urls = []
+  on SearchCompaniesResultsPage do |page|
+    urls = page.get_results.map{|r| r.get_url}
+  end
+
+  urls.each do |url|
+    begin
+      @browser.goto url
+      on DealerDetailsPage do |page|
         yield page
       end
     rescue Exception => e
