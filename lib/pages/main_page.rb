@@ -136,4 +136,18 @@ class MainPage
     self.link_element(text: category).when_present.click
   end
 
+  def go_to_news_section section
+    debugger
+    go_to_news_section section
+  end
+
+end
+
+class NewsListPage
+  include PageObject
+
+  def has_item? name
+    debugger
+    has_item? name
+  end
 end

@@ -140,3 +140,15 @@ end
     page.navigate_to_new_ad
   end
 end
+
+Допустим /^я перехожу в категорию новостей "(.*?)"$/ do |section|
+  on MainPage do |page|
+    page.go_to_news_section section
+  end
+end
+
+То /^в списке новостей присутствует "(.*?)"$/ do |name|
+  on NewsListPage do |page|
+    page.has_item?(name)
+  end
+end
