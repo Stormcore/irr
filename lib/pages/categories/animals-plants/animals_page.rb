@@ -30,3 +30,10 @@ class CategoryAnimalsPlantsAnimalsPage < AdDetailsPage
   end
 
 end
+
+class CategoryAnimalsPlantsAccesoriesPage < AdDetailsPage
+  include PageObject
+
+  @@url_suffix = "/animals-plants/accessories"
+  @category = "Животные и растения -> Аксессуары"
+end
