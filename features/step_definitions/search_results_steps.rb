@@ -26,7 +26,7 @@ end
   end
 end
 
-Когда /^на странице результатов показано >= (\d+) объявлений$/ do |num|
+Когда /^я вижу на странице результатов >= (\d+) объявлений$/ do |num|
   on SearchResultsPage do |page|
     page.get_results_size.should >= num.to_i
   end
@@ -35,6 +35,12 @@ end
 Когда /^я перехожу на (\d+) страницу результатов$/ do |num|
   on SearchResultsPage do |page|
     page.open_paginated_result_page num.to_s
+  end
+end
+
+Когда /^я изменяю количество отображаемых объявлений на (\d+)$/ do |num|
+  on SearchResultsPage do |page|
+    page.change_result_length_to num.to_s
   end
 end
 
@@ -47,6 +53,21 @@ end
 То /^на странице результатов показано >= (\d+) дилера$/ do |num|
   on SearchCompaniesResultsPage do |page|
     page.get_results_size.should >= num.to_i
+  end
+end
+
+
+То /^значения фильтра имеют вид:$/ do |table|
+  table.hashes.each do |hash|
+    on SearchResultsPage do |page|
+      page.get_filter_parameter(hash).should be_true
+    end
+    #реализовать проверку региона
+    #if hash['поле'] == 'Регион'
+    #  on RegionSelectPage do |page|
+    #    page.select_region hash['значение']
+    #  end
+    #end
   end
 end
 
