@@ -26,6 +26,18 @@ end
   end
 end
 
+Когда /^на странице результатов показано >= (\d+) объявлений$/ do |num|
+  on SearchResultsPage do |page|
+    page.get_results_size.should >= num.to_i
+  end
+end
+
+Когда /^я перехожу на (\d+) страницу результатов$/ do |num|
+  on SearchResultsPage do |page|
+    page.open_paginated_result_page num.to_s
+  end
+end
+
 То /^на странице результатов показано >= (\d+) объявлений$/ do |num|
   on SearchResultsPage do |page|
     page.get_results_size.should >= num.to_i

@@ -30,6 +30,7 @@ $: << File.dirname(__FILE__)+'/../../lib'
 require 'pages.rb'
 
 World PageObject::PageFactory
+=begin
 
 if HEADLESS
   puts "Starting xvfb.."
@@ -38,6 +39,7 @@ if HEADLESS
   headless.start
   stdin, stdout, stderr = Open3.popen3("x11vnc -forever -input M")
 end
+=end
 
 def start_browser
   case DRIVER

@@ -1,0 +1,1 @@
+cucumber -r features/support/env.rb -r features/step_definitions features/filters/small.feature --line=10

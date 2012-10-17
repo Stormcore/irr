@@ -22,6 +22,11 @@ class SearchResultsPage
     self.set_list_type type
   end
 
+  def open_paginated_result_page page_num
+    #self.link_element(xpath: "//div[@class='adsListPaging']//a[@text=#{page_num}]").when_present.click
+    self.link_element(text: page_num.to_s).click
+  end
+
   def set_filter_parameter hash
     if self.table_element.element.td(text: hash['поле']).exists?
       td = self.table_element.element.td(text: hash['поле'])
